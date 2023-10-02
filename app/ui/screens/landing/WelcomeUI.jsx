@@ -1,48 +1,81 @@
 import React from "react";
-import { LinearGradient, ImageBackground, StyleSheet, View, Text } from "react-native";
+import { ImageBackground, StyleSheet, View, Text, Pressable } from "react-native";
 import { useCallback } from "react";
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
-
+import { LinearGradient } from 'expo-linear-gradient';
+import i18n from '../../../assets/strings/I18n';
 import fondo from "../../../assets/images/fondo.png"
 
-SplashScreen.preventAutoHideAsync();
+
+
+//SplashScreen.preventAutoHideAsync();
 
 export default function WelcomeUI() {
+    /*
+                <LinearGradient colors={['transparent', 'rgba(81,47,123,1)']} style={styles.background}/>
+
+            </LinearGradient>
+    */
     const [fontsLoaded] = useFonts({
         'Poppins': require('../../../assets/fonts/Poppins-BoldItalic.ttf'),
     })
 
     const onLayoutRootView = useCallback(async () => {
-        if (fontsLoaded){
+        if (fontsLoaded) {
             await SplashScreen.hideAsync()
         }
     }, [fontsLoaded])
 
-    if (!fontsLoaded){
+    if (!fontsLoaded) {
         return null
     }
 
     return (
         <View style={styles.container}>
-            <LinearGradient colors={['transparent','rgba(81,47,123,1)']} style={styles.background}>
-                <ImageBackground source={fondo} resizeMode="cover" style={styles.image}>
-                
-                    <Text style={styles.logoText}>MiHome</Text>
-                </ImageBackground> 
+            <LinearGradient colors={['rgba(0, 0, 0, 0.45)', 'rgba(81,47,123,1)']} style={styles.background}>
+                <ImageBackground source={fondo} resizeMode='cover' style={styles.image} >
+
+                    <View style={styles.overlay}>
+                        <Text style={styles.logoText}>{i18n.t('appName')}</Text>
+                    </View>
+
+                    <View style={styles.contenedorLogin}>
+                        <Pressable style={styles.boton}>
+                            <Text style={styles.textoBoton}>GOOGLE</Text>
+                        </Pressable>
+
+                        <Pressable>
+                            <Text style={styles.textoLoginInmobiliaria}>{i18n.t('PLInmobiliaria')}</Text>
+                        </Pressable>
+                    </View>
+
+
+
+
+
+
+                </ImageBackground>
+
             </LinearGradient>
-        
+
+
+
+
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
+        flex: 1,
+        width: '100%',
+        height: '100%'
     },
     image: {
-        flex: 1,
-        justifyContent: 'center',
+        flex: 1, // Para que la imagen ocupe toda la pantalla
+        justifyContent: 'center', // Centrar verticalmente
+        alignItems: 'center', // Centrar horizontalmente
     },
 
     background: {
@@ -51,13 +84,46 @@ const styles = StyleSheet.create({
         right: 0,
         height: '100%',
     },
-    
+    overlay: {
+        flex: 1,
+        justifyContent: 'flex-start', // Alinea el contenido en la parte superior
+        marginTop: 150, // Espacio en la parte superior para separar el texto del borde superior
+        width: '100%',
+    },
+
 
     logoText: {
         textAlign: 'center',
-        fontFamily: 'PoppinsBoldItalic',
-        fontSize: 32,
+        //fontFamily: 'PoppinsBoldItalic',
+        fontSize: 50,
         color: 'white',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+
     },
-    
-  });
+
+    boton: {
+        backgroundColor: 'rgba(81,47,123,1)',
+        width: 270,
+
+        height: 'auto',
+        borderRadius: 10
+    },
+    textoBoton: {
+        fontSize: 28,
+        color: 'white',
+        textAlign: 'center',
+        padding: 10
+    },
+    textoLoginInmobiliaria: {
+        color: 'white',
+
+    },
+
+    contenedorLogin: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
+    },
+
+});
