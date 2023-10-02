@@ -16,7 +16,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <CardPropiedad />
+      <Welcome />
     </View>
   );
 }
@@ -24,7 +24,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+
     alignItems: 'center',
     justifyContent: 'center',
   },
