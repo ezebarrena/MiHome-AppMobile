@@ -6,12 +6,20 @@ import {
     Text,
     Pressable,
     Image,
+
 } from "react-native";
 
 import Theme from "../../styles/Theme";
 
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import imagenTest from '../../../assets/images/varios/imagenCasaTest.png'
+
+const data = [
+    'US$180.000',
+    'Calle Mitre 890',
+    '4 amb',
+    '168 m2 totales',
+];
 
 //funcion que crea pantalla 
 export default function CardPropiedad() {
@@ -22,6 +30,12 @@ export default function CardPropiedad() {
     if (!fontsLoaded && !fontError) {
         return null;
     }
+
+    const renderItem = ({ item }) => (
+        <View style={styles.gridItem}>
+            <Text style={styles.Texto}>{item}</Text>
+        </View>
+    );
 
     return (
         <View style={styles.container}>
@@ -34,7 +48,24 @@ export default function CardPropiedad() {
                 </View>
                 <Image source={imagenTest} style={styles.imagenEstilo} />
                 <View style={styles.contenedorData}>
-                    <Text style={styles.Texto}>Hola</Text>
+                    <View style={styles.row}>
+                        <View style={styles.gridItem}>
+                            <Text style={styles.Texto}>US$180.000</Text>
+                        </View>
+                        <View style={styles.gridItem}>
+                            <Text style={styles.Texto}>Calle Mitre 890</Text>
+                        </View>
+                    </View>
+                    <View style={styles.row}>
+                        <View style={styles.gridItem}>
+                            <Text style={styles.Texto}>4 amb</Text>
+                        </View>
+                        <View style={styles.gridItem}>
+                            <Text style={styles.Texto}>168 m2 totales</Text>
+                        </View>
+                    </View>
+
+
                 </View>
             </View>
 
@@ -64,7 +95,7 @@ const styles = StyleSheet.create({
         width: 330,
         height: 135,
         borderRadius: 10,
-
+        elevation: 15,
 
     },
 
@@ -78,15 +109,17 @@ const styles = StyleSheet.create({
     },
 
     contenedorData: {
-        backgroundColor: 'green',
+        backgroundColor: Theme.colors.FONDOCARD,
         width: "100%",
         alignItems: 'center',
         borderBottomLeftRadius: 10, // Redondea la esquina inferior izquierda
         borderBottomRightRadius: 10,
+        elevation: 15,
+
 
     },
     Texto: {
-        padding: 10,
+        padding: 2,
         fontFamily: 'Poppins_400Regular'
     },
 
@@ -98,6 +131,8 @@ const styles = StyleSheet.create({
         zIndex: 1,
         borderTopLeftRadius: 10,
         borderBottomEndRadius: 10,
+        elevation: 5,
+
     },
 
     textoIndicador: {
@@ -109,6 +144,19 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_400Regular'
 
 
+    },
+
+    gridItem: {
+        flex: 1,
+        alignItems: 'center',
+        margin: 2,
+
+
+
+    },
+
+    row: {
+        flexDirection: 'row',
     },
 
 });

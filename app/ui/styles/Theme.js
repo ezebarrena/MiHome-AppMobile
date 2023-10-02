@@ -7,6 +7,7 @@ const Theme = {
         SECONDARY: '#8361A4',
         TERCIARIO: '#E36565',
         FONDOS: '#FAFAFA',
+        FONDOCARD: '#ECE6F0'
 
 
     },
