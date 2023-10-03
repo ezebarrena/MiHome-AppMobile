@@ -14,9 +14,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
 import fondo from "../../../assets/images/Fondos/fondo.png";
 import Theme from "../../styles/Theme";
-import profilePic from "../../../assets/images/varios/icon.png"
+//import profilePic from "../../../assets/images/varios/icon.png"
 
-export default function WelcomeUI() {
+export default function UserProfileUI() {
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold_Italic,
         Poppins_400Regular,
@@ -30,11 +30,14 @@ export default function WelcomeUI() {
     return (
         <View style={styles.container}>
             
-                
+            <View style={styles.close}>
+                <Text style={styles.mailText}>Close</Text>
+            </View>   
+
             <View style={styles.userInfo}>
-                <Image source={profilePic} />
-                <Text style={styles.logoText}>{i18n.t("userName")}</Text>
-                <Text style={styles.mailText}>{i18n.t("userEmail")}</Text>
+                
+                <Text style={styles.userNameText}>Javier</Text>
+                <Text style={styles.mailText}>javi@gmail.com</Text>
             </View>
 
 
@@ -53,7 +56,9 @@ export default function WelcomeUI() {
                 </Pressable>
             </View>
             <View style={styles.contenedorCerrarSesion}>
-
+                <Pressable>
+                    <Text>Cerrar Sesion</Text>
+                </Pressable>
             </View>
         </View>
     );
