@@ -11,8 +11,7 @@ import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
 import * as SplashScreen from "expo-splash-screen";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
-import fondo from "../../../assets/images/fondo.png";
-
+import fondo from "../../../assets/images/Fondos/fondo.png";
 //SplashScreen.preventAutoHideAsync();
 
 export default function WelcomeUI() {
