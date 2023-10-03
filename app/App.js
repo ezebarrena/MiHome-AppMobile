@@ -4,9 +4,13 @@ import { useState } from 'react';
 import * as Localization from 'expo-localization';
 import { I18n } from 'i18n-js'
 import { translations } from '../localization';
-import Welcome from './ui/screens/landing/Welcome.js'
+import UserProfile from './ui/screens/userProfile/UserProfile.js'
+
+import CardPropiedad from './ui/components/cardPropiedad/cardPropiedad';
+
 import { NavigationContainer } from '@react-navigation/native';
 import LandingStackNavigator from './navigation/LandingStackNavigator'
+
 
 export default function App() {
   /*const i18n = new I18n(translations)
@@ -16,16 +20,21 @@ export default function App() {
   i18n.defaultLocale = "es"*/
 
   return (
+
+
+    <View style={styles.container}>
+      <UserProfile/>
+    </View>
     
-    <LandingStackNavigator/>
     
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+
     alignItems: 'center',
     justifyContent: 'center',
   },
