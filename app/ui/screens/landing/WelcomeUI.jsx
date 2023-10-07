@@ -4,14 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
-import fondo from "../../../assets/images/Fondos/fondo.png";
+import mainBackground from "../../../assets/images/backgrounds/mainBackground.png";
 import ButtonWithIcon from "../../components/buttons/ButtonWithIcon";
 import Theme from "../../styles/Theme";
 
 export default function WelcomeUI() {
-
   const navigation = useNavigation();
-  
+
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold_Italic,
   });
@@ -23,28 +22,25 @@ export default function WelcomeUI() {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["rgba(0, 0, 0, 0.45)", "rgba(81,47,123,1)"]}
-        style={styles.background}
+        colors={["rgba(0, 0, 0, 0.45)", "rgba(81, 47, 123, 1)"]}
+        style={styles.gradient}
       >
-        <ImageBackground source={fondo} resizeMode="cover" style={styles.image}>
-          <View style={styles.overlay}>
-            <Text style={styles.logoText}>MiHome</Text>
-          </View>
+        <ImageBackground source={mainBackground} resizeMode="cover" style={styles.imageBackground}>
+          <Text style={styles.appName}>{i18n.t("common.appName")}</Text>
 
-          <View style={styles.contenedorLogin}>
+          <View style={styles.containerLogin}>
             <ButtonWithIcon
-              title={i18n.t("GoogleButton")}
+              title={i18n.t("welcomeScreen.googleButton")}
               onPress={() => console.log("Google")}
               backgroundColor={Theme.colors.PRIMARY}
               icon={require("../../../assets/images/GoogleIcon.png")}
             />
 
-            <Pressable>
-              <Text
-                style={styles.textoLoginInmobiliaria}
-                onPress={() => navigation.navigate("WelcomeRE")}
-              >
-                {i18n.t("PLInmobiliaria")}
+            <Pressable
+              onPress={() => navigation.navigate("WelcomeRE")}
+            >
+              <Text style={styles.realEstateLoginText}>
+                {i18n.t("welcomeScreen.startAsRealEstate")}
               </Text>
             </Pressable>
           </View>
@@ -57,38 +53,27 @@ export default function WelcomeUI() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    height: "100%",
   },
-  image: {
+  gradient: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    height: "100%",
-  },
-  overlay: {
+  imageBackground: {
     flex: 1,
-    justifyContent: "flex-start",
-    marginTop: 150,
-    width: "100%",
   },
-  logoText: {
+  appName: {
     textAlign: "center",
-    fontFamily: 'Poppins_700Bold_Italic',
+    fontFamily: "Poppins_700Bold_Italic",
     fontSize: 50,
     color: "white",
   },
-  textoLoginInmobiliaria: {
-    color: "white",
-  },
-  contenedorLogin: {
-    flex: 1,
+  containerLogin: {
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-evenly",
+    paddingTop: 20,
+  },
+  realEstateLoginText: {
+    color: "white",
+    textAlign: "center",
+    marginTop: 20,
   },
 });

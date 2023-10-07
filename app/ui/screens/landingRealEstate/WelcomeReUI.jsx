@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { ImageBackground, StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
-import fondo from "../../../assets/images/Fondos/fondo.png";
+import mainBackground from "../../../assets/images/backgrounds/mainBackground.png";
+import Button from "../../components/buttons/Button";
 import CustomTextInput from "../../components/inputs/CustomTextInput";
+import RegistrationModal from "../../components/modals/RegistrationModal";
+import CannotLoginModal from "../../components/modals/cannotLoginModal";
 
-export default function WelcomeUI() {
-
+export default function WelcomeReUI() {
   const navigation = useNavigation();
-  
+
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold_Italic,
   });
+
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [showCannotLoginModal, setShowCannotLoginModal] = useState(false);
 
   if (!fontsLoaded && !fontError) {
     return null;
@@ -23,26 +28,39 @@ export default function WelcomeUI() {
     <View style={styles.container}>
       <LinearGradient
         colors={["rgba(0, 0, 0, 0.45)", "rgba(81,47,123,1)"]}
-        style={styles.background}
+        style={styles.gradient}
       >
-        <ImageBackground source={fondo} resizeMode="cover" style={styles.image}>
-          <View style={styles.overlay}>
-            <Text style={styles.logoText}>MiHome</Text>
-          </View>
+        <ImageBackground source={mainBackground} resizeMode="cover" style={styles.imageBackground}>
+          <Text style={styles.appName}>{i18n.t("common.appName")}</Text>
 
-          <View style={styles.contenedorLogin}>
+          <View style={styles.containerLogin}>
+            <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.emailInput')} />
+            <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.passwordInput')} />
+            <Button title={i18n.t('realEstateWelcomeScreen.loginButton')} titleColor='#E36565' />
 
-            <Pressable>
-              <Text
-                style={styles.textoLoginInmobiliaria}
-                onPress={() => navigation.navigate("WelcomeRE")}
-              >
-                {i18n.t("PLInmobiliaria")}
+            <Pressable onPress={() => setShowRegistrationModal(true)}>
+              <Text style={styles.realEstateLoginText}>
+                {i18n.t('realEstateWelcomeScreen.registerLink')}
+              </Text>
+            </Pressable>
+            <Pressable onPress={() => setShowCannotLoginModal(true)}>
+              <Text style={styles.realEstateLoginText}>
+                {i18n.t('realEstateWelcomeScreen.cannotLogin')}
               </Text>
             </Pressable>
           </View>
         </ImageBackground>
       </LinearGradient>
+
+      <RegistrationModal
+        isVisible={showRegistrationModal}
+        onClose={() => setShowRegistrationModal(false)}
+      />
+
+      <CannotLoginModal
+        isVisible={showCannotLoginModal}
+        onClose={() => setShowCannotLoginModal(false)}
+      />
     </View>
   );
 }
@@ -50,38 +68,25 @@ export default function WelcomeUI() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    height: "100%",
   },
-  image: {
+  gradient: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    height: "100%",
-  },
-  overlay: {
+  imageBackground: {
     flex: 1,
-    justifyContent: "flex-start",
-    marginTop: 150,
-    width: "100%",
   },
-  logoText: {
+  appName: {
     textAlign: "center",
-    fontFamily: 'Poppins_700Bold_Italic',
+    fontFamily: "Poppins_700Bold_Italic",
     fontSize: 50,
     color: "white",
   },
-  textoLoginInmobiliaria: {
-    color: "white",
+  containerLogin: {
+    justifyContent: "center",
   },
-  contenedorLogin: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
+  realEstateLoginText: {
+    color: "white",
+    textAlign: "center",
+    marginTop: 20,
   },
 });

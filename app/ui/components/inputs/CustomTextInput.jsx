@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     overflow: "hidden",
     marginVertical: 10,
-    paddingLeft: 16,
+    textAlign: "center", // Centra el texto del placeholder
     ...Platform.select({
       ios: {
         shadowOffset: { width: 0, height: 2 },
