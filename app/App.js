@@ -5,6 +5,7 @@ import * as Localization from 'expo-localization';
 import { I18n } from 'i18n-js'
 import { translations } from '../localization';
 import UserProfile from './ui/screens/userProfile/UserProfile.js'
+import RealEstateProfile from './ui/screens/realEstateProfile/RealEstateProfile'
 
 import CardPropiedad from './ui/components/cardPropiedad/cardPropiedad';
 
@@ -23,7 +24,7 @@ export default function App() {
 
 
     <View style={styles.container}>
-      <UserProfile/>
+      <RealEstateProfile/>
     </View>
     
     
