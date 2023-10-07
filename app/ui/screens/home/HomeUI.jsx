@@ -5,19 +5,27 @@ import {
   View,
   Text,
   Pressable,
+  ScrollView,
+  SafeAreaView,
+  Dimensions,
+  Image,
 } from "react-native";
 import { useCallback } from "react";
-import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
+import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
 import * as SplashScreen from "expo-splash-screen";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
-import fondo from "../../../assets/images/fondo.png";
+import fondo from "../../../assets/images/Fondos/fondo.png"
+import CardPropiedad from "../../components/cardPropiedad/cardPropiedad.js"
+import Theme from "../../styles/Theme";
+
 
 //SplashScreen.preventAutoHideAsync();
 
 export default function WelcomeUI() {
   const [fontsLoaded, fontError] = useFonts({
-    Poppins_700Bold_Italic,
+    Poppins_700Bold,
+    Poppins_500Medium,
   });
 
   if (!fontsLoaded && !fontError) {
@@ -27,29 +35,26 @@ export default function WelcomeUI() {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={["rgba(0, 0, 0, 0.45)", "rgba(81,47,123,1)"]}
-        style={styles.background}
-      >
-        <ImageBackground source={fondo} resizeMode="cover" style={styles.image}>
-          <View style={styles.overlay}>
-            <Text style={styles.logoText}>HOME</Text>
-          </View>
+      <View style={styles.head}>
+        <Text style={styles.textoHead}>{i18n.t('PHUsuario')} Usuario!</Text>
+      </View>
+      <Text style={styles.textoBody1}>{i18n.t('PHUsuario1')} </Text>
 
-          <View style={styles.contenedorLogin}>
-            <Pressable style={styles.boton}>
-              <Text style={styles.textoBoton}>GOOGLE</Text>
-            </Pressable>
+      <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
 
-            <Pressable>
-              <Text style={styles.textoLoginInmobiliaria}
-                onPress ={() => navigation.navigate('Welcome')}>
-                {i18n.t("PLInmobiliaria")}
-              </Text>
-            </Pressable>
-          </View>
-        </ImageBackground>
-      </LinearGradient>
+
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+      </ScrollView>
+      <Text>{i18n.t('PHUsuario1')} </Text>
+
     </View>
   );
 }
@@ -57,55 +62,44 @@ export default function WelcomeUI() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
+  },
+
+  scrollView: {
+
+
+    flexGrow: 0,
+  },
+
+  scrollViewContent: {
+    paddingBottom: "14%",
+    paddingTop: "6%",
+    paddingStart: '5%',
+    paddingEnd: "2%",
+  },
+
+  head: {
     width: "100%",
-    height: "100%",
-  },
-  image: {
-    flex: 1, // Para que la imagen ocupe toda la pantalla
-    justifyContent: "center", // Centrar verticalmente
-    alignItems: "center", // Centrar horizontalmente
-  },
-
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    height: "100%",
-  },
-  overlay: {
-    flex: 1,
-    justifyContent: "flex-start", // Alinea el contenido en la parte superior
-    marginTop: 150, // Espacio en la parte superior para separar el texto del borde superior
-    width: "100%",
+    backgroundColor: Theme.colors.PRIMARY,
+    paddingTop: "8%",
+    justifyContent: 'center',
+    height: "20%",
+    borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
+    borderBottomRightRadius: 15,
+    marginBottom: 30,
   },
 
-  logoText: {
-    textAlign: "center",
-    fontFamily: 'Poppins_700Bold_Italic',
-    fontSize: 50,
-    color: "white",
+  textoHead: {
+    fontFamily: 'Poppins_700Bold',
+    color: 'white',
+    fontSize: Dimensions.get('window').width * 0.07,
+    marginLeft: "3%"
   },
 
-  boton: {
-    backgroundColor: "rgba(81,47,123,1)",
-    width: 270,
-
-    height: "auto",
-    borderRadius: 10,
-  },
-  textoBoton: {
-    fontSize: 28,
-    color: "white",
-    textAlign: "center",
-    padding: 10,
-  },
-  textoLoginInmobiliaria: {
-    color: "white",
+  textoBody1: {
+    fontFamily: "Poppins_500Medium",
+    fontSize: Dimensions.get('window').width * 0.05,
+    marginLeft: "3%",
   },
 
-  contenedorLogin: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
 });
