@@ -8,16 +8,27 @@ import {
     Pressable,
     Image,
 } from "react-native";
-
-import { useFonts, Poppins_700Bold_Italic, Poppins_400Regular } from "@expo-google-fonts/poppins";
-//import * as SplashScreen from "expo-splash-screen";
+import ImagePicker from 'react-native-image-picker';
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
 import googleLogo from '../../../assets/images/varios/googleG.png'
 import { Dimensions } from "react-native";
 
+
 const [text, onChangeText] = React.useState('');
 const [number, onChangeNumber] = React.useState('');
+
+const MyImagePicker = () => {
+    const [image, setImage] = useState(null);
+  
+    const selectImage = () => {
+      ImagePicker.showImagePicker({ title: 'Select Image' }, (response) => {
+        if (!response.didCancel && !response.error) {
+          setImage({ uri: response.uri });
+        }
+      });
+    };
+}
 
 export default function uploadAssetUI() {
     const [fontsLoaded, fontError] = useFonts({
@@ -34,6 +45,11 @@ export default function uploadAssetUI() {
         <View style = {styles.ScrollView}>
             
             <Text style={textoTitulo}>{i18n.t("TEXTO")}</Text>  //subir a i18n
+
+            <View style ={styles.inputImagen}>
+                <Button title={i18n.t("Seleccionar imagen")} onPress={selectImage} />
+                {image && <Image source={image} />}
+            </View>
 
             <TextInput
                 style={styles.inputBox}
@@ -75,8 +91,9 @@ export default function uploadAssetUI() {
             fontSize: Dimensions.get('window').width*0.1,
         },
 
-        inputBox:{
-
+        inputImagen:{
+            width: 200, 
+            height: 200 
         }
     },
 );
