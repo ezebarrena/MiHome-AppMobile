@@ -1,20 +1,16 @@
 import React from "react";
-import {
-  ImageBackground,
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-} from "react-native";
-import { useCallback } from "react";
+import { ImageBackground, StyleSheet, View, Text, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
-import * as SplashScreen from "expo-splash-screen";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
 import fondo from "../../../assets/images/Fondos/fondo.png";
-//SplashScreen.preventAutoHideAsync();
+import CustomTextInput from "../../components/inputs/CustomTextInput";
 
-export default function HomeUI() {
+export default function WelcomeUI() {
+
+  const navigation = useNavigation();
+  
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold_Italic,
   });
@@ -22,7 +18,6 @@ export default function HomeUI() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
 
   return (
     <View style={styles.container}>
@@ -32,17 +27,16 @@ export default function HomeUI() {
       >
         <ImageBackground source={fondo} resizeMode="cover" style={styles.image}>
           <View style={styles.overlay}>
-            <Text style={styles.logoText}>HOME</Text>
+            <Text style={styles.logoText}>MiHome</Text>
           </View>
 
           <View style={styles.contenedorLogin}>
-            <Pressable style={styles.boton}>
-              <Text style={styles.textoBoton}>GOOGLE</Text>
-            </Pressable>
 
             <Pressable>
-              <Text style={styles.textoLoginInmobiliaria}
-                onPress ={() => navigation.navigate('Welcome')}>
+              <Text
+                style={styles.textoLoginInmobiliaria}
+                onPress={() => navigation.navigate("WelcomeRE")}
+              >
                 {i18n.t("PLInmobiliaria")}
               </Text>
             </Pressable>
@@ -60,11 +54,10 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   image: {
-    flex: 1, // Para que la imagen ocupe toda la pantalla
-    justifyContent: "center", // Centrar verticalmente
-    alignItems: "center", // Centrar horizontalmente
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
-
   background: {
     position: "absolute",
     left: 0,
@@ -73,35 +66,19 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    justifyContent: "flex-start", // Alinea el contenido en la parte superior
-    marginTop: 150, // Espacio en la parte superior para separar el texto del borde superior
+    justifyContent: "flex-start",
+    marginTop: 150,
     width: "100%",
   },
-
   logoText: {
     textAlign: "center",
     fontFamily: 'Poppins_700Bold_Italic',
     fontSize: 50,
     color: "white",
   },
-
-  boton: {
-    backgroundColor: "rgba(81,47,123,1)",
-    width: 270,
-
-    height: "auto",
-    borderRadius: 10,
-  },
-  textoBoton: {
-    fontSize: 28,
-    color: "white",
-    textAlign: "center",
-    padding: 10,
-  },
   textoLoginInmobiliaria: {
     color: "white",
   },
-
   contenedorLogin: {
     flex: 1,
     alignItems: "center",
