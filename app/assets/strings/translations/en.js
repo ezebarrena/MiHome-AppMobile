@@ -27,21 +27,19 @@ export default {
           "sendButton": "Send Code"
         },
         "secondStep": {
-          "helpText": "Enter the code you received in your email and your new password.",
+          "helpText": "Please enter the code you have received.",
           "codeInput": "Code",
-          "newPasswordInput": "New Password",
-          "confirmPasswordInput": "Confirm Password",
-          "resetButton": "Reset Password"
+          "validationButton": "Validate code"
         },
         "thirdStep": {
-          "helpText": "Other information or instructions for the third step.",
-          "additionalField": "Additional Field",
-          "thirdStepButton": "Third Step Button"
+          "helpText": "Please enter your new password and type it again to confirm.",
+          "passwordInput": "Password",
+          "confirmPasswordInput": "Confirm Password",
+          "changePasswordButton": "Change Password"
         },
         "fourthStep": {
-          "helpText": "Other information or instructions for the fourth step.",
-          "additionalField": "Additional Field",
-          "fourthStepButton": "Fourth Step Button"
+          "helpText": "Password successfully reset!",
+          "loginButton": "Log In"
         }
       }    
     }, 

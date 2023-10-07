@@ -8,7 +8,7 @@ import mainBackground from "../../../assets/images/backgrounds/mainBackground.pn
 import Button from "../../components/buttons/Button";
 import CustomTextInput from "../../components/inputs/CustomTextInput";
 import RegistrationModal from "../../components/modals/RegistrationModal";
-import CannotLoginModal from "../../components/modals/CannotLoginModal";
+import CannotLoginModal from "../../components/modals/CannotLogin/CannotLoginModal";
 
 export default function WelcomeReUI() {
   const navigation = useNavigation();
