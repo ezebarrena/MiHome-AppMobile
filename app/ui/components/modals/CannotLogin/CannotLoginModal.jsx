@@ -32,10 +32,12 @@ export default function CannotLoginModal({ isVisible, onClose }) {
               <Ionicons name="close" size={24} color="black" />
             </Pressable>
           </View>
-          {step === 1 && <Step1 handleNextStep={handleNextStep} />}
-          {step === 2 && <Step2 handleNextStep={handleNextStep} />}
-          {step === 3 && <Step3 handleNextStep={handleNextStep} />}
-          {step === 4 && <Step4 handleCloseModal={handleCloseModal} />}
+          <View style={styles.stepContainer}>
+            {step === 1 && <Step1 handleNextStep={handleNextStep} />}
+            {step === 2 && <Step2 handleNextStep={handleNextStep} />}
+            {step === 3 && <Step3 handleNextStep={handleNextStep} />}
+            {step === 4 && <Step4 handleCloseModal={handleCloseModal} />}
+          </View>
         </View>
       </View>
     </Modal>
@@ -52,9 +54,14 @@ const styles = StyleSheet.create({
     height: "60%",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    padding: 20,
+    padding: 40,
   },
   closeButton: {
     alignItems: "flex-end",
+    marginBottom: 20,
+  },
+  stepContainer: {
+    alignItems: "center",
+    marginBottom: 20,
   },
 });
