@@ -46,7 +46,7 @@ export default function Step2({ handleNextStep }) {
         )}
         size="medium"
         backgroundColor="#E36565"
-        onPress={handleVerifyCode}
+        onPress={handleNextStep}
       />
     </View>
   );

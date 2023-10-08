@@ -13,6 +13,11 @@ export default function CannotLoginModal({ isVisible, onClose }) {
     setStep((prevStep) => prevStep + 1);
   };
 
+  const handleCloseModal = () => {
+    setStep(1);
+    onClose();
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -23,14 +28,14 @@ export default function CannotLoginModal({ isVisible, onClose }) {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <View style={styles.closeButton}>
-            <Pressable onPress={onClose}>
+            <Pressable onPress={handleCloseModal}>
               <Ionicons name="close" size={24} color="black" />
             </Pressable>
           </View>
           {step === 1 && <Step1 handleNextStep={handleNextStep} />}
           {step === 2 && <Step2 handleNextStep={handleNextStep} />}
           {step === 3 && <Step3 handleNextStep={handleNextStep} />}
-          {step === 4 && <Step4 />}
+          {step === 4 && <Step4 handleCloseModal={handleCloseModal} />}
         </View>
       </View>
     </Modal>

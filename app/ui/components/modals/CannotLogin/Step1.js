@@ -46,7 +46,7 @@ export default function Step1({ handleNextStep }) {
         )}
         size="medium"
         backgroundColor="#E36565"
-        onPress={handleSendCode}
+        onPress={handleNextStep}
       />
     </View>
   );
