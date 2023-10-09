@@ -3,6 +3,7 @@ const NAVIGATOR = {
     HOME: 'HOME',
     FAVOURITES: 'FAVOURITES',
     BOOKINGS: 'BOOKINGS',
+    PROFILE: 'PROFILE',
 }
 
 export default {

@@ -13,10 +13,10 @@ import {
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
 import * as SplashScreen from "expo-splash-screen";
-import { LinearGradient } from "expo-linear-gradient";
+
 import i18n from "../../../assets/strings/I18n";
 
-import fondo from "../../../assets/images/Fondos/fondo.png"
+
 import CardPropiedad from "../../components/cardPropiedad/cardPropiedad.js"
 import Theme from "../../styles/Theme";
 
@@ -36,9 +36,9 @@ export default function HomeUI() {
   return (
     <View style={styles.container}>
       <View style={styles.head}>
-        <Text style={styles.textoHead}>{i18n.t('PHUsuario')} Usuario!</Text>
+        <Text style={styles.textoHead}>{i18n.t('homeScreen.PHUsuario')} Usuario!</Text>
       </View>
-      <Text style={styles.textoBody1}>{i18n.t('PHUsuario1')} </Text>
+      <Text style={styles.textoBody1}>{i18n.t('homeScreen.PHUsuario1')} </Text>
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
 
@@ -53,7 +53,7 @@ export default function HomeUI() {
           <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
         </View>
       </ScrollView>
-      <Text>{i18n.t('PHUsuario1')} </Text>
+      <Text>{i18n.t('homeScreen.PHUsuario1')} </Text>
 
     </View>
   );

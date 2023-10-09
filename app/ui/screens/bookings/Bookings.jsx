@@ -12,7 +12,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
 
-import fondo from "../../../assets/images/Fondos/fondo.png";
+
 
 //SplashScreen.preventAutoHideAsync();
 
@@ -32,13 +32,13 @@ export default function WelcomeUI() {
         colors={["rgba(0, 0, 0, 0.45)", "rgba(81,47,123,1)"]}
         style={styles.background}
       >
-        <ImageBackground source={fondo} resizeMode="cover" style={styles.image}>
+        
           <View style={styles.overlay}>
             <Text style={styles.logoText}>Bookings</Text>
           </View>
 
 
-        </ImageBackground>
+        
       </LinearGradient>
     </View>
   );

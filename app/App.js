@@ -15,6 +15,7 @@ import React from "react";
 
 import { NavigationContainer } from '@react-navigation/native';
 import { MainStackNavigator } from './navigation/MainStackNavigator';
+import { LandingStackNavigator } from './navigation/LandingStackNavigator'
 
 export default function App() {
   return (

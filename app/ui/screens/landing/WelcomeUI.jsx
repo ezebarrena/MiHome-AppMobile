@@ -19,6 +19,7 @@ export default function WelcomeUI() {
     return null;
   }
 
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -31,7 +32,7 @@ export default function WelcomeUI() {
           <View style={styles.containerLogin}>
             <ButtonWithIcon
               title={i18n.t("welcomeScreen.googleButton")}
-              onPress={() => console.log("Google")}
+              onPress={() => navigation.navigate("LandingStack")}
               backgroundColor={Theme.colors.PRIMARY}
               icon={require("../../../assets/images/GoogleIcon.png")}
             />
