@@ -14,7 +14,7 @@ import i18n from "../../../assets/strings/I18n";
 import fondo from "../../../assets/images/Fondos/fondo.png";
 //SplashScreen.preventAutoHideAsync();
 
-export default function WelcomeUI() {
+export default function HomeUI() {
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold_Italic,
   });
