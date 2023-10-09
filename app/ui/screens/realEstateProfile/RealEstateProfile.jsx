@@ -16,14 +16,14 @@ import fondo from "../../../assets/images/Fondos/fondo.png";
 import Theme from "../../styles/Theme";
 //import profilePic from "../../../assets/images/varios/icon.png"
 import Boton from "../../components/botonesPerfil/BotonMenuPerfil"
-import favorito from "../../../assets/images/icons/favorite.png"
+import home from "../../../assets/images/icons/home.png"
 import ruedita from "../../../assets/images/icons/settings.png"
-import billetera from "../../../assets/images/icons/account_balance_wallet.png"
+import calendar from "../../../assets/images/icons/calendar_month.png"
 import logout from "../../../assets/images/icons/logout.png"
-import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
+import fotoPerfil from "../../../assets/images/icons/fotoRE.png"
 
 
-export default function UserProfileUI() {
+export default function RealEstateProfileUI() {
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold_Italic,
         Poppins_400Regular,
@@ -44,16 +44,16 @@ export default function UserProfileUI() {
 
             <View style={styles.userInfo}>
                 <Image source={fotoPerfil}/>
-                <Text style={styles.userNameText}>Javier</Text>
-                <Text style={styles.mailText}>javi@gmail.com</Text>
+                <Text style={styles.userNameText}>LLA Propiedades</Text>
+                <Text style={styles.mailText}>llaprops@zdm.com</Text>
             </View>
 
 
 
             <View style={styles.contenedorOpciones}>
-                <Boton iconSource={favorito} title={"Tus Favoritos"}/>
+                <Boton iconSource={home} title={"Mis Propiedades"}/>
 
-                <Boton iconSource={billetera} title={"Tus Medios de pago"}/>
+                <Boton iconSource={calendar} title={"Calendario"}/>
                 <Boton iconSource={ruedita} title={"Ajustes"}/>
             </View>
             
@@ -70,7 +70,10 @@ const styles = StyleSheet.create({
   
       alignItems: 'center',
       //justifyContent: 'center',
-      paddingTop: 50,
+      
+    },
+    userInfo: {
+        alignItems: 'center',
     },
 
     contenedorOpciones: {
