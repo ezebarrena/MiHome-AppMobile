@@ -15,14 +15,14 @@ import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts
 import * as SplashScreen from "expo-splash-screen";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
+
 import fondo from "../../../assets/images/Fondos/fondo.png"
 import CardPropiedad from "../../components/cardPropiedad/cardPropiedad.js"
 import Theme from "../../styles/Theme";
 
-
 //SplashScreen.preventAutoHideAsync();
 
-export default function WelcomeUI() {
+export default function HomeUI() {
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
