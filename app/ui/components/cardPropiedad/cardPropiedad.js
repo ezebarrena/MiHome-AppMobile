@@ -13,7 +13,7 @@ import {
 import Theme from "../../styles/Theme";
 
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
-import imagenTest from '../../../assets/images/varios/imagenCasaTest.png'
+import imagenTest from '../../../assets/images/various/imagenCasaTest.png'
 
 
 

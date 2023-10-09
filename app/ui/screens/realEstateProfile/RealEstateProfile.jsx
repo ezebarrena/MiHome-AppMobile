@@ -9,12 +9,7 @@ import {
 } from "react-native";
 
 import { useFonts, Poppins_700Bold_Italic, Poppins_400Regular } from "@expo-google-fonts/poppins";
-//import * as SplashScreen from "expo-splash-screen";
-import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
-import fondo from "../../../assets/images/Fondos/fondo.png";
-import Theme from "../../styles/Theme";
-//import profilePic from "../../../assets/images/varios/icon.png"
 import Boton from "../../components/botonesPerfil/BotonMenuPerfil"
 import home from "../../../assets/images/icons/home.png"
 import ruedita from "../../../assets/images/icons/settings.png"
