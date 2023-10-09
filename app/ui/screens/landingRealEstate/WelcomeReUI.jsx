@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { ImageBackground, StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
 import mainBackground from "../../../assets/images/backgrounds/mainBackground.png";
-import ButtonWithIcon from "../../components/buttons/ButtonWithIcon";
-import Theme from "../../styles/Theme";
+import Button from "../../components/buttons/Button";
+import CustomTextInput from "../../components/inputs/CustomTextInput";
+import RegistrationModal from "../../components/modals/RegistrationModal";
+import CannotLoginModal from "../../components/modals/CannotLogin/CannotLoginModal";
 
-export default function WelcomeUI() {
+export default function WelcomeReUI() {
   const navigation = useNavigation();
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold_Italic,
   });
+
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [showCannotLoginModal, setShowCannotLoginModal] = useState(false);
 
   if (!fontsLoaded && !fontError) {
     return null;
@@ -22,30 +27,40 @@ export default function WelcomeUI() {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["rgba(0, 0, 0, 0.45)", "rgba(81, 47, 123, 1)"]}
+        colors={["rgba(0, 0, 0, 0.45)", "rgba(81,47,123,1)"]}
         style={styles.gradient}
       >
         <ImageBackground source={mainBackground} resizeMode="cover" style={styles.imageBackground}>
           <Text style={styles.appName}>{i18n.t("common.appName")}</Text>
 
           <View style={styles.containerLogin}>
-            <ButtonWithIcon
-              title={i18n.t("welcomeScreen.googleButton")}
-              onPress={() => console.log("Google")}
-              backgroundColor={Theme.colors.PRIMARY}
-              icon={require("../../../assets/images/GoogleIcon.png")}
-            />
+            <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.emailInput')} />
+            <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.passwordInput')} />
+            <Button title={i18n.t('realEstateWelcomeScreen.loginButton')} titleColor='#E36565' />
 
-            <Pressable
-              onPress={() => navigation.navigate("WelcomeRE")}
-            >
+            <Pressable onPress={() => setShowRegistrationModal(true)}>
               <Text style={styles.realEstateLoginText}>
-                {i18n.t("welcomeScreen.startAsRealEstate")}
+                {i18n.t('realEstateWelcomeScreen.registerLink')}
+              </Text>
+            </Pressable>
+            <Pressable onPress={() => setShowCannotLoginModal(true)}>
+              <Text style={styles.realEstateLoginText}>
+                {i18n.t('realEstateWelcomeScreen.cannotLogin')}
               </Text>
             </Pressable>
           </View>
         </ImageBackground>
       </LinearGradient>
+
+      <RegistrationModal
+        isVisible={showRegistrationModal}
+        onClose={() => setShowRegistrationModal(false)}
+      />
+
+      <CannotLoginModal
+        isVisible={showCannotLoginModal}
+        onClose={() => setShowCannotLoginModal(false)}
+      />
     </View>
   );
 }
@@ -68,8 +83,6 @@ const styles = StyleSheet.create({
   },
   containerLogin: {
     justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 20,
   },
   realEstateLoginText: {
     color: "white",
