@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator  } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NavigatorConstant from './NavigatorConstant';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -12,6 +12,7 @@ import Bookings from '../ui/screens/bookings/Bookings';
 import { NavigationContainer } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
+
 
 const tabOptions = {
   tabBarStyle: {
@@ -88,8 +89,11 @@ return (
         }}
       />
 
-    </Tab.Navigator>
-  </NavigationContainer>
+
+        
+
+      </Tab.Navigator>
+    </NavigationContainer>
   )
 }
 

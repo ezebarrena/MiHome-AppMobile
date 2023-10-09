@@ -2,6 +2,10 @@ export default {
     "common": {
       "appName": "MiHome",
     },
+  "homeScreen":{
+    PHUsuario: 'Welcome',
+    PHUsuario1: "Properties near you",
+  },
     "welcomeScreen": {
       "continue": "Continue",
       "googleButton": "Continue with Google",
@@ -42,6 +46,6 @@ export default {
           "loginButton": "Log In"
         }
       }    
-    }, 
+    },
   };
-  
+

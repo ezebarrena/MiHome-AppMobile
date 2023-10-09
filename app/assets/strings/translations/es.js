@@ -1,4 +1,10 @@
 export default {
+  
+  "homeScreen":{
+    PHUsuario: 'Bienvenido',
+    PHUsuario1: "Propiedades cerca tuyo",
+  },
+
     "common": {
       "appName": "MiHome",
     },
@@ -23,3 +29,4 @@ export default {
     },
   };
   
+

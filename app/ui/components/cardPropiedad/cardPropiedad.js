@@ -6,6 +6,7 @@ import {
     Text,
     Pressable,
     Image,
+    Dimensions,
 
 } from "react-native";
 
@@ -14,15 +15,10 @@ import Theme from "../../styles/Theme";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import imagenTest from '../../../assets/images/varios/imagenCasaTest.png'
 
-const data = [
-    'US$180.000',
-    'Calle Mitre 890',
-    '4 amb',
-    '168 m2 totales',
-];
+
 
 //funcion que crea pantalla 
-export default function CardPropiedad() {
+export default function CardPropiedad({ valor, ubicacion, ambientes, metros, tipo, margen }) {
     const [fontsLoaded, fontError] = useFonts({
         Poppins_400Regular,
     });
@@ -31,37 +27,33 @@ export default function CardPropiedad() {
         return null;
     }
 
-    const renderItem = ({ item }) => (
-        <View style={styles.gridItem}>
-            <Text style={styles.Texto}>{item}</Text>
-        </View>
-    );
+
 
     return (
-        <View style={styles.container}>
+        <View>
 
-            <View style={styles.contenedorPrincipal}>
+            <View style={{ width: 330, borderRadius: 10, elevation: 10, marginRight: margen }}>
                 <View style={styles.indicador}>
                     <Text style={styles.textoIndicador}>
-                        VENTA
+                        {tipo}
                     </Text>
                 </View>
                 <Image source={imagenTest} style={styles.imagenEstilo} />
                 <View style={styles.contenedorData}>
                     <View style={styles.row}>
                         <View style={styles.gridItem}>
-                            <Text style={styles.Texto}>US$180.000</Text>
+                            <Text style={styles.Texto}>{valor}</Text>
                         </View>
                         <View style={styles.gridItem}>
-                            <Text style={styles.Texto}>Calle Mitre 890</Text>
+                            <Text style={styles.Texto}>{ambientes} ambientes</Text>
                         </View>
                     </View>
                     <View style={styles.row}>
                         <View style={styles.gridItem}>
-                            <Text style={styles.Texto}>4 amb</Text>
+                            <Text style={styles.Texto}>{ubicacion}</Text>
                         </View>
                         <View style={styles.gridItem}>
-                            <Text style={styles.Texto}>168 m2 totales</Text>
+                            <Text style={styles.Texto}>{metros} m2 totales</Text>
                         </View>
                     </View>
 
@@ -90,14 +82,6 @@ const styles = StyleSheet.create({
 
     },
 
-    contenedorPrincipal: {
-        backgroundColor: 'blue',
-        width: 330,
-        height: 135,
-        borderRadius: 10,
-        elevation: 15,
-
-    },
 
     imagenEstilo: {
         resizeMode: 'cover',
