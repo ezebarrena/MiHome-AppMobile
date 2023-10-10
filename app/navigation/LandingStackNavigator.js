@@ -3,17 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NavigatorConstant from './NavigatorConstant';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-
-import Welcome from '../ui/screens/landing/Welcome';
 import Home from '../ui/screens/home/Home';
 import Favourites from '../ui/screens/favourites/Favourites';
 import Bookings from '../ui/screens/bookings/Bookings';
 import UserProfile from '../ui/screens/userProfile/UserProfile'
 
-import { NavigationContainer } from '@react-navigation/native';
-
 const Tab = createBottomTabNavigator();
-
 
 const tabOptions = {
   tabBarStyle: {
@@ -60,6 +55,7 @@ return (
           const iconName = getTabIcon(route.name);
           return <Icon name={iconName} size={size} color={color} />;
         },
+        headerShown: false,
         ...tabOptions,
       })}
       >
@@ -93,9 +89,6 @@ return (
         options={{
         }}
       />
-
-
-        
 
       </Tab.Navigator>
     
