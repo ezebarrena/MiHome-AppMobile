@@ -4,6 +4,7 @@ const NAVIGATOR = {
     FAVOURITES: 'FAVOURITES',
     BOOKINGS: 'BOOKINGS',
     PROFILE: 'PROFILE',
+    HOMERS: 'HOMERS'
 }
 
 export default {
