@@ -8,6 +8,7 @@ import Favourites from '../ui/screens/favourites/Favourites';
 import Bookings from '../ui/screens/bookings/Bookings';
 import UserProfile from '../ui/screens/userProfile/UserProfile';
 import HomeRS from '../ui/screens/homeRealState/homeRS';
+import UploadAsset from '../ui/screens/uploadAsset/uploadAsset';
 
 const Tab = createBottomTabNavigator();
 
@@ -72,7 +73,7 @@ const TabBar = () => {
 
       <Tab.Screen
         name={NavigatorConstant.NAVIGATOR.FAVOURITES}
-        component={Favourites}
+        component={UploadAsset}
         options={{
         }}
       />
