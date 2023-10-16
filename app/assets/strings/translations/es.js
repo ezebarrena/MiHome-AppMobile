@@ -5,6 +5,10 @@ export default {
     PHUsuario1: "Propiedades cerca tuyo",
     PHBusqueda: 'Que estas buscando?',
   },
+  homeScreenRS: {
+    main: 'Propiedades Listadas',
+    headVisualization: 'Mostrando'
+  },
 
   "common": {
     "appName": "MiHome",

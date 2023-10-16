@@ -7,6 +7,10 @@ export default {
     PHUsuario1: "Properties near you",
     PHBusqueda: 'What are you looking for?',
   },
+  homeScreenRS: {
+    main: 'Listed Real State',
+    headVisualization: 'View'
+  },
   "welcomeScreen": {
     "continue": "Continue",
     "googleButton": "Continue with Google",

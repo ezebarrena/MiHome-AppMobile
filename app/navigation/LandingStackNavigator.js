@@ -7,7 +7,7 @@ import Home from '../ui/screens/home/Home';
 import Favourites from '../ui/screens/favourites/Favourites';
 import Bookings from '../ui/screens/bookings/Bookings';
 import UserProfile from '../ui/screens/userProfile/UserProfile';
-
+import HomeRS from '../ui/screens/homeRealState/homeRS';
 
 const Tab = createBottomTabNavigator();
 
@@ -86,7 +86,7 @@ const TabBar = () => {
 
       <Tab.Screen
         name={NavigatorConstant.NAVIGATOR.BOOKINGS}
-        component={Bookings}
+        component={HomeRS}
         options={{
         }}
       />
