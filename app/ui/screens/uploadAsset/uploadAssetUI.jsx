@@ -49,8 +49,10 @@ export default function uploadAssetUI() {
                 <Text style={styles.textoBody1}>Titulo</Text>
                 <CustomTextInput keyboardType={String}/>
                 <Text style={styles.textoBody1}>Descripcion</Text>
-                <CustomTextInput title={"TEXT"} titleColor={"white"}/>
-                <Button/>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>Extras</Text>
+                <CustomTextInput/>
+                <Button title={"Publicar"} titleColor={"white"}/>
             </View>
 
         </View>
@@ -89,11 +91,7 @@ export default function uploadAssetUI() {
             marginLeft: "3%",
             paddingTop: 30,
           },
-
-        dataEntry:{
-
-        },
-
+        
         textoBody1: {
             fontFamily: "Poppins_500Medium", //cambiar a roboto
             fontSize: Dimensions.get('window').width * 0.05,
