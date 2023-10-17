@@ -13,6 +13,10 @@ import {
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
 import { Dimensions } from "react-native";
+import TextInput from "../../../ui/components/inputs/CustomTextInput";
+import CustomTextInput from "../../../ui/components/inputs/CustomTextInput";
+import Button from "../../../ui/components/buttons/Button";
+
 
 /*
 const [text, onChangeText] = React.useState('');
@@ -41,8 +45,12 @@ export default function uploadAssetUI() {
                 <Text style={styles.textoHead}>Publicar Propiedad</Text>
             </View>
             
-            <View style={styles.dataEntry}>
-                
+            <View style={styles.dataEntry}> 
+                <Text style={styles.textoBody1}>Titulo</Text>
+                <CustomTextInput keyboardType={String}/>
+                <Text style={styles.textoBody1}>Descripcion</Text>
+                <CustomTextInput title={"TEXT"} titleColor={"white"}/>
+                <Button/>
             </View>
 
         </View>
@@ -85,6 +93,12 @@ export default function uploadAssetUI() {
         dataEntry:{
 
         },
+
+        textoBody1: {
+            fontFamily: "Poppins_500Medium", //cambiar a roboto
+            fontSize: Dimensions.get('window').width * 0.05,
+            marginLeft: "3%",
+          },
     },
 
 );

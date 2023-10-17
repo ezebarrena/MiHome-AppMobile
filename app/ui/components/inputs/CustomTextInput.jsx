@@ -1,3 +1,4 @@
+import { BottomTabBarHeightCallbackContext } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { TextInput, StyleSheet, Platform } from "react-native";
 
@@ -20,7 +21,9 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "rgba(250, 250, 250, 0.9)", // RGBA con 90% de transparencia
     height: 48,
-    borderRadius: 5,
+    borderRadius: 10,
+    borderWidth: 1,
+    margin: 14,
     overflow: "hidden",
     marginVertical: 10,
     textAlign: "center", // Centra el texto del placeholder
