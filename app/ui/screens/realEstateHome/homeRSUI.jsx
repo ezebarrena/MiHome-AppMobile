@@ -69,7 +69,7 @@ export default function HomeRSUI() {
       </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} >
         {propiedades.map((propiedad, index) => (
-          <View key={index} style={{ height: '15%' }}>
+          <View key={index} style={{ height: '5%', marginBottom: '50%' }}>
             <CardPropiedad valor={propiedad.valor} ubicacion={propiedad.ubicacion} ambientes={propiedad.ambientes} metros={propiedad.metros} tipo={propiedad.tipo} margen={0} />
           </View>
 
@@ -129,15 +129,13 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
   },
   scrollView: {
-    flexGrow: 0,
-
+    flexGro2: 0,
 
 
   },
 
   scrollViewContent: {
     alignItems: "center",
-
 
   },
 })
