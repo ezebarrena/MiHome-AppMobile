@@ -7,7 +7,16 @@ export default {
   },
   homeScreenRS: {
     main: 'Propiedades Listadas',
-    headVisualization: 'Mostrando'
+    headVisualization: 'Mostrando',
+  },
+
+  propiedadesEstados: {
+    todo: 'Todo',
+    venta: 'Venta',
+    vendida: 'Vendida',
+    alquiler: 'Alquiler',
+    alquiladas: 'Alquilada',
+    pausada: 'Pausada'
   },
 
   "common": {

@@ -35,8 +35,9 @@ export default function WelcomeReUI() {
 
           <View style={styles.containerLogin}>
             <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.emailInput')} />
-            <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.passwordInput')} />
-            <Button title={i18n.t('realEstateWelcomeScreen.loginButton')} titleColor='#E36565' />
+            <CustomTextInput secureTextEntry={true} placeholder={i18n.t('realEstateWelcomeScreen.passwordInput')} />
+
+            <Button title={i18n.t('realEstateWelcomeScreen.loginButton')} titleColor='#E36565' onPress={() => navigation.navigate("LandingStackRE")}/>
 
             <Pressable onPress={() => setShowRegistrationModal(true)}>
               <Text style={styles.realEstateLoginText}>
