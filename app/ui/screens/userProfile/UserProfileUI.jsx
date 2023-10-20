@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   
       alignItems: 'center',
       //justifyContent: 'center',
-      paddingTop: 50,
+      
     },
 
     contenedorOpciones: {
