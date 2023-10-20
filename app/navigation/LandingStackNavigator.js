@@ -6,7 +6,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Home from '../ui/screens/home/Home';
 import Favourites from '../ui/screens/favourites/Favourites';
 import Bookings from '../ui/screens/bookings/Bookings';
-import UserProfile from '../ui/screens/userProfile/UserProfile'
+
+import UserProfile from '../ui/screens/userProfile/UserProfile';
+import HomeRS from '../ui/screens/homeRealState/homeRS';
+import UploadAsset from '../ui/screens/uploadAsset/uploadAsset';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -70,6 +74,7 @@ return (
       
 
       <Tab.Screen
+
         name={NavigatorConstant.NAVIGATOR.FAVORITES}
         component={Favourites}
         options={{

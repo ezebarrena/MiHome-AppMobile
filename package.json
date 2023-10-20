@@ -23,6 +23,7 @@
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "i18n-js": "^4.3.2",
+    "image-picker": "^0.3.1",
     "linear-gradient": "^1.0.6",
     "make-plural": "^7.3.0",
     "material-symbols": "^0.13.0",

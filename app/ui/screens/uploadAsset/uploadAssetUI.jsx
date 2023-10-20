@@ -8,13 +8,17 @@ import {
     Pressable,
     Image,
 } from "react-native";
-import ImagePicker from 'react-native-image-picker';
+
+//import ImagePicker from 'react-native-image-picker';
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
-import googleLogo from '../../../assets/images/varios/googleG.png'
 import { Dimensions } from "react-native";
+import TextInput from "../../../ui/components/inputs/CustomTextInput";
+import CustomTextInput from "../../../ui/components/inputs/CustomTextInput";
+import Button from "../../../ui/components/buttons/Button";
 
 
+/*
 const [text, onChangeText] = React.useState('');
 const [number, onChangeNumber] = React.useState('');
 
@@ -28,45 +32,28 @@ const MyImagePicker = () => {
         }
       });
     };
+    
 }
+*/
 
 export default function uploadAssetUI() {
-    const [fontsLoaded, fontError] = useFonts({
-        Poppins_700Bold_Italic,
-        Poppins_400Regular,
-    });
-
-    if (!fontsLoaded && !fontError) {
-        return null;
-    }
-
 
     return (
         <View style = {styles.ScrollView}>
-            
-            <Text style={textoTitulo}>{i18n.t("TEXTO")}</Text>  //subir a i18n
 
-            <View style ={styles.inputImagen}>
-                <Button title={i18n.t("Seleccionar imagen")} onPress={selectImage} />
-                {image && <Image source={image} />}
+            <View style={styles.contenedorHead}>
+                <Text style={styles.textoHead}>Publicar Propiedad</Text>
             </View>
-
-            <TextInput
-                style={styles.inputBox}
-                onChangeText={onChangeText}
-                value={text}
-                placeholder={i18n.t("TXT")}
-                keyboardType="text"
-            />
-
-            <TextInput
-                style={styles.inputBox}
-                onChangeText={onChangeNumber}
-                value={number}
-                placeholder={i18n.t("TXT")}
-                keyboardType="number"
-            />
-
+            
+            <View style={styles.dataEntry}> 
+                <Text style={styles.textoBody1}>Titulo</Text>
+                <CustomTextInput keyboardType={String}/>
+                <Text style={styles.textoBody1}>Descripcion</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>Extras</Text>
+                <CustomTextInput/>
+                <Button title={"Publicar"} titleColor={"white"}/>
+            </View>
 
         </View>
     );
@@ -87,13 +74,29 @@ export default function uploadAssetUI() {
             height: "100%",
         },
 
-        textoTitulo:{
-            fontSize: Dimensions.get('window').width*0.1,
-        },
-
         inputImagen:{
             width: 200, 
             height: 200 
-        }
+        },
+
+        textoHead: {
+            fontFamily: 'Poppins_700Bold',
+            color: 'black',
+            fontSize: Dimensions.get('window').width * 0.07,
+        },
+
+        contenedorHead: {
+            flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
+            alignItems: 'center',
+            marginLeft: "3%",
+            paddingTop: 30,
+          },
+        
+        textoBody1: {
+            fontFamily: "Poppins_500Medium", //cambiar a roboto
+            fontSize: Dimensions.get('window').width * 0.05,
+            marginLeft: "3%",
+          },
     },
+
 );
