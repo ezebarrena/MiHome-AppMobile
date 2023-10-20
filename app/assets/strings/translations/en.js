@@ -11,6 +11,14 @@ export default {
     main: 'Listed Real State',
     headVisualization: 'View'
   },
+  propiedadesEstados: {
+    todo: 'All',
+    venta: 'For Sale',
+    vendida: 'Sold',
+    alquiler: 'For Rent',
+    alquiladas: 'Rented',
+    pausada: 'Paused'
+  },
   "welcomeScreen": {
     "continue": "Continue",
     "googleButton": "Continue with Google",
