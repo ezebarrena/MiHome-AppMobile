@@ -27,8 +27,13 @@ export default function HomeRSUI() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: 'Apple', value: 'apple' },
-    { label: 'Banana', value: 'banana' }
+    { label: i18n.t('propiedadesEstados.todo'), value: i18n.t('propiedadesEstados.todo') },
+    { label: i18n.t('propiedadesEstados.venta'), value: '1' },
+    { label: i18n.t('propiedadesEstados.vendida'), value: '2' },
+    { label: i18n.t('propiedadesEstados.alquiler'), value: '3' },
+    { label: i18n.t('propiedadesEstados.alquiladas'), value: '4' },
+    { label: i18n.t('propiedadesEstados.pausada'), value: '5' },
+
   ]);
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -38,7 +43,7 @@ export default function HomeRSUI() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
+  const propiedades = [{ valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'VENTA' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }]
   return (
     <View style={styles.container}>
       <View style={styles.head}>
@@ -57,9 +62,19 @@ export default function HomeRSUI() {
             setItems={setItems}
             textStyle={{ fontFamily: "Poppins_500Medium" }}
             containerStyle={{ width: "50%" }}
+            placeholder={i18n.t('propiedadesEstados.todo')}
+            onSelectItem={(item) => { console.log(item) }}
           />
         </View>
       </View>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} >
+        {propiedades.map((propiedad, index) => (
+          <View key={index} style={{ height: '15%' }}>
+            <CardPropiedad valor={propiedad.valor} ubicacion={propiedad.ubicacion} ambientes={propiedad.ambientes} metros={propiedad.metros} tipo={propiedad.tipo} margen={0} />
+          </View>
+
+        ))}
+      </ScrollView>
     </View>
   )
 
@@ -112,5 +127,17 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     fontFamily: "Poppins_500Medium",
+  },
+  scrollView: {
+    flexGrow: 0,
+
+
+
+  },
+
+  scrollViewContent: {
+    alignItems: "center",
+
+
   },
 })
