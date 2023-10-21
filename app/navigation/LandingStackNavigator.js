@@ -3,12 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NavigatorConstant from './NavigatorConstant';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Home from '../ui/screens/home/Home';
-import Favourites from '../ui/screens/favourites/Favourites';
-import Bookings from '../ui/screens/bookings/Bookings';
+import Home from '../ui/screens/userHome/Home';
+import Favourites from '../ui/screens/userFavorites/Favourites';
+import Bookings from '../ui/screens/userBookings/Bookings';
 
 import UserProfile from '../ui/screens/userProfile/UserProfile';
-import HomeRS from '../ui/screens/homeRealState/homeRS';
+import HomeRS from '../ui/screens/realEstateHome/homeRS';
 import UploadAsset from '../ui/screens/uploadAsset/uploadAsset';
 
 

@@ -5,9 +5,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 //import UploadAsset from '../ui/screens/uploadAsset/uploadAsset';
-import Favourites from '../ui/screens/favourites/Favourites';
+import Favourites from '../ui/screens/userFavorites/Favourites';
 import REProfile from '../ui/screens/realEstateProfile/RealEstateProfile'
-import HomeRE from '../ui/screens/homeRealState/homeRS';
+import HomeRE from '../ui/screens/realEstateHome/homeRS';
 
 const Tab = createBottomTabNavigator();
 

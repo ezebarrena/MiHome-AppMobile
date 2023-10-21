@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import Welcome from '../ui/screens/landing/Welcome';
-import WelcomeRE from '../ui/screens/landingRealEstate/WelcomeRE';
+import Welcome from '../ui/screens/userWelcome/Welcome';
+import WelcomeRE from '../ui/screens/realEstateWelcome/WelcomeRE';
 import LandingStackNavigator from './LandingStackNavigator'
 import LandingStackRE from './LandingStackNavigatorRE'
 
