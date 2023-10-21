@@ -97,11 +97,7 @@ export default function HomeRSUI() {
       </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>
         {propiedades.map((propiedad, index) => (
-<<<<<<< HEAD:app/ui/screens/homeRealState/homeRSUI.jsx
           <View key={index} style={{ height: '5%', marginBottom: "55%" }}>
-=======
-          <View key={index} style={{ height: '5%', marginBottom: '50%' }}>
->>>>>>> 727a0203de9a450c5319745ccdccd02333565fb3:app/ui/screens/realEstateHome/homeRSUI.jsx
             <CardPropiedad valor={propiedad.valor} ubicacion={propiedad.ubicacion} ambientes={propiedad.ambientes} metros={propiedad.metros} tipo={propiedad.tipo} margen={0} />
           </View>
 
@@ -161,18 +157,14 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
   },
   scrollView: {
-<<<<<<< HEAD:app/ui/screens/homeRealState/homeRSUI.jsx
     flexGrow: 0,
     zIndex: -1,
-=======
-    flexGro2: 0,
-
->>>>>>> 727a0203de9a450c5319745ccdccd02333565fb3:app/ui/screens/realEstateHome/homeRSUI.jsx
 
   },
 
   scrollViewContent: {
     alignItems: "center",
+
 
   },
 })
