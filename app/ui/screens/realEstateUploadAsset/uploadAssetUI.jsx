@@ -18,44 +18,56 @@ import CustomTextInput from "../../../ui/components/inputs/CustomTextInput";
 import Button from "../../../ui/components/buttons/Button";
 
 
-/*
-const [text, onChangeText] = React.useState('');
-const [number, onChangeNumber] = React.useState('');
-
-const MyImagePicker = () => {
-    const [image, setImage] = useState(null);
-  
-    const selectImage = () => {
-      ImagePicker.showImagePicker({ title: 'Select Image' }, (response) => {
-        if (!response.didCancel && !response.error) {
-          setImage({ uri: response.uri });
-        }
-      });
-    };
-    
-}
-*/
 
 export default function uploadAssetUI() {
 
     return (
-        <View style = {styles.ScrollView}>
+        <ScrollView style = {styles.ScrollView}>
 
             <View style={styles.contenedorHead}>
                 <Text style={styles.textoHead}>Publicar Propiedad</Text>
             </View>
             
             <View style={styles.dataEntry}> 
-                <Text style={styles.textoBody1}>Titulo</Text>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
                 <CustomTextInput keyboardType={String}/>
-                <Text style={styles.textoBody1}>Descripcion</Text>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
                 <CustomTextInput/>
-                <Text style={styles.textoBody1}>Extras</Text>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.price')}</Text>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.coin')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bills')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.description')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.floors')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bath')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bedroom')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.garage')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mTotal')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mCover')} </Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.storage')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.antiquity')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.frontBack')}</Text>
+                <CustomTextInput/>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
                 <CustomTextInput/>
                 <Button title={"Publicar"} titleColor={"white"}/>
             </View>
 
-        </View>
+        </ScrollView>
     );
 }
     
@@ -94,7 +106,7 @@ export default function uploadAssetUI() {
         
         textoBody1: {
             fontFamily: "Poppins_500Medium", //cambiar a roboto
-            fontSize: Dimensions.get('window').width * 0.05,
+            fontSize: Dimensions.get('window').width * 0.045,
             marginLeft: "3%",
           },
     },
