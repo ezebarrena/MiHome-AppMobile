@@ -43,7 +43,7 @@ export default {
   },
   "realEstateUploadAsset": {
     "headTitle": "Publicar Propiedad",
-    "image": "Cargar imagenes",
+    "image": "Imagenes",
     "title": "Titulo de publicacion",
     "type": "Tipo de propiedad",
     "transaction": "Transaccion",

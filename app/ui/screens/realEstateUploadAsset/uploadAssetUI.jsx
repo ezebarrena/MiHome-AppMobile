@@ -7,9 +7,9 @@ import {
     Text,
     Pressable,
     Image,
+    Touchable,
+    TouchableOpacity,
 } from "react-native";
-
-//import ImagePicker from 'react-native-image-picker';
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
 import { Dimensions } from "react-native";
@@ -18,6 +18,20 @@ import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
 import {launchImageLibrary} from 'react-native-image-picker';
+
+
+const ImagePicker = () => {
+    let options = {
+        storageOptions: {
+            path: 'image',
+        },
+    };
+
+    launchImageLibrary(options, response => {
+        console.log(response);
+    })
+}
+
 
 const dataTypes = [
     {key:'1', value:'Casa'},
@@ -104,7 +118,14 @@ export default function uploadAssetUI() {
                 <CustomTextInput keyboardType={String}/>
 
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
-                <CustomTextInput keyboardType={String}/>
+                <TouchableOpacity style={styles.test}
+                    onPress={() => {
+                        ImagePicker();
+                    
+                    }}
+                >
+                    <Text style={styles.textoBody1}>Cargar Imagen</Text>
+                </TouchableOpacity>
 
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
                 <ChoiceInput data={dataTypes}/>
@@ -206,6 +227,17 @@ export default function uploadAssetUI() {
             fontSize: Dimensions.get('window').width * 0.045,
             marginLeft: "3%",
           },
+
+        test: {
+            height:50,
+            backgroundColor: 'blue',
+            marginTop:10,
+            marginBottom:10,
+            borderRadius: 10,
+            borderWidth: 1,
+            margin: 14,
+
+        }
         
 
     },
