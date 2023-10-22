@@ -60,6 +60,7 @@ export default {
     "antiquity": "Antiguedad de propiedad",
     "location": "Ubicacion",
     "frontBack": "Front or back",
+    "amenities": "Amenities",
   },
 };
 

@@ -79,6 +79,7 @@ export default {
     "antiquity": "Antiquity",
     "location": "Location",
     "frontBack": "Front or back",
+    "amenities": "Amenities",
   },
 };
 
