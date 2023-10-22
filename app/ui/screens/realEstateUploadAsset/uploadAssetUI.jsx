@@ -17,8 +17,18 @@ import CustomTextInput from "../../../ui/components/inputs/CustomTextInput";
 import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
+import {launchImageLibrary} from 'react-native-image-picker';
 
-
+const dataTypes = [
+    {key:'1', value:'Casa'},
+    {key:'2', value:'Departamento'},
+    {key:'3', value:'Casa quinta'},
+    {key:'4', value:'PH'},
+    {key:'5', value:'Galpon'},
+    {key:'5', value:'Oficina'},
+    {key:'5', value:'Comercion'},
+    {key:'5', value:'Terreno'},
+]
 const dataTransaccion = [
     {key:'1', value:'Venta'},
     {key:'2', value:'Alquiler'},
@@ -85,15 +95,19 @@ export default function uploadAssetUI() {
         <ScrollView style = {styles.ScrollView}>
 
             <View style={styles.contenedorHead}>
-                <Text style={styles.textoHead}>Publicar Propiedad</Text>
+                <Text style={styles.textoHead}>{i18n.t('realEstateUploadAsset.headTitle')}</Text>
             </View>
             
             <View style={styles.dataEntry}> 
+            
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
                 <CustomTextInput keyboardType={String}/>
 
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
+                <CustomTextInput keyboardType={String}/>
+
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
-                <CustomTextInput/>
+                <ChoiceInput data={dataTypes}/>
 
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}</Text>
                 <ChoiceInput data={dataTransaccion}/>

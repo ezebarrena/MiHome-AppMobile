@@ -61,6 +61,8 @@ export default {
     }
   },
   "realEstateUploadAsset": {
+    "headTitle": "Upload Estate",
+    "image": "Upload image",
     "title": "Post title",
     "type": "Asset Type",
     "transaction": "Transaction",
