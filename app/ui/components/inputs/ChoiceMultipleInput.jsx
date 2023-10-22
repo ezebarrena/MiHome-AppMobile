@@ -1,17 +1,18 @@
-import { SelectList } from 'react-native-dropdown-select-list'
+import { MultipleSelectList } from 'react-native-dropdown-select-list'
 import React from "react";
 import { TextInput, StyleSheet, Platform } from "react-native";
 
-const ChoiceInput = ({data}) => {
+const ChoiceMultipleInput = ({data}) => {
 
-  const [selected, setSelected] = React.useState("");
+  const [selected, setSelected] = React.useState([]);
   
   return(
-    <SelectList 
-        boxStyles={styles.input}
+    <MultipleSelectList 
         setSelected={(val) => setSelected(val)} 
+        boxStyles={styles.input}
         data={data} 
         save="value"
+        onSelect={() => alert(selected)} 
     />
   )
 
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
       margin: 14,
       overflow: "hidden",
       marginVertical: 10,
-      textAlign: "left", // Centra el texto del placeholder
+      textAlign: "center", // Centra el texto del placeholder
       ...Platform.select({
         ios: {
           shadowOffset: { width: 0, height: 2 },
@@ -41,4 +42,4 @@ const styles = StyleSheet.create({
   });
   
 
-export default ChoiceInput;
+export default ChoiceMultipleInput;

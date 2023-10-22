@@ -15,6 +15,7 @@ import Theme from "../../styles/Theme";
 import { Dimensions } from "react-native";
 import CustomTextInput from "../../../ui/components/inputs/CustomTextInput";
 import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
+import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
 
 
@@ -63,6 +64,20 @@ const dataGarages = [
     {key:'3', value:'3 vehiculos'},
     {key:'4', value:'4 o mas vehiculos'}
 ]
+const dataAmenities = [
+    {key:'1', value:'pileta'},
+    {key:'2', value:'pileta climatizada'},
+    {key:'3', value:'pileta techada'},
+    {key:'4', value:'jacuzzi'},
+    {key:'5', value:'Gimnasio'},
+    {key:'6', value:'Quincho'},
+    {key:'7', value:'Parrilla'},
+    {key:'8', value:'Terraza'},
+    {key:'9', value:'Jardin'},
+    {key:'10', value:'Seguridad privada'},
+    {key:'11', value:'Espacio para deportes'},
+]
+
 
 export default function uploadAssetUI() {
 
@@ -96,7 +111,7 @@ export default function uploadAssetUI() {
                 <CustomTextInput/>
 
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.amenities')}</Text>
-                <CustomTextInput/>
+                <ChoiceMultipleInput data={dataAmenities}/>
 
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}</Text>
                 <ChoiceInput data={dataRooms}/>
