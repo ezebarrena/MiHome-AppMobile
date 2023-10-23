@@ -60,6 +60,14 @@ export default {
       }
     }
   },
+
+  detallePropiedadInmobiliaria: {
+    modificarPublicacion:'Modify Publication',
+    pausar:'Pause',
+    eliminar :'Delete',
+    listar:'Unpause',
+},
+
   "realEstateUploadAsset": {
     "headTitle": "Upload Estate",
     "image": "Image",

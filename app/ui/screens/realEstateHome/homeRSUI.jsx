@@ -15,7 +15,7 @@ import * as SplashScreen from "expo-splash-screen";
 
 import i18n from "../../../assets/strings/I18n";
 import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
-
+import { useNavigation } from "@react-navigation/native";
 import CardPropiedad from "../../components/cardPropiedad/cardPropiedad.js"
 import Theme from "../../styles/Theme";
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -23,40 +23,28 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 //SplashScreen.preventAutoHideAsync();
 
-export default function HomeRSUI() {
+export default function HomeRSUI(listadoPropiedades) {
+  const navigation = useNavigation();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: i18n.t('propiedadesEstados.todo'), value: '0' },
-    { label: i18n.t('propiedadesEstados.venta'), value: '1' },
-    { label: i18n.t('propiedadesEstados.vendida'), value: '2' },
-    { label: i18n.t('propiedadesEstados.alquiler'), value: '3' },
-    { label: i18n.t('propiedadesEstados.alquiladas'), value: '4' },
-    { label: i18n.t('propiedadesEstados.pausada'), value: '5' },]);
-  const [itemSeleccionado, setItemSeleccionado] = useState()
+    { label: i18n.t('propiedadesEstados.todo'), value: 'todo' },
+    { label: i18n.t('propiedadesEstados.venta'), value: 'venta' },
+    { label: i18n.t('propiedadesEstados.vendida'), value: 'vendidas' },
+    { label: i18n.t('propiedadesEstados.alquiler'), value: 'alquiler' },
+    { label: i18n.t('propiedadesEstados.alquiladas'), value: 'alquiladas' },
+    { label: i18n.t('propiedadesEstados.pausada'), value: 'pausada' }
+  ]);
 
-  const [propiedades, setPropiedades] = useState([{ valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiladas' }])
+  const [propiedades, setPropiedades] = useState()
 
+  useEffect(() => {
 
-  /*useEffect(() => {
-    const listado = [{ valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiladas' }]
-    if (itemSeleccionado == undefined) {
-      setPropiedades(listado);
-    }
-    /*if (itemSeleccionado != undefined) {
-      const tipoDeseado = 'venta'; // Cambia 'venta' al tipo que desees buscar
+    const listado = [{ ids: 1, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { ids: 2, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { ids: 3, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiladas' }]
+    //console.log(listadoPropiedades.listadoPropiedades);
+    setPropiedades(listado);
 
-      const objetosFiltrados = listado.filter(objeto => objeto.tipo === tipoDeseado);
-      setPropiedades(objetosFiltrados)
-    }
-  })*/
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
+  }, [setPropiedades])
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -67,8 +55,23 @@ export default function HomeRSUI() {
   }
 
   const filtrarItems = (item) => {
-    setItemSeleccionado(item.value)
-    console.log(item.value);
+
+
+
+    const tipoDeseado = item.value; // Cambia 'venta' al tipo que desees buscar
+
+    const objetosFiltrados = listadoPropiedades.listadoPropiedades.filter(objeto => objeto.tipo === tipoDeseado);
+
+    setPropiedades(objetosFiltrados)
+
+    if (item.value == 'todo') {
+      setPropiedades(listadoPropiedades.listadoPropiedades)
+    }
+  }
+
+  const abrirDetalles = (identificacion) => {
+    console.log(identificacion, 't');
+    navigation.navigate("LandingStackRE")
   }
 
 
@@ -97,9 +100,9 @@ export default function HomeRSUI() {
       </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>
         {propiedades.map((propiedad, index) => (
-          <View key={index} style={{ height: '5%', marginBottom: "55%" }}>
+          <Pressable key={index} style={{ height: '5%', marginBottom: "55%", backgroundColor: 'red' }} onPress={() => abrirDetalles(propiedad.ids)}>
             <CardPropiedad valor={propiedad.valor} ubicacion={propiedad.ubicacion} ambientes={propiedad.ambientes} metros={propiedad.metros} tipo={propiedad.tipo} margen={0} />
-          </View>
+          </Pressable>
 
         ))}
       </ScrollView>
@@ -159,12 +162,11 @@ const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 0,
     zIndex: -1,
-
   },
 
   scrollViewContent: {
     alignItems: "center",
-
+    justifyContent: 'flex-start'
 
   },
 })

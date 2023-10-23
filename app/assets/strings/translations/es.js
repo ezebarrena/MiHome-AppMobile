@@ -16,7 +16,7 @@ export default {
     vendida: 'Vendida',
     alquiler: 'Alquiler',
     alquiladas: 'Alquilada',
-    pausada: 'Pausada'
+    pausada: 'Pausada',
   },
 
   "common": {
@@ -39,8 +39,15 @@ export default {
       "nameInput": "AGENCIA INMOBILIARIA",
       "cuitInput": "CUIT",
       "registerButton": "Crear cuenta",
-    }
+    },
   },
+  detallePropiedadInmobiliaria: {
+    modificarPublicacion:'Modify Publication',
+    pausar:'Pause',
+    eliminar :'Delete',
+    listar:'Unpause',
+},
+
   "realEstateUploadAsset": {
     "headTitle": "Publicar Propiedad",
     "image": "Imagenes",

@@ -8,8 +8,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Favourites from '../ui/screens/userFavorites/Favourites';
 import REProfile from '../ui/screens/realEstateProfile/RealEstateProfile'
 import HomeRE from '../ui/screens/realEstateHome/homeRS';
-import UploadAsset from '../ui/screens/realEstateUploadAsset/uploadAsset';
 
+import DetallePropiedadRS from '../ui/screens/realEstateDetallePropiedad/detallePropiedadRS';
+
+import UploadAsset from '../ui/screens/realEstateUploadAsset/uploadAsset';
 
 const Tab = createBottomTabNavigator();
 
@@ -63,7 +65,7 @@ const TabBarRE = () => {
 
       <Tab.Screen
         name={NavigatorConstant.NAVIGATOR.HOMERE}
-        component={HomeRE}
+        component={DetallePropiedadRS}
         options={{
         }}
       />
