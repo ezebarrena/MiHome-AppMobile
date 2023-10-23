@@ -7,7 +7,9 @@ import AgendaRE from '../ui/screens/realEstateAgenda/RealEstateAgenda'
 import Icon from 'react-native-vector-icons/Ionicons';
 import UploadAsset from '../ui/screens/realEstateUploadAsset/uploadAsset';
 
+
 const Tab = createMaterialBottomTabNavigator();
+
 
 
 
@@ -36,6 +38,7 @@ const LandingStackNavigatorRE = () => {
 
   return (
     <Tab.Navigator
+
         initialRouteName={NavigatorConstant.NAVIGATOR.HOMERE}
         activeColor= '#250094'
         inactiveColor= '#1C1B1F'
@@ -55,6 +58,7 @@ const LandingStackNavigatorRE = () => {
       <Tab.Screen name="Home" component={HomeRE} />
       <Tab.Screen name="Upload" component={Favourites} options={{tabBarLabel: false, }} />
       <Tab.Screen name="Agenda" component={AgendaRE} />
+
     </Tab.Navigator>
   );
 }

@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import Theme from "../../styles/Theme";
-
+import i18n from "../../../assets/strings/I18n";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import imagenTest from '../../../assets/images/various/imagenCasaTest.png'
 
@@ -27,15 +27,17 @@ export default function CardPropiedad({ valor, ubicacion, ambientes, metros, tip
         return null;
     }
 
+    let idioma = 'propiedadesEstados.' + tipo
+    let i18nIdioma = i18n.t(idioma).toLocaleUpperCase()
 
 
     return (
         <View>
 
-            <View style={{ width: 330, borderRadius: 10, elevation: 10, marginRight: margen }}>
+            <View style={{ width: 330, borderRadius: 10, elevation: 10, marginRight: margen}}>
                 <View style={styles.indicador}>
                     <Text style={styles.textoIndicador}>
-                        {tipo}
+                        {i18nIdioma}
                     </Text>
                 </View>
                 <Image source={imagenTest} style={styles.imagenEstilo} />
