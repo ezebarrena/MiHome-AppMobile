@@ -5,10 +5,10 @@ export const ButtonWithIcon = ({ title, titleColor, icon, backgroundColor, onPre
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.button, { backgroundColor: backgroundColor || '#512F7B' }]}>
-        <Text style={[styles.buttonText, { color: titleColor ? titleColor : 'white' }]}>{title}</Text>
         <View style={styles.iconContainer}>
           <Image source={icon} style={styles.icon} resizeMode="contain" />
         </View>
+        <Text style={[styles.buttonText, { color: titleColor ? titleColor : 'white' }]}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     width: '15%',
     aspectRatio: 1,
-    marginLeft: 10,
+    marginRight: 10,
   },
   icon: {
     flex: 1,

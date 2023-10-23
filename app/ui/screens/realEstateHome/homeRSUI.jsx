@@ -4,19 +4,18 @@ import {
   StyleSheet,
   View,
   Text,
-  Pressable,
-  ScrollView,
   Dimensions,
   Image,
+  FlatList,
+
 
 } from "react-native";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
-import * as SplashScreen from "expo-splash-screen";
 
 import i18n from "../../../assets/strings/I18n";
 import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
 
-import CardPropiedad from "../../components/cardPropiedad/cardPropiedad.js"
+import CardPropiedad from "../../components/cardPropiedad/cardPropiedad";
 import Theme from "../../styles/Theme";
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -43,7 +42,7 @@ export default function HomeRSUI() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-  const propiedades = [{ valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'VENTA' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }]
+  const propiedades = [{ id:'1', valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'VENTA' }, { id:'2', valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { id:'3', valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }]
   return (
     <View style={styles.container}>
       <View style={styles.head}>
@@ -67,14 +66,18 @@ export default function HomeRSUI() {
           />
         </View>
       </View>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} >
-        {propiedades.map((propiedad, index) => (
-          <View key={index} style={{ height: '5%', marginBottom: '50%' }}>
-            <CardPropiedad valor={propiedad.valor} ubicacion={propiedad.ubicacion} ambientes={propiedad.ambientes} metros={propiedad.metros} tipo={propiedad.tipo} margen={0} />
-          </View>
-
-        ))}
-      </ScrollView>
+      <View style={styles.cardsContainer}>
+      <FlatList
+          data={propiedades}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <CardPropiedad valor={item.valor} ubicacion={item.ubicacion} ambientes={item.ambientes} metros={item.metros} margen={item.margen} tipo={item.tipo} onPress={() => { console.log("hola") }} />}
+          contentContainerStyle={{ 
+            alignItems: "center",
+            flexGrow: 1,
+           }}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     </View>
   )
 
@@ -82,7 +85,6 @@ export default function HomeRSUI() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
   },
   head: {
     width: "100%",
@@ -92,24 +94,20 @@ const styles = StyleSheet.create({
     height: "25%",
     borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
     borderBottomRightRadius: 15,
-    marginBottom: 30,
   },
   textoHead: {
     fontFamily: 'Poppins_700Bold',
     color: 'white',
     fontSize: Dimensions.get('window').width * 0.07,
-
   },
   imagenHead: {
     resizeMode: 'contain',
     height: "120%"
-
   },
   contenedorHead: {
     flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
     alignItems: 'center',
     marginLeft: "3%",
-
   },
   contenedorHead2: {
     marginTop: '5%',
@@ -122,20 +120,19 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get('window').width * 0.045,
-
-
   },
   dropdown: {
     fontFamily: "Poppins_500Medium",
   },
   scrollView: {
     flexGro2: 0,
-
-
   },
-
   scrollViewContent: {
     alignItems: "center",
-
+  },
+  cardsContainer: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
   },
 })
