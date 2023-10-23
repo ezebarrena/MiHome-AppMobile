@@ -103,7 +103,7 @@ const dataAmenities = [
 ]
 
 
-export default function uploadAssetUI() {
+export default function UploadAssetUI() {
 
     return (
         <ScrollView style = {styles.ScrollView}>
@@ -115,9 +115,9 @@ export default function uploadAssetUI() {
             <View style={styles.dataEntry}> 
             
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
-                <CustomTextInput keyboardType={String}/>
+                <CustomTextInput/>
 
-                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
+                <Text style={styles.textoBody2}>{i18n.t('realEstateUploadAsset.image')}</Text>
                 <TouchableOpacity style={styles.test}
                     onPress={() => {
                         ImagePicker();
@@ -228,9 +228,17 @@ export default function uploadAssetUI() {
             marginLeft: "3%",
           },
 
+        textoBody2: {
+            fontFamily: "Poppins_500Medium", //cambiar a roboto
+            color: 'white',
+            textAlign: 'center',
+            fontSize: Dimensions.get('window').width * 0.045,
+            marginLeft: "3%",
+        },
+
         test: {
             height:50,
-            backgroundColor: 'blue',
+            backgroundColor: Theme.colors.PRIMARY,
             marginTop:10,
             marginBottom:10,
             borderRadius: 10,

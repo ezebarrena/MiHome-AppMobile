@@ -40,7 +40,7 @@ const TabBar = () => {
         iconName = 'heart';
         break;
       case 'BOOKINGS':
-        iconName = 'receipt-long';
+        iconName = 'receipt';
         break;
       default:
         iconName = 'home';

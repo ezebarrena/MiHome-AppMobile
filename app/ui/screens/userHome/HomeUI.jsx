@@ -19,7 +19,7 @@ import * as SplashScreen from "expo-splash-screen";
 import i18n from "../../../assets/strings/I18n";
 import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
 
-import CardPropiedad from "../../components/cardPropiedad/cardPropiedad";
+import CardPropiedad from "../../components/cards/cardPropiedad";
 import Theme from "../../styles/Theme";
 
 //SplashScreen.preventAutoHideAsync();

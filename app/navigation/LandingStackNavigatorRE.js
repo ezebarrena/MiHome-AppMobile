@@ -23,7 +23,7 @@ const LandingStackNavigatorRE = () => {
           case 'Home':
             iconName = 'home';
             break;
-          case 'Upload':
+          case 'Publicar':
             iconName = 'add-circle-outline';
             break;
           case 'Agenda':
@@ -56,7 +56,7 @@ const LandingStackNavigatorRE = () => {
         
         >
       <Tab.Screen name="Home" component={HomeRE} />
-      <Tab.Screen name="Upload" component={Favourites} options={{tabBarLabel: false, }} />
+      <Tab.Screen name="Publicar" component={UploadAsset}  />
       <Tab.Screen name="Agenda" component={AgendaRE} />
 
     </Tab.Navigator>

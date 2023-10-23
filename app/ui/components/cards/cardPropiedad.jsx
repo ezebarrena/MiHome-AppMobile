@@ -2,9 +2,17 @@ import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import Theme from "../../styles/Theme";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
-import imagenTest from '../../../assets/images/various/imagenCasaTest.png';
+import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
+import i18n from "../../../assets/strings/I18n";
 
-export default function CardPropiedad({ valor, ubicacion, ambientes, metros, tipo, onPress }) {
+export default function CardPropiedad({
+  valor,
+  ubicacion,
+  ambientes,
+  metros,
+  tipo,
+  onPress,
+}) {
   const [fontsLoaded, fontError] = useFonts({
     Poppins_400Regular,
   });
@@ -12,13 +20,14 @@ export default function CardPropiedad({ valor, ubicacion, ambientes, metros, tip
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
+  let idioma = "propiedadesEstados." + tipo;
+  let i18nIdioma = i18n.t(idioma).toLocaleUpperCase();
   return (
     <TouchableOpacity onPress={onPress} style={styles.cardContainer}>
       <View style={styles.imageContainer}>
         <Image source={imagenTest} style={styles.propertyImage} />
         <View style={styles.statusIndicator}>
-          <Text style={styles.statusIndicatorText}>{tipo}</Text>
+          <Text style={styles.statusIndicatorText}> {i18nIdioma}</Text>
         </View>
       </View>
       <View style={styles.dataContainer}>
@@ -42,19 +51,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: Theme.colors.FONDOCARD,
     marginVertical: 5,
+    marginHorizontal: 5,
   },
   imageContainer: {
     flex: 2,
   },
   propertyImage: {
-    resizeMode: 'cover',
+    resizeMode: "cover",
     width: "100%",
-    height: '100%',
+    height: "100%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
   statusIndicator: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     zIndex: 1,
@@ -67,19 +77,19 @@ const styles = StyleSheet.create({
     color: "white",
     paddingVertical: 5,
     paddingHorizontal: 10,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
   },
   dataContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingHorizontal: 10,
   },
   text: {
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
     fontSize: 16,
   },
 });

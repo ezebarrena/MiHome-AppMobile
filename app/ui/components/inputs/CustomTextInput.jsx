@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 10,
     borderWidth: 1,
-    marginVertical: 14,
+    margin: 14,
     overflow: "hidden",
     marginVertical: 10,
     textAlign: "center", // Centra el texto del placeholder

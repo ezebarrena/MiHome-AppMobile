@@ -15,7 +15,7 @@ import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts
 import i18n from "../../../assets/strings/I18n";
 import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
 
-import CardPropiedad from "../../components/cardPropiedad/cardPropiedad";
+import CardPropiedad from "../../components/cards/cardPropiedad";
 import { useNavigation } from "@react-navigation/native";
 
 import Theme from "../../styles/Theme";
@@ -41,7 +41,7 @@ export default function HomeRSUI(listadoPropiedades) {
 
   useEffect(() => {
 
-    const listado = [{ ids: 1, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { ids: 2, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { ids: 3, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiladas' }]
+    const listado = [{ id: 1, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { id: 2, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { id: 3, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiladas' }]
     //console.log(listadoPropiedades.listadoPropiedades);
     setPropiedades(listado);
 
