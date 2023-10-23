@@ -31,24 +31,25 @@ export default function WelcomeReUI() {
         style={styles.gradient}
       >
         <ImageBackground source={mainBackground} resizeMode="cover" style={styles.imageBackground}>
-          <Text style={styles.appName}>{i18n.t("common.appName")}</Text>
+          <View style={styles.contentContainer}>
+            <Text style={styles.appName}>{i18n.t("common.appName")}</Text>
+            <View style={styles.loginContainer}>
+              <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.emailInput')} />
+              <CustomTextInput secureTextEntry={true} placeholder={i18n.t('realEstateWelcomeScreen.passwordInput')} />
 
-          <View style={styles.containerLogin}>
-            <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.emailInput')} />
-            <CustomTextInput secureTextEntry={true} placeholder={i18n.t('realEstateWelcomeScreen.passwordInput')} />
+              <Button title={i18n.t('realEstateWelcomeScreen.loginButton')} titleColor='#E36565' onPress={() => navigation.navigate("LandingStackRE")}/>
 
-            <Button title={i18n.t('realEstateWelcomeScreen.loginButton')} titleColor='#E36565' onPress={() => navigation.navigate("LandingStackRE")}/>
-
-            <Pressable onPress={() => setShowRegistrationModal(true)}>
-              <Text style={styles.realEstateLoginText}>
-                {i18n.t('realEstateWelcomeScreen.registerLink')}
-              </Text>
-            </Pressable>
-            <Pressable onPress={() => setShowCannotLoginModal(true)}>
-              <Text style={styles.realEstateLoginText}>
-                {i18n.t('realEstateWelcomeScreen.cannotLogin')}
-              </Text>
-            </Pressable>
+              <Pressable onPress={() => setShowRegistrationModal(true)}>
+                <Text style={styles.signUpText}>
+                  {i18n.t('realEstateWelcomeScreen.registerLink')}
+                </Text>
+              </Pressable>
+              <Pressable onPress={() => setShowCannotLoginModal(true)}>
+                <Text style={styles.cantLoginText}>
+                  {i18n.t('realEstateWelcomeScreen.cannotLogin')}
+                </Text>
+              </Pressable>
+            </View>
           </View>
         </ImageBackground>
       </LinearGradient>
@@ -76,18 +77,30 @@ const styles = StyleSheet.create({
   imageBackground: {
     flex: 1,
   },
+  contentContainer: {
+    flex: 1,
+    padding: 20,
+  },
   appName: {
+    flex: 1,
+    marginTop: 50,
     textAlign: "center",
     fontFamily: "Poppins_700Bold_Italic",
     fontSize: 50,
     color: "white",
   },
-  containerLogin: {
+  loginContainer: {
+    flex: 2,
     justifyContent: "center",
   },
-  realEstateLoginText: {
+  signUpText: {
     color: "white",
     textAlign: "center",
-    marginTop: 20,
+    marginTop: 14,
+  },
+  cantLoginText: {
+    color: "white",
+    textAlign: "center",
+    marginTop: 14,
   },
 });
