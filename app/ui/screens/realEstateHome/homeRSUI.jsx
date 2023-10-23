@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 
   StyleSheet,
@@ -27,14 +27,36 @@ export default function HomeRSUI() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: i18n.t('propiedadesEstados.todo'), value: i18n.t('propiedadesEstados.todo') },
+    { label: i18n.t('propiedadesEstados.todo'), value: '0' },
     { label: i18n.t('propiedadesEstados.venta'), value: '1' },
     { label: i18n.t('propiedadesEstados.vendida'), value: '2' },
     { label: i18n.t('propiedadesEstados.alquiler'), value: '3' },
     { label: i18n.t('propiedadesEstados.alquiladas'), value: '4' },
-    { label: i18n.t('propiedadesEstados.pausada'), value: '5' },
+    { label: i18n.t('propiedadesEstados.pausada'), value: '5' },]);
+  const [itemSeleccionado, setItemSeleccionado] = useState()
 
-  ]);
+  const [propiedades, setPropiedades] = useState([{ valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiladas' }])
+
+
+  /*useEffect(() => {
+    const listado = [{ valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiladas' }]
+    if (itemSeleccionado == undefined) {
+      setPropiedades(listado);
+    }
+    /*if (itemSeleccionado != undefined) {
+      const tipoDeseado = 'venta'; // Cambia 'venta' al tipo que desees buscar
+
+      const objetosFiltrados = listado.filter(objeto => objeto.tipo === tipoDeseado);
+      setPropiedades(objetosFiltrados)
+    }
+  })*/
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -43,7 +65,13 @@ export default function HomeRSUI() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-  const propiedades = [{ valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'VENTA' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }]
+
+  const filtrarItems = (item) => {
+    setItemSeleccionado(item.value)
+    console.log(item.value);
+  }
+
+
   return (
     <View style={styles.container}>
       <View style={styles.head}>
@@ -63,13 +91,13 @@ export default function HomeRSUI() {
             textStyle={{ fontFamily: "Poppins_500Medium" }}
             containerStyle={{ width: "50%" }}
             placeholder={i18n.t('propiedadesEstados.todo')}
-            onSelectItem={(item) => { console.log(item) }}
+            onSelectItem={(items) => filtrarItems(items)}
           />
         </View>
       </View>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} >
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>
         {propiedades.map((propiedad, index) => (
-          <View key={index} style={{ height: '5%', marginBottom: '50%' }}>
+          <View key={index} style={{ height: '5%', marginBottom: "55%" }}>
             <CardPropiedad valor={propiedad.valor} ubicacion={propiedad.ubicacion} ambientes={propiedad.ambientes} metros={propiedad.metros} tipo={propiedad.tipo} margen={0} />
           </View>
 
@@ -129,13 +157,14 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
   },
   scrollView: {
-    flexGro2: 0,
-
+    flexGrow: 0,
+    zIndex: -1,
 
   },
 
   scrollViewContent: {
     alignItems: "center",
+
 
   },
 })
