@@ -9,7 +9,6 @@ import Bookings from '../ui/screens/userBookings/Bookings';
 
 import UserProfile from '../ui/screens/userProfile/UserProfile';
 import HomeRS from '../ui/screens/realEstateHome/homeRS';
-import UploadAsset from '../ui/screens/realEstateUploadAsset/uploadAsset';
 
 
 const Tab = createBottomTabNavigator();
