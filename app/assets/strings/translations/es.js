@@ -41,6 +41,12 @@ export default {
       "registerButton": "Crear cuenta",
     }
   },
+  detallePropiedadInmobiliaria: {
+    modificarPublicacion:'Modify Publication',
+    pausar:'Pause',
+    eliminar :'Delete',
+    listar:'Unpause',
+  },
 };
 
 

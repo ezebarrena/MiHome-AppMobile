@@ -30,10 +30,11 @@ export default function CardPropiedad({ valor, ubicacion, ambientes, metros, tip
     let idioma = 'propiedadesEstados.' + tipo
     let i18nIdioma = i18n.t(idioma).toLocaleUpperCase()
 
+
     return (
         <View>
 
-            <View style={{ width: 330, borderRadius: 10, elevation: 10, marginRight: margen }}>
+            <View style={{ width: 330, borderRadius: 10, elevation: 10, marginRight: margen}}>
                 <View style={styles.indicador}>
                     <Text style={styles.textoIndicador}>
                         {i18nIdioma}
