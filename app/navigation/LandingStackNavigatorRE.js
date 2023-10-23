@@ -1,96 +1,65 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import NavigatorConstant from './NavigatorConstant';
-import Icon from 'react-native-vector-icons/Ionicons';
-
-
-//import UploadAsset from '../ui/screens/uploadAsset/uploadAsset';
 import Favourites from '../ui/screens/userFavorites/Favourites';
-import REProfile from '../ui/screens/realEstateProfile/RealEstateProfile'
 import HomeRE from '../ui/screens/realEstateHome/homeRS';
-
-import DetallePropiedadRS from '../ui/screens/realEstateDetallePropiedad/detallePropiedadRS';
-
+import AgendaRE from '../ui/screens/realEstateAgenda/RealEstateAgenda'
+import Icon from 'react-native-vector-icons/Ionicons';
 import UploadAsset from '../ui/screens/realEstateUploadAsset/uploadAsset';
 
-const Tab = createBottomTabNavigator();
 
-const tabOptions = {
-  tabBarStyle: {
-    backgroundColor: '#ECE6F0',
-  },
-  tabBarActiveTintColor: '#250094',
-  tabBarInactiveTintColor: '#1C1B1F',
-  labelStyle: { paddingBottom: 10, fontSize: 10 },
-  style: { padding: 10, height: 70 }
-}
+const Tab = createMaterialBottomTabNavigator();
 
-const TabBarRE = () => {
-  const getTabIcon = (routeName) => {
-    let iconName;
 
-    switch (routeName) {
-      
-      case 'Home':
-        iconName = 'home';
-        break;
-      case 'FAVORITES':
-        iconName = 'add-circle';
-        break;
-      case 'REPROFILE':
-        iconName = 'calendar';
-        break;
-      default:
-        iconName = 'home';
-    }
 
-    return iconName;
-  };
 
+const LandingStackNavigatorRE = () => {
+
+    const getTabIcon = (routeName) => {
+        let iconName;
+    
+        switch (routeName) {
+          
+          case 'Home':
+            iconName = 'home';
+            break;
+          case 'Publicar':
+            iconName = 'add-circle-outline';
+            break;
+          case 'Agenda':
+            iconName = 'calendar';
+            break;
+          default:
+            iconName = 'home';
+        }
+    
+        return iconName;
+      };
 
   return (
-
     <Tab.Navigator
-      initialRouteName={NavigatorConstant.NAVIGATOR.HOMERE}
-      screenOptions={({ route }) => ({
 
-        tabBarIcon: ({ color, size }) => {
-          const iconName = getTabIcon(route.name);
-          return <Icon name={iconName} size={size} color={color} />;
-        },
-        headerShown: false,
-        ...tabOptions,
-      })}
-    >
-
-      <Tab.Screen
-        name={NavigatorConstant.NAVIGATOR.HOMERE}
-        component={DetallePropiedadRS}
-        options={{
-        }}
-      />
-
-
-
-      <Tab.Screen
-        name={NavigatorConstant.NAVIGATOR.FAVORITES}
-        component={UploadAsset}
-        options={{
-          
-        }}
-      />
-
-
-      <Tab.Screen
-        name={NavigatorConstant.NAVIGATOR.REPROFILE}
-        component={REProfile}
-        options={{
-        }}
-      />
+        initialRouteName={NavigatorConstant.NAVIGATOR.HOMERE}
+        activeColor= '#250094'
+        inactiveColor= '#1C1B1F'
+        backgroundColor = '#ECE6F0'
+        
+        //shifting= {true}
+        //labeled = {false}
+        barStyle={{ backgroundColor: '#ECE6F0', height: 70 }}
+        screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+                const iconName = getTabIcon(route.name);
+                return <Icon name={iconName} size={24} color={color} />;
+            },
+        })}
+        
+        >
+      <Tab.Screen name="Home" component={HomeRE} />
+      <Tab.Screen name="Publicar" component={UploadAsset}  />
+      <Tab.Screen name="Agenda" component={AgendaRE} />
 
     </Tab.Navigator>
-
-  )
+  );
 }
-
-export default TabBarRE;
+export default LandingStackNavigatorRE;
