@@ -21,7 +21,8 @@ const tabOptions = {
     tabBarActiveTintColor: '#250094',
     tabBarInactiveTintColor: '#1C1B1F',
     labelStyle: { paddingBottom: 10, fontSize: 10 },
-    style: { padding: 10, height: 70}
+    style: { padding: 10, height: 70},
+
 }
 
 const TabBar = () => {

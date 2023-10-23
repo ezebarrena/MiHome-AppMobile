@@ -4,7 +4,8 @@ const Theme = {
       SECONDARY: '#8361A4',
       TERCIARIO: '#E36565',
       FONDOS: '#FAFAFA',
-      FONDOCARD: '#ECE6F0'
+      FONDOCARD: '#ECE6F0',
+      BTNELIMINAR:'#F27474'
     },
     fonts: {
       SMALL: 14,
