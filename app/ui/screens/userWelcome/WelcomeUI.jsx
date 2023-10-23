@@ -27,23 +27,24 @@ export default function WelcomeUI() {
         style={styles.gradient}
       >
         <ImageBackground source={mainBackground} resizeMode="cover" style={styles.imageBackground}>
-          <Text style={styles.appName}>{i18n.t("common.appName")}</Text>
+          <View style={styles.contentContainer}>
+            <Text style={styles.appName}>{i18n.t("common.appName")}</Text>
+            <View style={styles.loginContainer}>
+              <ButtonWithIcon
+                title={i18n.t("welcomeScreen.googleButton")}
+                onPress={() => navigation.navigate("LandingStack")}
+                backgroundColor={Theme.colors.PRIMARY}
+                icon={require("../../../assets/images/GoogleIcon.png")}
+              />
 
-          <View style={styles.containerLogin}>
-            <ButtonWithIcon
-              title={i18n.t("welcomeScreen.googleButton")}
-              onPress={() => navigation.navigate("LandingStack")}
-              backgroundColor={Theme.colors.PRIMARY}
-              icon={require("../../../assets/images/GoogleIcon.png")}
-            />
-
-            <Pressable
-              onPress={() => navigation.navigate("WelcomeRE")}
-            >
-              <Text style={styles.realEstateLoginText}>
-                {i18n.t("welcomeScreen.startAsRealEstate")}
-              </Text>
-            </Pressable>
+              <Pressable
+                onPress={() => navigation.navigate("WelcomeRE")}
+              >
+                <Text style={styles.realEstateLoginText}>
+                  {i18n.t("welcomeScreen.startAsRealEstate")}
+                </Text>
+              </Pressable>
+            </View>
           </View>
         </ImageBackground>
       </LinearGradient>
@@ -61,20 +62,25 @@ const styles = StyleSheet.create({
   imageBackground: {
     flex: 1,
   },
+  contentContainer: {
+    flex: 1,
+    padding: 20,
+  },
   appName: {
+    flex: 1,
+    marginTop: 50,
     textAlign: "center",
     fontFamily: "Poppins_700Bold_Italic",
     fontSize: 50,
     color: "white",
   },
-  containerLogin: {
+  loginContainer: {
+    flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 20,
   },
   realEstateLoginText: {
     color: "white",
     textAlign: "center",
-    marginTop: 20,
+    marginTop: 14,
   },
 });

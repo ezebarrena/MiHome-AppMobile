@@ -12,7 +12,7 @@ import { useFonts, Poppins_700Bold_Italic, Poppins_400Regular } from "@expo-goog
 
 import i18n from "../../../assets/strings/I18n";
 
-import Boton from "../../components/botonesPerfil/BotonMenuPerfil"
+import Boton from "../../components/buttons/BotonMenuPerfil";
 import favorito from "../../../assets/images/icons/favorite.png"
 import ruedita from "../../../assets/images/icons/settings.png"
 import billetera from "../../../assets/images/icons/account_balance_wallet.png"

@@ -10,7 +10,7 @@ import {
 
 import { useFonts, Poppins_700Bold_Italic, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import i18n from "../../../assets/strings/I18n";
-import Boton from "../../components/botonesPerfil/BotonMenuPerfil"
+import Boton from "../../components/buttons/BotonMenuPerfil";
 import home from "../../../assets/images/icons/home.png"
 import ruedita from "../../../assets/images/icons/settings.png"
 import calendar from "../../../assets/images/icons/calendar_month.png"
