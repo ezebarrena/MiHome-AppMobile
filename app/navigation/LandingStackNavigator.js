@@ -10,6 +10,9 @@ import Bookings from '../ui/screens/userBookings/Bookings';
 import UserProfile from '../ui/screens/userProfile/UserProfile';
 import HomeRS from '../ui/screens/realEstateHome/homeRS';
 
+import UploadAsset from '../ui/screens/realEstateUploadAsset/uploadAsset';
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +23,8 @@ const tabOptions = {
     tabBarActiveTintColor: '#250094',
     tabBarInactiveTintColor: '#1C1B1F',
     labelStyle: { paddingBottom: 10, fontSize: 10 },
-    style: { padding: 10, height: 70}
+    style: { padding: 10, height: 70},
+
 }
 
 const TabBar = () => {
