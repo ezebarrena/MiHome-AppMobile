@@ -9,8 +9,11 @@ export default function HomeRS() {
         const listado = [{ valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiladas' }]
         setPropiedades(listado);
 
-    }, [setPropiedades])
+    }, [])
+
+    console.log(propiedades, 'home js');
     return (
+
         <HomeRSUI listadoPropiedades={propiedades} />
     )
 }

@@ -8,6 +8,7 @@ import {
     ScrollView,
     Dimensions,
     Image,
+    TouchableOpacity,
 
 
 
@@ -36,35 +37,37 @@ export default function DetallePropiedadRSUI(mostrarBotones) {
     }
 
     const navModificar = () => {
-
+        console.log('mod');
     }
 
     const pausar = () => {
-
+        console.log('pausar');
     }
 
     const eliminar = () => {
-
+        console.log('eliminar');
     }
     return (
         <View style={styles.container}>
             <View style={styles.divImagen}>
                 <Image source={imagenTest} style={styles.imagen} />
             </View>
-            <View style={styles.botonera}>
-                <Pressable onPress={() => navModificar()} style={[styles.boton, styles.botonMod]}>
-                    <Text style={styles.botonTexto}>{i18n.t("detallePropiedadInmobiliaria.modificarPublicacion")}</Text>
-                </Pressable>
+            {mostrarBotones.mostrarBotones ?
+                <View style={styles.botonera}>
+                    <TouchableOpacity onPress={() => navModificar()} style={[styles.boton, styles.botonMod]}>
+                        <Text style={styles.botonTexto}>{i18n.t("detallePropiedadInmobiliaria.modificarPublicacion")}</Text>
+                    </TouchableOpacity >
 
-                <Pressable onPress={() => pausar()} style={[styles.boton, styles.botonPausa]}>
-                    <Text style={styles.botonTexto}>{i18n.t("detallePropiedadInmobiliaria.pausar")}</Text>
-                </Pressable>
+                    <TouchableOpacity onPress={() => pausar()} style={[styles.boton, styles.botonPausa]}>
+                        <Text style={styles.botonTexto}>{i18n.t("detallePropiedadInmobiliaria.pausar")}</Text>
+                    </TouchableOpacity >
 
-                <Pressable onPress={() => eliminar()} style={[styles.boton, styles.botonEliminar]}>
-                    <Text style={[styles.botonTexto, styles.textoEliminar]}>{i18n.t("detallePropiedadInmobiliaria.eliminar")}</Text>
-                </Pressable>
+                    <TouchableOpacity onPress={() => eliminar()} style={[styles.boton, styles.botonEliminar]}>
+                        <Text style={[styles.botonTexto, styles.textoEliminar]}>{i18n.t("detallePropiedadInmobiliaria.eliminar")}</Text>
+                    </TouchableOpacity >
 
-            </View>
+                </View> : null}
+
         </View>
     )
 }
@@ -106,20 +109,20 @@ const styles = StyleSheet.create({
         fontSize: Dimensions.get('window').width * 0.038,
     },
 
-    botonMod:{
+    botonMod: {
         backgroundColor: Theme.colors.FONDOS
     },
 
-    botonPausa:{
+    botonPausa: {
         backgroundColor: Theme.colors.FONDOCARD
     },
-    botonEliminar:{
+    botonEliminar: {
         backgroundColor: Theme.colors.BTNELIMINAR
     },
 
-    textoEliminar:{
-        color:Theme.colors.FONDOS
+    textoEliminar: {
+        color: Theme.colors.FONDOS
     }
- 
+
 
 })

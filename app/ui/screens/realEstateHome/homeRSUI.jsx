@@ -38,10 +38,11 @@ export default function HomeRSUI(listadoPropiedades) {
 
   const [propiedades, setPropiedades] = useState()
 
+
   useEffect(() => {
 
     const listado = [{ ids: 1, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { ids: 2, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { ids: 3, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiladas' }]
-    //console.log(listadoPropiedades.listadoPropiedades);
+    console.log(listadoPropiedades.listadoPropiedades, 't');
     setPropiedades(listado);
 
   }, [setPropiedades])
