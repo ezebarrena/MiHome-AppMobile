@@ -60,5 +60,28 @@ export default {
       }
     }
   },
+  "realEstateUploadAsset": {
+    "headTitle": "Upload Estate",
+    "image": "Image",
+    "title": "Post title",
+    "type": "Asset Type",
+    "transaction": "Transaction",
+    "price": "Price",
+    "coin": "Select currency",
+    "bills": "Bills",
+    "description": "Asset description",
+    "rooms": "Total rooms",
+    "floors": "Total floors",
+    "bath": "Baths",
+    "bedroom": "Bedrooms",
+    "garage": "Garage",
+    "mTotal": "Total meters",
+    "mCover": "Meters built",
+    "storage": "Internal storage",
+    "antiquity": "Antiquity",
+    "location": "Location",
+    "frontBack": "Front or back",
+    "amenities": "Amenities",
+  },
 };
 
