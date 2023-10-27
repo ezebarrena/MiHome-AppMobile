@@ -32,12 +32,12 @@ export default function CardPropiedad({
       </View>
       <View style={styles.dataContainer}>
         <View style={styles.row}>
-          <Text style={styles.text}>{valor}</Text>
-          <Text style={styles.text}>{ambientes} ambientes</Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{valor}</Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{ambientes} ambientes</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.text}>{ubicacion}</Text>
-          <Text style={styles.text}>{metros} m2 totales</Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{ubicacion}</Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{metros} m2 totales</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -91,5 +91,6 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Poppins_400Regular",
     fontSize: 16,
+    maxWidth: '50%'
   },
 });

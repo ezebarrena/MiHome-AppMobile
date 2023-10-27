@@ -15,8 +15,9 @@ export default {
     venta: 'Venta',
     vendida: 'Vendida',
     alquiler: 'Alquiler',
-    alquiladas: 'Alquilada',
+    alquilada: 'Alquilada',
     pausada: 'Pausada',
+
   },
 
   "common": {
@@ -42,11 +43,23 @@ export default {
     },
   },
   detallePropiedadInmobiliaria: {
-    modificarPublicacion:'Modify Publication',
-    pausar:'Pause',
-    eliminar :'Delete',
-    listar:'Unpause',
-},
+    modificarPublicacion: 'Modificar Publicación',
+    pausar: 'Pausar',
+    eliminar: 'Eliminar',
+    listar: 'Listar',
+    estadoPropiedad: 'Estado Propiedad',
+    precioVenta: 'Precio de Venta',
+    alquiler: 'Alquiler Mensual',
+    expensas: 'Valor de Expensas',
+    noExpensas: 'No tiene expensas',
+    vendidoA: 'Vendido a',
+    alquiladoA: 'Alquilado a',
+    vendido: 'Importe Final',
+    fechaVenta: 'Vendido el',
+    alquilado: 'Alquilado Mensual',
+    alquiladoDesde: 'Alquilado Desde',
+    alquiladoHasta: 'Hasta'
+  },
 
   "realEstateUploadAsset": {
     "headTitle": "Publicar Propiedad",

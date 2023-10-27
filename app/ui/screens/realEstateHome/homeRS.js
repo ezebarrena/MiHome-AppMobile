@@ -6,12 +6,12 @@ import React, { useState, useEffect } from "react";
 export default function HomeRS() {
     const [propiedades, setPropiedades] = useState([])
     useEffect(() => {
-        const listado = [{ valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiladas' }]
+        const listado = [{ id: 1, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'venta' }, { id: 2, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquiler' }, { id: 3, valor: 'US$360.000', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquilada' }]
         setPropiedades(listado);
 
-    }, [])
+    }, [setPropiedades])
 
-    console.log(propiedades, 'home js');
+    //console.log(propiedades, 'home js');
     return (
 
         <HomeRSUI listadoPropiedades={propiedades} />
