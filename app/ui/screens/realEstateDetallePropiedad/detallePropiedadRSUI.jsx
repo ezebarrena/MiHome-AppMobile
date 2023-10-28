@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
+
+
   StyleSheet,
   View,
   Text,
@@ -7,6 +9,11 @@ import {
   ScrollView,
   Dimensions,
   Image,
+  TouchableOpacity,
+
+
+
+
 } from "react-native";
 import {
   useFonts,
@@ -20,10 +27,12 @@ import fotoPerfil from "../../../assets/images/icons/Rectangle.png";
 import Theme from "../../styles/Theme";
 
 import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
+import PanelDetalles from "../../components/componenteREDP/detalles";
 
-export default function DetallePropiedadRSUI(mostrarBotones) {
+export default function DetallePropiedadRSUI({ mostrarBotones, informacion }) {
   //console.log(mostrarBotones.mostrarBotones);
   //{mostrarBotones.mostrarBotones ? <Text>Bienvenidos, Usuario</Text> : null}
+
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -32,9 +41,12 @@ export default function DetallePropiedadRSUI(mostrarBotones) {
   if (!fontsLoaded && !fontError) {
     return null;
   }
+
   const navModificar = () => {
     console.log("mod");
+    console.log(informacion);
   };
+
 
   const pausar = () => {
     console.log("pausar");
@@ -43,12 +55,13 @@ export default function DetallePropiedadRSUI(mostrarBotones) {
   const eliminar = () => {
     console.log("eliminar");
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.divImagen}>
         <Image source={imagenTest} style={styles.imagen} />
       </View>
-      {mostrarBotones.mostrarBotones ? (
+      {mostrarBotones ? (
         <View style={styles.botonera}>
           <TouchableOpacity
             onPress={() => navModificar()}
@@ -76,8 +89,21 @@ export default function DetallePropiedadRSUI(mostrarBotones) {
               {i18n.t("detallePropiedadInmobiliaria.eliminar")}
             </Text>
           </TouchableOpacity>
+
         </View>
-      ) : null}
+      ) : <View style={styles.botonera}>
+        <TouchableOpacity
+          onPress={() => eliminar()}
+          style={[styles.boton, styles.botonEliminar]}
+        >
+          <Text style={[styles.botonTexto, styles.textoEliminar]}>
+            {i18n.t("detallePropiedadInmobiliaria.eliminar")}
+          </Text>
+        </TouchableOpacity>
+
+      </View>}
+      <PanelDetalles datosPropiedad={informacion} />
+
     </View>
   );
 }
@@ -85,6 +111,7 @@ export default function DetallePropiedadRSUI(mostrarBotones) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: '20%'
   },
   imagen: {
     width: "80%",
@@ -128,7 +155,22 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.BTNELIMINAR,
   },
 
-  textoEliminar: {
-    color: Theme.colors.FONDOS,
+
+  botonMod: {
+    backgroundColor: Theme.colors.FONDOS
   },
-});
+
+  botonPausa: {
+    backgroundColor: Theme.colors.FONDOCARD
+  },
+  botonEliminar: {
+    backgroundColor: Theme.colors.BTNELIMINAR
+  },
+
+  textoEliminar: {
+    color: Theme.colors.FONDOS
+  }
+
+
+})
+
