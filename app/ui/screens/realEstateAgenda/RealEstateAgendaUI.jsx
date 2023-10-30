@@ -6,7 +6,19 @@ const RealEstateAgendaUI = () => {
   // Estado para almacenar los datos de visitas
   const [items, setItems] = useState({});
 
-  // Datos ficticios de visitas
+  // Función para generar el objeto con todos los días del mes
+  const generateAllDays = (year, month) => {
+    const totalDays = new Date(year, month, 0).getDate();
+    const allDays = {};
+    for (let day = 1; day <= totalDays; day++) {
+      const formattedDay = day < 10 ? `0${day}` : day.toString();
+      const date = `${year}-${month < 10 ? `0${month}` : month}-${formattedDay}`;
+      allDays[date] = [];
+    }
+    return allDays;
+  };
+
+  // Función para generar visitas ficticias
   const generateVisits = () => {
     const visitData = [
       {
@@ -32,7 +44,7 @@ const RealEstateAgendaUI = () => {
       },
     ];
 
-    const visits = { ...items }; // Copia profunda del estado actual
+    const visits = {};
     visitData.forEach((visit, index) => {
       const date = visit.date;
       if (!visits[date]) {
@@ -48,12 +60,6 @@ const RealEstateAgendaUI = () => {
     });
     return visits;
   };
-
-  useEffect(() => {
-    // Obtener datos de visitas (simulados) y actualizar el estado
-    const visits = generateVisits();
-    setItems(visits);
-  }, []);
 
   LocaleConfig.locales['es'] = {
     monthNames: [
@@ -77,22 +83,10 @@ const RealEstateAgendaUI = () => {
   };
   LocaleConfig.defaultLocale = 'es';
 
-  // Crear un objeto con todos los días del mes actual
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth() + 1; // Los meses en JavaScript se indexan a partir de 0
-  const totalDays = new Date(currentYear, currentMonth, 0).getDate();
-  const allDays = {};
-  for (let day = 1; day <= totalDays; day++) {
-    const formattedDay = day < 10 ? `0${day}` : day.toString();
-    const date = `${currentYear}-${currentMonth < 10 ? `0${currentMonth}` : currentMonth}-${formattedDay}`;
-    allDays[date] = [];
-  }
-
   return (
     <View style={{ flex: 1 }}>
       <Agenda
-        items={{ ...allDays, ...items }}
+        items={items}
         // Establecer una fecha inicial predeterminada
         selected={'2023-10-24'}
         // Vista de día inicial
@@ -110,6 +104,21 @@ const RealEstateAgendaUI = () => {
             <Text>No hay visitas programadas para este día</Text>
           </View>
         )}
+        loadItemsForMonth={(month) => {
+          // Lógica para cargar elementos para el mes actual
+          const year = month.year;
+          const currentMonth = month.month;
+          const newAllDays = generateAllDays(year, currentMonth);
+
+          // Lógica para cargar visitas ficticias
+          const visits = generateVisits();
+          
+          // Fusionar el nuevo objeto con el estado actual de items
+          const updatedItems = { ...items, ...newAllDays, ...visits };
+          
+          // Actualizar el estado de items con el nuevo objeto fusionado
+          setItems(updatedItems);
+        }}
       />
     </View>
   );
