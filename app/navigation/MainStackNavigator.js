@@ -4,6 +4,7 @@ import WelcomeRE from '../ui/screens/realEstateWelcome/WelcomeRE';
 import LandingStackNavigator from './LandingStackNavigator'
 import LandingStackRE from './LandingStackNavigatorRE'
 import DetallePropiedadRS from '../ui/screens/realEstateDetallePropiedad/detallePropiedadRS';
+import i18n from "../assets/strings/I18n";
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,7 @@ export function MainStackNavigator() {
       <Stack.Group>
         <Stack.Screen name="WelcomeRE" component={WelcomeRE} />
         <Stack.Screen name="LandingStackRE" component={LandingStackRE} options={{ headerShown: false }} />
-        <Stack.Screen name="DetallesPropiedadRE" component={DetallePropiedadRS} />
+        <Stack.Screen name="DetallesPropiedadRE" component={DetallePropiedadRS} options={{title:i18n.t("detallePropiedadInmobiliaria.titulo")}} />
       </Stack.Group>
 
 
