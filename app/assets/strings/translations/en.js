@@ -77,6 +77,11 @@ export default {
     fechaVenta: 'Sold the',
     alquiladoDesde: 'Rented From',
     alquiladoHasta: 'To',
+    titulo:'Estate Details',
+    textoModalPausar:'Are you sure you want to pause this publication?',
+    cancelarModal:'Cancel',
+    textoModalEliminar:'Are you sure you want to delete this publication?',
+    textoModalEliminar2:'Once deleted you cant go back',
   },
 
   "realEstateUploadAsset": {

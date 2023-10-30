@@ -58,7 +58,12 @@ export default {
     fechaVenta: 'Vendido el',
     alquilado: 'Alquilado Mensual',
     alquiladoDesde: 'Alquilado Desde',
-    alquiladoHasta: 'Hasta'
+    alquiladoHasta: 'Hasta',
+    titulo:'Detalles de la Propiedad',
+    textoModalPausar:'Seguro que deseas pausar esta propiedad?',
+    cancelarModal:'Cancelar',
+    textoModalEliminar:'Seguro que deseas eliminar esta propiedad?',
+    textoModalEliminar2:'Una vez eliminada no se podra volver atras',
   },
 
   "realEstateUploadAsset": {
