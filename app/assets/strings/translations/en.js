@@ -16,7 +16,7 @@ export default {
     venta: 'For Sale',
     vendida: 'Sold',
     alquiler: 'For Rent',
-    alquiladas: 'Rented',
+    alquilada: 'Rented',
     pausada: 'Paused'
   },
   "welcomeScreen": {
@@ -62,11 +62,27 @@ export default {
   },
 
   detallePropiedadInmobiliaria: {
-    modificarPublicacion:'Modify Publication',
-    pausar:'Pause',
-    eliminar :'Delete',
-    listar:'Unpause',
-},
+    modificarPublicacion: 'Modify Publication',
+    pausar: 'Pause',
+    eliminar: 'Delete',
+    listar: 'Unpause',
+    estadoPropiedad: 'Property Status',
+    precioVenta: 'Selling For',
+    alquiler: 'Monthly Rent',
+    expensas: 'Maintenance Fees',
+    noExpensas: 'No Maintenance Fees',
+    vendidoA: 'Sold to',
+    alquiladoA: 'Rented to',
+    vendido: 'Sold For',
+    fechaVenta: 'Sold the',
+    alquiladoDesde: 'Rented From',
+    alquiladoHasta: 'To',
+    titulo:'Estate Details',
+    textoModalPausar:'Are you sure you want to pause this publication?',
+    cancelarModal:'Cancel',
+    textoModalEliminar:'Are you sure you want to delete this publication?',
+    textoModalEliminar2:'Once deleted you cant go back',
+  },
 
   "realEstateUploadAsset": {
     "headTitle": "Upload Estate",
