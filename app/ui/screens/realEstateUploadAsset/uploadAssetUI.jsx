@@ -18,8 +18,22 @@ import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
 import {launchImageLibrary} from 'react-native-image-picker';
+import MapScreen from "../../components/cards/CardMap";
 
-
+//import ImagePicker2 from 'react-native-image-crop-picker';
+/*
+const selectImageFromGallery = () => {
+    ImagePicker2.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+    }).catch(error => {
+      console.log(error);
+    });
+  };
+*/
 const ImagePicker = () => {
     let options = {
         storageOptions: {
@@ -117,14 +131,14 @@ export default function UploadAssetUI() {
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
                 <CustomTextInput/>
 
-                <Text style={styles.textoBody2}>{i18n.t('realEstateUploadAsset.image')}</Text>
+                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
                 <TouchableOpacity style={styles.test}
                     onPress={() => {
                         ImagePicker();
-                    
+                        //selectImageFromGallery();
                     }}
                 >
-                    <Text style={styles.textoBody1}>Cargar Imagen</Text>
+                    <Text style={styles.textoBody2}>Cargar Imagen desde galeria</Text>
                 </TouchableOpacity>
 
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
@@ -180,6 +194,8 @@ export default function UploadAssetUI() {
 
                 <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
                 <CustomTextInput/>
+                <MapScreen/>
+
 
                 <Button title={"Publicar"} titleColor={"white"}/>
 
@@ -210,6 +226,7 @@ export default function UploadAssetUI() {
         },
 
         textoHead: {
+            marginTop: 20,
             fontFamily: 'Poppins_700Bold',
             color: 'black',
             fontSize: Dimensions.get('window').width * 0.07,
@@ -232,7 +249,7 @@ export default function UploadAssetUI() {
             fontFamily: "Poppins_500Medium", //cambiar a roboto
             color: 'white',
             textAlign: 'center',
-            fontSize: Dimensions.get('window').width * 0.045,
+            fontSize: Dimensions.get('window').width * 0.035,
             marginLeft: "3%",
         },
 
@@ -244,6 +261,8 @@ export default function UploadAssetUI() {
             borderRadius: 10,
             borderWidth: 1,
             margin: 14,
+            justifyContent: 'center',
+            alignItems: 'center',
 
         }
         
