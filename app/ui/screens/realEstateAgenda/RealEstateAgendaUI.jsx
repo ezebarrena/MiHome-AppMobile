@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Agenda, LocaleConfig } from 'react-native-calendars';
 
 const RealEstateAgendaUI = () => {
+  // Estado para almacenar los datos de visitas
   const [items, setItems] = useState({});
 
   // Datos ficticios de visitas
@@ -16,14 +17,14 @@ const RealEstateAgendaUI = () => {
         timeSlot: 'Mañana',
       },
       {
-        date: '2023-10-25',
+        date: '2023-10-24',
         name: 'María Gómez',
         propertyType: 'Apartamento',
         address: '456 Avenida Secundaria',
         timeSlot: 'Tarde',
       },
       {
-        date: '2023-10-28',
+        date: '2023-10-25',
         name: 'Carlos Sánchez',
         propertyType: 'Apartamento',
         address: '654 Avenida Principal',
@@ -31,7 +32,7 @@ const RealEstateAgendaUI = () => {
       },
     ];
 
-    const visits = {};
+    const visits = { ...items }; // Copia profunda del estado actual
     visitData.forEach((visit, index) => {
       const date = visit.date;
       if (!visits[date]) {
