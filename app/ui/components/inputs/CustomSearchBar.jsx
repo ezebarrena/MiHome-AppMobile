@@ -6,30 +6,28 @@ const CustomSearchBar = ({ onAddressSelect }) => {
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const API_KEY = '5b3ce3597851110001cf6248a43d074c7b9c4b79bf1d0ce4c6de155a'; // Reemplaza con tu clave API de OpenRouteService
-  const ENDPOINT = 'https://api.openrouteservice.org/geocode/search';
+  const API_KEY = 'AvmPrvRS-voqmRn9ifwJ5pnVskBSZuc0zx4ztiQCxeHRCcr8zld_DxjJbW8U40tP'; // Reemplaza con tu clave API de Bing Maps
+  const ENDPOINT = 'https://dev.virtualearth.net/REST/v1/Locations';
 
   const searchAddress = async () => {
     try {
       const response = await axios.get(ENDPOINT, {
         params: {
-          text: searchText,
-        },
-        headers: {
-          'Authorization': `Bearer ${API_KEY}`,
+          query: searchText,
+          key: API_KEY,
         },
       });
-      setSearchResults(response.data.features);
+      setSearchResults(response.data.resourceSets[0].resources);
     } catch (error) {
-      console.error('Error searching address:', error);
+      console.error('Error al buscar la dirección:', error);
     }
   };
 
   const selectAddress = (item) => {
-    // Extract the coordinates from the selected address
-    const { coordinates } = item.geometry;
+    // Extrae las coordenadas de la dirección seleccionada
+    const coordinates = [item.point.coordinates[0], item.point.coordinates[1]];
 
-    // Call the callback function to expose the coordinates
+    // Llama a la función de devolución de llamada para exponer las coordenadas
     onAddressSelect(coordinates);
   };
 
@@ -43,8 +41,8 @@ const CustomSearchBar = ({ onAddressSelect }) => {
         onEndEditing={searchAddress}
       />
       {searchResults && searchResults.length > 0 && searchResults.map((item) => (
-        <TouchableOpacity style={styles.result} key={item.properties.id} onPress={() => selectAddress(item)}>
-          <Text>{item.properties.label}</Text>
+        <TouchableOpacity style={styles.result} key={item.name} onPress={() => selectAddress(item)}>
+          <Text>{item.address.formattedAddress}</Text>
         </TouchableOpacity>
       ))}
     </View>
