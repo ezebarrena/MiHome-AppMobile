@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import axios from 'axios';
-import { st } from 'make-plural';
 
 const CustomSearchBar = ({ onAddressSelect }) => {
   const [searchText, setSearchText] = useState('');
