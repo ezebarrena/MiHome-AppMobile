@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, ScrollView, FlatList } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity } from "react-native";
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
 import { Dimensions } from "react-native";
@@ -9,6 +9,7 @@ import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInp
 import Button from "../../../ui/components/buttons/Button";
 import MapScreen from "../../components/cards/CardMap";
 import ImagePickerModal from "../../components/modals/ImagePickerModal";
+import { Ionicons } from "@expo/vector-icons"; // Asegúrate de importar Ionicons desde tu proyecto
 
 const dataTypes = [
   { key: '1', value: 'Casa' },
@@ -19,7 +20,6 @@ const dataTypes = [
   { key: '6', value: 'Oficina' },
   { key: '7', value: 'Comercio' },
   { key: '8', value: 'Terreno' },
-  // Agrega más tipos de propiedades si es necesario
 ];
 
 const dataTransaccion = [
@@ -98,9 +98,15 @@ export default function UploadAssetUI() {
         keyExtractor={(uri, index) => index.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View style={styles.previewContainer}>
             <Image source={{ uri: item }} style={styles.previewImage} />
+            <TouchableOpacity
+              onPress={() => removeImage(index)}
+              style={styles.deleteIcon}
+            >
+              <Ionicons name="trash-outline" size={20} color="white" />
+            </TouchableOpacity>
           </View>
         )}
       />
@@ -109,6 +115,12 @@ export default function UploadAssetUI() {
 
   const addImageToUris = (uri) => {
     setImageUris([...imageUris, uri]);
+  };
+
+  const removeImage = (index) => {
+    const updatedImages = [...imageUris];
+    updatedImages.splice(index, 1);
+    setImageUris(updatedImages);
   };
 
   return (
@@ -257,5 +269,18 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 5,
+  },
+
+  deleteIcon: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderBottomLeftRadius: 5,
+    borderTopRightRadius: 5,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
