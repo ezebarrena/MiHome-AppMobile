@@ -1,7 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import axios from 'axios';
 
-const CustomSearchBar = ({ searchText, setSearchText, searchAddress, searchResults, selectAddress }) => {
+const CustomSearchBar = ({ onAddressSelect }) => {
+  const [searchText, setSearchText] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+  const API_KEY = '5b3ce3597851110001cf6248a43d074c7b9c4b79bf1d0ce4c6de155a'; // Reemplaza con tu clave API de OpenRouteService
+  const ENDPOINT = 'https://api.openrouteservice.org/geocode/search';
+
+  const searchAddress = async () => {
+    try {
+      const response = await axios.get(ENDPOINT, {
+        params: {
+          text: searchText,
+        },
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+        },
+      });
+      setSearchResults(response.data.features);
+    } catch (error) {
+      console.error('Error searching address:', error);
+    }
+  };
+
+  const selectAddress = (item) => {
+    // Extract the coordinates from the selected address
+    const { coordinates } = item.geometry;
+
+    // Call the callback function to expose the coordinates
+    onAddressSelect(coordinates);
+  };
+
   return (
     <View>
       <TextInput
