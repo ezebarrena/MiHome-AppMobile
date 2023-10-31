@@ -7,9 +7,10 @@ import CustomTextInput from "../../../ui/components/inputs/CustomTextInput";
 import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
-import MapScreen from "../../components/cards/CardMap";
 import ImagePickerModal from "../../components/modals/ImagePickerModal";
 import { Ionicons } from "@expo/vector-icons"; // Asegúrate de importar Ionicons desde tu proyecto
+import MapView, { Marker } from 'react-native-maps';
+import CustomSearchBar from "../../components/inputs/CustomSearchBar";
 
 const dataTypes = [
   { key: '1', value: 'Casa' },
@@ -90,6 +91,19 @@ const dataAmenities = [
 
 export default function UploadAssetUI() {
   const [imageUris, setImageUris] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [mapRegion, setMapRegion] = useState({
+    latitude: DEFAULT_LATITUDE, // Define una latitud predeterminada
+    longitude: DEFAULT_LONGITUDE, // Define una longitud predeterminada
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  });
+
+  // Agrega las coordenadas predeterminadas del mapa
+  const DEFAULT_LATITUDE = 40.7128; // Ejemplo de Nueva York
+  const DEFAULT_LONGITUDE = -74.0060;
 
   const renderImagePreview = (imageUris) => {
     return (
@@ -193,9 +207,13 @@ export default function UploadAssetUI() {
         <CustomTextInput />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
-        <CustomTextInput />
-        <MapScreen />
-
+        <CustomSearchBar />
+        <MapView
+          style={styles.map}
+          region={mapRegion}
+        >
+        </MapView>
+        
         <Button title={"Publicar"} titleColor={"white"} />
       </View>
     </ScrollView>
@@ -282,5 +300,12 @@ const styles = StyleSheet.create({
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  map:
+  {
+    height: 200,
+    marginHorizontal: 14,
+    marginVertical: 10,
   },
 });
