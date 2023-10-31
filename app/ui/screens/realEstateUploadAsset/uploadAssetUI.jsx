@@ -91,9 +91,7 @@ const dataAmenities = [
 
 export default function UploadAssetUI() {
   const [imageUris, setImageUris] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState(null);
+
   const [mapRegion, setMapRegion] = useState({
     latitude: DEFAULT_LATITUDE, // Define una latitud predeterminada
     longitude: DEFAULT_LONGITUDE, // Define una longitud predeterminada
@@ -207,7 +205,13 @@ export default function UploadAssetUI() {
         <CustomTextInput />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
-        <CustomSearchBar />
+        <CustomSearchBar
+          onAddressSelect={(coordinates) => setMapRegion({
+            ...mapRegion,
+            latitude: coordinates[0],
+            longitude: coordinates[1],
+          })}
+        />
         <MapView
           style={styles.map}
           region={mapRegion}
