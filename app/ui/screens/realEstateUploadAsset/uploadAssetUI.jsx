@@ -93,15 +93,11 @@ export default function UploadAssetUI() {
   const [imageUris, setImageUris] = useState([]);
 
   const [mapRegion, setMapRegion] = useState({
-    latitude: DEFAULT_LATITUDE, // Define una latitud predeterminada
-    longitude: DEFAULT_LONGITUDE, // Define una longitud predeterminada
+    latitude: null,
+    longitude: null,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
-
-  // Agrega las coordenadas predeterminadas del mapa
-  const DEFAULT_LATITUDE = 40.7128; // Ejemplo de Nueva York
-  const DEFAULT_LONGITUDE = -74.0060;
 
   const renderImagePreview = (imageUris) => {
     return (
@@ -212,10 +208,15 @@ export default function UploadAssetUI() {
             longitude: coordinates[1],
           })}
         />
-        <MapView
-          style={styles.map}
-          region={mapRegion}
-        >
+        <MapView style={styles.map} region={mapRegion}>
+          {mapRegion.latitude !== null && mapRegion.longitude !== null && (
+            <Marker
+              coordinate={{
+                latitude: mapRegion.latitude,
+                longitude: mapRegion.longitude,
+              }}
+            />
+          )}
         </MapView>
         
         <Button title={"Publicar"} titleColor={"white"} />
