@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import axios from 'axios';
+import { se } from 'make-plural';
 
 const CustomSearchBar = ({ onAddressSelect }) => {
   const [searchText, setSearchText] = useState('');
@@ -29,6 +30,8 @@ const CustomSearchBar = ({ onAddressSelect }) => {
 
     // Llama a la función de devolución de llamada para exponer las coordenadas
     onAddressSelect(coordinates);
+    setSearchText(item.address.formattedAddress);
+    setSearchResults([]);
   };
 
   return (
