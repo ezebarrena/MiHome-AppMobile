@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import axios from 'axios';
+import { st } from 'make-plural';
 
 const CustomSearchBar = ({ onAddressSelect }) => {
   const [searchText, setSearchText] = useState('');
@@ -34,7 +35,7 @@ const CustomSearchBar = ({ onAddressSelect }) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
         style={styles.searchInput}
         placeholder="Buscar dirección..."
@@ -43,7 +44,7 @@ const CustomSearchBar = ({ onAddressSelect }) => {
         onEndEditing={searchAddress}
       />
       {searchResults && searchResults.length > 0 && searchResults.map((item) => (
-        <TouchableOpacity key={item.properties.id} onPress={() => selectAddress(item)}>
+        <TouchableOpacity style={styles.result} key={item.properties.id} onPress={() => selectAddress(item)}>
           <Text>{item.properties.label}</Text>
         </TouchableOpacity>
       ))}
@@ -52,9 +53,8 @@ const CustomSearchBar = ({ onAddressSelect }) => {
 };
 
 const styles = StyleSheet.create({
-  searchInput: {
+  container: {
     backgroundColor: 'rgba(250, 250, 250, 0.9)',
-    height: 48,
     borderRadius: 10,
     borderWidth: 1,
     marginHorizontal: 14,
@@ -70,6 +70,16 @@ const styles = StyleSheet.create({
         elevation: 2,
       },
     }),
+  },
+  searchInput: {
+    height: 48,
+    paddingHorizontal: 10,
+  },
+  result: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderColor: '#ccc',
   },
 });
 
