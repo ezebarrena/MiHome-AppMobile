@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import axios from 'axios';
 
 const CustomSearchBar = ({ onAddressSelect }) => {
@@ -42,17 +42,11 @@ const CustomSearchBar = ({ onAddressSelect }) => {
         onChangeText={(text) => setSearchText(text)}
         onEndEditing={searchAddress}
       />
-      {searchResults && searchResults.length > 0 && (
-        <FlatList
-          data={searchResults}
-          keyExtractor={(item) => item.properties.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => selectAddress(item)}>
-              <Text>{item.properties.label}</Text>
-            </TouchableOpacity>
-          )}
-        />
-      )}
+      {searchResults && searchResults.length > 0 && searchResults.map((item) => (
+        <TouchableOpacity key={item.properties.id} onPress={() => selectAddress(item)}>
+          <Text>{item.properties.label}</Text>
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };
