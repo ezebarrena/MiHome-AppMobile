@@ -37,168 +37,19 @@ export default function HomeRSUI({ listadoPropiedades }) {
     { label: i18n.t('propiedadesEstados.alquilada'), value: 'alquilada' },
     { label: i18n.t('propiedadesEstados.pausada'), value: 'pausada' }
   ]);
-  const [propiedadesBD, setPropiedadesBD] = useState()
+
   const [propiedades, setPropiedades] = useState()
 
 
   useEffect(() => {
     //const listados = { valor: 'US$175.500', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquilada', expensas: '$35.000', tieneExpensas: 'si', usuario: 'Alberto Massa', fechaVenta: '21/10/2023', fechaDesde: '22/09/2022', fechaHasta: '22/09/2025' }
-    const listado = [
-      {
-        id: 1,
-        valor: 'US$150,000',
-        ubicacion: 'Avenida Libertador 123',
-        ambientes: 3,
-        metros: 200,
-        margen: 5,
-        tipo: 'venta',
-        tieneExpensas: 'no'
-      },
-      {
-        id: 2,
-        valor: '$100,000',
-        ubicacion: 'Calle Rivadavia 456',
-        ambientes: 2,
-        metros: 150,
-        margen: 2,
-        tipo: 'alquiler',
-        tieneExpensas: 'si',
-        expensas: '$15,000'
-      },
-      {
-        id: 3,
-        valor: 'US$250,000',
-        ubicacion: 'Calle San Martin 789',
-        ambientes: 4,
-        metros: 300,
-        margen: 10,
-        tipo: 'vendida',
-        tieneExpensas: 'si',
-        expensas: '$30,000',
-        fechaVenta: '15/05/2023'
-      },
-      {
-        id: 4,
-        valor: '$180,000',
-        ubicacion: 'Avenida Belgrano 987',
-        ambientes: 2,
-        metros: 180,
-        margen: 3,
-        tipo: 'alquiler',
-        tieneExpensas: 'no'
-      },
-      {
-        id: 5,
-        valor: 'US$280,000',
-        ubicacion: 'Calle Sarmiento 234',
-        ambientes: 5,
-        metros: 400,
-        margen: 15,
-        tipo: 'venta',
-        tieneExpensas: 'no'
-      },
-      {
-        id: 6,
-        valor: '$220,000',
-        ubicacion: 'Avenida 9 de Julio 567',
-        ambientes: 3,
-        metros: 220,
-        margen: 6,
-        tipo: 'alquiler',
-        tieneExpensas: 'si',
-        expensas: '$25,000'
-      },
-      {
-        id: 7,
-        valor: 'US$320,000',
-        ubicacion: 'Calle Buenos Aires 345',
-        ambientes: 4,
-        metros: 350,
-        margen: 12,
-        tipo: 'venta',
-        tieneExpensas: 'si',
-        expensas: '$40,000'
-      },
-      {
-        id: 8,
-        valor: '$140,000',
-        ubicacion: 'Calle Defensa 678',
-        ambientes: 2,
-        metros: 160,
-        margen: 1,
-        tipo: 'alquiler',
-        tieneExpensas: 'si',
-        expensas: '$10,000'
-      },
-      {
-        id: 9,
-        valor: 'US$210,000',
-        ubicacion: 'Avenida Corrientes 456',
-        ambientes: 3,
-        metros: 250,
-        margen: 8,
-        tipo: 'vendida',
-        tieneExpensas: 'no'
-      },
-      {
-        id: 10,
-        valor: '$160,000',
-        ubicacion: 'Calle Alvear 789',
-        ambientes: 2,
-        metros: 170,
-        margen: 4,
-        tipo: 'alquiler',
-        tieneExpensas: 'no'
-      },
-      {
-        id: 11,
-        valor: '$260,000',
-        ubicacion: 'Calle Urquiza 123',
-        ambientes: 3,
-        metros: 180,
-        margen: 6,
-        tipo: 'alquilada',
-        tieneExpensas: 'si',
-        expensas: '$20,000',
-        usuario: 'Luis Rodriguez',
-        fechaDesde: '10/08/2023',
-        fechaHasta: '10/08/2026'
-      },
-      {
-        id: 12,
-        valor: 'US$280,000',
-        ubicacion: 'Calle Belgrano 567',
-        ambientes: 4,
-        metros: 250,
-        margen: 8,
-        tipo: 'vendida',
-        tieneExpensas: 'si',
-        expensas: '$45,000',
-        fechaVenta: '28/06/2023'
-      },
-      {
-        id: 13,
-        valor: '$180,000',
-        ubicacion: 'Calle San Martin 789',
-        ambientes: 2,
-        metros: 150,
-        margen: 4,
-        tipo: 'alquilada',
-        tieneExpensas: 'si',
-        expensas: '$15,000',
-        usuario: 'Laura Pérez',
-        fechaDesde: '12/11/2023',
-        fechaHasta: '12/11/2025'
-      }
+
+    console.log(listadoPropiedades,'t');
+
+    setPropiedades(listadoPropiedades);
 
 
-    ]
-
-
-    setPropiedades(listado);
-    setPropiedadesBD(listado)
-
-  }, [setPropiedades])
+  }, [setPropiedades, listadoPropiedades])
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -215,13 +66,13 @@ export default function HomeRSUI({ listadoPropiedades }) {
 
     const tipoDeseado = item.value; // Cambia 'venta' al tipo que desees buscar
 
-    const objetosFiltrados = propiedadesBD.filter(objeto => objeto.tipo === tipoDeseado);
+    const objetosFiltrados = listadoPropiedades.filter(objeto => objeto.tipo === tipoDeseado);
 
 
     setPropiedades(objetosFiltrados)
 
     if (item.value == 'todo') {
-      setPropiedades(propiedadesBD)
+      setPropiedades(listadoPropiedades)
     }
   }
 
@@ -254,8 +105,8 @@ export default function HomeRSUI({ listadoPropiedades }) {
       <View style={styles.cardsContainer}>
         <FlatList
           data={propiedades}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => <CardPropiedad valor={item.valor} ubicacion={item.ubicacion} ambientes={item.ambientes} metros={item.metros} margen={item.margen} tipo={item.tipo} onPress={() => navigation.navigate("DetallesPropiedadRE", {propiedadId:item.id})} />}
+          keyExtractor={item => item._id}
+          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} state={item.state} onPress={() => navigation.navigate("DetallesPropiedadRE", {propiedadId:item._id})} />}
           contentContainerStyle={{
             alignItems: "center",
             flexGrow: 1,
