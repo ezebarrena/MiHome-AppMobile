@@ -7,11 +7,14 @@ import i18n from "../../../assets/strings/I18n";
 
 export default function CardPropiedad({
   valor,
-  ubicacion,
+  calle,
   ambientes,
   metros,
-  tipo,
+  state,
   onPress,
+  moneda,
+  numero,
+  barrio,
 }) {
   const [fontsLoaded, fontError] = useFonts({
     Poppins_400Regular,
@@ -20,6 +23,16 @@ export default function CardPropiedad({
   if (!fontsLoaded && !fontError) {
     return null;
   }
+  let tipo;
+  switch(state){
+    case 0:
+      tipo = "alquiler"
+      break
+    case 1:
+      tipo = "venta"
+      break
+  }
+  console.log(state);
   let idioma = "propiedadesEstados." + tipo;
   let i18nIdioma = i18n.t(idioma).toLocaleUpperCase();
   return (
@@ -32,12 +45,12 @@ export default function CardPropiedad({
       </View>
       <View style={styles.dataContainer}>
         <View style={styles.row}>
-          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{valor}</Text>
-          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{ambientes} ambientes</Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{moneda} {valor}</Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{ambientes} {ambientes > 1 ? i18n.t("detallePropiedad.ambientes") : i18n.t("detallePropiedad.ambiente")}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{ubicacion}</Text>
-          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{metros} m2 totales</Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{calle} {numero}, {barrio}</Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{metros} m2</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -91,6 +104,6 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Poppins_400Regular",
     fontSize: 16,
-    maxWidth: '50%'
+    maxWidth: '60%'
   },
 });
