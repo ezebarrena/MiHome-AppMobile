@@ -32,17 +32,17 @@ export default function HomeRSUI({ listadoPropiedades }) {
   const [items, setItems] = useState([
     { label: i18n.t('propiedadesEstados.todo'), value: 'todo' },
     { label: i18n.t('propiedadesEstados.venta'), value: 'venta' },
-    { label: i18n.t('propiedadesEstados.vendida'), value: 'vendidas' },
+    { label: i18n.t('propiedadesEstados.vendida'), value: 'vendida' },
     { label: i18n.t('propiedadesEstados.alquiler'), value: 'alquiler' },
     { label: i18n.t('propiedadesEstados.alquilada'), value: 'alquilada' },
     { label: i18n.t('propiedadesEstados.pausada'), value: 'pausada' }
   ]);
-
+  const [propiedadesBD, setPropiedadesBD] = useState()
   const [propiedades, setPropiedades] = useState()
 
 
   useEffect(() => {
-    const listados = { valor: 'US$175.500', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquilada', expensas: '$35.000', tieneExpensas: 'si', usuario: 'Alberto Massa', fechaVenta: '21/10/2023', fechaDesde: '22/09/2022', fechaHasta: '22/09/2025' }
+    //const listados = { valor: 'US$175.500', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquilada', expensas: '$35.000', tieneExpensas: 'si', usuario: 'Alberto Massa', fechaVenta: '21/10/2023', fechaDesde: '22/09/2022', fechaHasta: '22/09/2025' }
     const listado = [
       {
         id: 1,
@@ -193,9 +193,10 @@ export default function HomeRSUI({ listadoPropiedades }) {
 
 
     ]
-    console.log(listadoPropiedades, 't');
+
 
     setPropiedades(listado);
+    setPropiedadesBD(listado)
 
   }, [setPropiedades])
 
@@ -210,16 +211,17 @@ export default function HomeRSUI({ listadoPropiedades }) {
 
   const filtrarItems = (item) => {
 
-
+    
 
     const tipoDeseado = item.value; // Cambia 'venta' al tipo que desees buscar
 
-    const objetosFiltrados = listadoPropiedades.listadoPropiedades.filter(objeto => objeto.tipo === tipoDeseado);
+    const objetosFiltrados = propiedadesBD.filter(objeto => objeto.tipo === tipoDeseado);
+
 
     setPropiedades(objetosFiltrados)
 
     if (item.value == 'todo') {
-      setPropiedades(listadoPropiedades.listadoPropiedades)
+      setPropiedades(propiedadesBD)
     }
   }
 
@@ -253,7 +255,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
         <FlatList
           data={propiedades}
           keyExtractor={item => item.id}
-          renderItem={({ item }) => <CardPropiedad valor={item.valor} ubicacion={item.ubicacion} ambientes={item.ambientes} metros={item.metros} margen={item.margen} tipo={item.tipo} onPress={() => navigation.navigate("DetallesPropiedadRE")} />}
+          renderItem={({ item }) => <CardPropiedad valor={item.valor} ubicacion={item.ubicacion} ambientes={item.ambientes} metros={item.metros} margen={item.margen} tipo={item.tipo} onPress={() => navigation.navigate("DetallesPropiedadRE", {propiedadId:item.id})} />}
           contentContainerStyle={{
             alignItems: "center",
             flexGrow: 1,
@@ -277,6 +279,7 @@ const styles = StyleSheet.create({
     height: "25%",
     borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
     borderBottomRightRadius: 15,
+    zIndex:1,
   },
   textoHead: {
     fontFamily: 'Poppins_700Bold',
@@ -310,7 +313,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flexGrow: 0,
-    zIndex: -1,
+
   },
   scrollViewContent: {
     alignItems: "center",

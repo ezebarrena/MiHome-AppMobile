@@ -44,6 +44,7 @@
     "react-native-paper": "^5.11.0",
     "react-native-vector-icons": "^10.0.0",
     "watchman": "^1.0.0"
+
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
