@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   Modal,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import {
   useFonts,
   Poppins_700Bold,
@@ -19,7 +20,6 @@ import {
 } from "@expo-google-fonts/poppins";
 
 import i18n from "../../../assets/strings/I18n";
-import fotoPerfil from "../../../assets/images/icons/Rectangle.png";
 
 import Theme from "../../styles/Theme";
 
@@ -29,6 +29,7 @@ import PanelDetalles from "../../components/componenteREDP/detalles";
 export default function DetallePropiedadRSUI({ mostrarBotones, informacion }) {
   //console.log(mostrarBotones.mostrarBotones);
   //{mostrarBotones.mostrarBotones ? <Text>Bienvenidos, Usuario</Text> : null}
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalPausarVisible, setModalPausarVisible] = useState(false);
   const [modalEliminarVisible, setModalEliminarVisible] = useState(false);
@@ -64,6 +65,10 @@ export default function DetallePropiedadRSUI({ mostrarBotones, informacion }) {
     setModalVisible(false)
     setModalPausarVisible(false)
     setModalEliminarVisible(false)
+  }
+
+  const handleNavegacion = () =>{
+    navigation.navigate("PublicacionPropiedadT")
   }
 
   return (
@@ -104,9 +109,9 @@ export default function DetallePropiedadRSUI({ mostrarBotones, informacion }) {
           </View>
         </View>
       </Modal>
-      <Pressable onPress={() => { console.log("t"); }} style={styles.divImagen}>
+      <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", {propiedadId:informacion.id})} style={styles.divImagen}>
         <Image source={imagenTest} style={styles.imagen} />
-      </Pressable>
+      </TouchableOpacity>
       {mostrarBotones ? (
         <View style={styles.botonera}>
           <TouchableOpacity

@@ -51,7 +51,7 @@ export default function PanelDetalles({ datosPropiedad }) {
             </View>
 
             {venta ? <View style={styles.headEstadoPropiedad}>
-                <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.precioVenta')}</Text>
+                <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.venta')}</Text>
                 <Text style={styles.textos}>{datosPropiedad.valor}</Text>
             </View> : null}
             {alquiler ? <View style={styles.headEstadoPropiedad}>
