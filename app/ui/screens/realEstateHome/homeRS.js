@@ -11,7 +11,7 @@ export default function HomeRS() {
 
             try {
                 const respuesta = await postmyREAssets("654032a899e75ce5e8e99510", "", "")
-                console.log(respuesta, 's');
+
                 setPropiedades(respuesta);
             }
             catch (error) {

@@ -32,7 +32,7 @@ export default function CardPropiedad({
       tipo = "venta"
       break
   }
-  console.log(state);
+
   let idioma = "propiedadesEstados." + tipo;
   let i18nIdioma = i18n.t(idioma).toLocaleUpperCase();
   return (

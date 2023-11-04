@@ -2,7 +2,7 @@ import { SelectList } from 'react-native-dropdown-select-list'
 import React from "react";
 import { TextInput, StyleSheet, Platform } from "react-native";
 
-const ChoiceInput = ({data}) => {
+const ChoiceInput = ({data,value}) => {
 
   const [selected, setSelected] = React.useState("");
   
@@ -11,6 +11,7 @@ const ChoiceInput = ({data}) => {
         boxStyles={styles.input}
         setSelected={(val) => setSelected(val)} 
         data={data} 
+        value={value}
         save="value"
     />
   )

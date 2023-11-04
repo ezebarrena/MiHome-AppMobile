@@ -43,7 +43,6 @@ export default function HomeRSUI({ listadoPropiedades }, idInmobiliaria) {
 
   useEffect(() => {
 
-    console.log(idInmobiliaria,'t');
 
     setPropiedades(listadoPropiedades);
 

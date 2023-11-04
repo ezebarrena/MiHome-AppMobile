@@ -26,7 +26,7 @@ import Theme from "../../styles/Theme";
 import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 import PanelDetalles from "../../components/componenteREDP/detalles";
 
-export default function DetallePropiedadRSUI({ mostrarBotones, informacion }) {
+export default function DetallePropiedadRSUI({ mostrarBotones, informacion, tipo }) {
   //console.log(mostrarBotones.mostrarBotones);
   //{mostrarBotones.mostrarBotones ? <Text>Bienvenidos, Usuario</Text> : null}
   const navigation = useNavigation();
@@ -153,7 +153,7 @@ export default function DetallePropiedadRSUI({ mostrarBotones, informacion }) {
         </TouchableOpacity>
 
       </View>}
-      <PanelDetalles datosPropiedad={informacion} />
+      <PanelDetalles datosPropiedad={informacion} tipo={tipo} />
 
     </View>
   );

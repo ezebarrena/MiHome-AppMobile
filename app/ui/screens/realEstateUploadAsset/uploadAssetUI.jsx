@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity } from "react-native";
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
@@ -11,6 +11,10 @@ import ImagePickerModal from "../../components/modals/ImagePickerModal";
 import { Ionicons } from "@expo/vector-icons"; // Asegúrate de importar Ionicons desde tu proyecto
 import MapView, { Marker } from 'react-native-maps';
 import CustomSearchBar from "../../components/inputs/CustomSearchBar";
+
+//API
+import assetPOST from '../../../api/assetPOST.api';
+
 
 const dataTypes = [
   { key: '1', value: 'Casa' },
@@ -89,7 +93,7 @@ const dataAmenities = [
   { key: '11', value: 'Espacio para deportes' },
 ];
 
-export default function UploadAssetUI() {
+export default function UploadAssetUI({}) {
   const [imageUris, setImageUris] = useState([]);
 
   const [mapRegion, setMapRegion] = useState({
@@ -131,6 +135,12 @@ export default function UploadAssetUI() {
     setImageUris(updatedImages);
   };
 
+  //manejo de API 
+  //const [asset, setAsset] = useState([])
+  //const {assetData} = route.params;
+  const [title, setTitle] = useState('');
+  const [types, setTypes] = useState('');
+
   return (
     <ScrollView style={styles.ScrollView}>
       <View style={styles.contenedorHead}>
@@ -139,7 +149,10 @@ export default function UploadAssetUI() {
 
       <View style={styles.dataEntry}>
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
-        <CustomTextInput />
+        <CustomTextInput
+          value={title}
+          onChangeText={(title) => setTitle(title)} // Actualiza el estado del título.
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
         <ImagePickerModal
@@ -150,7 +163,10 @@ export default function UploadAssetUI() {
         {renderImagePreview(imageUris)}
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
-        <ChoiceInput data={dataTypes} />
+        <ChoiceInput 
+          data={dataTypes}
+          value={types}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}</Text>
         <ChoiceInput data={dataTransaccion} />

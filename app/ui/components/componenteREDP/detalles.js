@@ -23,7 +23,7 @@ import Theme from "../../styles/Theme";
 
 import imagenTest from '../../../assets/images/various/imagenCasaTest.png'
 
-export default function PanelDetalles({ datosPropiedad }) {
+export default function PanelDetalles({ datosPropiedad, tipo }) {
 
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold,
@@ -34,14 +34,14 @@ export default function PanelDetalles({ datosPropiedad }) {
     if (!fontsLoaded && !fontError) {
         return null;
     }
-    let idioma = "propiedadesEstados." + datosPropiedad.tipo;
+    let idioma = "propiedadesEstados." + tipo;
     let i18nIdioma = i18n.t(idioma).toLocaleUpperCase();
 
-    let venta = datosPropiedad.tipo === "venta";
-    let alquiler = datosPropiedad.tipo === "alquiler";
-    let vendida = datosPropiedad.tipo === "vendida";
-    let alquilado = datosPropiedad.tipo === "alquilada";
-    let pausada = datosPropiedad.tipo === "pausada";
+    let venta = tipo === "venta";
+    let alquiler = tipo === "alquiler";
+    let vendida = tipo === "vendida";
+    let alquilado = tipo === "alquilada";
+    let pausada = tipo === "pausada";
     let expensas = datosPropiedad.tieneExpensas === 'si'
     return (
         <View style={styles.container}>
@@ -52,17 +52,17 @@ export default function PanelDetalles({ datosPropiedad }) {
 
             {venta ? <View style={styles.headEstadoPropiedad}>
                 <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.venta')}</Text>
-                <Text style={styles.textos}>{datosPropiedad.valor}</Text>
+                <Text style={styles.textos}>{datosPropiedad.coin} {datosPropiedad.price}</Text>
             </View> : null}
             {alquiler ? <View style={styles.headEstadoPropiedad}>
                 <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.alquiler')}</Text>
-                <Text style={styles.textos}>{datosPropiedad.valor}</Text>
+                <Text style={styles.textos}>{datosPropiedad.coin} {datosPropiedad.price}</Text>
             </View> : null}
             {vendida ? <View>
                 <Text style={[styles.textos, styles.centrar]}>{i18n.t('detallePropiedadInmobiliaria.vendidoA')} {datosPropiedad.usuario}</Text>
                 <View style={styles.headEstadoPropiedad}>
                     <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.vendido')}</Text>
-                    <Text style={styles.textos}>{datosPropiedad.valor}</Text>
+                    <Text style={styles.textos}>{datosPropiedad.coin} {datosPropiedad.price}</Text>
                 </View>
                 <Text style={[styles.textos, styles.centrar]}>{i18n.t('detallePropiedadInmobiliaria.fechaVenta')} {datosPropiedad.fechaVenta}</Text>
             </View> : null}
@@ -71,7 +71,7 @@ export default function PanelDetalles({ datosPropiedad }) {
                 <Text style={[styles.textos, styles.centrar]}>{i18n.t('detallePropiedadInmobiliaria.alquiladoA')} {datosPropiedad.usuario}</Text>
                 <View style={styles.headEstadoPropiedad}>
                     <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.alquiler')}</Text>
-                    <Text style={styles.textos}>{datosPropiedad.valor}</Text>
+                    <Text style={styles.textos}>{datosPropiedad.coin} {datosPropiedad.price}</Text>
                 </View>
                 <View style={styles.headEstadoPropiedad}>
                     <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.alquiladoDesde')}</Text>
@@ -89,10 +89,10 @@ export default function PanelDetalles({ datosPropiedad }) {
 
 
             {(vendida || alquilado) ? null : (
-                expensas ? (
+                datosPropiedad.bills ? (
                     <View style={styles.headEstadoPropiedad}>
                         <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.expensas')}</Text>
-                        <Text style={styles.textos}>{datosPropiedad.expensas}</Text>
+                        <Text style={styles.textos}>$ {datosPropiedad.bills}</Text>
                     </View>
                 ) : (
                     <View style={styles.headEstadoPropiedad}>
