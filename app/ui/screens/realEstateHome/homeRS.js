@@ -6,12 +6,11 @@ import postmyREAssets from "../../../api/myREassetsPOST.api";
 
 export default function HomeRS() {
     const [propiedades, setPropiedades] = useState([])
-
     useEffect(() => {
         const busquedaPropiedades = async () => {
 
             try {
-                const respuesta = await postmyREAssets("654032a899e75ce5e8e99510", 1)
+                const respuesta = await postmyREAssets("654032a899e75ce5e8e99510", "", "")
                 console.log(respuesta, 's');
                 setPropiedades(respuesta);
             }
