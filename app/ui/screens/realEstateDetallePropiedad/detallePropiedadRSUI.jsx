@@ -25,15 +25,18 @@ import Theme from "../../styles/Theme";
 
 import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 import PanelDetalles from "../../components/componenteREDP/detalles";
+import Estados from "../../../assets/funcionTraduccion";
 
-export default function DetallePropiedadRSUI({ mostrarBotones, informacion }) {
+export default function DetallePropiedadRSUI({ informacion}) {
   //console.log(mostrarBotones.mostrarBotones);
   //{mostrarBotones.mostrarBotones ? <Text>Bienvenidos, Usuario</Text> : null}
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalPausarVisible, setModalPausarVisible] = useState(false);
   const [modalEliminarVisible, setModalEliminarVisible] = useState(false);
+  const necesitaBoton = ['venta', 'alquiler', 'pausada', 'alquilada']
 
+  
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -67,9 +70,13 @@ export default function DetallePropiedadRSUI({ mostrarBotones, informacion }) {
     setModalEliminarVisible(false)
   }
 
-  const handleNavegacion = () =>{
-    navigation.navigate("PublicacionPropiedadT")
+  let tipo = Estados(informacion.transaction, informacion.state)
+
+  let mostrarBotones = false
+  if (necesitaBoton.includes(tipo)) {
+    mostrarBotones = true
   }
+
 
   return (
     <View style={styles.container}>
@@ -109,7 +116,7 @@ export default function DetallePropiedadRSUI({ mostrarBotones, informacion }) {
           </View>
         </View>
       </Modal>
-      <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", {propiedadId:informacion.id})} style={styles.divImagen}>
+      <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", {propiedadId:informacion._id})} style={styles.divImagen}>
         <Image source={imagenTest} style={styles.imagen} />
       </TouchableOpacity>
       {mostrarBotones ? (
@@ -153,7 +160,7 @@ export default function DetallePropiedadRSUI({ mostrarBotones, informacion }) {
         </TouchableOpacity>
 
       </View>}
-      <PanelDetalles datosPropiedad={informacion} />
+      <PanelDetalles datosPropiedad={informacion} tipo={tipo} />
 
     </View>
   );

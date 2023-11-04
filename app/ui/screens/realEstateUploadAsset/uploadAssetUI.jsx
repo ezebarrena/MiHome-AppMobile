@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity } from "react-native";
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
@@ -11,6 +11,10 @@ import ImagePickerModal from "../../components/modals/ImagePickerModal";
 import { Ionicons } from "@expo/vector-icons"; // Asegúrate de importar Ionicons desde tu proyecto
 import MapView, { Marker } from 'react-native-maps';
 import CustomSearchBar from "../../components/inputs/CustomSearchBar";
+
+//API
+import assetPOST from '../../../api/assetPOST.api';
+
 
 const dataTypes = [
   { key: '1', value: 'Casa' },
@@ -89,7 +93,7 @@ const dataAmenities = [
   { key: '11', value: 'Espacio para deportes' },
 ];
 
-export default function UploadAssetUI() {
+export default function UploadAssetUI({}) {
   const [imageUris, setImageUris] = useState([]);
 
   const [mapRegion, setMapRegion] = useState({
@@ -131,6 +135,32 @@ export default function UploadAssetUI() {
     setImageUris(updatedImages);
   };
 
+  const handleSubmit = async () => {
+    try {
+      const response = await assetPOST(formData); // Envía el objeto formData a la función assetPOST
+      console.log(response);
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error);
+    }
+  };
+
+  const [formData, setFormData] = useState({
+    title: '',
+    types:'',
+    transaction:'',
+    price:'',
+    coin:'',
+
+  });
+
+
+
+  //manejo de API 
+  //const [asset, setAsset] = useState([])
+  //const {assetData} = route.params;
+  //const [title, setTitle] = useState('');
+  //const [types, setTypes] = useState('');
+
   return (
     <ScrollView style={styles.ScrollView}>
       <View style={styles.contenedorHead}>
@@ -139,7 +169,10 @@ export default function UploadAssetUI() {
 
       <View style={styles.dataEntry}>
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
-        <CustomTextInput />
+        <CustomTextInput
+          value={formData.title}
+          onChangeText={(value) => setFormData({ ...formData, title: Text })} //update
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
         <ImagePickerModal
@@ -150,16 +183,31 @@ export default function UploadAssetUI() {
         {renderImagePreview(imageUris)}
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
-        <ChoiceInput data={dataTypes} />
+        <ChoiceInput 
+          data={dataTypes}
+          value={formData.types}
+          onValueSelect={(value) => setFormData({ ...formData, types: Text })}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}</Text>
-        <ChoiceInput data={dataTransaccion} />
+        <ChoiceInput 
+          data={dataTransaccion} 
+          value={formData.transaction}
+          onValueSelect={(value) => setFormData({ ...formData, transaction: Text })}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.price')}</Text>
-        <CustomTextInput />
+        <CustomTextInput 
+          value={formData.price}
+          onChangeText={(value) => setFormData({ ...formData, price: Text })}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.coin')}</Text>
-        <ChoiceInput data={dataCurrency} />
+        <ChoiceInput 
+          data={dataCurrency} 
+          value={formData.coin}
+          onValueSelect={(value) => setFormData({ ...formData, coin: Text })}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bills')}</Text>
         <CustomTextInput />
@@ -219,7 +267,7 @@ export default function UploadAssetUI() {
           )}
         </MapView>
         
-        <Button title={"Publicar"} titleColor={"white"} />
+        <Button title={"Publicar"} titleColor={"white"} onPress={handleSubmit}/>
       </View>
     </ScrollView>
   );

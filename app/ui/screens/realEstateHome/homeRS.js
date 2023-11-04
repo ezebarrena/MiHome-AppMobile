@@ -11,7 +11,7 @@ export default function HomeRS() {
 
             try {
                 const respuesta = await postmyREAssets("654032a899e75ce5e8e99510", "", "")
-                console.log(respuesta, 's');
+
                 setPropiedades(respuesta);
             }
             catch (error) {
@@ -21,12 +21,22 @@ export default function HomeRS() {
 
 
         };
-        
-        
+
+
         busquedaPropiedades()
     }, [setPropiedades])
 
     //console.log(propiedades, 'home js');
+    const cargarDatos = async () => {
+        try {
+            const respuesta = await postmyREAssets("654032a899e75ce5e8e99510", "", "")
+
+            setPropiedades(respuesta);
+        }
+        catch (error) {
+            console.error('Error al obtener la busqueda:', error);
+        }
+    }
     return (
 
         <HomeRSUI listadoPropiedades={propiedades} />
