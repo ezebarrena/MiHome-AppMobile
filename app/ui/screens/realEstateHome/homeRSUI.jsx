@@ -25,26 +25,25 @@ import DetallePropiedadRS from "../realEstateDetallePropiedad/detallePropiedadRS
 
 //SplashScreen.preventAutoHideAsync();
 
-export default function HomeRSUI({ listadoPropiedades }) {
+export default function HomeRSUI({ listadoPropiedades }, idInmobiliaria) {
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
     { label: i18n.t('propiedadesEstados.todo'), value: 'todo' },
-    { label: i18n.t('propiedadesEstados.venta'), value: 'venta' },
-    { label: i18n.t('propiedadesEstados.vendida'), value: 'vendida' },
-    { label: i18n.t('propiedadesEstados.alquiler'), value: 'alquiler' },
-    { label: i18n.t('propiedadesEstados.alquilada'), value: 'alquilada' },
-    { label: i18n.t('propiedadesEstados.pausada'), value: 'pausada' }
+    { label: i18n.t('propiedadesEstados.venta'), value: 0 },
+    { label: i18n.t('propiedadesEstados.vendida'), value: 1 },
+    { label: i18n.t('propiedadesEstados.alquiler'), value: 2 },
+    { label: i18n.t('propiedadesEstados.alquilada'), value: 3 },
+    { label: i18n.t('propiedadesEstados.pausada'), value: 4 }
   ]);
 
   const [propiedades, setPropiedades] = useState()
 
 
   useEffect(() => {
-    //const listados = { valor: 'US$175.500', ubicacion: 'calle mitre 123', ambientes: 2, metros: 168, margen: 0, tipo: 'alquilada', expensas: '$35.000', tieneExpensas: 'si', usuario: 'Alberto Massa', fechaVenta: '21/10/2023', fechaDesde: '22/09/2022', fechaHasta: '22/09/2025' }
 
-    console.log(listadoPropiedades,'t');
+    console.log(idInmobiliaria,'t');
 
     setPropiedades(listadoPropiedades);
 
@@ -65,11 +64,41 @@ export default function HomeRSUI({ listadoPropiedades }) {
     
 
     const tipoDeseado = item.value; // Cambia 'venta' al tipo que desees buscar
+    let transaccion;
+    let estado; 
 
-    const objetosFiltrados = listadoPropiedades.filter(objeto => objeto.tipo === tipoDeseado);
+    switch(tipoDeseado){
+      case 0:
+        transaccion = 0
+        estado=1
+        break
+      case 1:
+        transaccion=0
+        estado=0
+        break
+      case 2:
+        transaccion=1
+        estado=1
+        break
+      case 3:
+        transaccion=1
+        estado=0
+        break
+      case 4:
+        estado=0
+        const objetosFiltrados = listadoPropiedades.filter(objeto => objeto.state === estado);
+        setPropiedades(objetosFiltrados)
+        break
+    }
+
+    if(tipoDeseado != 4){
+      const objetosFiltrados = listadoPropiedades.filter(objeto => objeto.transaction === transaccion && objeto.state === estado);
+      setPropiedades(objetosFiltrados)
+    }
 
 
-    setPropiedades(objetosFiltrados)
+
+    
 
     if (item.value == 'todo') {
       setPropiedades(listadoPropiedades)

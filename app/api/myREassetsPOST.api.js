@@ -1,9 +1,10 @@
-const postmyREAssets = async (realEstateName, estado) => {
+const postmyREAssets = async (realEstateName, estado, transaction) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
         "realEstateName": realEstateName,
         "state": estado,
+        "transaction": transaction
     });
 
     var requestOptions = {
