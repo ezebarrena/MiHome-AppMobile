@@ -25,22 +25,17 @@ import Theme from "../../styles/Theme";
 
 import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 import PanelDetalles from "../../components/componenteREDP/detalles";
+import Estados from "../../../assets/funcionTraduccion";
 
-export default function DetallePropiedadRSUI({mostrarBotones, propiedad, tipo}) {
+export default function DetallePropiedadRSUI({ informacion}) {
   //console.log(mostrarBotones.mostrarBotones);
   //{mostrarBotones.mostrarBotones ? <Text>Bienvenidos, Usuario</Text> : null}
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-  const [informacion, setInformacion] = useState([])
   const [modalPausarVisible, setModalPausarVisible] = useState(false);
   const [modalEliminarVisible, setModalEliminarVisible] = useState(false);
-  useEffect(() => {
+  const necesitaBoton = ['venta', 'alquiler', 'pausada', 'alquilada']
 
-
-    setInformacion(propiedad);
-
-    
-  }, [setInformacion])
   
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -75,11 +70,13 @@ export default function DetallePropiedadRSUI({mostrarBotones, propiedad, tipo}) 
     setModalEliminarVisible(false)
   }
 
-  const handleNavegacion = () =>{
-    navigation.navigate("PublicacionPropiedadT")
+  let tipo = Estados(informacion.transaction, informacion.state)
+
+  let mostrarBotones = false
+  if (necesitaBoton.includes(tipo)) {
+    mostrarBotones = true
   }
 
-  console.log(propiedad);
 
   return (
     <View style={styles.container}>

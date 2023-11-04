@@ -3,7 +3,7 @@ const login = async (email,password) => {
     myHeaders.append("Content-Type", "application/json");
     
     var raw = JSON.stringify({
-      "email": email,
+      "logInEmail": email,
       "password": password
     });
     
@@ -15,7 +15,7 @@ const login = async (email,password) => {
       mode: 'cors'
     };
     
-    let response = await fetch("http://192.168.1.6:8080//auths/login", requestOptions);
+    let response = await fetch("http://192.168.1.6:8080/auths/login", requestOptions);
     let jsonData = await response.json();
 
     return jsonData;

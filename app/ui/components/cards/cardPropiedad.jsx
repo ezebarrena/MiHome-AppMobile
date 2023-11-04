@@ -4,17 +4,19 @@ import Theme from "../../styles/Theme";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 import i18n from "../../../assets/strings/I18n";
+import Estados from "../../../assets/funcionTraduccion";
 
 export default function CardPropiedad({
   valor,
   calle,
   ambientes,
   metros,
-  state,
+  estado,
   onPress,
   moneda,
   numero,
   barrio,
+  transaccion,
 }) {
   const [fontsLoaded, fontError] = useFonts({
     Poppins_400Regular,
@@ -23,15 +25,10 @@ export default function CardPropiedad({
   if (!fontsLoaded && !fontError) {
     return null;
   }
-  let tipo;
-  switch(state){
-    case 0:
-      tipo = "alquiler"
-      break
-    case 1:
-      tipo = "venta"
-      break
-  }
+
+  let tipo = Estados(transaccion, estado);
+
+
 
   let idioma = "propiedadesEstados." + tipo;
   let i18nIdioma = i18n.t(idioma).toLocaleUpperCase();

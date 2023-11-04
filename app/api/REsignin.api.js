@@ -3,8 +3,8 @@ const REsignin = async (name,email,password) => {
     myHeaders.append("Content-Type", "application/json");
     
     var raw = JSON.stringify({
-      "name":name,
-      "email": email,
+      "fantasyName":name,
+      "logInEmail": email,
       "password": password
     });
     

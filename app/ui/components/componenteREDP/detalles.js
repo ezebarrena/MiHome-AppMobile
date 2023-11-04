@@ -23,20 +23,14 @@ import Theme from "../../styles/Theme";
 
 import imagenTest from '../../../assets/images/various/imagenCasaTest.png'
 
-export default function PanelDetalles({ propiedad }, tipo) {
-    const [datosPropiedad, setDatosPropiedad] = useState([])
+export default function PanelDetalles({ datosPropiedad, tipo }) {
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold,
         Poppins_500Medium,
         Poppins_600SemiBold,
     });
-    useEffect(() => {
 
 
-        setDatosPropiedad(propiedad);
-
-
-    }, [setDatosPropiedad, propiedad])
 
     if (!fontsLoaded && !fontError) {
         return null;
@@ -49,7 +43,6 @@ export default function PanelDetalles({ propiedad }, tipo) {
     let vendida = tipo === "vendida";
     let alquilado = tipo === "alquilada";
     let pausada = tipo === "pausada";
-
 
     return (
         <View style={styles.container}>

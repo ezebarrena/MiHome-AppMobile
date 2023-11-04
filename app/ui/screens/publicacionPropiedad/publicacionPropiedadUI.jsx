@@ -25,6 +25,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import Theme from "../../styles/Theme";
 import imagenInmobiliaria from '../../../assets/images/imagenInmobiliaria.png'
+import Estados from "../../../assets/funcionTraduccion";
 
 const { width } = Dimensions.get('window');
 
@@ -51,7 +52,7 @@ export default function PublicacionPropiedadUI({ propiedad }) {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
       });
-      
+      console.log(propiedad,'t');
       const ubicacion = propiedad.geoLocalization.split(" ");
       const latitude = parseFloat(ubicacion[0]); // Convierte la latitud en un número de punto flotante
       const longitude = parseFloat(ubicacion[1]); // Convierte la longitud en un número de punto flotante
@@ -67,6 +68,7 @@ export default function PublicacionPropiedadUI({ propiedad }) {
     if (!fontsLoaded && !fontError) {
         return null;
     }
+    let tipo = Estados(propiedad.transaction, propiedad.state)
     let idiomaTipo = "propiedadesEstados." + propiedad.tipo;
     let i18nIdiomaTipo = i18n.t(idiomaTipo)
     let idiomaDetalleTipo = "detallePropiedadInmobiliaria." + propiedad.tipo;
