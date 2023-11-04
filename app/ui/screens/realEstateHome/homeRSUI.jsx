@@ -134,7 +134,7 @@ export default function HomeRSUI({ listadoPropiedades }, idInmobiliaria) {
         <FlatList
           data={propiedades}
           keyExtractor={item => item._id}
-          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} state={item.state} onPress={() => navigation.navigate("DetallesPropiedadRE", {propiedadId:item._id})} />}
+          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} state={item.state} onPress={() => navigation.navigate("DetallesPropiedadRE", {propiedadId:item._id, detallePropiedad: item})} />}
           contentContainerStyle={{
             alignItems: "center",
             flexGrow: 1,

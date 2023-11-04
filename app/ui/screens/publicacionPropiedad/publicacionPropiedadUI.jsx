@@ -19,7 +19,7 @@ import {
     Poppins_500Medium,
     Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
-
+import MapView, { Marker } from 'react-native-maps';
 import i18n from "../../../assets/strings/I18n";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -36,12 +36,33 @@ const images = [
     // Agrega más imágenes aquí
 ];
 
+//TO DO 
+
 export default function PublicacionPropiedadUI({ propiedad }) {
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold,
         Poppins_500Medium,
         Poppins_600SemiBold,
     });
+
+    const [mapRegion, setMapRegion] = useState({
+        latitude: null,
+        longitude: null,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
+      
+      const ubicacion = propiedad.geoLocalization.split(" ");
+      const latitude = parseFloat(ubicacion[0]); // Convierte la latitud en un número de punto flotante
+      const longitude = parseFloat(ubicacion[1]); // Convierte la longitud en un número de punto flotante
+      
+      // Configura el estado mapRegion con los valores de latitud y longitud
+      setMapRegion({
+        latitude,
+        longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
 
     if (!fontsLoaded && !fontError) {
         return null;
@@ -64,15 +85,15 @@ export default function PublicacionPropiedadUI({ propiedad }) {
             <View style={styles.containerDetalles}>
                 <View style={styles.viewDetalles}>
                     <Ionicons name="location-outline" size={33} style={{ marginHorizontal: 8 }} />
-                    <Text style={styles.textDetalles1}>{propiedad.calle} {propiedad.numero}, {propiedad.barrio}, {propiedad.localidad}, {propiedad.provincia}</Text>
+                    <Text style={styles.textDetalles1}>{propiedad.streetName} {propiedad.streetNumber}, {propiedad.neighbourhood}, {propiedad.locality}, {propiedad.province}, {propiedad.country}</Text>
                 </View>
                 <View style={styles.viewDetalles}>
                     <Ionicons name="home-outline" size={33} style={{ marginHorizontal: 8 }} />
-                    <Text style={styles.textDetalles}>{propiedad.tipoPropiedad} {i18nIdiomaTipo} </Text>
+                    <Text style={styles.textDetalles}>{propiedad.type} {i18nIdiomaTipo} </Text>
                 </View>
                 <View style={styles.viewDetalles}>
                     <MaterialIcons name="straighten" size={33} style={{ marginHorizontal: 8 }} />
-                    <Text style={styles.textDetalles}>{propiedad.m2cubiertos} m2 totales, {propiedad.m2descubiertos} m2 cubiertos</Text>
+                    <Text style={styles.textDetalles}>{propiedad.mTotal} m2 totales, {propiedad.mIndoor} m2 cubiertos</Text>
                 </View>
 
             </View>
@@ -84,9 +105,9 @@ export default function PublicacionPropiedadUI({ propiedad }) {
 
                 </View>
                 <View style={styles.viewValores1}>
-                    <Text style={styles.textValores}>{propiedad.precio}</Text>
-                    {propiedad.expensas ?
-                        <Text style={styles.textValores}>{propiedad.expensas}</Text>
+                    <Text style={styles.textValores}>{propiedad.coin} {propiedad.price}</Text>
+                    {propiedad.bills ?
+                        <Text style={styles.textValores}>$ {propiedad.bills}</Text>
                         : null}
                 </View>
 
@@ -95,19 +116,19 @@ export default function PublicacionPropiedadUI({ propiedad }) {
             <Text style={styles.descripcion}>{propiedad.descripcion}</Text>
             <View style={styles.chipContainer}>
                 <View style={styles.chip}>
-                    <Text style={styles.chipText}>{propiedad.ambientes} {propiedad.ambientes > 1 ? i18n.t("detallePropiedad.ambientes") : i18n.t("detallePropiedad.ambiente")}</Text>
+                    <Text style={styles.chipText}>{propiedad.room} {propiedad.room > 1 ? i18n.t("detallePropiedad.ambientes") : i18n.t("detallePropiedad.ambiente")}</Text>
                 </View>
                 <View style={styles.chip}>
-                    <Text style={styles.chipText}>{propiedad.cantCuartos} {propiedad.cantCuartos > 1 ? i18n.t("detallePropiedad.habitaciones") : i18n.t("detallePropiedad.habitacion")}</Text>
+                    <Text style={styles.chipText}>{propiedad.bedroom} {propiedad.bedroom > 1 ? i18n.t("detallePropiedad.habitaciones") : i18n.t("detallePropiedad.habitacion")}</Text>
                 </View>
                 <View style={styles.chip}>
-                    <Text style={styles.chipText}>{propiedad.nBaths} {propiedad.nBaths > 1 ? i18n.t("detallePropiedad.banios") : i18n.t("detallePropiedad.banio")}</Text>
+                    <Text style={styles.chipText}>{propiedad.bath} {propiedad.bath > 1 ? i18n.t("detallePropiedad.banios") : i18n.t("detallePropiedad.banio")}</Text>
                 </View>
                 <View style={styles.chip}>
-                    <Text style={styles.chipText}>{propiedad.cochera} {propiedad.cochera > 1 ? i18n.t("detallePropiedad.cocheras") : i18n.t("detallePropiedad.cochera")}</Text>
+                    <Text style={styles.chipText}>{propiedad.garage} {propiedad.garage > 1 ? i18n.t("detallePropiedad.cocheras") : i18n.t("detallePropiedad.cochera")}</Text>
                 </View>
                 <View style={styles.chip}>
-                    <Text style={styles.chipText}>{propiedad.baulera} {propiedad.baulera > 1 ? i18n.t("detallePropiedad.bauleras") : i18n.t("detallePropiedad.baulera")}</Text>
+                    <Text style={styles.chipText}>{propiedad.storage} {propiedad.storage > 1 ? i18n.t("detallePropiedad.bauleras") : i18n.t("detallePropiedad.baulera")}</Text>
                 </View>
 
                 {propiedad.amenities.map((chip, index) => (
@@ -120,11 +141,21 @@ export default function PublicacionPropiedadUI({ propiedad }) {
             </View>
             <View style={styles.viewUbicacion}>
                 <Text style={styles.textUbicacion}>{i18n.t("detallePropiedad.ubicacion")}</Text>
+                <MapView style={styles.map} region={mapRegion}>
+                    {mapRegion.latitude !== null && mapRegion.longitude !== null && (
+                        <Marker
+                            coordinate={{
+                                latitude: mapRegion.latitude,
+                                longitude: mapRegion.longitude,
+                            }}
+                        />
+                    )}
+                </MapView>
             </View>
             <View style={styles.viewExtras}>
-                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.coordenadas")}: {propiedad.geolocalizacion}</Text>
-                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.orientacion")}: oeste, norte</Text>
-                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.antiguedad")}: 25 {i18n.t("detallePropiedad.anios")}</Text>
+                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.coordenadas")}: {propiedad.geolocalization}</Text>
+                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.orientacion")}: {propiedad.frontBack}</Text>
+                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.antiguedad")}: {propiedad.antiquity} {propiedad.antiquity > 1 ? i18n.t("detallePropiedad.anios") : i18n.t("detallePropiedad.anio")}</Text>
             </View>
             <View style={styles.viewCardInmobiliaria}>
                 <View style={styles.imageContainer}>
@@ -181,15 +212,15 @@ const styles = StyleSheet.create({
 
     },
     textDetalles: {
-        paddingHorizontal:15,
+        paddingHorizontal: 15,
         fontFamily: 'Poppins_600SemiBold',
         fontSize: Dimensions.get("window").width * 0.039,
     },
-    textDetalles1:{
+    textDetalles1: {
 
         fontFamily: 'Poppins_600SemiBold',
         fontSize: Dimensions.get("window").width * 0.039,
-        paddingHorizontal:15,
+        paddingHorizontal: 15,
     },
     viewValores: {
         backgroundColor: Theme.colors.PRIMARY,
@@ -290,16 +321,19 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         flex: 1, // Toma todo el espacio disponible
-        alignItems:'flex-start',
-        justifyContent:'center'
+        alignItems: 'flex-start',
+        justifyContent: 'center'
     },
-    tituloCI:{
+    tituloCI: {
         fontFamily: 'Poppins_700Bold',
         fontSize: Dimensions.get("window").width * 0.045,
     },
-    textoCI:{
+    textoCI: {
         fontFamily: 'Poppins_500Medium',
         fontSize: Dimensions.get("window").width * 0.039,
     },
-
+    map: {
+        height: 200,
+        marginVertical: 10,
+    },
 })

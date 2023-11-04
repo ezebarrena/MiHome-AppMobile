@@ -42,7 +42,6 @@ const postAsset = async (title,image,type,transaction,price,coin,bills,descripti
 
     let response = await fetch("http://192.168.1.6:8080/assets", requestOptions)
     let jsonData = await response.json();
-    //console.log(response.status);
     return jsonData.asset;
 
 

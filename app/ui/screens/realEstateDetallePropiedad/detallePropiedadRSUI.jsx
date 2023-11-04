@@ -26,14 +26,22 @@ import Theme from "../../styles/Theme";
 import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 import PanelDetalles from "../../components/componenteREDP/detalles";
 
-export default function DetallePropiedadRSUI({ mostrarBotones, informacion, tipo }) {
+export default function DetallePropiedadRSUI({mostrarBotones, propiedad, tipo}) {
   //console.log(mostrarBotones.mostrarBotones);
   //{mostrarBotones.mostrarBotones ? <Text>Bienvenidos, Usuario</Text> : null}
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [informacion, setInformacion] = useState([])
   const [modalPausarVisible, setModalPausarVisible] = useState(false);
   const [modalEliminarVisible, setModalEliminarVisible] = useState(false);
+  useEffect(() => {
 
+
+    setInformacion(propiedad);
+
+    
+  }, [setInformacion])
+  
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -70,6 +78,8 @@ export default function DetallePropiedadRSUI({ mostrarBotones, informacion, tipo
   const handleNavegacion = () =>{
     navigation.navigate("PublicacionPropiedadT")
   }
+
+  console.log(propiedad);
 
   return (
     <View style={styles.container}>
@@ -109,7 +119,7 @@ export default function DetallePropiedadRSUI({ mostrarBotones, informacion, tipo
           </View>
         </View>
       </Modal>
-      <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", {propiedadId:informacion.id})} style={styles.divImagen}>
+      <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", {propiedadId:informacion._id})} style={styles.divImagen}>
         <Image source={imagenTest} style={styles.imagen} />
       </TouchableOpacity>
       {mostrarBotones ? (
