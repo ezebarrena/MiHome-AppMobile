@@ -19,7 +19,7 @@ import {
     Poppins_500Medium,
     Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
-import MapView, { Marker } from 'react-native-maps';
+//import MapView, { Marker } from 'react-native-maps';
 import i18n from "../../../assets/strings/I18n";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -39,14 +39,15 @@ const images = [
 
 //TO DO 
 
-export default function PublicacionPropiedadUI({ propiedad }) {
+export default function PublicacionPropiedadUI( {propiedad} ) {
+
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold,
         Poppins_500Medium,
         Poppins_600SemiBold,
     });
 
-    const [mapRegion, setMapRegion] = useState({
+    /* const [mapRegion, setMapRegion] = useState({
         latitude: null,
         longitude: null,
         latitudeDelta: 0.01,
@@ -63,15 +64,15 @@ export default function PublicacionPropiedadUI({ propiedad }) {
         longitude,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
-      });
+      }); */
 
     if (!fontsLoaded && !fontError) {
         return null;
     }
     let tipo = Estados(propiedad.transaction, propiedad.state)
-    let idiomaTipo = "propiedadesEstados." + propiedad.tipo;
+    let idiomaTipo = "propiedadesEstados." + tipo;
     let i18nIdiomaTipo = i18n.t(idiomaTipo)
-    let idiomaDetalleTipo = "detallePropiedadInmobiliaria." + propiedad.tipo;
+    let idiomaDetalleTipo = "detallePropiedadInmobiliaria." + tipo;
     let i18nIdiomaDetalleTipo = i18n.t(idiomaDetalleTipo)
     return (
         <ScrollView style={styles.container}>
@@ -143,7 +144,7 @@ export default function PublicacionPropiedadUI({ propiedad }) {
             </View>
             <View style={styles.viewUbicacion}>
                 <Text style={styles.textUbicacion}>{i18n.t("detallePropiedad.ubicacion")}</Text>
-                <MapView style={styles.map} region={mapRegion}>
+                {/* <MapView style={styles.map} region={mapRegion}>
                     {mapRegion.latitude !== null && mapRegion.longitude !== null && (
                         <Marker
                             coordinate={{
@@ -152,7 +153,7 @@ export default function PublicacionPropiedadUI({ propiedad }) {
                             }}
                         />
                     )}
-                </MapView>
+                </MapView> */}
             </View>
             <View style={styles.viewExtras}>
                 <Text style={styles.textExtras}>{i18n.t("detallePropiedad.coordenadas")}: {propiedad.geolocalization}</Text>
