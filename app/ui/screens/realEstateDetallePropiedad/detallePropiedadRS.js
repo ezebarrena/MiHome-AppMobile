@@ -13,12 +13,13 @@ export default function DetallePropiedadRS({ route }) { //tendria que recibir id
     //const [botones, setBotones] = useState(false)
     
     useEffect(() => {
+        let respuesta
         const busquedaPropiedades = async () => {
 
             try {
 
-                const respuesta = await postIdAsset(propiedadId)
-
+                respuesta = await postIdAsset(propiedadId)
+                console.log(respuesta);
                 setPropiedad(respuesta[0]);
 
    
