@@ -11,10 +11,8 @@ import ImagePickerModal from "../../components/modals/ImagePickerModal";
 import { Ionicons } from "@expo/vector-icons"; // Asegúrate de importar Ionicons desde tu proyecto
 import MapView, { Marker } from 'react-native-maps';
 import CustomSearchBar from "../../components/inputs/CustomSearchBar";
-
-//API
-import assetPOST from '../../../api/assetPOST.api';
-
+import { useForm } from "../../../hooks/useForm";
+import { createAsset } from "../../../api/assetsAPI";
 
 const dataTypes = [
   { key: '1', value: 'Casa' },
@@ -103,6 +101,81 @@ export default function UploadAssetUI({}) {
     longitudeDelta: 0.01,
   });
 
+  var raw = JSON.stringify({
+    "title": title,
+    "image":image,
+    "type": type,
+    "transaction": transaction, //1 alquiler, 0 venta
+    "price":price,
+    "coin":coin,
+    "bills":bills,
+    "description":description,
+    "amenities":amenities,
+    "room":room,
+    "floor":floor,
+    "bath":bath,
+    "bedroom":bedroom,
+    "garage":garage,
+    "mTotal":mTotal,
+    "mIndoor":mIndoor,
+    "storage":storage,
+    "antiquity":antiquity,
+    "streetName":streetName,
+    "streetNumber":streetNumber,
+    "neighbourhood":neighbourhood,
+    "locality":locality,
+    "province":province,
+    "country":country,
+    "geoLocalization":geoLocalization,
+    "frontBack":frontBack,
+    "state":state, //1 disponible, 0 no disponible
+    "realEstateName":realEstateName,
+  });
+
+  const initialFormState = {
+    title: '',
+    image: [],
+    type: '',
+    transaction: '',
+    price: '',
+    coin: '',
+    bills: '',
+    description: '',
+    amenities: [],
+    room: '',
+    floor: '',
+    bath: '',
+    bedroom: '',
+    garage: '',
+    mTotal: '',
+    mIndoor: '',
+    storage: '',
+    antiquity: '',
+    streetName: '',
+    streetNumber: '',
+    neighbourhood: '',
+    locality: '',
+    province: '',
+    country: '',
+    geoLocalization: '',
+    frontBack: '',
+    state: '',
+    realEstateName: '',
+  };
+  
+  const { form, onChange } = useForm(initialFormState);
+ 
+  const handleSubmit = async () => {
+    const response = await createAsset(form);
+    if (response) {
+      navigation.navigate("LandingStackRE");
+    }
+    else {
+      alert("Usuario o contraseña incorrectos");
+    }
+  };
+    
+
   const renderImagePreview = (imageUris) => {
     return (
       <FlatList
@@ -134,32 +207,6 @@ export default function UploadAssetUI({}) {
     updatedImages.splice(index, 1);
     setImageUris(updatedImages);
   };
-
-  const handleSubmit = async () => {
-    try {
-      const response = await assetPOST(formData); // Envía el objeto formData a la función assetPOST
-      console.log(response);
-    } catch (error) {
-      console.error('Error al enviar el formulario:', error);
-    }
-  };
-
-  const [formData, setFormData] = useState({
-    title: '',
-    types:'',
-    transaction:'',
-    price:'',
-    coin:'',
-
-  });
-
-
-
-  //manejo de API 
-  //const [asset, setAsset] = useState([])
-  //const {assetData} = route.params;
-  //const [title, setTitle] = useState('');
-  //const [types, setTypes] = useState('');
 
   return (
     <ScrollView style={styles.ScrollView}>
@@ -267,7 +314,7 @@ export default function UploadAssetUI({}) {
           )}
         </MapView>
         
-        <Button title={"Publicar"} titleColor={"white"} onPress={handleSubmit}/>
+        <Button title={"Publicar"} titleColor={"white"} onPress={handleSubmit} />
       </View>
     </ScrollView>
   );

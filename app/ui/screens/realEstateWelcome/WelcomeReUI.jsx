@@ -9,16 +9,34 @@ import Button from "../../components/buttons/Button";
 import CustomTextInput from "../../components/inputs/CustomTextInput";
 import RegistrationModal from "../../components/modals/RegistrationModal";
 import CannotLoginModal from "../../components/modals/CannotLogin/CannotLoginModal";
+import { useForm } from "../../../hooks/useForm";
+import { logInRealEstate } from "../../../api/realEstatesAPI";
 
 export default function WelcomeReUI() {
   const navigation = useNavigation();
-
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold_Italic,
   });
 
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showCannotLoginModal, setShowCannotLoginModal] = useState(false);
+
+  const initialFormState = {
+    logInEmail: "",
+    password: "",
+  };
+
+  const { form, onChange } = useForm(initialFormState);
+
+  const handleLogin = async () => {
+    const response = await logInRealEstate(form);
+    if (response) {
+      navigation.navigate("LandingStackRE");
+    }
+    else {
+      alert("Usuario o contraseña incorrectos");
+    }
+  };
 
   if (!fontsLoaded && !fontError) {
     return null;
@@ -34,10 +52,10 @@ export default function WelcomeReUI() {
           <View style={styles.contentContainer}>
             <Text style={styles.appName}>{i18n.t("common.appName")}</Text>
             <View style={styles.loginContainer}>
-              <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.emailInput')} />
-              <CustomTextInput secureTextEntry={true} placeholder={i18n.t('realEstateWelcomeScreen.passwordInput')} />
+              <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.emailInput') } value={form.logInEmail} onChangeText={(value) => onChange(value, "logInEmail")} />
+              <CustomTextInput secureTextEntry={true} placeholder={i18n.t('realEstateWelcomeScreen.passwordInput') } value={form.password} onChangeText={(value) => onChange(value, "password")} />
 
-              <Button title={i18n.t('realEstateWelcomeScreen.loginButton')} titleColor='#E36565' onPress={() => navigation.navigate("LandingStackRE")}/>
+              <Button title={i18n.t('realEstateWelcomeScreen.loginButton')} titleColor='#E36565' onPress={handleLogin} />
 
               <Pressable onPress={() => setShowRegistrationModal(true)}>
                 <Text style={styles.signUpText}>
