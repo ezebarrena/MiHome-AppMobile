@@ -6,6 +6,6 @@ import i18n from '../../../assets/strings/I18n';
 
 export default function UpdateAsset() {
     return (
-        <UpdateAsset />
+        <UpdateAssetUI />
     )
 }
