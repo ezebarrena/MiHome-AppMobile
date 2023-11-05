@@ -134,28 +134,37 @@ export default function UploadAssetUI({}) {
 
   const initialFormState = {
     title: '',
-    types:'',
-    transaction:'',
-    price:'',
-    coin:'',
-    bills:'',
-    description:'',
-    amenities:'',
-    rooms:'',
-    floors:'',
-    bath:'',
-    bedroom:'',
-    garage:'',
-    mTotal:'',
-    mCover:'',
-    storage:'',
-    antiquity:'',
-    frontBack:'',
-    location:'',
+    image: [],
+    type: '',
+    transaction: '',
+    price: '',
+    coin: '',
+    bills: '',
+    description: '',
+    amenities: [],
+    room: '',
+    floor: '',
+    bath: '',
+    bedroom: '',
+    garage: '',
+    mTotal: '',
+    mIndoor: '',
+    storage: '',
+    antiquity: '',
+    streetName: '',
+    streetNumber: '',
+    neighbourhood: '',
+    locality: '',
+    province: '',
+    country: '',
+    geoLocalization: '',
+    frontBack: '',
+    state: '',
+    realEstateName: '',
   };
-
+  
   const { form, onChange } = useForm(initialFormState);
-
+ 
   const handleSubmit = async () => {
     const response = await createAsset(form);
     if (response) {
