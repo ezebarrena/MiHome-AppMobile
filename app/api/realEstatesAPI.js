@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://tu-direccion-del-backend.com'; // Reemplaza con la URL de tu backend
+const API_BASE_URL = 'http://3.17.181.224:8080'; // Reemplaza con la URL de tu backend
 
 // Crea una instancia personalizada de Axios
 const realEstatesAPI = axios.create({
@@ -23,7 +23,7 @@ export const signInRealEstate = async (realEstateData) => {
 
 export const logInRealEstate = async (realEstateData) => {
   try {
-    const response = await realEstatesAPI.post('/auths/l', realEstateData);
+    const response = await realEstatesAPI.post('/auths/login', realEstateData);
     return response.data;
   } catch (error) {
     console.error('Error logging in real estate:', error);
