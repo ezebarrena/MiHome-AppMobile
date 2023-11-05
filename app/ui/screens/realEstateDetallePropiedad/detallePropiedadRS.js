@@ -3,7 +3,7 @@ import i18n from '../../../assets/strings/I18n';
 import React, { useState, useEffect } from "react";
 
 import DetallePropiedadRSUI from './detallePropiedadRSUI';
-import { ActivityIndicator, View } from 'react-native';
+import { getAssetById } from '../../../api/assetsAPI';
 
 export default function DetallePropiedadRS({ route }) { //tendria que recibir id para hacer una busqueda en bd
     const { propiedadId } = route.params;
@@ -17,9 +17,8 @@ export default function DetallePropiedadRS({ route }) { //tendria que recibir id
 
             try {
 
-                respuesta = await postIdAsset(propiedadId)
-                console.log(respuesta);
-                setPropiedad(respuesta[0]);
+                respuesta = await getAssetById(propiedadId)
+                setPropiedad(respuesta.asset[0]);
 
    
             }

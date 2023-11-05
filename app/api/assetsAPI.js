@@ -65,7 +65,7 @@ export const deleteAsset = async (assetId) => {
 
 export const getAssetById = async (assetId) => {
   try {
-    const response = await assetsAPI.post('/idAssets', { id: assetId });
+    const response = await assetsAPI.post('/idAssets', { _id: assetId });
     return response.data;
   } catch (error) {
     console.error('Error getting asset by ID:', error);

@@ -1,15 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, Dimensions, FlatList } from "react-native";
+import {
+
+  StyleSheet,
+  View,
+  Text,
+  Dimensions,
+  Image,
+  FlatList,
+
+
+} from "react-native";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
+
 import i18n from "../../../assets/strings/I18n";
+import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
+
 import CardPropiedad from "../../components/cards/cardPropiedad";
 import { useNavigation } from "@react-navigation/native";
+
 import Theme from "../../styles/Theme";
-import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
 import DropDownPicker from 'react-native-dropdown-picker';
 
-export default function HomeRSUI() {
+import DetallePropiedadRS from "../realEstateDetallePropiedad/detallePropiedadRS";
 
+//SplashScreen.preventAutoHideAsync();
+
+export default function HomeRSUI({ listadoPropiedades }) {
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -23,7 +39,13 @@ export default function HomeRSUI() {
   ]);
 
   const [propiedades, setPropiedades] = useState()
-  
+
+
+  useEffect(() => {
+
+
+    setPropiedades(listadoPropiedades.asset);
+  }, [setPropiedades, listadoPropiedades])
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
