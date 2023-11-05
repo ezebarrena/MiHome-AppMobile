@@ -16,6 +16,7 @@ const postIdAsset = async (idPropiedad) => {
     
     let response = await fetch("http://192.168.1.6:8080/idAssets", requestOptions)
     let jsonData = await response.json();
+    console.log(jsonData);
     return jsonData.asset;
 
 
