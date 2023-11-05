@@ -10,7 +10,7 @@ import CustomTextInput from "../../components/inputs/CustomTextInput";
 import RegistrationModal from "../../components/modals/RegistrationModal";
 import CannotLoginModal from "../../components/modals/CannotLogin/CannotLoginModal";
 import { useForm } from "../../../hooks/useForm";
-import { signInRealEstate, logInRealEstate } from "../../../api/realEstatesAPI";
+import { logInRealEstate } from "../../../api/realEstatesAPI";
 
 export default function WelcomeReUI() {
   const navigation = useNavigation();
