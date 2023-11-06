@@ -43,7 +43,11 @@ export default function PanelDetalles({ datosPropiedad, tipo }) {
     let vendida = tipo === "vendida";
     let alquilado = tipo === "alquilada";
     let pausada = tipo === "pausada";
-
+    let expensas = false
+    console.log(datosPropiedad.bills);
+    if("bills" in datosPropiedad){
+        expensas= true
+    }
     return (
         <View style={styles.container}>
             <View style={styles.headEstadoPropiedad}>
@@ -89,7 +93,7 @@ export default function PanelDetalles({ datosPropiedad, tipo }) {
 
 
 
-           {/*  {(vendida || alquilado) ? null : (
+           {(vendida || alquilado) ? null : (
                 expensas = undefined  ? (
                     <View style={styles.headEstadoPropiedad}>
                         <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.expensas')}</Text>
@@ -100,7 +104,7 @@ export default function PanelDetalles({ datosPropiedad, tipo }) {
                         <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.noExpensas')}</Text>
                     </View>
                 )
-            )} */}
+            )}
 
 
 
