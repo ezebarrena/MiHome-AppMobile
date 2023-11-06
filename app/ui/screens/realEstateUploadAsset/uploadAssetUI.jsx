@@ -29,6 +29,11 @@ const dataTypes = [
   { key: '8', value: i18n.t('REUploadAssetChoices.terrain') },
 ];
 
+const dataFrontBack = [
+  { key: '1', value: 'Frente' },
+  { key: '2', value: 'Contrafrente' },
+]
+
 const dataTransaccion = [
   { key: '1', value: i18n.t('REUploadAssetChoices.sell') },
   { key: '2', value: i18n.t('REUploadAssetChoices.rent') },
@@ -152,7 +157,7 @@ export default function UploadAssetUI({ }) {
     "garage": null,
     "mTotal": null,
     "mIndoor": null,
-    "storage": null,
+    "storage": false,
     "antiquity": null,
     "streetName": "",
     "streetNumber": null,
@@ -372,11 +377,17 @@ export default function UploadAssetUI({ }) {
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.storage')}</Text>
-        <ChoiceMultipleInput
+        <ChoiceInput
           data={dataStorage}
           value={form.storage}
-          onValueSelect={(value) => onChange(value, "storage")}
+          onValueSelect={(value) => {
+            let valor= false 
+            if(value == 'Si' || value == 'si'){
+              valor = true
+            }
+            onChange(valor, "storage")}}
         />
+
 
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.antiquity')}</Text>
@@ -387,10 +398,12 @@ export default function UploadAssetUI({ }) {
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.frontBack')}</Text>
-        <CustomTextInput
+        <ChoiceInput
+          data={dataFrontBack}
           value={form.frontBack}
-          onChangeText={(value) => onChange(value, "frontBack")}
+          onValueSelect={(value) => onChange(value, "frontBack")}
         />
+
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
         <CustomSearchBar
