@@ -50,6 +50,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
     if(listadoPropiedades.asset && listadoPropiedades.asset.length > 0){
       setActive(false)
     }
+    console.log(propiedades,'s');
   }, [setPropiedades, listadoPropiedades])
 
   const [fontsLoaded, fontError] = useFonts({

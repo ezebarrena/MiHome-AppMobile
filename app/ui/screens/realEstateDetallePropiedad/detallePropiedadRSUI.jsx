@@ -26,8 +26,9 @@ import Theme from "../../styles/Theme";
 import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 import PanelDetalles from "../../components/componenteREDP/detalles";
 import Estados from "../../../assets/funcionTraduccion";
+import { deleteAsset } from "../../../api/assetsAPI";
 
-export default function DetallePropiedadRSUI({ informacion}) {
+export default function DetallePropiedadRSUI({ informacion }) {
   //console.log(mostrarBotones.mostrarBotones);
   //{mostrarBotones.mostrarBotones ? <Text>Bienvenidos, Usuario</Text> : null}
   const navigation = useNavigation();
@@ -36,7 +37,7 @@ export default function DetallePropiedadRSUI({ informacion}) {
   const [modalEliminarVisible, setModalEliminarVisible] = useState(false);
   const necesitaBoton = ['venta', 'alquiler', 'pausada', 'alquilada']
 
-  
+
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -64,10 +65,30 @@ export default function DetallePropiedadRSUI({ informacion}) {
     setModalEliminarVisible(true)
   };
 
-  const cerrarModales = () => {
+  const cerrarModales = (numero) => {
+    if (numero == 1) {
+      //funcion para pausar
+    }
+    if (numero == 2) {
+      handleDelete()
+    }
     setModalVisible(false)
     setModalPausarVisible(false)
     setModalEliminarVisible(false)
+  }
+  const handleDelete = async () => {
+    try {
+
+      respuesta = await deleteAsset(informacion._id)
+      console.log(respuesta,'ta');
+      if(respuesta.status == 200){
+        navigation.navigate("LandingStackRE");
+      }
+
+    }
+    catch (error) {
+      console.error('Error al obtener la busqduedass:', error);
+    }
   }
 
   let tipo = Estados(informacion.transaction, informacion.state)
@@ -77,7 +98,7 @@ export default function DetallePropiedadRSUI({ informacion}) {
     mostrarBotones = true
   }
 
-  console.log(informacion.title);
+
 
   return (
     <View style={styles.container}>
@@ -96,28 +117,28 @@ export default function DetallePropiedadRSUI({ informacion}) {
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: '100%', paddingVertical: 5 }}>
               <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => cerrarModales()}>
+                onPress={() => cerrarModales(0)}>
                 <Text style={styles.textStyle}>{i18n.t("detallePropiedadInmobiliaria.cancelarModal")}</Text>
               </TouchableOpacity>
-              {modalPausarVisible ? 
-              <TouchableOpacity
-                style={[styles.button, styles.botonPausa]}
-                onPress={() => cerrarModales()}>
-                <Text style={[styles.textStyle, styles.colorNegroFuente]}>{i18n.t("detallePropiedadInmobiliaria.pausar")}</Text>
-              </TouchableOpacity> : null}
-              {modalEliminarVisible ? 
-              <TouchableOpacity
-                style={[styles.button, styles.botonEliminar]}
-                onPress={() => cerrarModales()}>
-                <Text style={styles.textStyle}>{i18n.t("detallePropiedadInmobiliaria.eliminar")}</Text>
-              </TouchableOpacity> : null}
+              {modalPausarVisible ?
+                <TouchableOpacity
+                  style={[styles.button, styles.botonPausa]}
+                  onPress={() => cerrarModales(1)}>
+                  <Text style={[styles.textStyle, styles.colorNegroFuente]}>{i18n.t("detallePropiedadInmobiliaria.pausar")}</Text>
+                </TouchableOpacity> : null}
+              {modalEliminarVisible ?
+                <TouchableOpacity
+                  style={[styles.button, styles.botonEliminar]}
+                  onPress={() => cerrarModales(2)}>
+                  <Text style={styles.textStyle}>{i18n.t("detallePropiedadInmobiliaria.eliminar")}</Text>
+                </TouchableOpacity> : null}
 
             </View>
 
           </View>
         </View>
       </Modal>
-      <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", {propiedadId:informacion._id, name: informacion.title})} style={styles.divImagen}>
+      <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", { propiedadId: informacion._id, name: informacion.title })} style={styles.divImagen}>
         <Image source={imagenTest} style={styles.imagen} />
       </TouchableOpacity>
       {mostrarBotones ? (
@@ -265,8 +286,8 @@ const styles = StyleSheet.create({
   buttonClose: {
     backgroundColor: '#2196F3',
   },
-  colorNegroFuente:{
-    color:'black',
+  colorNegroFuente: {
+    color: 'black',
   },
   textStyle: {
     color: 'white',

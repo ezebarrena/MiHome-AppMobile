@@ -35,51 +35,16 @@ const dataTransaccion = [
 ];
 
 const dataCurrency = [
-  { key: '1', value: 'U$D dolar estadounidense' },
-  { key: '2', value: 'AR$ peso argentino' },
+  { key: '1', value: 'U$D' },
+  { key: '2', value: 'AR$' },
 ];
 
-const dataRooms = [
-  { key: '1', value: '1' },
-  { key: '2', value: '2' },
-  { key: '3', value: '3' },
-  { key: '4', value: '4' },
-  { key: '5', value: '5' },
-  { key: '6', value: '6' },
-  { key: '7', value: '7' },
-  { key: '8', value: '8' },
-  { key: '9', value: '9' },
-  { key: '10', value: '10' },
-  { key: '11', value: 'Mas de 10' },
+const dataStorage = [
+  { key: '1', value: 'Si' },
+  { key: '2', value: 'No' },
 ];
 
-const dataFloors = [
-  { key: '1', value: '1' },
-  { key: '2', value: '2' },
-  { key: '3', value: '3' },
-  { key: '4', value: '4 o mas' },
-];
 
-const dataBaths = [
-  { key: '1', value: '1' },
-  { key: '2', value: '2' },
-  { key: '3', value: '3' },
-  { key: '4', value: '4 o mas' },
-];
-
-const dataBedrooms = [
-  { key: '1', value: '1' },
-  { key: '2', value: '2' },
-  { key: '3', value: '3' },
-  { key: '4', value: '4 o mas' },
-];
-
-const dataGarages = [
-  { key: '1', value: '1 vehiculo' },
-  { key: '2', value: '2 vehiculos' },
-  { key: '3', value: '3 vehiculos' },
-  { key: '4', value: '4 o mas vehiculos' },
-];
 
 const dataAmenities = [
   { key: '1', value: 'pileta' },
@@ -95,7 +60,7 @@ const dataAmenities = [
   { key: '11', value: 'Espacio para deportes' },
 ];
 
-export default function UploadAssetUI({}) {
+export default function UploadAssetUI({ }) {
   const [imageUris, setImageUris] = useState([]);
 
   const [mapRegion, setMapRegion] = useState({
@@ -138,60 +103,103 @@ export default function UploadAssetUI({}) {
   });
   */
 
-  const initialFormState = {
-    title: '',
-    image: [],
-    type: '',
-    transaction: null,
-    price: null,
-    coin: '',
-    bills: null,
-    description: '',
-    amenities: [],
-    room: null,
-    floor: null,
-    bath: null,
-    bedroom: null,
-    garage: null,
-    mTotal: null,
-    mIndoor: null,
-    storage: null,
-    antiquity: null,
-    streetName: '',
-    streetNumber: '',
-    neighbourhood: '',
-    locality: '',
-    province: '',
-    country: '',
-    geoLocalization: '',
-    frontBack: '',
-    state: null,
-    realEstateName: '',
-  };
+  /*   const initialFormState = {
+      "title": '',
+      "image": [],
+      "type": '',
+      "transaction": null,
+      "price": null,
+      "coin": '',
+      "bills": null,
+      "description": '',
+      "amenities": [],
+      "room": null,
+      "floor": null,
+      "bath": null,
+      "bedroom": null,
+      'garage': null,
+      'mTotal': null,
+      'mIndoor': null,
+      'storage': null,
+      "antiquity": null,
+      "streetName": '',
+      "streetNumber": '',
+      "neighbourhood": '',
+      "locality": '',
+      "province": '',
+      "country": '',
+      "geoLocalization": '',
+      "frontBack": '',
+      "state": null,
+      "realEstateName": '',
+    }; */
 
-  
+
+  const initialFormState = {
+    "title": "",
+    "image": [],
+    "type": "",
+    "transaction": null,
+    "price": null,
+    "coin": "",
+    "bills": null,
+    "description": "",
+    "amenities": [],
+    "room": null,
+    "floor": null,
+    "bath": null,
+    "bedroom": null,
+    "garage": null,
+    "mTotal": null,
+    "mIndoor": null,
+    "storage": null,
+    "antiquity": null,
+    "streetName": "",
+    "streetNumber": null,
+    "neighbourhood": "",
+    "locality": "",
+    "province": "",
+    "country": "",
+    "geoLocalization": "",
+    "frontBack": "",
+    "state": 1,
+    "realEstateName": ""
+
+  }
+
+
+
+
   const { form, onChange, setFormValue } = useForm(initialFormState);
 
- 
-  
+
+
+
   const handleSubmit = async () => {
     const value = await AsyncStorage.getItem('realEstateId')
-    onChange(value, "realEstateName")
-    const nuevoForm = removeNullFields(form)
-    console.log(nuevoForm,'asdf');
-    const response = await createAsset(form);
-    if (response) {
-      navigation.navigate("LandingStackRE");
+
+    if (value) {
+      onChange(value, "realEstateName")
+      const nuevoForm = removeNullFields(form)
+      console.log(nuevoForm, 'asdf');
+      if (nuevoForm) {
+        const response = await createAsset(nuevoForm);
+        if (response) {
+          navigation.navigate("LandingStackRE");
+        }
+        else {
+          alert("error Upload Asset");
+        }
+      }
     }
-    else {
-      alert("error Upload Asset");
-    } 
+
+
   };
-  
+
   function removeNullFields(obj) {
     const result = {};
     for (const key in obj) {
-      if (obj[key] !== null) {
+      if (obj[key] !== "") {
         result[key] = obj[key];
       }
     }
@@ -231,17 +239,17 @@ export default function UploadAssetUI({}) {
   };
 
   return (
-    
+
     <ScrollView style={styles.ScrollView}>
       <View style={styles.contenedorHead}>
         <Text style={styles.textoHead}>{i18n.t('realEstateUploadAsset.headTitle')}</Text>
       </View>
-      
+
       <View style={styles.dataEntry}>
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
         <CustomTextInput
           value={form.title}
-          onChangeText={(value) => onChange( value,"title")} 
+          onChangeText={(value) => onChange(value, "title")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
@@ -253,119 +261,135 @@ export default function UploadAssetUI({}) {
         {renderImagePreview(imageUris)}
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
-        <ChoiceInput 
+        <ChoiceInput
           data={dataTypes}
           value={form.types}
-          onValueSelect={(value) => onChange(value,"type")}
+          onValueSelect={(value) => onChange(value, "type")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}</Text>
-        <ChoiceInput 
-          data={dataTransaccion} 
+        <ChoiceInput
+          data={dataTransaccion}
           value={form.transaction}
-          onValueSelect={(value) => onChange(value,"transaction")}
+          onValueSelect={(value) => {
+            let transaccion
+            if (value == "Alquiler") {
+              transaccion = 1
+            }
+            if (value == 'Venta') {
+              transaccion = 0
+            }
+            onChange(parseInt(transaccion), "transaction")
+          }}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.price')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           keyboardType={'numeric'}
           value={form.price}
-          onChangeText={(value)  => onChange(value,"price")}
+          onChangeText={(value) => onChange(parseInt(value), "price")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.coin')}</Text>
-        <ChoiceInput 
-          data={dataCurrency} 
+        <ChoiceInput
+          data={dataCurrency}
           value={form.coin}
-          onValueSelect={(value)  => onChange(value,"coin")}
+          onValueSelect={(value) => onChange(value, "coin")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bills')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           keyboardType={'numeric'}
           value={form.bills}
-          onChangeText={(value)  => onChange(value,"bills")}
+          onChangeText={(value) => onChange(parseInt(value), "bills")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.description')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           value={form.description}
-          onChangeText={(value)  => onChange(value,"description")}
+          onChangeText={(value) => onChange(value, "description")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.amenities')}</Text>
         <ChoiceMultipleInput
           data={dataAmenities}
           value={form.amenities}
-          onValueSelect={(value)  => onChange(value,"amenities")}
+          onValueSelect={(value) => onChange(value, "amenities")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}</Text>
-        <ChoiceInput 
-          data={dataRooms} 
+        <CustomTextInput
+          keyboardType={'numeric'}
           value={form.room}
-          onValueSelect={(value) => onChange(value,"room")}
+          onChangeText={(value) => onChange(parseInt(value), "room")}
         />
+
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.floors')}</Text>
-        <ChoiceInput 
-        data={dataFloors} 
-        value={form.floor}
-        onValueSelect={(value) => onChange(value,"floor")}
+        <CustomTextInput
+          keyboardType={'numeric'}
+          value={form.floor}
+          onChangeText={(value) => onChange(parseInt(value), "floor")}
         />
+
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bath')}</Text>
-        <ChoiceInput 
-        data={dataBaths} 
-        value={form.bath}
-        onValueSelect={(value) => onChange(value,"bath")}
+        <CustomTextInput
+          keyboardType={'numeric'}
+          value={form.bath}
+          onChangeText={(value) => onChange(parseInt(value), "bath")}
         />
+
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bedroom')}</Text>
-        <ChoiceInput 
-        data={dataBedrooms} 
-        value={form.bedroom}
-        onValueSelect={(value) => onChange(value,"bedroom")}
+        <CustomTextInput
+          keyboardType={'numeric'}
+          value={form.bedroom}
+          onChangeText={(value) => onChange(parseInt(value), "bedroom")}
         />
+
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.garage')}</Text>
-        <ChoiceInput 
-        data={dataGarages} 
-        value={form.garage}
-        onValueSelect={(value) => onChange(value,"garage")}
+        <CustomTextInput
+          keyboardType={'numeric'}
+          value={form.garage}
+          onChangeText={(value) => onChange(parseInt(value), "garage")}
         />
 
+
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mTotal')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           keyboardType={'numeric'}
           value={form.mTotal}
-          onChangeText={(value)  => onChange(value,"mTotal")}
+          onChangeText={(value) => onChange(parseInt(value), "mTotal")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mCover')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           keyboardType={'numeric'}
-          value={form.mIndoor} 
-          onChangeText={(value)  => onChange(value,"mIndoor")}
+          value={form.mIndoor}
+          onChangeText={(value) => onChange(parseInt(value), "mIndoor")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.storage')}</Text>
-        <CustomTextInput 
-          value={form.storage} 
-          onChangeText={(value)  => onChange(value,"storage")}             
+        <ChoiceMultipleInput
+          data={dataStorage}
+          value={form.storage}
+          onValueSelect={(value) => onChange(value, "storage")}
         />
 
+
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.antiquity')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           keyboardType={'numeric'}
-          value={form.antiquity} 
-          onChangeText={(value)  => onChange(value,"antiquity")}   
+          value={form.antiquity}
+          onChangeText={(value) => onChange(value, "antiquity")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.frontBack')}</Text>
-        <CustomTextInput 
-          value={form.frontBack} 
-          onChangeText={(value)  => onChange(value,"frontBack")}   
+        <CustomTextInput
+          value={form.frontBack}
+          onChangeText={(value) => onChange(value, "frontBack")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
@@ -389,6 +413,7 @@ export default function UploadAssetUI({}) {
             const streetNumber = addressParts.slice(-1)[0]; // El número de la calle es la última parte
 
             // Actualizar el estado o realizar otras acciones necesarias
+
             setFormValue(
               {
                 ...form,
@@ -401,6 +426,7 @@ export default function UploadAssetUI({}) {
                 geoLocalization: item.point.coordinates,
               }
             );
+
           }}
         />
         <MapView style={styles.map} region={mapRegion}>
@@ -413,8 +439,8 @@ export default function UploadAssetUI({}) {
             />
           )}
         </MapView>
-        
-       <Button title={"Publicar"} titleColor={"white"} onPress={()=> handleSubmit()} />
+
+        <Button title={"Publicar"} titleColor={"white"} onPress={() => handleSubmit()} />
       </View>
     </ScrollView>
   );
