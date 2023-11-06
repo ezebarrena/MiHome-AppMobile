@@ -1,34 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import RealEstateProfileUI from './RealEstateProfileUI';
-import i18n from '../../../assets/strings/I18n';
+import { getRealEstateID } from '../../../api/realEstatesAPI';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { getReById } from '../../../api/realEstatesAPI';
-
-
-//funcion que crea pantalla 
-/*
-export default function RealEstateProfile({route}) {
-    const { realEstateId } = route.params;
+export default function RealEstateProfile() {
 
     const [realEstate, setRealEstate] = useState([])
 
-    useEffect(()=> {
-        let respuesta
-        const busquedaRealEstate = async => {
+    useEffect(() => {
+        const getRealEstate = async () => {
+            const realEstateId = await AsyncStorage.getItem('realEstateId')
             try {
-                respuesta = await getReById(realEstateId)
-                setRealEstate(respuesta.asset[0]);
+                const response = await getRealEstateID(realEstateId)
+                setRealEstate(response)
             } catch (error) {
-                console.error('Error al obtener RealEstate')
+                console.error('Error al obtener la busqueda:', error);
             }
         }
-    },[])
-
-    busquedaRealEstate()
+        getRealEstate()
+    }, [])
     
     return (
         <RealEstateProfileUI realEstate ={realEstate} />
     )
 }
-
-*/
