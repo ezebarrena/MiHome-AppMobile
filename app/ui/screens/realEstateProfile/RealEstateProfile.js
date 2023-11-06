@@ -12,7 +12,7 @@ export default function RealEstateProfile() {
             const realEstateId = await AsyncStorage.getItem('realEstateId')
             try {
                 const response = await getRealEstateID(realEstateId)
-                setRealEstate(response)
+                setRealEstate(response.realEstates)
             } catch (error) {
                 console.error('Error al obtener la busqueda:', error);
             }
@@ -21,6 +21,6 @@ export default function RealEstateProfile() {
     }, [])
     
     return (
-        <RealEstateProfileUI realEstate ={realEstate} />
+        <RealEstateProfileUI params={realEstate} />
     )
 }
