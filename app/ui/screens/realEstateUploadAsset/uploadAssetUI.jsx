@@ -250,6 +250,7 @@ export default function UploadAssetUI({}) {
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.price')}</Text>
         <CustomTextInput 
+          keyboardType={'numeric'}
           value={form.price}
           onChangeText={(value)  => useForm(value,"price")}
         />
@@ -263,6 +264,7 @@ export default function UploadAssetUI({}) {
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bills')}</Text>
         <CustomTextInput 
+          keyboardType={'numeric'}
           value={form.bills}
           onChangeText={(value)  => useForm(value,"bills")}
         />
@@ -317,12 +319,14 @@ export default function UploadAssetUI({}) {
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mTotal')}</Text>
         <CustomTextInput 
+          keyboardType={'numeric'}
           value={form.mTotal}
           onChangeText={(value)  => useForm(value,"mTotal")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mCover')}</Text>
         <CustomTextInput 
+          keyboardType={'numeric'}
           value={form.mIndoor} 
           onChangeText={(value)  => useForm(value,"mIndoor")}
         />
@@ -335,6 +339,7 @@ export default function UploadAssetUI({}) {
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.antiquity')}</Text>
         <CustomTextInput 
+          keyboardType={'numeric'}
           value={form.antiquity} 
           onChangeText={(value)  => useForm(value,"antiquity")}   
         />
