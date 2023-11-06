@@ -35,8 +35,10 @@ const dataFrontBack = [
 ]
 
 const dataTransaccion = [
-  { key: '0', value: 'Venta' },
-  { key: '1', value: 'Alquiler' },
+
+  { key: '0', value: i18n.t('REUploadAssetChoices.sell') },
+  { key: '1', value: i18n.t('REUploadAssetChoices.rent') },
+
 ];
 
 const dataCurrency = [
@@ -45,24 +47,24 @@ const dataCurrency = [
 ];
 
 const dataStorage = [
-  { key: '1', value: 'Si' },
-  { key: '2', value: 'No' },
+  { key: '1', value: i18n.t('REUploadAssetChoices.yes') },
+  { key: '2', value: i18n.t('REUploadAssetChoices.no') },
 ];
 
 
 
 const dataAmenities = [
-  { key: '1', value: 'pileta' },
-  { key: '2', value: 'pileta climatizada' },
-  { key: '3', value: 'pileta techada' },
-  { key: '4', value: 'jacuzzi' },
-  { key: '5', value: 'Gimnasio' },
-  { key: '6', value: 'Quincho' },
-  { key: '7', value: 'Parrilla' },
-  { key: '8', value: 'Terraza' },
-  { key: '9', value: 'Jardin' },
-  { key: '10', value: 'Seguridad privada' },
-  { key: '11', value: 'Espacio para deportes' },
+  { key: '1', value: i18n.t('REUploadAssetChoices.pool') },
+  { key: '2', value: i18n.t('REUploadAssetChoices.climatized_pool') },
+  { key: '3', value: i18n.t('REUploadAssetChoices.covered_pool')},
+  { key: '4', value: i18n.t('REUploadAssetChoices.jacuzzi') },
+  { key: '5', value: i18n.t('REUploadAssetChoices.gym')},
+  { key: '6', value: i18n.t('REUploadAssetChoices.mpr') },
+  { key: '7', value: i18n.t('REUploadAssetChoices.grill') },
+  { key: '8', value: i18n.t('REUploadAssetChoices.terrace') },
+  { key: '9', value: i18n.t('REUploadAssetChoices.garden') },
+  { key: '10', value: i18n.t('REUploadAssetChoices.security') },
+  { key: '11', value: i18n.t('REUploadAssetChoices.sport') },
 ];
 
 export default function UploadAssetUI({ }) {
