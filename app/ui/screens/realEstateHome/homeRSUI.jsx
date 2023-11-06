@@ -7,7 +7,7 @@ import {
   Dimensions,
   Image,
   FlatList,
-
+  TouchableOpacity
 
 } from "react-native";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
@@ -22,6 +22,7 @@ import Theme from "../../styles/Theme";
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import DetallePropiedadRS from "../realEstateDetallePropiedad/detallePropiedadRS";
+//import UserProfile from "../../screens/userProfile/UserProfile.js"
 
 //SplashScreen.preventAutoHideAsync();
 
@@ -103,6 +104,9 @@ export default function HomeRSUI({ listadoPropiedades }) {
   }
 
 
+  const handleImagePress = () => {
+    navigation.navigate("../../screens/RealEstateProfile/RealProfile.js");
+  }
 
 
   return (
@@ -110,7 +114,10 @@ export default function HomeRSUI({ listadoPropiedades }) {
       <View style={styles.head}>
         <View style={styles.contenedorHead}>
           <Text style={styles.textoHead}>{i18n.t('homeScreenRS.main')}</Text>
-          <Image source={fotoPerfil} style={styles.imagenHead} />
+
+          <TouchableOpacity onPress={handleImagePress} style={styles}>
+            <Image source={fotoPerfil} style={styles.imagenHead} />
+          </TouchableOpacity>
         </View>
         <View style={styles.contenedorHead2}>
           <Text style={styles.textoHead2}>{i18n.t('homeScreenRS.headVisualization')}</Text>
@@ -153,7 +160,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.PRIMARY,
     paddingTop: "8%",
     justifyContent: 'center',
-    height: "25%",
+    height: "22%",
     borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
     borderBottomRightRadius: 15,
     zIndex:1,
@@ -161,19 +168,22 @@ const styles = StyleSheet.create({
   textoHead: {
     fontFamily: 'Poppins_700Bold',
     color: 'white',
-    fontSize: Dimensions.get('window').width * 0.07,
+    fontSize: Dimensions.get('window').width * 0.06,
+    paddingLeft:28
   },
   imagenHead: {
     resizeMode: 'contain',
-    height: "120%"
+    height:  Dimensions.get('window').width * 0.11,
+    marginLeft:20,
   },
   contenedorHead: {
     flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
     alignItems: 'center',
     marginLeft: "3%",
+    
   },
   contenedorHead2: {
-    marginTop: '5%',
+    marginTop: '4%',
     flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
     alignItems: 'center',
     justifyContent: 'space-evenly',
