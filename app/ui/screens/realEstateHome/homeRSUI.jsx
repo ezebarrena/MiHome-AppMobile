@@ -38,6 +38,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
     { label: i18n.t('propiedadesEstados.alquilada'), value: 3 },
     { label: i18n.t('propiedadesEstados.pausada'), value: 4 }
   ]);
+  const[active, setActive]=useState(true)
 
   const [propiedades, setPropiedades] = useState()
 
@@ -46,6 +47,9 @@ export default function HomeRSUI({ listadoPropiedades }) {
 
 
     setPropiedades(listadoPropiedades.asset);
+    if(listadoPropiedades.asset && listadoPropiedades.asset.length > 0){
+      setActive(false)
+    }
   }, [setPropiedades, listadoPropiedades])
 
   const [fontsLoaded, fontError] = useFonts({
@@ -58,45 +62,44 @@ export default function HomeRSUI({ listadoPropiedades }) {
   }
 
   const filtrarItems = (item) => {
-
     
 
     const tipoDeseado = item.value; // Cambia 'venta' al tipo que desees buscar
     let transaccion;
-    let estado; 
+    let estado;
 
-    switch(tipoDeseado){
+    switch (tipoDeseado) {
       case 0:
         transaccion = 0
-        estado=1
+        estado = 1
         break
       case 1:
-        transaccion=0
-        estado=0
+        transaccion = 0
+        estado = 0
         break
       case 2:
-        transaccion=1
-        estado=1
+        transaccion = 1
+        estado = 1
         break
       case 3:
-        transaccion=1
-        estado=0
+        transaccion = 1
+        estado = 0
         break
       case 4:
-        estado=0
+        estado = 0
         const objetosFiltrados = listadoPropiedades.filter(objeto => objeto.state === estado);
         setPropiedades(objetosFiltrados)
         break
     }
 
-    if(tipoDeseado != 4){
+    if (tipoDeseado != 4) {
       const objetosFiltrados = listadoPropiedades.filter(objeto => objeto.transaction === transaccion && objeto.state === estado);
       setPropiedades(objetosFiltrados)
     }
 
 
 
-    
+
 
     if (item.value == 'todo') {
       setPropiedades(listadoPropiedades)
@@ -107,10 +110,11 @@ export default function HomeRSUI({ listadoPropiedades }) {
   const handleImagePress = () => {
     navigation.navigate("../../screens/RealEstateProfile/RealProfile.js");
   }
-
+  console.log(propiedades);
 
   return (
     <View style={styles.container}>
+
       <View style={styles.head}>
         <View style={styles.contenedorHead}>
           <Text style={styles.textoHead}>{i18n.t('homeScreenRS.main')}</Text>
@@ -132,21 +136,25 @@ export default function HomeRSUI({ listadoPropiedades }) {
             containerStyle={{ width: "50%" }}
             placeholder={i18n.t('propiedadesEstados.todo')}
             onSelectItem={(items) => filtrarItems(items)}
+            disabled={active}
           />
         </View>
       </View>
-      <View style={styles.cardsContainer}>
+      {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
         <FlatList
           data={propiedades}
           keyExtractor={item => item._id}
-          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", {propiedadId:item._id})} />}
+          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
           contentContainerStyle={{
             alignItems: "center",
             flexGrow: 1,
           }}
           showsVerticalScrollIndicator={false}
         />
-      </View>
+      </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>NO TIENES PROPIEDADES CARGADAS {"\n"} </Text><Text style={styles.textEmpty}>CARGA NUEVAS PROPIEDADES HACIENDO CLIC EN PUBLICAR!</Text></View>)
+
+      }
+
     </View>
   )
 
@@ -163,24 +171,24 @@ const styles = StyleSheet.create({
     height: "22%",
     borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
     borderBottomRightRadius: 15,
-    zIndex:1,
+    zIndex: 1,
   },
   textoHead: {
     fontFamily: 'Poppins_700Bold',
     color: 'white',
     fontSize: Dimensions.get('window').width * 0.06,
-    paddingLeft:28
+    paddingLeft: 28
   },
   imagenHead: {
     resizeMode: 'contain',
-    height:  Dimensions.get('window').width * 0.11,
-    marginLeft:20,
+    height: Dimensions.get('window').width * 0.11,
+    marginLeft: 20,
   },
   contenedorHead: {
     flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
     alignItems: 'center',
     marginLeft: "3%",
-    
+
   },
   contenedorHead2: {
     marginTop: '4%',
@@ -209,5 +217,15 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     alignItems: "center",
+  },
+  emptyContainer:{
+    alignItems:'center',
+    justifyContent:'center',
+    flex:1,
+    paddingHorizontal:15,
+  },
+  textEmpty:{
+    fontFamily: 'Poppins_700Bold',
+    fontSize: Dimensions.get('window').width * 0.05,
   },
 })

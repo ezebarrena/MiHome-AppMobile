@@ -85,6 +85,7 @@ export default {
     valoracion:'Valoracion',
     contactar:'CONTACTAR',
     propiedades:'PROPIEDADES',
+    valoracion:'Valoracion',
   },
   realEstateUploadAsset: {
     "headTitle": "Publicar Propiedad",
