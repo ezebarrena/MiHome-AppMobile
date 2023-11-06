@@ -153,5 +153,16 @@ export default {
     "frontBack": "Front or back",
     "amenities": "Amenities",
   },
+
+  REUploadAssetChoices:{
+    house:"House",
+    department:"Department",
+    country_house:"Country house",
+    PH:"PH",
+    shed:"Shed",
+    office:"Office",
+    commerce:"Commerce",
+    terrain:"Terrain"
+  }
 };
 

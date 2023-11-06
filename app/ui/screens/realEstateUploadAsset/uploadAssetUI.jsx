@@ -19,14 +19,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const dataTypes = [
-  { key: '1', value: 'Casa' },
-  { key: '2', value: 'Departamento' },
-  { key: '3', value: 'Casa quinta' },
-  { key: '4', value: 'PH' },
-  { key: '5', value: 'Galpon' },
-  { key: '6', value: 'Oficina' },
-  { key: '7', value: 'Comercio' },
-  { key: '8', value: 'Terreno' },
+  { key: '1', value: i18n.t('REUploadAssetChoices.house') },
+  { key: '2', value: i18n.t('REUploadAssetChoices.department') },
+  { key: '3', value: i18n.t('REUploadAssetChoices.houcountry_housee') },
+  { key: '4', value: i18n.t('REUploadAssetChoices.PH') },
+  { key: '5', value: i18n.t('REUploadAssetChoices.shed') },
+  { key: '6', value: i18n.t('REUploadAssetChoices.office') },
+  { key: '7', value: i18n.t('REUploadAssetChoices.commerce') },
+  { key: '8', value: i18n.t('REUploadAssetChoices.terrain') },
 ];
 
 const dataTransaccion = [
