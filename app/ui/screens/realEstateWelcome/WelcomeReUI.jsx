@@ -11,6 +11,7 @@ import RegistrationModal from "../../components/modals/RegistrationModal";
 import CannotLoginModal from "../../components/modals/CannotLogin/CannotLoginModal";
 import { useForm } from "../../../hooks/useForm";
 import { logInRealEstate } from "../../../api/realEstatesAPI";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function WelcomeReUI() {
   const navigation = useNavigation();
@@ -31,6 +32,8 @@ export default function WelcomeReUI() {
   const handleLogin = async () => {
     const response = await logInRealEstate(form);
     if (response) {
+      await AsyncStorage.setItem("token", response.token);
+      await AsyncStorage.setItem("realEstateId", response.id);
       navigation.navigate("LandingStackRE");
     }
     else {

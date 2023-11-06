@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import PublicacionPropiedadUI from './publicacionPropiedadUI';
 import { getAssetById } from '../../../api/assetsAPI';
 import { ActivityIndicator } from 'react-native';
+import { getRealEstateID } from '../../../api/realEstatesAPI';
 
 export default function PublicacionPropiedad({ route }) {
     const { propiedadId } = route.params;
@@ -18,8 +19,24 @@ export default function PublicacionPropiedad({ route }) {
             }
         };
 
+
         busquedaPropiedades();
+        
+
     }, []);
+    useEffect(()=>{
+        const busquedaRealEstate = async () => {
+            let realEstateID = informacion.realEstateName
+            console.log(realEstateID);
+            try {
+                const respuesta = await getRealEstateID(realEstateID);
+                console.log(respuesta,'inmobiliraia');
+            } catch (error) {
+                console.error('Error al obtener la busqdueddass:', error);
+            }
+        };
+        busquedaRealEstate()
+    },[setInformacion, informacion])
 
     return (
         <React.Fragment>
