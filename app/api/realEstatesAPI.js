@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { t } from 'i18n-js';
 
 const API_BASE_URL = 'http://3.17.181.224:8080'; // Reemplaza con la URL de tu backend
 
@@ -40,3 +41,35 @@ export const getRealEstateID = async (realEstateId) => {
     throw error;
   }
 };
+
+export const sendCode = async (email) => {
+  try {
+    const response = await realEstatesAPI.post('/resetPassword', { email });
+    return response.data;
+  } catch (error) {
+    console.error('Error sending code:', error);
+    throw error;
+  }
+};
+
+export const validateCode = async (token) => {
+  try {
+    const response = await realEstatesAPI.post('/resetPassword/validate', { token });
+    return response.data;
+  } catch (error) {
+    console.error('Error validating code:', error);
+    throw error;
+  }
+};
+
+export const resetPassword = async (email, password) => {
+  try {
+    const response = await realEstatesAPI.post('/resetPassword/renewPassword', { email, password });
+    return response.data;
+  } catch (error) {
+    console.error('Error validating code:', error);
+    throw error;
+  }
+};
+
+

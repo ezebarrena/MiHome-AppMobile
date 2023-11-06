@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import CustomTextInput from "../../inputs/CustomTextInput";
 import Button from "../../buttons/Button";
 import i18n from "../../../../assets/strings/I18n";
+import { validateCode } from "../../../../api/realEstatesAPI";
 
 export default function Step2({ handleNextStep }) {
   const [code, setCode] = useState(""); // Estado para el código de cinco dígitos
@@ -11,7 +12,15 @@ export default function Step2({ handleNextStep }) {
   const handleVerifyCode = () => {
     if (isCodeValid) {
       console.log("Código verificado"); // Muestra "Código verificado" en la consola
-      handleNextStep(); // Avanza al siguiente paso
+      const token = validateCode(code); // Valida el código de cinco dígitos
+      console.log(token);
+      if (token) {
+        handleNextStep(); // Avanza al siguiente paso
+      }
+      else {
+        // Si el código no es válido, muestra un mensaje de error o realiza alguna acción adicional.
+        console.log("Código no válido");
+      }
     } else {
       // Si el código no es válido, muestra un mensaje de error o realiza alguna acción adicional.
       console.log("Código no válido");
@@ -20,7 +29,7 @@ export default function Step2({ handleNextStep }) {
 
   const validateCode = (text) => {
     // Lógica de validación del código de cinco dígitos (puedes personalizarla)
-    const codePattern = /^\d{5}$/;
+    const codePattern = /^\d{4}$/;
     const isValid = codePattern.test(text);
     setIsCodeValid(isValid);
     setCode(text);
@@ -46,7 +55,7 @@ export default function Step2({ handleNextStep }) {
         )}
         size="medium"
         backgroundColor="#E36565"
-        onPress={handleNextStep}
+        onPress={handleVerifyCode}
       />
     </View>
   );
