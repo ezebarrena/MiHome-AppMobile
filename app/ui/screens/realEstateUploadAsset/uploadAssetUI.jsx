@@ -35,8 +35,8 @@ const dataTransaccion = [
 ];
 
 const dataCurrency = [
-  { key: '1', value: 'U$D dolar estadounidense' },
-  { key: '2', value: 'AR$ peso argentino' },
+  { key: '1', value: 'U$D' },
+  { key: '2', value: 'AR$' },
 ];
 
 const dataRooms = [
@@ -138,37 +138,37 @@ export default function UploadAssetUI({ }) {
   });
   */
 
-/*   const initialFormState = {
-    "title": '',
-    "image": [],
-    "type": '',
-    "transaction": null,
-    "price": null,
-    "coin": '',
-    "bills": null,
-    "description": '',
-    "amenities": [],
-    "room": null,
-    "floor": null,
-    "bath": null,
-    "bedroom": null,
-    'garage': null,
-    'mTotal': null,
-    'mIndoor': null,
-    'storage': null,
-    "antiquity": null,
-    "streetName": '',
-    "streetNumber": '',
-    "neighbourhood": '',
-    "locality": '',
-    "province": '',
-    "country": '',
-    "geoLocalization": '',
-    "frontBack": '',
-    "state": null,
-    "realEstateName": '',
-  }; */
-  
+  /*   const initialFormState = {
+      "title": '',
+      "image": [],
+      "type": '',
+      "transaction": null,
+      "price": null,
+      "coin": '',
+      "bills": null,
+      "description": '',
+      "amenities": [],
+      "room": null,
+      "floor": null,
+      "bath": null,
+      "bedroom": null,
+      'garage': null,
+      'mTotal': null,
+      'mIndoor': null,
+      'storage': null,
+      "antiquity": null,
+      "streetName": '',
+      "streetNumber": '',
+      "neighbourhood": '',
+      "locality": '',
+      "province": '',
+      "country": '',
+      "geoLocalization": '',
+      "frontBack": '',
+      "state": null,
+      "realEstateName": '',
+    }; */
+
 
   const initialFormState = {
     "title": "",
@@ -204,18 +204,22 @@ export default function UploadAssetUI({ }) {
   const { form, onChange } = useForm(initialFormState);
   const handleSubmit = async () => {
     const value = await AsyncStorage.getItem('realEstateId')
-    onChange(value, "realEstateName")
-    const nuevoForm = removeNullFields(form)
-    console.log(nuevoForm, 'asdf');
-    if (nuevoForm) {
-      const response = await createAsset(nuevoForm);
-      if (response) {
-        navigation.navigate("LandingStackRE");
-      }
-      else {
-        alert("error Upload Asset");
+    
+    if (value) {
+      onChange(value, "realEstateName")
+      const nuevoForm = removeNullFields(form)
+      console.log(nuevoForm, 'asdf');
+      if (nuevoForm) {
+        const response = await createAsset(nuevoForm);
+        if (response) {
+          navigation.navigate("LandingStackRE");
+        }
+        else {
+          alert("error Upload Asset");
+        }
       }
     }
+
 
   };
 
@@ -294,15 +298,16 @@ export default function UploadAssetUI({ }) {
         <ChoiceInput
           data={dataTransaccion}
           value={form.transaction}
-          onValueSelect={(value) =>{
+          onValueSelect={(value) => {
             let transaccion
-            if(value == "Alquiler"){
-              transaccion=1
+            if (value == "Alquiler") {
+              transaccion = 1
             }
-            if(value == 'Venta'){
-              transaccion=0
+            if (value == 'Venta') {
+              transaccion = 0
             }
-            onChange(parseInt(transaccion), "transaction")}}
+            onChange(parseInt(transaccion), "transaction")
+          }}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.price')}</Text>
@@ -391,7 +396,7 @@ export default function UploadAssetUI({ }) {
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.storage')}</Text>
         <CustomTextInput
           value={form.storage}
-          //onChangeText={(value) => onChange(value, "storage")}
+        //onChangeText={(value) => onChange(value, "storage")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.antiquity')}</Text>
