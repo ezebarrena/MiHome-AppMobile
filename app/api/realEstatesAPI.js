@@ -30,3 +30,13 @@ export const logInRealEstate = async (realEstateData) => {
     return null; // Retornar null en caso de error
   }
 };
+
+export const getRealEstateID = async (realEstateId) => {
+  try {
+    const response = await realEstatesAPI.post('/realestate/id', { _id: realEstateId });
+    return response.data;
+  } catch (error) {
+    console.error('Error signing in real estate:', error);
+    throw error;
+  }
+};

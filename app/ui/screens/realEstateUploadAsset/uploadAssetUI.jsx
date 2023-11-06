@@ -101,6 +101,7 @@ export default function UploadAssetUI({}) {
     longitudeDelta: 0.01,
   });
 
+  /*
   var raw = JSON.stringify({
     "title": title,
     "image":image,
@@ -131,6 +132,7 @@ export default function UploadAssetUI({}) {
     "state":state, //1 disponible, 0 no disponible
     "realEstateName":realEstateName,
   });
+  */
 
   const initialFormState = {
     title: '',
@@ -217,8 +219,8 @@ export default function UploadAssetUI({}) {
       <View style={styles.dataEntry}>
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
         <CustomTextInput
-          value={formData.title}
-          onChangeText={(value) => setFormData({ ...formData, title: Text })} //update
+          value={form.title}
+          onChangeText={(value) => useForm( value,"title")} //update
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
@@ -232,27 +234,27 @@ export default function UploadAssetUI({}) {
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
         <ChoiceInput 
           data={dataTypes}
-          value={formData.types}
+          value={form.types}
           onValueSelect={(value) => setFormData({ ...formData, types: Text })}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}</Text>
         <ChoiceInput 
           data={dataTransaccion} 
-          value={formData.transaction}
+          value={form.transaction}
           onValueSelect={(value) => setFormData({ ...formData, transaction: Text })}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.price')}</Text>
         <CustomTextInput 
-          value={formData.price}
+          value={form.price}
           onChangeText={(value) => setFormData({ ...formData, price: Text })}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.coin')}</Text>
         <ChoiceInput 
           data={dataCurrency} 
-          value={formData.coin}
+          value={form.coin}
           onValueSelect={(value) => setFormData({ ...formData, coin: Text })}
         />
 
