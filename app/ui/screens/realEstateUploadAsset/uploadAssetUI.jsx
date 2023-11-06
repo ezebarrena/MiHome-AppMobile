@@ -167,16 +167,17 @@ export default function UploadAssetUI({}) {
   
   const { form, onChange } = useForm(initialFormState);
  
+  /*
   const handleSubmit = async () => {
     const response = await createAsset(form);
     if (response) {
       navigation.navigate("LandingStackRE");
     }
     else {
-      alert("Usuario o contraseña incorrectos");
+      alert("error");
     }
   };
-    
+    */
 
   const renderImagePreview = (imageUris) => {
     return (
@@ -211,11 +212,12 @@ export default function UploadAssetUI({}) {
   };
 
   return (
+    
     <ScrollView style={styles.ScrollView}>
       <View style={styles.contenedorHead}>
         <Text style={styles.textoHead}>{i18n.t('realEstateUploadAsset.headTitle')}</Text>
       </View>
-
+      
       <View style={styles.dataEntry}>
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
         <CustomTextInput
@@ -316,7 +318,7 @@ export default function UploadAssetUI({}) {
           )}
         </MapView>
         
-        <Button title={"Publicar"} titleColor={"white"} onPress={handleSubmit} />
+       <Button title={"Publicar"} titleColor={"white"} onPress={handleSubmit} />
       </View>
     </ScrollView>
   );
