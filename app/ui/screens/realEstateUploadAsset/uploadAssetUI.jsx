@@ -39,47 +39,12 @@ const dataCurrency = [
   { key: '2', value: 'AR$' },
 ];
 
-const dataRooms = [
-  { key: '1', value: '1' },
-  { key: '2', value: '2' },
-  { key: '3', value: '3' },
-  { key: '4', value: '4' },
-  { key: '5', value: '5' },
-  { key: '6', value: '6' },
-  { key: '7', value: '7' },
-  { key: '8', value: '8' },
-  { key: '9', value: '9' },
-  { key: '10', value: '10' },
-  { key: '11', value: 'Mas de 10' },
+const dataStorage = [
+  { key: '1', value: 'Si' },
+  { key: '2', value: 'No' },
 ];
 
-const dataFloors = [
-  { key: '1', value: '1' },
-  { key: '2', value: '2' },
-  { key: '3', value: '3' },
-  { key: '4', value: '4 o mas' },
-];
 
-const dataBaths = [
-  { key: '1', value: '1' },
-  { key: '2', value: '2' },
-  { key: '3', value: '3' },
-  { key: '4', value: '4 o mas' },
-];
-
-const dataBedrooms = [
-  { key: '1', value: '1' },
-  { key: '2', value: '2' },
-  { key: '3', value: '3' },
-  { key: '4', value: '4 o mas' },
-];
-
-const dataGarages = [
-  { key: '1', value: '1 vehiculo' },
-  { key: '2', value: '2 vehiculos' },
-  { key: '3', value: '3 vehiculos' },
-  { key: '4', value: '4 o mas vehiculos' },
-];
 
 const dataAmenities = [
   { key: '1', value: 'pileta' },
@@ -353,39 +318,44 @@ export default function UploadAssetUI({ }) {
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}</Text>
-        <ChoiceInput
-          data={dataRooms}
+        <CustomTextInput
+          keyboardType={'numeric'}
           value={form.room}
-          onValueSelect={(value) => onChange(parseInt(value), "room")}
+          onChangeText={(value) => onChange(parseInt(value), "room")}
         />
+
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.floors')}</Text>
-        <ChoiceInput
-          data={dataFloors}
+        <CustomTextInput
+          keyboardType={'numeric'}
           value={form.floor}
-          onValueSelect={(value) => onChange(parseInt(value), "floor")}
+          onChangeText={(value) => onChange(parseInt(value), "floor")}
         />
+
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bath')}</Text>
-        <ChoiceInput
-          data={dataBaths}
+        <CustomTextInput
+          keyboardType={'numeric'}
           value={form.bath}
-          onValueSelect={(value) => onChange(parseInt(value), "bath")}
+          onChangeText={(value) => onChange(parseInt(value), "bath")}
         />
+
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bedroom')}</Text>
-        <ChoiceInput
-          data={dataBedrooms}
+        <CustomTextInput
+          keyboardType={'numeric'}
           value={form.bedroom}
-          onValueSelect={(value) => onChange(parseInt(value), "bedroom")}
+          onChangeText={(value) => onChange(parseInt(value), "bedroom")}
         />
 
+
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.garage')}</Text>
-        <ChoiceInput
-          data={dataGarages}
+        <CustomTextInput
+          keyboardType={'numeric'}
           value={form.garage}
-          onValueSelect={(value) => onChange(parseInt(value), "garage")}
+          onChangeText={(value) => onChange(parseInt(value), "garage")}
         />
+
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mTotal')}</Text>
         <CustomTextInput
@@ -402,10 +372,12 @@ export default function UploadAssetUI({ }) {
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.storage')}</Text>
-        <CustomTextInput
+        <ChoiceMultipleInput
+          data={dataStorage}
           value={form.storage}
-        //onChangeText={(value) => onChange(value, "storage")}
+          onValueSelect={(value) => onChange(value, "storage")}
         />
+
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.antiquity')}</Text>
         <CustomTextInput
