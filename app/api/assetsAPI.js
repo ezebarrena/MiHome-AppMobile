@@ -13,6 +13,7 @@ const assetsAPI = axios.create({
 
 export const createAsset = async (assetData) => {
   try {
+    console.log(assetData,'t');
     const response = await assetsAPI.post('/assets', assetData);
     return response.data;
   } catch (error) {

@@ -138,15 +138,44 @@ export default function UploadAssetUI({}) {
   });
   */
 
-  
+  const initialFormState = {
+    title: '',
+    image: [],
+    type: '',
+    transaction: null,
+    price: null,
+    coin: '',
+    bills: null,
+    description: '',
+    amenities: [],
+    room: null,
+    floor: null,
+    bath: null,
+    bedroom: null,
+    garage: null,
+    mTotal: null,
+    mIndoor: null,
+    storage: null,
+    antiquity: null,
+    streetName: '',
+    streetNumber: '',
+    neighbourhood: '',
+    locality: '',
+    province: '',
+    country: '',
+    geoLocalization: '',
+    frontBack: '',
+    state: null,
+    realEstateName: '',
+  };
   const { form, onChange } = useForm(initialFormState);
  
   
   const handleSubmit = async () => {
-    const realEstateName2 = await AsyncStorage.getItem('realEstateId')
-    const value=realEstateName
-    onChange(value, realEstateName2)
-    console.log(form);
+    const value = await AsyncStorage.getItem('realEstateId')
+    onChange(value, "realEstateName")
+    const nuevoForm = removeNullFields(form)
+    console.log(nuevoForm,'asdf');
     const response = await createAsset(form);
     if (response) {
       navigation.navigate("LandingStackRE");
@@ -156,36 +185,15 @@ export default function UploadAssetUI({}) {
     } 
   };
   
-  const initialFormState = {
-    title: '',
-    image: [],
-    type: '',
-    transaction: '',
-    price: '',
-    coin: '',
-    bills: '',
-    description: '',
-    amenities: [],
-    room: '',
-    floor: '',
-    bath: '',
-    bedroom: '',
-    garage: '',
-    mTotal: '',
-    mIndoor: '',
-    storage: '',
-    antiquity: '',
-    streetName: '',
-    streetNumber: '',
-    neighbourhood: '',
-    locality: '',
-    province: '',
-    country: '',
-    geoLocalization: '',
-    frontBack: '',
-    state: '',
-    realEstateName: '',
-  };
+  function removeNullFields(obj) {
+    const result = {};
+    for (const key in obj) {
+      if (obj[key] !== null) {
+        result[key] = obj[key];
+      }
+    }
+    return result;
+  }
 
   const renderImagePreview = (imageUris) => {
     return (
