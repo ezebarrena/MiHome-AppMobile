@@ -4,15 +4,17 @@ import CustomTextInput from "../../inputs/CustomTextInput";
 import Button from "../../buttons/Button";
 import i18n from "../../../../assets/strings/I18n";
 import { sendCode } from "../../../../api/realEstatesAPI";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Step1({ handleNextStep }) {
   const [email, setEmail] = useState(""); // Estado para el correo electrónico
   const [isEmailValid, setIsEmailValid] = useState(false); // Estado para la validación del correo
 
-  const handleSendCode = () => {
+  const handleSendCode = async () => {
     if (isEmailValid) {
       console.log("Código enviado"); // Muestra "Código enviado" en la consola
       sendCode(email); // Envía el código al correo electrónico
+      await AsyncStorage.setItem("emailCannotLogin", email); // Guarda el correo electrónico en el dispositivo
       handleNextStep(); // Avanza al siguiente paso
     } else {
       // Si el correo electrónico no es válido, muestra un mensaje de error o realiza alguna acción adicional.

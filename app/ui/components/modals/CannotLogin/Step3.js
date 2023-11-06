@@ -4,16 +4,18 @@ import CustomTextInput from "../../inputs/CustomTextInput";
 import Button from "../../buttons/Button";
 import i18n from "../../../../assets/strings/I18n";
 import { resetPassword } from "../../../../api/realEstatesAPI";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Step3({ handleNextStep }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
 
-  const handleVerifyPassword = () => {
+  const handleVerifyPassword = async () => {
     if (isPasswordValid && password === confirmPassword) {
       console.log("Contraseña verificada");
       // Realiza aquí la lógica para cambiar la contraseña en tu sistema.
+      const email = await AsyncStorage.getItem("emailCannotLogin");
       resetPassword(email, password);
       // Una vez cambiada con éxito, puedes avanzar al siguiente paso.
       handleNextStep();

@@ -6,7 +6,7 @@ import i18n from "../../../../assets/strings/I18n";
 
 export default function Step4({ handleCloseModal }) {
   return (
-    <View>
+    <View style={{ alignItems: "center" }}>
       <Ionicons name="ios-checkmark-circle" size={150} color="#512F7B" />
       <Text>{i18n.t("realEstateWelcomeScreen.cannotLoginModal.fourthStep.helpText")}</Text>
       <Button
