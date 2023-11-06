@@ -12,8 +12,7 @@ export default function RealEstateProfile() {
             const realEstateId = await AsyncStorage.getItem('realEstateId')
             try {
                 const response = await getRealEstateID(realEstateId)
-                setRealEstate(response)
-                console.log('Esta es la respuesta de la busqueda:', response)
+                setRealEstate(response.realEstates)
             } catch (error) {
                 console.error('Error al obtener la busqueda:', error);
             }
@@ -22,6 +21,6 @@ export default function RealEstateProfile() {
     }, [])
     
     return (
-        <RealEstateProfileUI navigation ={realEstate} />
+        <RealEstateProfileUI params={realEstate} />
     )
 }
