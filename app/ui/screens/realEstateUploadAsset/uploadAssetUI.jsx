@@ -170,13 +170,13 @@ export default function UploadAssetUI({}) {
   
   const handleSubmit = async () => {
     console.log(form);
-    /* const response = await createAsset(form);
+    const response = await createAsset(form);
     if (response) {
       navigation.navigate("LandingStackRE");
     }
     else {
       alert("error");
-    } */
+    } 
   };
   
 
