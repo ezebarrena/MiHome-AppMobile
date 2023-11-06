@@ -201,10 +201,18 @@ export default function UploadAssetUI({ }) {
     "realEstateName": ""
 
   }
-  const { form, onChange } = useForm(initialFormState);
+
+
+
+
+  const { form, onChange, setFormValue } = useForm(initialFormState);
+
+
+
+
   const handleSubmit = async () => {
     const value = await AsyncStorage.getItem('realEstateId')
-    
+
     if (value) {
       onChange(value, "realEstateName")
       const nuevoForm = removeNullFields(form)
@@ -429,16 +437,24 @@ export default function UploadAssetUI({ }) {
             const addressParts = streetAddress.split(' '); // Suponiendo que las partes están separadas por espacios
 
             // Obtener el nombre de la calle y el número
-            const streetName = addressParts[1]; // El nombre de la calle son todas las partes excepto la última
-            const streetNumber = addressParts[2]; // El número de la calle es la última parte
+            const streetName = addressParts.slice(0, -1).join(' '); // El nombre de la calle son todas las partes excepto la última
+            const streetNumber = addressParts.slice(-1)[0]; // El número de la calle es la última parte
 
             // Actualizar el estado o realizar otras acciones necesarias
-            //onChange(streetNumber, "streetNumber");
-            onChange(item.address.formattedAddress, "streetName");
 
-            /* onChange(item.address.locality, "locality");
-            onChange(item.address.adminDistrict.slice(0, -1), "province");
-            onChange(item.address.countryRegion, "country"); */
+            setFormValue(
+              {
+                ...form,
+                streetName: streetName,
+                streetNumber: streetNumber,
+                neighbourhood: item.address.adminDistrict2,
+                locality: item.address.locality,
+                province: item.address.adminDistrict,
+                country: item.address.countryRegion,
+                geoLocalization: item.point.coordinates,
+              }
+            );
+
           }}
         />
         <MapView style={styles.map} region={mapRegion}>

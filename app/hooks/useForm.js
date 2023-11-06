@@ -11,9 +11,14 @@ export const useForm = (initState) => {
         });
     }
 
+    const setFormValue = (value) => {
+        setState(value);
+    }
+
     return {
         ...state,
         form: state,
         onChange,
+        setFormValue
     }
 }
