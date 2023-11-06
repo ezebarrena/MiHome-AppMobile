@@ -8,6 +8,7 @@ import { getRealEstateID } from '../../../api/realEstatesAPI';
 export default function PublicacionPropiedad({ route }) {
     const { propiedadId } = route.params;
     const [informacion, setInformacion] = useState(null);
+    const [inmobiliaria, setInmboliaria] = useState()
 
     useEffect(() => {
         const busquedaPropiedades = async () => {
@@ -30,18 +31,19 @@ export default function PublicacionPropiedad({ route }) {
             console.log(realEstateID);
             try {
                 const respuesta = await getRealEstateID(realEstateID);
-                console.log(respuesta,'inmobiliraia');
+
+                setInmboliaria(respuesta.realEstates)
             } catch (error) {
                 console.error('Error al obtener la busqdueddass:', error);
             }
         };
         busquedaRealEstate()
-    },[setInformacion, informacion])
+    },[informacion])
 
     return (
         <React.Fragment>
-            {informacion ? (
-                <PublicacionPropiedadUI propiedad={informacion} />
+            {informacion && inmobiliaria ? (
+                <PublicacionPropiedadUI propiedad={informacion} inmobiliaria={inmobiliaria} />
             ) : (
                 <ActivityIndicator size="large" />
             )}

@@ -77,6 +77,7 @@ export default function DetallePropiedadRSUI({ informacion}) {
     mostrarBotones = true
   }
 
+  console.log(informacion.title);
 
   return (
     <View style={styles.container}>
@@ -116,7 +117,7 @@ export default function DetallePropiedadRSUI({ informacion}) {
           </View>
         </View>
       </Modal>
-      <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", {propiedadId:informacion._id})} style={styles.divImagen}>
+      <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", {propiedadId:informacion._id, name: informacion.title})} style={styles.divImagen}>
         <Image source={imagenTest} style={styles.imagen} />
       </TouchableOpacity>
       {mostrarBotones ? (
