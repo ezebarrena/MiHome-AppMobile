@@ -7,9 +7,11 @@ import {
   Dimensions,
   Image,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  RefreshControl
 
 } from "react-native";
+
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
 
 import i18n from "../../../assets/strings/I18n";
@@ -23,7 +25,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 import DetallePropiedadRS from "../realEstateDetallePropiedad/detallePropiedadRS";
 //import UserProfile from "../../screens/userProfile/UserProfile.js"
-
+import { getMyRealEstateAssets } from '../../../api/assetsAPI';
 //SplashScreen.preventAutoHideAsync();
 
 export default function HomeRSUI({ listadoPropiedades }) {
@@ -38,19 +40,55 @@ export default function HomeRSUI({ listadoPropiedades }) {
     { label: i18n.t('propiedadesEstados.alquilada'), value: 3 },
     { label: i18n.t('propiedadesEstados.pausada'), value: 4 }
   ]);
-  const[active, setActive]=useState(true)
+  const [active, setActive] = useState(true)
 
   const [propiedades, setPropiedades] = useState()
+  const [propiedadesBD, setPropiedadesBD] = useState()
+  const [refreshing, setRefreshing] = useState(false);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    const busquedaPropiedades = async () => {
+      const valor = await AsyncStorage.getItem('realEstateId')
+
+      try {
+        const bodyData = {
+          realEstateName: valor,
+          state: '',
+          transaction: ''
+        }
+
+        const respuesta = await getMyRealEstateAssets(bodyData)
+
+
+        setPropiedades(respuesta.asset);
+        setPropiedadesBD(respuesta.asset)
+      }
+      catch (error) {
+        console.error('Error al obtener la busqueda:', error);
+      }
+
+
+
+    };
+
+
+    busquedaPropiedades()
+    setTimeout(() => {
+      // Lógica para obtener nuevos datos
+      setRefreshing(false);
+    }, 1500); // Espera 1 segundo antes de finalizar la recarga (puedes ajustar el tiempo según tus necesidades).
+  };
 
   useEffect(() => {
 
 
     setPropiedades(listadoPropiedades.asset);
-    if(listadoPropiedades.asset && listadoPropiedades.asset.length > 0){
+    setPropiedadesBD(listadoPropiedades.asset);
+    if (listadoPropiedades.asset && listadoPropiedades.asset.length > 0) {
       setActive(false)
     }
-    console.log(propiedades,'s');
+    console.log(propiedades, 's');
   }, [setPropiedades, listadoPropiedades])
 
   const [fontsLoaded, fontError] = useFonts({
@@ -64,7 +102,6 @@ export default function HomeRSUI({ listadoPropiedades }) {
 
   const filtrarItems = (item) => {
 
-    const asset = listadoPropiedades.asset
 
     const tipoDeseado = item.value; // Cambia 'venta' al tipo que desees buscar
     let transaccion;
@@ -89,13 +126,13 @@ export default function HomeRSUI({ listadoPropiedades }) {
         break
       case 4:
         estado = 0
-        const objetosFiltrados = asset.filter(objeto => objeto.state === estado);
+        const objetosFiltrados = propiedadesBD.filter(objeto => objeto.state === estado);
         setPropiedades(objetosFiltrados)
         break
     }
 
     if (tipoDeseado != 4) {
-      const objetosFiltrados = asset.filter(objeto => objeto.transaction === transaccion && objeto.state === estado);
+      const objetosFiltrados = propiedadesBD.filter(objeto => objeto.transaction === transaccion && objeto.state === estado);
       setPropiedades(objetosFiltrados)
     }
 
@@ -104,7 +141,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
 
 
     if (item.value == 'todo') {
-      setPropiedades(listadoPropiedades.asset)
+      setPropiedades(propiedadesBD)
     }
   }
 
@@ -152,6 +189,12 @@ export default function HomeRSUI({ listadoPropiedades }) {
             flexGrow: 1,
           }}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
         />
       </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>NO TIENES PROPIEDADES CARGADAS {"\n"} </Text><Text style={styles.textEmpty}>CARGA NUEVAS PROPIEDADES HACIENDO CLIC EN PUBLICAR!</Text></View>)
 
@@ -220,13 +263,13 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
   },
-  emptyContainer:{
-    alignItems:'center',
-    justifyContent:'center',
-    flex:1,
-    paddingHorizontal:15,
+  emptyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    paddingHorizontal: 15,
   },
-  textEmpty:{
+  textEmpty: {
     fontFamily: 'Poppins_700Bold',
     fontSize: Dimensions.get('window').width * 0.05,
   },
