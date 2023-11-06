@@ -9,16 +9,17 @@ export default function HomeRS() {
     const [propiedades, setPropiedades] = useState([])
     useEffect(() => {
         const busquedaPropiedades = async () => {
+            const valor = await AsyncStorage.getItem('realEstateId')
 
             try {
                 const bodyData={
-                    realEstateName: AsyncStorage.getItem('realEstateId'),
+                    realEstateName: valor,
                     state:'',
                     transaction:''
                 }
 
                 const respuesta = await getMyRealEstateAssets(bodyData)
-                
+
 
                 setPropiedades(respuesta);
             }

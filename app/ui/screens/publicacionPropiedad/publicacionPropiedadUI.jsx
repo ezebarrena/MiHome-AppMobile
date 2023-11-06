@@ -19,6 +19,7 @@ import {
     Poppins_500Medium,
     Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
+
 //import MapView, { Marker } from 'react-native-maps';
 import i18n from "../../../assets/strings/I18n";
 import { Ionicons } from '@expo/vector-icons';
@@ -26,7 +27,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Theme from "../../styles/Theme";
 import imagenInmobiliaria from '../../../assets/images/imagenInmobiliaria.png'
 import Estados from "../../../assets/funcionTraduccion";
-
+import StarRating from 'react-native-star-rating';
 const { width } = Dimensions.get('window');
 
 const images = [
@@ -39,7 +40,7 @@ const images = [
 
 //TO DO 
 
-export default function PublicacionPropiedadUI( {propiedad} ) {
+export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
 
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold,
@@ -156,7 +157,7 @@ export default function PublicacionPropiedadUI( {propiedad} ) {
                 </MapView> */}
             </View>
             <View style={styles.viewExtras}>
-                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.coordenadas")}: {propiedad.geolocalization}</Text>
+                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.coordenadas")}: {propiedad.geoLocalization}</Text>
                 <Text style={styles.textExtras}>{i18n.t("detallePropiedad.orientacion")}: {propiedad.frontBack}</Text>
                 <Text style={styles.textExtras}>{i18n.t("detallePropiedad.antiguedad")}: {propiedad.antiquity} {propiedad.antiquity > 1 ? i18n.t("detallePropiedad.anios") : i18n.t("detallePropiedad.anio")}</Text>
             </View>
@@ -165,9 +166,19 @@ export default function PublicacionPropiedadUI( {propiedad} ) {
                     <Image style={styles.imagenCardInmobiliaria} source={imagenInmobiliaria} />
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.tituloCI}>{propiedad.inmobiliaria}</Text>
-                    <Text style={styles.textoCI}>lla@gmail.com</Text>
-                    <Text style={styles.textoCI}>valoracion</Text>
+                    <Text style={styles.tituloCI}>{inmobiliaria.fantasyName}</Text>
+                    <Text style={styles.textoCI}>{inmobiliaria.logInEmail}</Text>
+                    <View style={styles.ratingContainer}>
+                        <Text style={styles.textoCI}>{i18n.t("detallePropiedad.valoracion")}</Text>
+                        <StarRating
+                            disabled={true}
+                            maxStars={5}
+                            rating={3.6}
+                            starSize={22}
+                        />
+                        <Text style={styles.textoCI}>(12)</Text>
+                    </View>
+
                     <View style={styles.bntneraCI}>
                         <Pressable style={styles.btnCI} onPress={() => { console.log("contactar") }}><Text>{i18n.t("detallePropiedad.contactar")}</Text></Pressable>
                         <Pressable style={styles.btnCI} onPress={() => { console.log("propiedades") }}><Text>{i18n.t("detallePropiedad.propiedades")}</Text></Pressable>
@@ -209,7 +220,7 @@ const styles = StyleSheet.create({
     containerDetalles: {
         marginVertical: 25,
         alignItems: 'flex-start',
-
+        paddingHorizontal: 2,
         justifyContent: 'center',
         //backgroundColor:'red'
 
@@ -339,4 +350,10 @@ const styles = StyleSheet.create({
         height: 200,
         marginVertical: 10,
     },
+    ratingContainer:{
+        flexDirection:'row',
+        justifyContent:'space-evenly',
+        alignItems:'center',
+        width:'100%'
+    }
 })

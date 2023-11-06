@@ -103,6 +103,7 @@ export default {
     valoracion:'Rating',
     contactar:'CONTACT',
     propiedades:'ESTATES',
+    valoracion:'Rating',
   },
 
   realEstateUploadAsset: {
