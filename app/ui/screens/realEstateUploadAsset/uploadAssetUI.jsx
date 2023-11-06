@@ -167,17 +167,18 @@ export default function UploadAssetUI({}) {
   
   const { form, onChange } = useForm(initialFormState);
  
-  /*
+  
   const handleSubmit = async () => {
-    const response = await createAsset(form);
+    console.log(form);
+    /* const response = await createAsset(form);
     if (response) {
       navigation.navigate("LandingStackRE");
     }
     else {
       alert("error");
-    }
+    } */
   };
-    */
+  
 
   const renderImagePreview = (imageUris) => {
     return (
@@ -237,40 +238,54 @@ export default function UploadAssetUI({}) {
         <ChoiceInput 
           data={dataTypes}
           value={form.types}
-          onValueSelect={(value) => setFormData({ ...formData, types: Text })}
+          onValueSelect={(value) => useForm(value,"type")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}</Text>
         <ChoiceInput 
           data={dataTransaccion} 
           value={form.transaction}
-          onValueSelect={(value) => setFormData({ ...formData, transaction: Text })}
+          onValueSelect={(value) => useForm(value,"transaction")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.price')}</Text>
         <CustomTextInput 
           value={form.price}
-          onChangeText={(value) => setFormData({ ...formData, price: Text })}
+          onChangeText={(value)  => useForm(value,"price")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.coin')}</Text>
         <ChoiceInput 
           data={dataCurrency} 
           value={form.coin}
-          onValueSelect={(value) => setFormData({ ...formData, coin: Text })}
+          onValueSelect={(value)  => useForm(value,"coin")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bills')}</Text>
-        <CustomTextInput />
+        <CustomTextInput 
+          value={form.bills}
+          onChangeText={(value)  => useForm(value,"bills")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.description')}</Text>
-        <CustomTextInput />
+        <CustomTextInput 
+          value={form.description}
+          onChangeText={(value)  => useForm(value,"description")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.amenities')}</Text>
-        <ChoiceMultipleInput data={dataAmenities} />
+        <ChoiceMultipleInput
+          data={dataAmenities}
+          value={form.amenities}
+          onValueSelect={(value)  => useForm(value,"amenities")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}</Text>
-        <ChoiceInput data={dataRooms} />
+        <ChoiceInput 
+          data={dataRooms} 
+          value={form.room}
+          onValueSelect={(value) => useForm(value,"type")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.floors')}</Text>
         <ChoiceInput data={dataFloors} />
@@ -318,7 +333,7 @@ export default function UploadAssetUI({}) {
           )}
         </MapView>
         
-       <Button title={"Publicar"} titleColor={"white"} />
+       <Button title={"Publicar"} titleColor={"white"} onPress={()=> handleSubmit()} />
       </View>
     </ScrollView>
   );
