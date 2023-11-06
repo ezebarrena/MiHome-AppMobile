@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MiHome-AppMobile",
-    "slug": "MiHome-AppMobile",
+    "name": "mihome-appmobile",
+    "slug": "mihome-appmobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/images/icon.png",
