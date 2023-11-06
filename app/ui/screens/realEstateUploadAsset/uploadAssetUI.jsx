@@ -316,11 +316,28 @@ export default function UploadAssetUI({}) {
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
         <CustomSearchBar
-          onAddressSelect={(coordinates) => setMapRegion({
-            ...mapRegion,
-            latitude: coordinates[0],
-            longitude: coordinates[1],
-          })}
+          onAddressSelect={(item) => {
+            console.log(item);
+
+            // Obtener las coordenadas y actualizar el mapa
+            setMapRegion({
+              ...mapRegion,
+              latitude: item.point.coordinates[0],
+              longitude: item.point.coordinates[1]
+            });
+
+            // Obtener la dirección de la calle y dividirla en partes
+            const streetAddress = item.address.addressLine;
+            const addressParts = streetAddress.split(' '); // Suponiendo que las partes están separadas por espacios
+
+            // Obtener el nombre de la calle y el número
+            const streetName = addressParts.slice(0, -1).join(' '); // El nombre de la calle son todas las partes excepto la última
+            const streetNumber = addressParts.slice(-1)[0]; // El número de la calle es la última parte
+
+            // Actualizar el estado o realizar otras acciones necesarias
+            onChange(streetName, "streetName");
+            onChange(streetNumber, "streetNumber");
+          }}
         />
         <MapView style={styles.map} region={mapRegion}>
           {mapRegion.latitude !== null && mapRegion.longitude !== null && (
