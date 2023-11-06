@@ -12,10 +12,10 @@ export default function HomeRS() {
             const valor = await AsyncStorage.getItem('realEstateId')
 
             try {
-                const bodyData={
+                const bodyData = {
                     realEstateName: valor,
-                    state:'',
-                    transaction:''
+                    state: '',
+                    transaction: ''
                 }
 
                 const respuesta = await getMyRealEstateAssets(bodyData)
@@ -38,4 +38,37 @@ export default function HomeRS() {
 
         <HomeRSUI listadoPropiedades={propiedades} />
     )
+}
+
+export function recargar() {
+    const [propiedades, setPropiedades] = useState([])
+    useEffect(() => {
+        const busquedaPropiedades = async () => {
+            const valor = await AsyncStorage.getItem('realEstateId')
+
+            try {
+                const bodyData = {
+                    realEstateName: valor,
+                    state: '',
+                    transaction: ''
+                }
+
+                const respuesta = await getMyRealEstateAssets(bodyData)
+
+
+                setPropiedades(respuesta);
+            }
+            catch (error) {
+                console.error('Error al obtener la busqueda:', error);
+            }
+
+
+
+        };
+
+
+        busquedaPropiedades()
+    }, [setPropiedades])
+
+    return propiedades
 }
