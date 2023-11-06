@@ -286,7 +286,7 @@ export default function UploadAssetUI({}) {
         <ChoiceInput 
           data={dataRooms} 
           value={form.room}
-          onValueSelect={(value) => onChange(value,"type")}
+          onValueSelect={(value) => onChange(value,"room")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.floors')}</Text>
