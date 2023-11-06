@@ -7,6 +7,7 @@ const ChoiceInput = ({ data, value, onValueSelect }) => {
   const [selected, setSelected] = React.useState("");
 
   const handleValueSelect = (val) => {
+    console.log(val);
     setSelected(val);
     onValueSelect(val); // Llama a la función proporcionada por el componente padre
   };
