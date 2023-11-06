@@ -35,8 +35,8 @@ const dataFrontBack = [
 ]
 
 const dataTransaccion = [
-  { key: '1', value: 'Venta' },
-  { key: '2', value: 'Alquiler' },
+  { key: '0', value: 'Venta' },
+  { key: '1', value: 'Alquiler' },
 ];
 
 const dataCurrency = [
@@ -184,6 +184,7 @@ export default function UploadAssetUI({ }) {
     const value = await AsyncStorage.getItem('realEstateId')
 
     if (value) {
+      console.log(value);
       onChange(value, "realEstateName")
       const nuevoForm = removeNullFields(form)
       console.log(nuevoForm, 'asdf');
@@ -277,14 +278,12 @@ export default function UploadAssetUI({ }) {
           data={dataTransaccion}
           value={form.transaction}
           onValueSelect={(value) => {
-            let transaccion
-            if (value == "Alquiler") {
-              transaccion = 1
+            const resultado = dataTransaccion.find(item => item.value === value);
+            if(resultado){
+              console.log(resultado.key);
+              onChange(parseInt(resultado.key), "transaction")
             }
-            if (value == 'Venta') {
-              transaccion = 0
-            }
-            onChange(parseInt(transaccion), "transaction")
+            
           }}
         />
 
@@ -394,7 +393,7 @@ export default function UploadAssetUI({ }) {
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.antiquity}
-          onChangeText={(value) => onChange(value, "antiquity")}
+          onChangeText={(value) => onChange(parseInt(value), "antiquity")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.frontBack')}</Text>
@@ -431,12 +430,12 @@ export default function UploadAssetUI({ }) {
               {
                 ...form,
                 streetName: streetName,
-                streetNumber: streetNumber,
+                streetNumber: parseInt(streetNumber),
                 neighbourhood: item.address.adminDistrict2,
                 locality: item.address.locality,
                 province: item.address.adminDistrict,
                 country: item.address.countryRegion,
-                geoLocalization: item.point.coordinates,
+                geoLocalization: String(item.point.coordinates),
               }
             );
 
