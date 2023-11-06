@@ -19,7 +19,11 @@ export const Button = ({ title, titleColor, backgroundColor, onPress, size = 'la
 
   return (
     <TouchableOpacity onPress={onPress} disabled={disabled}>
-      <View style={[styles.button, { backgroundColor: backgroundColor || '#512F7B' }, buttonStyles[size]]}>
+      <View style={[
+        styles.button,
+        { backgroundColor: disabled ? '#ccc' : (backgroundColor || '#512F7B') }, // Cambia el color de fondo cuando está deshabilitado
+        buttonStyles[size]
+      ]}>
         <Text style={[styles.buttonText, { color: titleColor ? titleColor : 'white' }]}>{title}</Text>
       </View>
     </TouchableOpacity>
