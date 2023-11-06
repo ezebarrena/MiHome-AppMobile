@@ -175,7 +175,7 @@ export default function UploadAssetUI({}) {
       navigation.navigate("LandingStackRE");
     }
     else {
-      alert("error");
+      alert("error Upload Asset");
     } 
   };
   
