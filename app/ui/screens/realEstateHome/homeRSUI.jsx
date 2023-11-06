@@ -111,7 +111,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
   const handleImagePress = () => {
     navigation.navigate("RealEstateProfile")
   }
-  console.log(propiedades);
+
 
   return (
     <View style={styles.container}>
