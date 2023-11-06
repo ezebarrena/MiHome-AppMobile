@@ -21,7 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const dataTypes = [
   { key: '1', value: i18n.t('REUploadAssetChoices.house') },
   { key: '2', value: i18n.t('REUploadAssetChoices.department') },
-  { key: '3', value: i18n.t('REUploadAssetChoices.houcountry_housee') },
+  { key: '3', value: i18n.t('REUploadAssetChoices.country_house') },
   { key: '4', value: i18n.t('REUploadAssetChoices.PH') },
   { key: '5', value: i18n.t('REUploadAssetChoices.shed') },
   { key: '6', value: i18n.t('REUploadAssetChoices.office') },
