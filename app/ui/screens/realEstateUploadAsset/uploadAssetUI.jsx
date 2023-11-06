@@ -318,7 +318,7 @@ export default function UploadAssetUI({}) {
           )}
         </MapView>
         
-       <Button title={"Publicar"} titleColor={"white"} onPress={handleSubmit} />
+       <Button title={"Publicar"} titleColor={"white"} />
       </View>
     </ScrollView>
   );
