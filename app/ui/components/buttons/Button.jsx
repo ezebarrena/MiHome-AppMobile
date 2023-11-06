@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 
-export const Button = ({ title, titleColor, backgroundColor, onPress, size = 'large' }) => {
+export const Button = ({ title, titleColor, backgroundColor, onPress, size = 'large', disabled = false }) => {
   const buttonStyles = {
     small: {
       width: Dimensions.get('window').width * 0.35,
@@ -18,7 +18,7 @@ export const Button = ({ title, titleColor, backgroundColor, onPress, size = 'la
   };
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
       <View style={[styles.button, { backgroundColor: backgroundColor || '#512F7B' }, buttonStyles[size]]}>
         <Text style={[styles.buttonText, { color: titleColor ? titleColor : 'white' }]}>{title}</Text>
       </View>

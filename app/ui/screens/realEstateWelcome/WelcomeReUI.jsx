@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ImageBackground, StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
 import mainBackground from "../../../assets/images/backgrounds/mainBackground.png";
@@ -12,38 +11,46 @@ import CannotLoginModal from "../../components/modals/CannotLogin/CannotLoginMod
 import { useForm } from "../../../hooks/useForm";
 import { logInRealEstate } from "../../../api/realEstatesAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomAlert from "../../components/modals/CustomAlert";
 
 export default function WelcomeReUI() {
   const navigation = useNavigation();
-  const [fontsLoaded, fontError] = useFonts({
-    Poppins_700Bold_Italic,
-  });
 
+  const [isFormValid, setIsFormValid] = useState(false);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showCannotLoginModal, setShowCannotLoginModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const initialFormState = {
     logInEmail: "",
     password: "",
   };
 
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
   const { form, onChange } = useForm(initialFormState);
+
+  const validateForm = () => {
+    const isEmailValid = emailRegex.test(form.logInEmail);
+    const isNotEmpty = form.logInEmail.trim() !== "" && form.password.trim() !== "";
+    setIsFormValid(isNotEmpty && isEmailValid);
+  };
+
+  useEffect(() => {
+    validateForm();
+  }, [form.logInEmail, form.password]);
 
   const handleLogin = async () => {
     const response = await logInRealEstate(form);
     if (response) {
+      console.log("response", response);
       await AsyncStorage.setItem("token", response.token);
       await AsyncStorage.setItem("realEstateId", response.id);
       navigation.navigate("LandingStackRE");
-    }
-    else {
-      alert("Usuario o contraseña incorrectos");
+    } else {
+      setShowAlert(true);
     }
   };
-
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
 
   return (
     <View style={styles.container}>
@@ -55,22 +62,43 @@ export default function WelcomeReUI() {
           <View style={styles.contentContainer}>
             <Text style={styles.appName}>{i18n.t("common.appName")}</Text>
             <View style={styles.loginContainer}>
-              <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.emailInput') } value={form.logInEmail} onChangeText={(value) => onChange(value, "logInEmail")} />
-              <CustomTextInput secureTextEntry={true} placeholder={i18n.t('realEstateWelcomeScreen.passwordInput') } value={form.password} onChangeText={(value) => onChange(value, "password")} />
+              <CustomTextInput
+                placeholder={i18n.t("realEstateWelcomeScreen.emailInput")}
+                value={form.logInEmail}
+                onChangeText={(value) => onChange(value, "logInEmail")}
+              />
+              <CustomTextInput
+                secureTextEntry={true}
+                placeholder={i18n.t("realEstateWelcomeScreen.passwordInput")}
+                value={form.password}
+                onChangeText={(value) => onChange(value, "password")}
+              />
 
-              <Button title={i18n.t('realEstateWelcomeScreen.loginButton')} titleColor='#E36565' onPress={handleLogin} />
+              <Button
+                title={i18n.t("realEstateWelcomeScreen.loginButton")}
+                titleColor="#E36565"
+                onPress={handleLogin}
+                disabled={!isFormValid}
+              />
 
               <Pressable onPress={() => setShowRegistrationModal(true)}>
                 <Text style={styles.signUpText}>
-                  {i18n.t('realEstateWelcomeScreen.registerLink')}
+                  {i18n.t("realEstateWelcomeScreen.registerLink")}
                 </Text>
               </Pressable>
               <Pressable onPress={() => setShowCannotLoginModal(true)}>
                 <Text style={styles.cantLoginText}>
-                  {i18n.t('realEstateWelcomeScreen.cannotLogin')}
+                  {i18n.t("realEstateWelcomeScreen.cannotLogin")}
                 </Text>
               </Pressable>
             </View>
+            <CustomAlert
+              isVisible={showAlert}
+              onClose={() => setShowAlert(false)}
+              title="Error"
+              message="Usuario o contraseña incorrectos"
+              buttonColor="#d97c7c"
+            />
           </View>
         </ImageBackground>
       </LinearGradient>
