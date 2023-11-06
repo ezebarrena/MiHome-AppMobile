@@ -142,21 +142,21 @@ export default function UploadAssetUI({}) {
     title: '',
     image: [],
     type: '',
-    transaction: '',
-    price: '',
+    transaction: null,
+    price: null,
     coin: '',
-    bills: '',
+    bills: null,
     description: '',
     amenities: [],
-    room: '',
-    floor: '',
-    bath: '',
-    bedroom: '',
-    garage: '',
-    mTotal: '',
-    mIndoor: '',
-    storage: '',
-    antiquity: '',
+    room: null,
+    floor: null,
+    bath: null,
+    bedroom: null,
+    garage: null,
+    mTotal: null,
+    mIndoor: null,
+    storage: null,
+    antiquity: null,
     streetName: '',
     streetNumber: '',
     neighbourhood: '',
@@ -165,7 +165,7 @@ export default function UploadAssetUI({}) {
     country: '',
     geoLocalization: '',
     frontBack: '',
-    state: '',
+    state: null,
     realEstateName: '',
   };
   const { form, onChange } = useForm(initialFormState);
@@ -174,7 +174,8 @@ export default function UploadAssetUI({}) {
   const handleSubmit = async () => {
     const value = await AsyncStorage.getItem('realEstateId')
     onChange(value, "realEstateName")
-    console.log(form.realEstateName,'tt');
+    const nuevoForm = removeNullFields(form)
+    console.log(nuevoForm,'asdf');
     const response = await createAsset(form);
     if (response) {
       navigation.navigate("LandingStackRE");
@@ -184,7 +185,15 @@ export default function UploadAssetUI({}) {
     } 
   };
   
-  
+  function removeNullFields(obj) {
+    const result = {};
+    for (const key in obj) {
+      if (obj[key] !== null) {
+        result[key] = obj[key];
+      }
+    }
+    return result;
+  }
 
   const renderImagePreview = (imageUris) => {
     return (
