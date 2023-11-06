@@ -15,7 +15,7 @@ export const createAsset = async (assetData) => {
   try {
     console.log(assetData,'t');
     const response = await assetsAPI.post('/assets', assetData);
-    return response.data;
+    return response;
   } catch (error) {
     console.error('Error creating asset:', error);
     throw error;

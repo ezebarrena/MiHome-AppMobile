@@ -95,7 +95,7 @@ const dataAmenities = [
   { key: '11', value: 'Espacio para deportes' },
 ];
 
-export default function UploadAssetUI({}) {
+export default function UploadAssetUI({ }) {
   const [imageUris, setImageUris] = useState([]);
 
   const [mapRegion, setMapRegion] = useState({
@@ -169,22 +169,25 @@ export default function UploadAssetUI({}) {
     realEstateName: '',
   };
   const { form, onChange } = useForm(initialFormState);
- 
-  
+
+
   const handleSubmit = async () => {
     const value = await AsyncStorage.getItem('realEstateId')
     onChange(value, "realEstateName")
     const nuevoForm = removeNullFields(form)
-    console.log(nuevoForm,'asdf');
-    const response = await createAsset(form);
-    if (response) {
-      navigation.navigate("LandingStackRE");
+    console.log(nuevoForm, 'asdf');
+    if (nuevoForm) {
+      const response = await createAsset(nuevoForm);
+      if (response) {
+        navigation.navigate("LandingStackRE");
+      }
+      else {
+        alert("error Upload Asset");
+      }
     }
-    else {
-      alert("error Upload Asset");
-    } 
+
   };
-  
+
   function removeNullFields(obj) {
     const result = {};
     for (const key in obj) {
@@ -228,17 +231,17 @@ export default function UploadAssetUI({}) {
   };
 
   return (
-    
+
     <ScrollView style={styles.ScrollView}>
       <View style={styles.contenedorHead}>
         <Text style={styles.textoHead}>{i18n.t('realEstateUploadAsset.headTitle')}</Text>
       </View>
-      
+
       <View style={styles.dataEntry}>
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
         <CustomTextInput
           value={form.title}
-          onChangeText={(value) => onChange( value,"title")} 
+          onChangeText={(value) => onChange(value, "title")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
@@ -250,119 +253,119 @@ export default function UploadAssetUI({}) {
         {renderImagePreview(imageUris)}
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
-        <ChoiceInput 
+        <ChoiceInput
           data={dataTypes}
           value={form.types}
-          onValueSelect={(value) => onChange(value,"type")}
+          onValueSelect={(value) => onChange(value, "type")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}</Text>
-        <ChoiceInput 
-          data={dataTransaccion} 
+        <ChoiceInput
+          data={dataTransaccion}
           value={form.transaction}
-          onValueSelect={(value) => onChange(value,"transaction")}
+          onValueSelect={(value) => onChange(value, "transaction")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.price')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           keyboardType={'numeric'}
           value={form.price}
-          onChangeText={(value)  => onChange(value,"price")}
+          onChangeText={(value) => onChange(value, "price")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.coin')}</Text>
-        <ChoiceInput 
-          data={dataCurrency} 
+        <ChoiceInput
+          data={dataCurrency}
           value={form.coin}
-          onValueSelect={(value)  => onChange(value,"coin")}
+          onValueSelect={(value) => onChange(value, "coin")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bills')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           keyboardType={'numeric'}
           value={form.bills}
-          onChangeText={(value)  => onChange(value,"bills")}
+          onChangeText={(value) => onChange(value, "bills")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.description')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           value={form.description}
-          onChangeText={(value)  => onChange(value,"description")}
+          onChangeText={(value) => onChange(value, "description")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.amenities')}</Text>
         <ChoiceMultipleInput
           data={dataAmenities}
           value={form.amenities}
-          onValueSelect={(value)  => onChange(value,"amenities")}
+          onValueSelect={(value) => onChange(value, "amenities")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}</Text>
-        <ChoiceInput 
-          data={dataRooms} 
+        <ChoiceInput
+          data={dataRooms}
           value={form.room}
-          onValueSelect={(value) => onChange(value,"room")}
+          onValueSelect={(value) => onChange(value, "room")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.floors')}</Text>
-        <ChoiceInput 
-        data={dataFloors} 
-        value={form.floor}
-        onValueSelect={(value) => onChange(value,"floor")}
+        <ChoiceInput
+          data={dataFloors}
+          value={form.floor}
+          onValueSelect={(value) => onChange(value, "floor")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bath')}</Text>
-        <ChoiceInput 
-        data={dataBaths} 
-        value={form.bath}
-        onValueSelect={(value) => onChange(value,"bath")}
+        <ChoiceInput
+          data={dataBaths}
+          value={form.bath}
+          onValueSelect={(value) => onChange(value, "bath")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bedroom')}</Text>
-        <ChoiceInput 
-        data={dataBedrooms} 
-        value={form.bedroom}
-        onValueSelect={(value) => onChange(value,"bedroom")}
+        <ChoiceInput
+          data={dataBedrooms}
+          value={form.bedroom}
+          onValueSelect={(value) => onChange(value, "bedroom")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.garage')}</Text>
-        <ChoiceInput 
-        data={dataGarages} 
-        value={form.garage}
-        onValueSelect={(value) => onChange(value,"garage")}
+        <ChoiceInput
+          data={dataGarages}
+          value={form.garage}
+          onValueSelect={(value) => onChange(value, "garage")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mTotal')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           keyboardType={'numeric'}
           value={form.mTotal}
-          onChangeText={(value)  => onChange(value,"mTotal")}
+          onChangeText={(value) => onChange(value, "mTotal")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mCover')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           keyboardType={'numeric'}
-          value={form.mIndoor} 
-          onChangeText={(value)  => onChange(value,"mIndoor")}
+          value={form.mIndoor}
+          onChangeText={(value) => onChange(value, "mIndoor")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.storage')}</Text>
-        <CustomTextInput 
-          value={form.storage} 
-          onChangeText={(value)  => onChange(value,"storage")}             
+        <CustomTextInput
+          value={form.storage}
+          onChangeText={(value) => onChange(value, "storage")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.antiquity')}</Text>
-        <CustomTextInput 
+        <CustomTextInput
           keyboardType={'numeric'}
-          value={form.antiquity} 
-          onChangeText={(value)  => onChange(value,"antiquity")}   
+          value={form.antiquity}
+          onChangeText={(value) => onChange(value, "antiquity")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.frontBack')}</Text>
-        <CustomTextInput 
-          value={form.frontBack} 
-          onChangeText={(value)  => onChange(value,"frontBack")}   
+        <CustomTextInput
+          value={form.frontBack}
+          onChangeText={(value) => onChange(value, "frontBack")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
@@ -383,8 +386,8 @@ export default function UploadAssetUI({}) {
             />
           )}
         </MapView>
-        
-       <Button title={"Publicar"} titleColor={"white"} onPress={()=> handleSubmit()} />
+
+        <Button title={"Publicar"} titleColor={"white"} onPress={() => handleSubmit()} />
       </View>
     </ScrollView>
   );
