@@ -25,11 +25,8 @@ const CustomSearchBar = ({ onAddressSelect }) => {
   };
 
   const selectAddress = (item) => {
-    // Extrae las coordenadas de la dirección seleccionada
-    const coordinates = [item.point.coordinates[0], item.point.coordinates[1]];
-
     // Llama a la función de devolución de llamada para exponer las coordenadas
-    onAddressSelect(coordinates);
+    onAddressSelect(item);
     setSearchText(item.address.formattedAddress);
     setSearchResults([]);
   };
