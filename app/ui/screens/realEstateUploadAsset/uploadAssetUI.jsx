@@ -16,6 +16,8 @@ import { createAsset } from "../../../api/assetsAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
+
+
 const dataTypes = [
   { key: '1', value: 'Casa' },
   { key: '2', value: 'Departamento' },
@@ -228,7 +230,7 @@ export default function UploadAssetUI({}) {
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
         <CustomTextInput
           value={form.title}
-          onChangeText={(value) => onChange( value,"title")} //update
+          onChangeText={(value) => onChange( value,"title")} 
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
