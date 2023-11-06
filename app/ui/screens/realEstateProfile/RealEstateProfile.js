@@ -13,6 +13,7 @@ export default function RealEstateProfile() {
             try {
                 const response = await getRealEstateID(realEstateId)
                 setRealEstate(response)
+                console.log('Esta es la respuesta de la busqueda:', response)
             } catch (error) {
                 console.error('Error al obtener la busqueda:', error);
             }
@@ -21,6 +22,6 @@ export default function RealEstateProfile() {
     }, [])
     
     return (
-        <RealEstateProfileUI realEstate ={realEstate} />
+        <RealEstateProfileUI navigation ={realEstate} />
     )
 }

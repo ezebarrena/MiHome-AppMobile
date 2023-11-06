@@ -18,7 +18,7 @@ import logout from "../../../assets/images/icons/logout.png"
 import fotoPerfil from "../../../assets/images/icons/fotoRE.png"
 
 
-export default function RealEstateProfileUI() {
+export default function RealEstateProfileUI({navigation}) {
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold_Italic,
         Poppins_400Regular,
@@ -39,8 +39,8 @@ export default function RealEstateProfileUI() {
 
             <View style={styles.userInfo}>
                 <Image source={fotoPerfil}/>
-                <Text style={styles.userNameText}>LLA Propiedades</Text>
-                <Text style={styles.mailText}>llaprops@zdm.com</Text>
+                <Text style={styles.userNameText}>{navigation.realEstates.fantasyName}</Text>
+                <Text style={styles.mailText}>{navigation.realEstates.logInEmail}</Text>
             </View>
 
 
