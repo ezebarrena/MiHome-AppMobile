@@ -2,6 +2,7 @@
 import HomeRSUI from "./homeRSUI";
 import React, { useState, useEffect } from "react";
 import { getMyRealEstateAssets } from '../../../api/assetsAPI';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function HomeRS() {
@@ -11,7 +12,7 @@ export default function HomeRS() {
 
             try {
                 const bodyData={
-                    realEstateName: "6547ec1614f01fe26599736b",
+                    realEstateName: AsyncStorage.getItem('realEstateId'),
                     state:'',
                     transaction:''
                 }
