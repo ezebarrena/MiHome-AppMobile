@@ -13,6 +13,8 @@ import MapView, { Marker } from 'react-native-maps';
 import CustomSearchBar from "../../components/inputs/CustomSearchBar";
 import { useForm } from "../../../hooks/useForm";
 import { createAsset } from "../../../api/assetsAPI";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const dataTypes = [
   { key: '1', value: 'Casa' },
@@ -135,6 +137,7 @@ export default function UploadAssetUI({}) {
   */
 
   const initialFormState = {
+    realEstateName: '',
     title: '',
     image: [],
     type: '',
@@ -169,6 +172,8 @@ export default function UploadAssetUI({}) {
  
   
   const handleSubmit = async () => {
+    const realEstateName2 = await AsyncStorage.getItem('realEstateId')
+    onChange(realEstateName2, realEstateName)
     console.log(form);
     const response = await createAsset(form);
     if (response) {
