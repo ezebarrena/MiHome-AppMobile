@@ -21,13 +21,20 @@
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.proguade.mihomeappmobile"
     },
     "web": {
       "favicon": "./app/assets/images/favicon.png"
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "87cc9aac-c997-482a-9316-f737962a2372"
+      }
+    },
+    "owner": "proguade"
   }
 }
