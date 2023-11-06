@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import CustomTextInput from "../../inputs/CustomTextInput";
 import Button from "../../buttons/Button";
 import i18n from "../../../../assets/strings/I18n";
+import { resetPassword } from "../../../../api/realEstatesAPI";
 
 export default function Step3({ handleNextStep }) {
   const [password, setPassword] = useState("");
@@ -13,6 +14,7 @@ export default function Step3({ handleNextStep }) {
     if (isPasswordValid && password === confirmPassword) {
       console.log("Contraseña verificada");
       // Realiza aquí la lógica para cambiar la contraseña en tu sistema.
+      resetPassword(email, password);
       // Una vez cambiada con éxito, puedes avanzar al siguiente paso.
       handleNextStep();
     } else {
@@ -47,7 +49,7 @@ export default function Step3({ handleNextStep }) {
         title={i18n.t("realEstateWelcomeScreen.cannotLoginModal.thirdStep.changePasswordButton")}
         size="medium"
         backgroundColor="#E36565"
-        onPress={handleNextStep}
+        onPress={handleVerifyPassword}
       />
     </View>
   );
