@@ -288,31 +288,62 @@ export default function UploadAssetUI({}) {
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.floors')}</Text>
-        <ChoiceInput data={dataFloors} />
+        <ChoiceInput 
+        data={dataFloors} 
+        value={form.floor}
+        onValueSelect={(value) => useForm(value,"floor")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bath')}</Text>
-        <ChoiceInput data={dataBaths} />
+        <ChoiceInput 
+        data={dataBaths} 
+        value={form.bath}
+        onValueSelect={(value) => useForm(value,"bath")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bedroom')}</Text>
-        <ChoiceInput data={dataBedrooms} />
+        <ChoiceInput 
+        data={dataBedrooms} 
+        value={form.bedroom}
+        onValueSelect={(value) => useForm(value,"bedroom")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.garage')}</Text>
-        <ChoiceInput data={dataGarages} />
+        <ChoiceInput 
+        data={dataGarages} 
+        value={form.garage}
+        onValueSelect={(value) => useForm(value,"garage")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mTotal')}</Text>
-        <CustomTextInput />
+        <CustomTextInput 
+          value={form.mTotal}
+          onChangeText={(value)  => useForm(value,"mTotal")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mCover')}</Text>
-        <CustomTextInput />
+        <CustomTextInput 
+          value={form.mIndoor} 
+          onChangeText={(value)  => useForm(value,"mIndoor")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.storage')}</Text>
-        <CustomTextInput />
+        <CustomTextInput 
+          value={form.storage} 
+          onChangeText={(value)  => useForm(value,"storage")}             
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.antiquity')}</Text>
-        <CustomTextInput />
+        <CustomTextInput 
+          value={form.antiquity} 
+          onChangeText={(value)  => useForm(value,"antiquity")}   
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.frontBack')}</Text>
-        <CustomTextInput />
+        <CustomTextInput 
+          value={form.frontBack} 
+          onChangeText={(value)  => useForm(value,"frontBack")}   
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
         <CustomSearchBar
