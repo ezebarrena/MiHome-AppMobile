@@ -162,7 +162,22 @@ export default {
     shed:"Shed",
     office:"Office",
     commerce:"Commerce",
-    terrain:"Terrain"
+    terrain:"Terrain",
+    sell:"Sell",
+    rent:"Rent",
+    yes:"Yes",
+    no:"No",
+    pool:"Swimming pool",
+    climatized_pool:"Climatized pool",
+    covered_pool:"Covered pool",
+    jacuzzi:"Jacuzzi",
+    gym:"GYM",
+    mpr:"MPR",
+    grill:"Grill",
+    terrace:"Terrace",
+    garden:"Garden",
+    security:"Private security",
+    sport:"Sport place"
   }
 };
 

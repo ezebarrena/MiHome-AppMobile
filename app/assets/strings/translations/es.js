@@ -133,6 +133,32 @@ export default {
     "frontBack": "Front or back",
     "amenities": "Amenities",
   },
+
+  REUploadAssetChoices:{
+    house:"Casa",
+    department:"Departamento",
+    country_house:"Casa quinta",
+    PH:"PH",
+    shed:"Galpon",
+    office:"Oficina",
+    commerce:"Comercio",
+    terrain:"Terreno",
+    sell:"Venta",
+    rent:"Alquiler",
+    yes:"Si",
+    no:"No",
+    pool:"Pileta de natacion",
+    climatized_pool:"Pileta climatizada",
+    covered_pool:"Pileta cubierta",
+    jacuzzi:"Jacuzzi",
+    gym:"GYM",
+    mpr:"SUM",
+    grill:"Parrilla",
+    terrace:"Terraza",
+    garden:"Jardin",
+    security:"Seguridad privada",
+    sport:"Espacio de deportes"
+  }
 };
 
 
