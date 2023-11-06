@@ -76,7 +76,7 @@ export default function WelcomeReUI() {
 
               <Button
                 title={i18n.t("realEstateWelcomeScreen.loginButton")}
-                titleColor="#E36565"
+                titleColor="white"
                 onPress={handleLogin}
                 disabled={!isFormValid}
               />
