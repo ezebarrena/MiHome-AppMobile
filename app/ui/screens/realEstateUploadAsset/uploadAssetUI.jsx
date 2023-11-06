@@ -138,8 +138,25 @@ export default function UploadAssetUI({}) {
   });
   */
 
+  
+  const { form, onChange } = useForm(initialFormState);
+ 
+  
+  const handleSubmit = async () => {
+    const realEstateName2 = await AsyncStorage.getItem('realEstateId')
+    const value=realEstateName
+    onChange(value, realEstateName2)
+    console.log(form);
+    const response = await createAsset(form);
+    if (response) {
+      navigation.navigate("LandingStackRE");
+    }
+    else {
+      alert("error Upload Asset");
+    } 
+  };
+  
   const initialFormState = {
-    realEstateName: '',
     title: '',
     image: [],
     type: '',
@@ -169,23 +186,6 @@ export default function UploadAssetUI({}) {
     state: '',
     realEstateName: '',
   };
-  
-  const { form, onChange } = useForm(initialFormState);
- 
-  
-  const handleSubmit = async () => {
-    const realEstateName2 = await AsyncStorage.getItem('realEstateId')
-    onChange(realEstateName2, realEstateName)
-    console.log(form);
-    const response = await createAsset(form);
-    if (response) {
-      navigation.navigate("LandingStackRE");
-    }
-    else {
-      alert("error Upload Asset");
-    } 
-  };
-  
 
   const renderImagePreview = (imageUris) => {
     return (
