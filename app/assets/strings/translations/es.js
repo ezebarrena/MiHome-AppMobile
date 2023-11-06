@@ -121,7 +121,7 @@ export default {
     "bills": "Expensas",
     "description": "Descripcion de publicacion",
     "rooms": "Ambientes totales",
-    "floors": "Pisos totales",
+    "floors": "Piso",
     "bath": "Baños",
     "bedroom": "Dormitorios",
     "garage": "Garage",
