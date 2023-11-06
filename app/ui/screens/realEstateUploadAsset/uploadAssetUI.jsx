@@ -168,7 +168,10 @@ export default function UploadAssetUI({}) {
     state: null,
     realEstateName: '',
   };
-  const { form, onChange } = useForm(initialFormState);
+
+  
+  const { form, onChange, setFormValue } = useForm(initialFormState);
+
  
   
   const handleSubmit = async () => {
@@ -386,8 +389,18 @@ export default function UploadAssetUI({}) {
             const streetNumber = addressParts.slice(-1)[0]; // El número de la calle es la última parte
 
             // Actualizar el estado o realizar otras acciones necesarias
-            onChange(streetName, "streetName");
-            onChange(streetNumber, "streetNumber");
+            setFormValue(
+              {
+                ...form,
+                streetName: streetName,
+                streetNumber: streetNumber,
+                neighbourhood: item.address.adminDistrict2,
+                locality: item.address.locality,
+                province: item.address.adminDistrict,
+                country: item.address.countryRegion,
+                geoLocalization: item.point.coordinates,
+              }
+            );
           }}
         />
         <MapView style={styles.map} region={mapRegion}>
