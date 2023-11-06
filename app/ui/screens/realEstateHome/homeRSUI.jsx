@@ -62,7 +62,8 @@ export default function HomeRSUI({ listadoPropiedades }) {
   }
 
   const filtrarItems = (item) => {
-    
+
+    const asset = listadoPropiedades.asset
 
     const tipoDeseado = item.value; // Cambia 'venta' al tipo que desees buscar
     let transaccion;
@@ -87,13 +88,13 @@ export default function HomeRSUI({ listadoPropiedades }) {
         break
       case 4:
         estado = 0
-        const objetosFiltrados = listadoPropiedades.filter(objeto => objeto.state === estado);
+        const objetosFiltrados = asset.filter(objeto => objeto.state === estado);
         setPropiedades(objetosFiltrados)
         break
     }
 
     if (tipoDeseado != 4) {
-      const objetosFiltrados = listadoPropiedades.filter(objeto => objeto.transaction === transaccion && objeto.state === estado);
+      const objetosFiltrados = asset.filter(objeto => objeto.transaction === transaccion && objeto.state === estado);
       setPropiedades(objetosFiltrados)
     }
 
@@ -102,7 +103,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
 
 
     if (item.value == 'todo') {
-      setPropiedades(listadoPropiedades)
+      setPropiedades(listadoPropiedades.asset)
     }
   }
 
