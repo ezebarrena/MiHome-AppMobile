@@ -13,6 +13,10 @@ import MapView, { Marker } from 'react-native-maps';
 import CustomSearchBar from "../../components/inputs/CustomSearchBar";
 import { useForm } from "../../../hooks/useForm";
 import { createAsset } from "../../../api/assetsAPI";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
+
 
 const dataTypes = [
   { key: '1', value: 'Casa' },
@@ -134,6 +138,24 @@ export default function UploadAssetUI({}) {
   });
   */
 
+  
+  const { form, onChange } = useForm(initialFormState);
+ 
+  
+  const handleSubmit = async () => {
+    const realEstateName2 = await AsyncStorage.getItem('realEstateId')
+    const value=realEstateName
+    onChange(value, realEstateName2)
+    console.log(form);
+    const response = await createAsset(form);
+    if (response) {
+      navigation.navigate("LandingStackRE");
+    }
+    else {
+      alert("error Upload Asset");
+    } 
+  };
+  
   const initialFormState = {
     title: '',
     image: [],
@@ -164,21 +186,6 @@ export default function UploadAssetUI({}) {
     state: '',
     realEstateName: '',
   };
-  
-  const { form, onChange } = useForm(initialFormState);
- 
-  
-  const handleSubmit = async () => {
-    console.log(form);
-    const response = await createAsset(form);
-    if (response) {
-      navigation.navigate("LandingStackRE");
-    }
-    else {
-      alert("error");
-    } 
-  };
-  
 
   const renderImagePreview = (imageUris) => {
     return (
@@ -223,7 +230,7 @@ export default function UploadAssetUI({}) {
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
         <CustomTextInput
           value={form.title}
-          onChangeText={(value) => onChange( value,"title")} //update
+          onChangeText={(value) => onChange( value,"title")} 
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
