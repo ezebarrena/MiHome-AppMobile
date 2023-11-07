@@ -14,7 +14,7 @@ import CustomSearchBar from "../../components/inputs/CustomSearchBar";
 import { useForm } from "../../../hooks/useForm";
 import { createAsset } from "../../../api/assetsAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { useNavigation } from "@react-navigation/native";
 
 
 
@@ -56,9 +56,9 @@ const dataStorage = [
 const dataAmenities = [
   { key: '1', value: i18n.t('REUploadAssetChoices.pool') },
   { key: '2', value: i18n.t('REUploadAssetChoices.climatized_pool') },
-  { key: '3', value: i18n.t('REUploadAssetChoices.covered_pool')},
+  { key: '3', value: i18n.t('REUploadAssetChoices.covered_pool') },
   { key: '4', value: i18n.t('REUploadAssetChoices.jacuzzi') },
-  { key: '5', value: i18n.t('REUploadAssetChoices.gym')},
+  { key: '5', value: i18n.t('REUploadAssetChoices.gym') },
   { key: '6', value: i18n.t('REUploadAssetChoices.mpr') },
   { key: '7', value: i18n.t('REUploadAssetChoices.grill') },
   { key: '8', value: i18n.t('REUploadAssetChoices.terrace') },
@@ -69,14 +69,13 @@ const dataAmenities = [
 
 export default function UploadAssetUI({ }) {
   const [imageUris, setImageUris] = useState([]);
-
   const [mapRegion, setMapRegion] = useState({
     latitude: null,
     longitude: null,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
-
+  const navigation = useNavigation();
   /*
   var raw = JSON.stringify({
     "title": title,
@@ -184,21 +183,25 @@ export default function UploadAssetUI({ }) {
 
   const handleSubmit = async () => {
     const value = await AsyncStorage.getItem('realEstateId')
-
+    console.log(value);
     if (value) {
       console.log(value);
       onChange(value, "realEstateName")
-      const nuevoForm = removeNullFields(form)
-      console.log(nuevoForm, 'asdf');
-      if (nuevoForm) {
-        const response = await createAsset(nuevoForm);
-        if (response) {
-          navigation.navigate("LandingStackRE");
-        }
-        else {
-          alert("error Upload Asset");
+      console.log(form.realEstateName);
+      if (form.realEstateName != "") {
+        const nuevoForm = removeNullFields(form)
+        console.log(nuevoForm, 'asdf');
+        if (nuevoForm) {
+          const response = await createAsset(nuevoForm);
+          if (response) {
+            navigation.navigate("LandingStackRE");
+          }
+          else {
+            alert("error Upload Asset");
+          }
         }
       }
+
     }
 
 
@@ -281,11 +284,11 @@ export default function UploadAssetUI({ }) {
           value={form.transaction}
           onValueSelect={(value) => {
             const resultado = dataTransaccion.find(item => item.value === value);
-            if(resultado){
+            if (resultado) {
               console.log(resultado.key);
               onChange(parseInt(resultado.key), "transaction")
             }
-            
+
           }}
         />
 
@@ -382,11 +385,12 @@ export default function UploadAssetUI({ }) {
           data={dataStorage}
           value={form.storage}
           onValueSelect={(value) => {
-            let valor= false 
-            if(value == 'Si' || value == 'si'){
+            let valor = false
+            if (value == 'Si' || value == 'si') {
               valor = true
             }
-            onChange(valor, "storage")}}
+            onChange(valor, "storage")
+          }}
         />
 
 
