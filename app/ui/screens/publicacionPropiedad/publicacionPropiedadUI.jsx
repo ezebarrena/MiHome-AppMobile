@@ -104,7 +104,7 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
             <View style={styles.viewValores}>
                 <View style={styles.viewValores1}>
                     <Text style={styles.textValores}>{i18nIdiomaDetalleTipo}</Text>
-                    {propiedad.expensas ? <Text style={styles.textValores}>{i18n.t('detallePropiedadInmobiliaria.expensas')}</Text> : null}
+                    {propiedad.bills ? <Text style={styles.textValores}>{i18n.t('detallePropiedadInmobiliaria.expensas')}</Text> : null}
 
 
                 </View>
