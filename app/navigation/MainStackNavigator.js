@@ -8,11 +8,13 @@ import PublicacionPropiedad from '../ui/screens/publicacionPropiedad/publicacion
 import RealEstateProfile from '../ui/screens/realEstateProfile/RealEstateProfile';
 import i18n from "../assets/strings/I18n";
 import Theme from '../ui/styles/Theme';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const Stack = createStackNavigator();
 
 export function MainStackNavigator() {
   return (
+    <SafeAreaProvider>
     <Stack.Navigator
       screenOptions={{
         headerTransparent: true,
@@ -38,5 +40,6 @@ export function MainStackNavigator() {
         <Stack.Screen name="LandingStack" component={LandingStackNavigator} options={{ headerShown: false }} />
       </Stack.Group>
     </Stack.Navigator>
+    </SafeAreaProvider>
   );
 }
