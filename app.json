@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "MiHome-AppMobile",
-    "slug": "MiHome-AppMobile",
+    "name": "mihome-appmobile",
+    "slug": "mihome-appmobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./app/assets/images/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./app/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,15 +19,22 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./app/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.proguade.mihomeappmobile"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./app/assets/images/favicon.png"
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "87cc9aac-c997-482a-9316-f737962a2372"
+      }
+    },
+    "owner": "proguade"
   }
 }

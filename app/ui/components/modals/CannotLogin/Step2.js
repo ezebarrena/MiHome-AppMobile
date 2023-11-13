@@ -9,17 +9,13 @@ export default function Step2({ handleNextStep }) {
   const [code, setCode] = useState(""); // Estado para el código de cinco dígitos
   const [isCodeValid, setIsCodeValid] = useState(false); // Estado para la validación del código
 
-  const handleVerifyCode = () => {
+  const handleVerifyCode = async () => {
     if (isCodeValid) {
-      console.log("Código verificado"); // Muestra "Código verificado" en la consola
-      const token = validateCode(code); // Valida el código de cinco dígitos
-      console.log(token);
-      if (token) {
-        handleNextStep(); // Avanza al siguiente paso
-      }
-      else {
-        // Si el código no es válido, muestra un mensaje de error o realiza alguna acción adicional.
-        console.log("Código no válido");
+      try {
+        await validateCode(code); // Validación del código de cinco dígitos
+        handleNextStep(); // Si el código es válido, pasa al siguiente paso
+      } catch (error) {
+        console.log('Cai en el error', error);
       }
     } else {
       // Si el código no es válido, muestra un mensaje de error o realiza alguna acción adicional.
@@ -27,7 +23,7 @@ export default function Step2({ handleNextStep }) {
     }
   };
 
-  const validateCode = (text) => {
+  const validateDigits = (text) => {
     // Lógica de validación del código de cinco dígitos (puedes personalizarla)
     const codePattern = /^\d{4}$/;
     const isValid = codePattern.test(text);
@@ -47,7 +43,7 @@ export default function Step2({ handleNextStep }) {
           "realEstateWelcomeScreen.cannotLoginModal.secondStep.codeInput"
         )}
         value={code}
-        onChangeText={(text) => validateCode(text)} // Validación y actualización del código de cinco dígitos
+        onChangeText={(text) => validateDigits(text)} // Validación y actualización del código de cinco dígitos
       />
       <Button
         title={i18n.t(

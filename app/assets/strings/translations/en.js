@@ -39,7 +39,7 @@ export default {
     },
     "cannotLoginModal": {
       "firstStep": {
-        "helpText": "Please enter your email. We will send you a code to reset your password.",
+        "helpText": "Please enter your email. We will send you a code to reset your password. (Password must be longer than 7 characters )",
         "emailInput": "EMAIL",
         "sendButton": "Send Code"
       },
