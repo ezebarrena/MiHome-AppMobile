@@ -1,15 +1,14 @@
 import React from "react";
 import { ImageBackground, StyleSheet, View, Text, Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
 import mainBackground from "../../../assets/images/backgrounds/mainBackground.png";
 import ButtonWithIcon from "../../components/buttons/ButtonWithIcon";
 import Theme from "../../styles/Theme";
+import { Link } from "expo-router";
 
 export default function WelcomeUI() {
-  const navigation = useNavigation();
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold_Italic,
@@ -32,18 +31,16 @@ export default function WelcomeUI() {
             <View style={styles.loginContainer}>
               <ButtonWithIcon
                 title={i18n.t("welcomeScreen.googleButton")}
-                onPress={() => navigation.navigate("LandingStack")}
                 backgroundColor={Theme.colors.PRIMARY}
                 icon={require("../../../assets/images/GoogleIcon.png")}
               />
-
-              <Pressable
-                onPress={() => navigation.navigate("WelcomeRE")}
-              >
-                <Text style={styles.realEstateLoginText}>
-                  {i18n.t("welcomeScreen.startAsRealEstate")}
-                </Text>
-              </Pressable>
+              <Link href={"/ui/screens/realEstateWelcome/WelcomeRE"} asChild>
+                <Pressable>
+                  <Text style={styles.realEstateLoginText}>
+                    {i18n.t("welcomeScreen.startAsRealEstate")}
+                  </Text>
+                </Pressable>
+              </Link>
             </View>
           </View>
         </ImageBackground>
