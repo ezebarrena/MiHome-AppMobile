@@ -1,12 +1,13 @@
 import React from "react";
 import { ImageBackground, StyleSheet, View, Text, Pressable } from "react-native";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
+import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
 import mainBackground from "../../../assets/images/backgrounds/mainBackground.png";
 import ButtonWithIcon from "../../components/buttons/ButtonWithIcon";
 import Theme from "../../styles/Theme";
-import { Link } from "expo-router";
+import { WelcomeRE } from "../../../routeConstants";
 
 export default function WelcomeUI() {
 
@@ -17,7 +18,6 @@ export default function WelcomeUI() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
 
   return (
     <View style={styles.container}>
@@ -34,13 +34,11 @@ export default function WelcomeUI() {
                 backgroundColor={Theme.colors.PRIMARY}
                 icon={require("../../../assets/images/GoogleIcon.png")}
               />
-              <Link href={"/ui/screens/realEstateWelcome/WelcomeRE"} asChild>
-                <Pressable>
-                  <Text style={styles.realEstateLoginText}>
-                    {i18n.t("welcomeScreen.startAsRealEstate")}
-                  </Text>
-                </Pressable>
-              </Link>
+              <Pressable onPress={() => router.push(WelcomeRE)}>
+                <Text style={styles.realEstateLoginText}>
+                  {i18n.t("welcomeScreen.startAsRealEstate")}
+                </Text>
+              </Pressable>
             </View>
           </View>
         </ImageBackground>
