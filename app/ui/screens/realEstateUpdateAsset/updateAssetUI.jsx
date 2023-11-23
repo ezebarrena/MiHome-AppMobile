@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity }
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
 import { Dimensions } from "react-native";
-import CustomTextInput from "../../../ui/components/inputs/CustomTextInput";
-import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
-import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
-import Button from "../../../ui/components/buttons/Button";
+import CustomTextInput from "../../components/inputs/CustomTextInput";
+import ChoiceInput from "../../components/inputs/ChoiceInput";
+import ChoiceMultipleInput from "../../components/inputs/ChoiceMultipleInput";
+import Button from "../../components/buttons/Button";
 import ImagePickerModal from "../../components/modals/ImagePickerModal";
 import { Ionicons } from "@expo/vector-icons"; // Asegúrate de importar Ionicons desde tu proyecto
 import MapView, { Marker } from 'react-native-maps';

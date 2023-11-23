@@ -8,13 +8,11 @@ import {
 } from "react-native";
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
-import * as SplashScreen from "expo-splash-screen";
 import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
 
 
 
-//SplashScreen.preventAutoHideAsync();
 
 export default function BookingsUI() {
   const [fontsLoaded, fontError] = useFonts({
