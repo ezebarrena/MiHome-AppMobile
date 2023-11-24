@@ -1,5 +1,5 @@
 
-import HomeRSUI from "./HomeRSUI";
+import HomeRSUI from "./homeRSUI";
 import React, { useState, useEffect } from "react";
 import { getMyRealEstateAssets } from '../../../api/assetsAPI';
 import AsyncStorage from "@react-native-async-storage/async-storage";

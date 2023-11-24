@@ -1,7 +1,7 @@
 {
   "name": "mihome-appmobile",
   "version": "1.0.0",
-  "main": "expo-router/entry",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.3",
+    "@expo-google-fonts/roboto": "^0.2.3",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "1.17.11",
     "@react-native-community/masked-view": "^0.1.11",
@@ -29,8 +30,12 @@
     "expo-sharing": "~11.2.2",
     "expo-splash-screen": "~0.18.2",
     "expo-status-bar": "~1.4.4",
-    "expo-system-ui": "~2.2.1",
     "i18n-js": "^4.3.2",
+    "image-picker": "^0.3.1",
+    "linear-gradient": "^1.0.6",
+    "material-symbols": "^0.13.0",
+    "moment": "^2.29.4",
+    "patch-package": "^8.0.0",
     "react": "18.2.0",
     "react-native": "0.71.14",
     "react-native-calendars": "^1.1301.0",
@@ -47,7 +52,7 @@
     "react-native-screens": "~3.20.0",
     "react-native-star-rating": "^1.1.0",
     "react-native-vector-icons": "^10.0.0",
-    "react-native-web": "~0.19.6"
+    "watchman": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
