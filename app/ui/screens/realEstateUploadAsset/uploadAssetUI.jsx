@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity, Modal, Pressable } from "react-native";
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
 import { Dimensions } from "react-native";
@@ -30,8 +30,8 @@ const dataTypes = [
 ];
 
 const dataFrontBack = [
-  { key: '1', value: 'Frente' },
-  { key: '2', value: 'Contrafrente' },
+  { key: '1', value: i18n.t('REUploadAssetChoices.frente')  },
+  { key: '2', value: i18n.t('REUploadAssetChoices.contrafrente')  },
 ]
 
 const dataTransaccion = [
@@ -51,6 +51,12 @@ const dataStorage = [
   { key: '2', value: i18n.t('REUploadAssetChoices.no') },
 ];
 
+const dataOrientacion = [
+  { key: '1', value: i18n.t('REUploadAssetChoices.norte') },
+  { key: '2', value: i18n.t('REUploadAssetChoices.sur') },
+  { key: '3', value: i18n.t('REUploadAssetChoices.este') },
+  { key: '4', value: i18n.t('REUploadAssetChoices.oeste') },
+];
 
 
 const dataAmenities = [
@@ -69,12 +75,15 @@ const dataAmenities = [
 
 export default function UploadAssetUI({ }) {
   const [imageUris, setImageUris] = useState([]);
+  const [subiendo, setSubiendo] = useState(false);
+  const [error, setError] = useState(false);
   const [mapRegion, setMapRegion] = useState({
     latitude: null,
     longitude: null,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   /*
   var raw = JSON.stringify({
@@ -184,20 +193,54 @@ export default function UploadAssetUI({ }) {
   const handleSubmit = async () => {
     const value = await AsyncStorage.getItem('realEstateId')
     console.log(value);
+    setSubiendo(true)
     if (value) {
       console.log(value);
       onChange(value, "realEstateName")
       console.log(form.realEstateName);
       if (form.realEstateName != "") {
         const nuevoForm = removeNullFields(form)
-        console.log(nuevoForm, 'asdf');
         if (nuevoForm) {
           const response = await createAsset(nuevoForm);
-          if (response) {
-            navigation.navigate("LandingStackRE");
+          if (response.status === 200) {
+            console.log(response.status);
+            setSubiendo(false)
+            setModalVisible(true)
+            initialFormState = {
+              "title": "",
+              "image": [],
+              "type": "",
+              "transaction": null,
+              "price": null,
+              "coin": "",
+              "bills": null,
+              "description": "",
+              "amenities": [],
+              "room": null,
+              "floor": null,
+              "bath": null,
+              "bedroom": null,
+              "garage": null,
+              "mTotal": null,
+              "mIndoor": null,
+              "storage": false,
+              "antiquity": null,
+              "streetName": "",
+              "streetNumber": null,
+              "neighbourhood": "",
+              "locality": "",
+              "province": "",
+              "country": "",
+              "geoLocalization": "",
+              "frontBack": "",
+              "state": 1,
+              "realEstateName": ""
+
+            }
           }
           else {
             alert("error Upload Asset");
+            setError(true)
           }
         }
       }
@@ -252,6 +295,26 @@ export default function UploadAssetUI({ }) {
   return (
 
     <ScrollView style={styles.ScrollView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            {error ? <Text style={styles.modalText}>{i18n.t('realEstateUploadAsset.mensajeError')}</Text> : <Text style={styles.modalText}>{i18n.t('realEstateUploadAsset.mensajePublicado')}</Text>}
+            
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>{i18n.t('common.cerrar')}</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.contenedorHead}>
         <Text style={styles.textoHead}>{i18n.t('realEstateUploadAsset.headTitle')}</Text>
       </View>
@@ -409,6 +472,12 @@ export default function UploadAssetUI({ }) {
           onValueSelect={(value) => onChange(value, "frontBack")}
         />
 
+        {/* <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.orientacion')}</Text>
+        <ChoiceMultipleInput
+          data={dataOrientacion}
+       value={orientacion}
+          onValueSelect={(value) => onChange(value, "amenities")}
+        /> */}
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
         <CustomSearchBar
@@ -458,7 +527,7 @@ export default function UploadAssetUI({ }) {
           )}
         </MapView>
 
-        <Button title={"Publicar"} titleColor={"white"} onPress={() => handleSubmit()} />
+        <Button loading={subiendo} title={"Publicar"} titleColor={"white"} onPress={() => handleSubmit()} />
       </View>
     </ScrollView>
   );
@@ -551,5 +620,51 @@ const styles = StyleSheet.create({
     height: 200,
     marginHorizontal: 14,
     marginVertical: 10,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 20,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  buttonClose: {
+    backgroundColor: '#512F7B',
+  },
+  button: {
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    elevation: 5,
+  },
+  textStyle: {
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: "Poppins_500Medium",
+    fontSize: Dimensions.get("window").width * 0.039,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontFamily: "Poppins_500Medium",
+    fontSize: Dimensions.get("window").width * 0.039,
   },
 });

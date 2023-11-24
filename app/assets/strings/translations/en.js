@@ -1,6 +1,7 @@
 export default {
   "common": {
     "appName": "MiHome",
+    cerrar:'Close'
   },
   "homeScreen": {
     PHUsuario: 'Welcome',
@@ -9,7 +10,12 @@ export default {
   },
   homeScreenRS: {
     main: 'Listed Real State',
-    headVisualization: 'View'
+    headVisualization: 'View',
+    noPropiedad:'YOU DIDNT UPLOAD ANY ESTATES',
+    noPropiedad1:'UPLOAD ONE NOW CLICKING PUBLISH DOWN BELOW!'
+  },
+  stackNavigator:{
+    publicar:'Publish',
   },
   propiedadesEstados: {
     todo: 'All',
@@ -123,11 +129,14 @@ export default {
     "garage": "Garage",
     "mTotal": "Total meters",
     "mCover": "Meters built",
-    "storage": "Internal storage",
+    "storage": "Storage Room",
     "antiquity": "Antiquity",
     "location": "Location",
     "frontBack": "Front or back",
     "amenities": "Amenities",
+    mensajePublicado:'The Estate has been published',
+    mensajeError:'There has been an error, please review the content and try again'
+
   },
 
   realEstateUpdateAsset: {
@@ -177,7 +186,14 @@ export default {
     terrace:"Terrace",
     garden:"Garden",
     security:"Private security",
-    sport:"Sport place"
+    sport:"Sport place",
+    norte:'North',
+    sur:'South',
+    este:'East',
+    oeste:'West',
+    orientacion:'Orientation',
+    frente:'Front',
+    contrafrente:'Back'
   }
 };
 

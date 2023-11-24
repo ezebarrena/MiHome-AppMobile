@@ -29,12 +29,6 @@
     },
     "plugins": [
       "expo-localization"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "0e106ea5-507d-4181-b6ca-51d0f64538ee"
-      }
-    },
-    "owner": "eze_barrena"
+    ]
   }
 }

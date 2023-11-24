@@ -6,7 +6,7 @@ import HomeRE from '../ui/screens/realEstateHome/homeRS';
 import AgendaRE from '../ui/screens/realEstateAgenda/RealEstateAgenda'
 import Icon from 'react-native-vector-icons/Ionicons';
 import UploadAsset from '../ui/screens/realEstateUploadAsset/uploadAsset';
-
+import i18n from '../assets/strings/I18n';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -15,48 +15,49 @@ const Tab = createMaterialBottomTabNavigator();
 
 const LandingStackNavigatorRE = () => {
 
-    const getTabIcon = (routeName) => {
-        let iconName;
-    
-        switch (routeName) {
-          
-          case 'Home':
-            iconName = 'home';
-            break;
-          case 'Publicar':
-            iconName = 'add-circle-outline';
-            break;
-          case 'Agenda':
-            iconName = 'calendar';
-            break;
-          default:
-            iconName = 'home';
-        }
-    
-        return iconName;
-      };
+  
+  const getTabIcon = (routeName) => {
+    let iconName;
+
+    switch (routeName) {
+
+      case 'Home':
+        iconName = 'home';
+        break;
+      case i18n.t('stackNavigator.publicar') :
+        iconName = 'add-circle-outline';
+        break;
+      case 'Agenda':
+        iconName = 'calendar';
+        break;
+      default:
+        iconName = 'home';
+    }
+
+    return iconName;
+  };
 
   return (
     <Tab.Navigator
 
-        initialRouteName={NavigatorConstant.NAVIGATOR.HOMERE}
-        activeColor= '#250094'
-        inactiveColor= '#1C1B1F'
-        backgroundColor = '#ECE6F0'
-        
-        //shifting= {true}
-        //labeled = {false}
-        barStyle={{ backgroundColor: '#ECE6F0', height: 70 }}
-        screenOptions={({ route }) => ({
-            tabBarIcon: ({ color, size }) => {
-                const iconName = getTabIcon(route.name);
-                return <Icon name={iconName} size={24} color={color} />;
-            },
-        })}
-        
-        >
+      initialRouteName={NavigatorConstant.NAVIGATOR.HOMERE}
+      activeColor='#250094'
+      inactiveColor='#1C1B1F'
+      backgroundColor='#ECE6F0'
+
+      //shifting= {true}
+      //labeled = {false}
+      barStyle={{ backgroundColor: '#ECE6F0', height: 70 }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          const iconName = getTabIcon(route.name);
+          return <Icon name={iconName} size={24} color={color} />;
+        },
+      })}
+
+    >
       <Tab.Screen name="Home" component={HomeRE} />
-      <Tab.Screen name="Publicar" component={UploadAsset}  />
+      <Tab.Screen name={i18n.t('stackNavigator.publicar')} component={UploadAsset} />
       <Tab.Screen name="Agenda" component={AgendaRE} />
 
     </Tab.Navigator>

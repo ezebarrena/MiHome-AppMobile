@@ -8,6 +8,12 @@ export default {
   homeScreenRS: {
     main: 'Propiedades Listadas',
     headVisualization: 'Mostrando',
+    noPropiedad:'NO TIENES PROPIEDADES CARGADAS',
+    noPropiedad1:'CARGA NUEVAS PROPIEDADES HACIENDO CLIC EN PUBLICAR!'
+  },
+
+  stackNavigator:{
+    publicar:'Publicar',
   },
 
   propiedadesEstados: {
@@ -22,6 +28,7 @@ export default {
 
   "common": {
     "appName": "MiHome",
+    cerrar:'Cerrar'
   },
   "welcomeScreen": {
     "continue": "Continuar",
@@ -109,6 +116,9 @@ export default {
     "location": "Ubicacion",
     "frontBack": "Front or back",
     "amenities": "Amenities",
+    mensajePublicado:'La propiedad se cargo exitosamente',
+    mensajeError:'Hubo un error, revise los campos y vuelva a intentar'
+
   },
   realEstateUpdateAsset: {
     "headTitle": "Modificar Publicacion",
@@ -157,7 +167,14 @@ export default {
     terrace:"Terraza",
     garden:"Jardin",
     security:"Seguridad privada",
-    sport:"Espacio de deportes"
+    sport:"Espacio de deportes",
+    norte:'Norte',
+    sur:'Sur',
+    este:'Este',
+    oeste:'Oeste',
+    orientacion:'Orientacion',
+    frente:'Frente',
+    contrafrente:'Contrafrente'
   }
 };
 

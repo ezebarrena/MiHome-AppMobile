@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { t } from 'i18n-js';
 
-const API_BASE_URL = 'http://3.17.181.224:8080'; // Reemplaza con la URL de tu backend
+const API_BASE_URL = 'http://192.168.1.6:8080'; // Reemplaza con la URL de tu backend
 
 // Crea una instancia personalizada de Axios
 const realEstatesAPI = axios.create({

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useFocusEffect } from '@react-navigation/native';
 import {
 
   StyleSheet,
@@ -22,11 +23,9 @@ import { useNavigation } from "@react-navigation/native";
 
 import Theme from "../../styles/Theme";
 import DropDownPicker from 'react-native-dropdown-picker';
-
-import DetallePropiedadRS from "../realEstateDetallePropiedad/detallePropiedadRS";
-//import UserProfile from "../../screens/userProfile/UserProfile.js"
 import { getMyRealEstateAssets } from '../../../api/assetsAPI';
 //SplashScreen.preventAutoHideAsync();
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeRSUI({ listadoPropiedades }) {
   const navigation = useNavigation();
@@ -50,7 +49,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
     setRefreshing(true);
     const busquedaPropiedades = async () => {
       const valor = await AsyncStorage.getItem('realEstateId')
-
+      console.log(valor);
       try {
         const bodyData = {
           realEstateName: valor,
@@ -63,6 +62,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
 
         setPropiedades(respuesta.asset);
         setPropiedadesBD(respuesta.asset)
+        setRefreshing(false)
       }
       catch (error) {
         console.error('Error al obtener la busqueda:', error);
@@ -77,19 +77,18 @@ export default function HomeRSUI({ listadoPropiedades }) {
     setTimeout(() => {
       // Lógica para obtener nuevos datos
       setRefreshing(false);
-    }, 1500); // Espera 1 segundo antes de finalizar la recarga (puedes ajustar el tiempo según tus necesidades).
+    }, 2000); // Espera 1 segundo antes de finalizar la recarga (puedes ajustar el tiempo según tus necesidades).
   };
-
-  useEffect(() => {
-
-
-    setPropiedades(listadoPropiedades.asset);
-    setPropiedadesBD(listadoPropiedades.asset);
-    if (listadoPropiedades.asset && listadoPropiedades.asset.length > 0) {
-      setActive(false)
-    }
-    console.log(propiedades, 's');
-  }, [setPropiedades, listadoPropiedades])
+  useFocusEffect(
+    React.useCallback(() => {
+      setPropiedades(listadoPropiedades.asset);
+      setPropiedadesBD(listadoPropiedades.asset);
+      if (listadoPropiedades.asset && listadoPropiedades.asset.length > 0) {
+        setActive(false)
+      }
+    }, [setPropiedades, listadoPropiedades])
+  );
+ 
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -196,7 +195,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
             />
           }
         />
-      </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>NO TIENES PROPIEDADES CARGADAS {"\n"} </Text><Text style={styles.textEmpty}>CARGA NUEVAS PROPIEDADES HACIENDO CLIC EN PUBLICAR!</Text></View>)
+      </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad')} {"\n"} </Text><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad1')}</Text></View>)
 
       }
 
