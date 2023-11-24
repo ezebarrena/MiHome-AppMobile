@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { ImageBackground, StyleSheet, View, Text, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import i18n from "../../../assets/strings/I18n";
 import mainBackground from "../../../assets/images/backgrounds/mainBackground.png";
 import Button from "../../components/buttons/Button";
 import CustomTextInput from "../../components/inputs/CustomTextInput";
 import RegistrationModal from "../../components/modals/RegistrationModal";
 import CannotLoginModal from "../../components/modals/CannotLogin/CannotLoginModal";
-import CustomAlert from "../../components/modals/CustomAlert";
 import { useForm } from "../../../hooks/useForm";
 import { logInRealEstate } from "../../../api/realEstatesAPI";
-import { Welcome } from "../../../routeConstants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomAlert from "../../components/modals/CustomAlert";
 
 export default function WelcomeReUI() {
+  const navigation = useNavigation();
 
   const [isFormValid, setIsFormValid] = useState(false);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
@@ -46,7 +46,7 @@ export default function WelcomeReUI() {
       console.log("response", response);
       await AsyncStorage.setItem("token", response.token);
       await AsyncStorage.setItem("realEstateId", response.id);
-      router.push(Welcome);
+      navigation.navigate("LandingStackRE");
     } else {
       setShowAlert(true);
     }

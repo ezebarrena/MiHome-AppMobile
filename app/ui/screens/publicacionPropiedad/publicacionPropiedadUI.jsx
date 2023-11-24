@@ -27,6 +27,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Theme from "../../styles/Theme";
 import imagenInmobiliaria from '../../../assets/images/imagenInmobiliaria.png'
 import Estados from "../../../assets/funcionTraduccion";
+import StarRating from 'react-native-star-rating';
 const { width } = Dimensions.get('window');
 
 const images = [
@@ -169,6 +170,12 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
                     <Text style={styles.textoCI}>{inmobiliaria.logInEmail}</Text>
                     <View style={styles.ratingContainer}>
                         <Text style={styles.textoCI}>{i18n.t("detallePropiedad.valoracion")}</Text>
+                        <StarRating
+                            disabled={true}
+                            maxStars={5}
+                            rating={3.6}
+                            starSize={22}
+                        />
                         <Text style={styles.textoCI}>(12)</Text>
                     </View>
 

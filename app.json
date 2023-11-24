@@ -2,7 +2,6 @@
   "expo": {
     "name": "mihome-appmobile",
     "slug": "mihome-appmobile",
-    "scheme": "mihome-appmobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/images/icon.png",
@@ -26,16 +25,16 @@
       "package": "com.proguade.mihomeappmobile"
     },
     "web": {
-      "favicon": "./app/assets/images/favicon.png",
-      "bundler": "metro"
+      "favicon": "./app/assets/images/favicon.png"
     },
     "plugins": [
-      
+      "expo-localization"
     ],
     "extra": {
-      "router": {
-        "origin": false
+      "eas": {
+        "projectId": "0e106ea5-507d-4181-b6ca-51d0f64538ee"
       }
-    }
+    },
+    "owner": "eze_barrena"
   }
 }
