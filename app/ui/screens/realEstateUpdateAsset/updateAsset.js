@@ -1,11 +1,11 @@
-import React from 'react';
+// import React from 'react';
 
-import updateAssetUI from './updateAssetUI';
+//import UpdateAssetUI from './UpdateAssetUI';
 
-import i18n from '../../../assets/strings/I18n';
+// import i18n from '../../../assets/strings/I18n';
 
-export default function UpdateAsset() {
-    return (
-        <UpdateAssetUI />
-    )
-}
+// export default function UpdateAsset() {
+//     return (
+//         <UpdateAssetUI />
+//     )
+// }
