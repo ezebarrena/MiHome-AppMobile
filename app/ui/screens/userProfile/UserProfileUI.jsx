@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { useFonts, Poppins_700Bold_Italic, Poppins_400Regular } from "@expo-google-fonts/poppins";
-
+import { useNavigation } from "@react-navigation/native";
 import i18n from "../../../assets/strings/I18n";
 
 import Boton from "../../components/buttons/BotonMenuPerfil";
@@ -21,6 +21,7 @@ import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
 
 
 export default function UserProfileUI() {
+    const navigation = useNavigation();
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold_Italic,
         Poppins_400Regular,
@@ -30,6 +31,22 @@ export default function UserProfileUI() {
         return null;
     }
 
+    const onLogout = async () => {
+        try {
+            await AsyncStorage.clear(); // Elimina todos los datos almacenados en AsyncStorage
+        } catch (error) {
+            console.error('Error al limpiar AsyncStorage:', error);
+        }
+
+        navigation.reset({
+            index: 0,
+            routes: [{ name: "Welcome" }],
+        });
+    };
+
+    const favoriteNav = () => {
+        navigation.navigate("UserFavorites")
+    }
 
     return (
         
@@ -48,14 +65,14 @@ export default function UserProfileUI() {
 
 
             <View style={styles.contenedorOpciones}>
-                <Boton iconSource={favorito} title={"Tus Favoritos"}/>
+                <Boton iconSource={favorito} title={"Tus Favoritos"} onPress={favoriteNav}/>
 
                 <Boton iconSource={billetera} title={"Tus Medios de pago"}/>
                 <Boton iconSource={ruedita} title={"Ajustes"}/>
             </View>
             
             <View style={styles.contenedorCerrarSesion}>
-                <Boton iconSource={logout} title={"Cerrar sesion"}/>
+                <Boton iconSource={logout} title={"Cerrar sesion"} onPress={onLogout}/>
             </View>
         </View>
     );

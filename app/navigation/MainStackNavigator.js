@@ -8,6 +8,7 @@ import PublicacionPropiedad from '../ui/screens/publicacionPropiedad/publicacion
 import RealEstateProfile from '../ui/screens/realEstateProfile/RealEstateProfile';
 import i18n from "../assets/strings/I18n";
 import Theme from '../ui/styles/Theme';
+import Userfavorites from '../ui/screens/userFavorites/Favourites';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const Stack = createStackNavigator();
@@ -37,6 +38,7 @@ export function MainStackNavigator() {
 
       {/* Navegacion de usuario */}
       <Stack.Group>
+        <Stack.Screen name="UserFavorites" component={Userfavorites} />
         <Stack.Screen name="LandingStack" component={LandingStackNavigator} options={{ headerShown: false }} />
       </Stack.Group>
     </Stack.Navigator>
