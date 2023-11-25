@@ -55,7 +55,7 @@ export default function HomeUI() {
   }
 
   const advancedSearchScreen = () => {
-    navigation.navigate("AdvancedSearch") //cambiar
+    navigation.navigate("AdvancedSearch")
   }
 
   const Search = () => {

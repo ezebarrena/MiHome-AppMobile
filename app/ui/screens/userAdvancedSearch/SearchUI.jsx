@@ -17,24 +17,18 @@ import {
 } from "react-native";
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
-import * as SplashScreen from "expo-splash-screen";
 
 import i18n from "../../../assets/strings/I18n";
-import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
 
-import CardPropiedad from "../../components/cards/cardPropiedad";
 import Theme from "../../styles/Theme";
 
 import { useNavigation } from "@react-navigation/native";
-import { FlatList } from "react-native-gesture-handler";
 import { useState, useEffect } from "react";
 
 import searchIcon from "../../../assets/images/icons/searchIcon.png";
-import advancedIcon from "../../../assets/images/icons/advancedSearch.png";
 import close from "../../../assets/images/icons/close.png";
 
 
-//SplashScreen.preventAutoHideAsync();
 
 export default function SearchUI() {
 
@@ -82,9 +76,7 @@ export default function SearchUI() {
           <TouchableOpacity onPress={Search} style={styles.search1}>
             <Image source={searchIcon} style={styles.searchIcon}/>
           </TouchableOpacity>
-          <TouchableOpacity onPress={advancedSearchScreen} style={styles.search2}>
-            <Image source={advancedIcon} style={styles.advanced}/>
-          </TouchableOpacity>
+    
         </View>
 
       </View>
@@ -113,18 +105,14 @@ const styles = StyleSheet.create({
 
   head: {
     width: "100%",
-    backgroundColor: Theme.colors.PRIMARY,
     paddingTop: "8%",
     justifyContent: 'center',
     height: "21%",
-    borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
-    borderBottomRightRadius: 15,
-   
   },
 
   textoHead: {
     fontFamily: 'Poppins_700Bold',
-    color: 'white',
+    color: 'black',
     fontSize: Dimensions.get('window').width * 0.07,
     marginLeft: "3%"
   },
@@ -145,7 +133,7 @@ const styles = StyleSheet.create({
   imagenHead: {
     resizeMode: 'contain',
     height: Dimensions.get('window').width * 0.11,
-    marginLeft: '33%',
+    marginLeft: '49%',
   },
 
   contenedorHead: {
@@ -193,20 +181,10 @@ const styles = StyleSheet.create({
     marginTop:5.7,
   },
 
-  advanced:{
-    maxWidth: Dimensions.get('window').width * 0.09,
-    maxHeight: Dimensions.get('window').width * 0.09,
-    
-  },
-
   search1:{
     position:'absolute',
-    marginLeft: '80%'
+    marginLeft: '87%'
     
   },  
   
-  search2:{
-    position:'absolute',
-    marginLeft: '87%'
-  },
 });
