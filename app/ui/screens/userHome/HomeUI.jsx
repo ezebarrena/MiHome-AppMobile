@@ -12,7 +12,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
-  FlatList
+
 } from "react-native";
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
