@@ -12,6 +12,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Icon,
 
 } from "react-native";
 import { useCallback } from "react";
@@ -26,12 +27,18 @@ import Theme from "../../styles/Theme";
 
 import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native-gesture-handler";
+import { useState, useEffect } from "react";
+
+import searchIcon from "../../../assets/images/icons/searchIcon.png"
+import advancedIcon from "../../../assets/images/icons/advancedSearch.png"
 
 //SplashScreen.preventAutoHideAsync();
 
 export default function HomeUI() {
 
   const navigation = useNavigation();
+
+  const [text, setText] = useState('');
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -58,7 +65,11 @@ export default function HomeUI() {
           </TouchableOpacity>
         </View>
         <View style={styles.contenedorHead2}>
-          <TextInput placeholder={i18n.t('homeScreen.PHBusqueda')} style={styles.input} />
+          <TextInput placeholder={i18n.t('homeScreen.PHBusqueda')} 
+            style={styles.input}  
+            onChangeText={newText => setText(newText)}
+          />
+          <Icon style={styles.search} name={searchIcon} size={20} />
         </View>
 
       </View>
@@ -192,14 +203,18 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "white",
     borderWidth: 1,
-    padding: "5%",
     width: "100%",
-    height: 30,
+    height: 37,
     borderTopLeftRadius: 15,
     borderBottomLeftRadius: 15,
     borderTopRightRadius: 15,
-    borderBottomRightRadius: 15
+    borderBottomRightRadius: 15,
+    fontSize: 15,
+    paddingLeft:10
   
   },
 
+  search:{
+
+  },
 });
