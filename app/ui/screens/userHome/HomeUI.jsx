@@ -11,6 +11,8 @@ import {
   Image,
   TextInput,
   KeyboardAvoidingView,
+  TouchableOpacity,
+  FlatList
 } from "react-native";
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
@@ -22,9 +24,15 @@ import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
 import CardPropiedad from "../../components/cards/cardPropiedad";
 import Theme from "../../styles/Theme";
 
+import { useNavigation } from "@react-navigation/native";
+import { FlatList } from "react-native-gesture-handler";
+
 //SplashScreen.preventAutoHideAsync();
 
 export default function HomeUI() {
+
+  const navigation = useNavigation();
+
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -34,24 +42,30 @@ export default function HomeUI() {
     return null;
   }
 
+  const handleImagePress = () => {
+    navigation.navigate("UserProfile")
+  }
+
+
 
   return (
     <View style={styles.container}>
       <View style={styles.head}>
         <View style={styles.contenedorHead}>
           <Text style={styles.textoHead}>{i18n.t('homeScreen.PHUsuario')}</Text>
-          <Image source={fotoPerfil} style={styles.imagenHead} />
+          <TouchableOpacity onPress={handleImagePress}>
+            <Image source={fotoPerfil} style={styles.imagenHead} />
+          </TouchableOpacity>
         </View>
         <View style={styles.contenedorHead2}>
           <TextInput placeholder={i18n.t('homeScreen.PHBusqueda')} style={styles.input} />
         </View>
 
       </View>
+      
       <Text style={styles.textoBody1}>{i18n.t('homeScreen.PHUsuario1')} </Text>
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
-
-
         <View style={{ height: '15%' }}>
           <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
         </View>
@@ -62,8 +76,23 @@ export default function HomeUI() {
           <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
         </View>
       </ScrollView>
-      <Text>{i18n.t('homeScreen.PHUsuario1')} </Text>
 
+      <Text style={styles.textoBody1}>{i18n.t('homeScreen.SaleProperties')} </Text>
+
+      <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+      </ScrollView>
+
+      <Text style={styles.textoBody1}>{i18n.t('homeScreen.RentProperties')} </Text>
+  
     </View>
   );
 }
@@ -75,16 +104,15 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
-
-
     flexGrow: 0,
+    /*marginTop: '-2%',*/
   },
 
   scrollViewContent: {
-    paddingBottom: "14%",
-    paddingTop: "6%",
-    paddingStart: '5%',
-    paddingEnd: "2%",
+    paddingTop: "3%",
+    paddingStart: '3%',
+    paddingEnd: "3%",
+    paddingBottom: "3%",
   },
 
   head: {
@@ -92,7 +120,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.PRIMARY,
     paddingTop: "8%",
     justifyContent: 'center',
-    height: "20%",
+    height: "21%",
     borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
     borderBottomRightRadius: 15,
     marginBottom: 20,
@@ -108,20 +136,20 @@ const styles = StyleSheet.create({
   textoBody1: {
     fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get('window').width * 0.05,
-    marginLeft: "3%",
+    marginLeft: "5%",
   },
 
   imagenHead: {
     resizeMode: 'contain',
     height: Dimensions.get('window').width * 0.11,
-    marginLeft: '22%',
+    marginLeft: '33%',
   },
 
   contenedorHead: {
     flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
     alignItems: 'center',
     marginLeft: "3%",    
-    marginTop:"4%",
+    marginTop:"5%",
 
   },
 

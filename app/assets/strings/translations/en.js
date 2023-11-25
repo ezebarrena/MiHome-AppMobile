@@ -5,6 +5,9 @@ export default {
   "homeScreen": {
     PHUsuario: 'Welcome User!',
     PHUsuario1: "Properties near you",
+    SaleProperties: "Properties for sale",
+    RentProperties: "Properties for rent",
+
     PHBusqueda: 'What are you looking for?',
   },
   homeScreenRS: {
