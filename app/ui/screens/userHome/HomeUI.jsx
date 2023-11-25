@@ -29,8 +29,9 @@ import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native-gesture-handler";
 import { useState, useEffect } from "react";
 
-import searchIcon from "../../../assets/images/icons/searchIcon.png"
-import advancedIcon from "../../../assets/images/icons/advancedSearch.png"
+import searchIcon from "../../../assets/images/icons/searchIcon.png";
+import advancedIcon from "../../../assets/images/icons/advancedSearch.png";
+
 
 //SplashScreen.preventAutoHideAsync();
 
@@ -53,6 +54,14 @@ export default function HomeUI() {
     navigation.navigate("UserProfile")
   }
 
+  const advancedSearchScreen = () => {
+    navigation.navigate("AdvancedSearch") //cambiar
+  }
+
+  const Search = () => {
+    navigation.navigate("UserProfile") //cambiar
+  }
+
 
 
   return (
@@ -69,7 +78,12 @@ export default function HomeUI() {
             style={styles.input}  
             onChangeText={newText => setText(newText)}
           />
-          <Icon style={styles.search} name={searchIcon} size={20} />
+          <TouchableOpacity onPress={Search} style={styles.search1}>
+            <Image source={searchIcon} style={styles.searchIcon}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={advancedSearchScreen} style={styles.search2}>
+            <Image source={advancedIcon} style={styles.advanced}/>
+          </TouchableOpacity>
         </View>
 
       </View>
@@ -197,7 +211,9 @@ const styles = StyleSheet.create({
     marginTop: '3%',
     marginLeft: '5%',
     marginRight: '5%',
-    marginBottom:'5%'
+    marginBottom:'5%',
+    flexDirection: 'row',
+    flex:1
   },
 
   input: {
@@ -210,11 +226,31 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,
     fontSize: 15,
-    paddingLeft:10
+    paddingLeft:10,
+    flex:1
   
   },
 
-  search:{
+  searchIcon:{
+    maxWidth: Dimensions.get('window').width * 0.063,
+    maxHeight: Dimensions.get('window').width * 0.063,
+    marginTop:5.7,
+  },
 
+  advanced:{
+    maxWidth: Dimensions.get('window').width * 0.09,
+    maxHeight: Dimensions.get('window').width * 0.09,
+    
+  },
+
+  search1:{
+    position:'absolute',
+    marginLeft: '80%'
+    
+  },  
+  
+  search2:{
+    position:'absolute',
+    marginLeft: '87%'
   },
 });

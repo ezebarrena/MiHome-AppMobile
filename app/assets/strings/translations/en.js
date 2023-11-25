@@ -181,6 +181,10 @@ export default {
     garden:"Garden",
     security:"Private security",
     sport:"Sport place"
+  },
+
+  AdvancedSearch:{
+    title:'Advanced Search'
   }
 };
 
