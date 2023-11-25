@@ -14,7 +14,7 @@ import i18n from "../../../assets/strings/I18n";
 import CardPropiedad from "../../components/cards/cardPropiedad";
 import { useNavigation } from "@react-navigation/native";
 import Theme from "../../styles/Theme";
-import { getMyRealEstateAssets } from '../../../api/assetsAPI';
+import { getMyRealEstateAssets } from '../../../api/assetsAPI'; //cambiar API user 
 import { useState, useEffect } from "react";
 
 
