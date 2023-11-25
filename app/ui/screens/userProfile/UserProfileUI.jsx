@@ -70,6 +70,11 @@ const styles = StyleSheet.create({
       
     },
 
+    userInfo: {
+        alignItems: 'center',
+        paddingTop:50,
+    },
+    
     contenedorOpciones: {
         width: 328,
         borderWidth: 1,
