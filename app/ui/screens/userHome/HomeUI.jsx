@@ -63,7 +63,9 @@ export default function HomeUI() {
 
       </View>
       
-      <Text style={styles.textoBody1}>{i18n.t('homeScreen.PHUsuario1')} </Text>
+      <ScrollView vertical>
+      
+      <Text style={styles.textoBody2}>{i18n.t('homeScreen.PHUsuario1')} </Text>
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
         <View style={{ height: '15%' }}>
@@ -90,9 +92,22 @@ export default function HomeUI() {
           <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
         </View>
       </ScrollView>
-
+      
       <Text style={styles.textoBody1}>{i18n.t('homeScreen.RentProperties')} </Text>
-  
+
+      <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+      </ScrollView>
+
+      </ScrollView>
     </View>
   );
 }
@@ -109,10 +124,10 @@ const styles = StyleSheet.create({
   },
 
   scrollViewContent: {
-    paddingTop: "3%",
+    paddingTop: "2%",
     paddingStart: '3%',
     paddingEnd: "3%",
-    paddingBottom: "3%",
+    paddingBottom: "5%",
   },
 
   head: {
@@ -123,7 +138,7 @@ const styles = StyleSheet.create({
     height: "21%",
     borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
     borderBottomRightRadius: 15,
-    marginBottom: 20,
+   
   },
 
   textoHead: {
@@ -137,6 +152,13 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get('window').width * 0.05,
     marginLeft: "5%",
+  },
+
+  textoBody2: {
+    fontFamily: "Poppins_500Medium",
+    fontSize: Dimensions.get('window').width * 0.05,
+    marginLeft: "5%",
+    marginTop: "4%"
   },
 
   imagenHead: {
