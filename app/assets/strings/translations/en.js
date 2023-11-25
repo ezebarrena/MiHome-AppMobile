@@ -3,7 +3,7 @@ export default {
     "appName": "MiHome",
   },
   "homeScreen": {
-    PHUsuario: 'Welcome',
+    PHUsuario: 'Welcome User!',
     PHUsuario1: "Properties near you",
     PHBusqueda: 'What are you looking for?',
   },

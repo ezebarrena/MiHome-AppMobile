@@ -39,7 +39,7 @@ export default function HomeUI() {
     <View style={styles.container}>
       <View style={styles.head}>
         <View style={styles.contenedorHead}>
-          <Text style={styles.textoHead}>{i18n.t('homeScreen.PHUsuario')} Usuario!</Text>
+          <Text style={styles.textoHead}>{i18n.t('homeScreen.PHUsuario')}</Text>
           <Image source={fotoPerfil} style={styles.imagenHead} />
         </View>
         <View style={styles.contenedorHead2}>
@@ -92,10 +92,10 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.PRIMARY,
     paddingTop: "8%",
     justifyContent: 'center',
-    height: "25%",
+    height: "20%",
     borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
     borderBottomRightRadius: 15,
-    marginBottom: 30,
+    marginBottom: 20,
   },
 
   textoHead: {
@@ -110,25 +110,46 @@ const styles = StyleSheet.create({
     fontSize: Dimensions.get('window').width * 0.05,
     marginLeft: "3%",
   },
+
   imagenHead: {
     resizeMode: 'contain',
-    height: "120%"
-
+    height: Dimensions.get('window').width * 0.11,
+    marginLeft: '22%',
   },
+
   contenedorHead: {
     flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
     alignItems: 'center',
+    marginLeft: "3%",    
+    marginTop:"4%",
+
   },
+
+    contenedorHead2: {
+      flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
+      alignItems: 'center',
+      justifyContent: 'space-evenly',
+      width: '100%',
+  },
+
   contenedorHead2: {
-    marginTop: '5%'
+    marginTop: '3%',
+    marginLeft: '5%',
+    marginRight: '5%',
+    marginBottom:'5%'
   },
+
   input: {
     backgroundColor: "white",
     borderWidth: 1,
-    padding: "1%",
-    width: "65%",
-    borderTopLeftRadius: 30,
-    borderBottomLeftRadius: 30
+    padding: "5%",
+    width: "100%",
+    height: 30,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15,
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15
+  
   },
 
 });
