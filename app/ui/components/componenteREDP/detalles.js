@@ -91,10 +91,10 @@ export default function PanelDetalles({ datosPropiedad, tipo }) {
 
             </View> : null}
 
-
+            
 
            {(vendida || alquilado) ? null : (
-                expensas = undefined  ? (
+                expensas  ? (
                     <View style={styles.headEstadoPropiedad}>
                         <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.expensas')}</Text>
                         <Text style={styles.textos}>$ {datosPropiedad.bills}</Text>

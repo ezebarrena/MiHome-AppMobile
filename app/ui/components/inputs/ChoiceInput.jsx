@@ -2,7 +2,7 @@ import { SelectList } from 'react-native-dropdown-select-list'
 import React from "react";
 import { TextInput, StyleSheet, Platform } from "react-native";
 
-const ChoiceInput = ({ data, value, onValueSelect }) => {
+const ChoiceInput = ({ data, value, onValueSelect, defaultOption }) => {
 
   const [selected, setSelected] = React.useState("");
 
@@ -11,7 +11,6 @@ const ChoiceInput = ({ data, value, onValueSelect }) => {
     setSelected(val);
     onValueSelect(val); // Llama a la función proporcionada por el componente padre
   };
-  
   return (
     <SelectList 
       boxStyles={styles.input}
@@ -19,6 +18,7 @@ const ChoiceInput = ({ data, value, onValueSelect }) => {
       data={data} 
       value={value}
       save="value"
+      defaultOption={defaultOption}
     />
   );
 };

@@ -9,6 +9,7 @@ import RealEstateProfile from '../ui/screens/realEstateProfile/RealEstateProfile
 import i18n from "../assets/strings/I18n";
 import Theme from '../ui/styles/Theme';
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import UpdateAsset from '../ui/screens/realEstateUpdateAsset/updateAsset';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ export function MainStackNavigator() {
       <Stack.Group>
         <Stack.Screen name="WelcomeRE" component={WelcomeRE} />
         <Stack.Screen name="LandingStackRE" component={LandingStackRE} options={{ headerShown: false }} />
+        <Stack.Screen name="UpdatePropiedad" component={UpdateAsset} getId={({ params }) => params.propiedadId} options={{headerTransparent: false }} />
         <Stack.Screen name="DetallesPropiedadRE" component={DetallePropiedadRS} getId={({ params }) => params.propiedadId} options={{ title: i18n.t("detallePropiedadInmobiliaria.titulo") }} />
         <Stack.Screen name="PublicacionPropiedad" component={PublicacionPropiedad} getId={({ params }) => params.propiedadId} options={({ route }) => ({ title: route.params.name, headerStyle: { backgroundColor: Theme.colors.PRIMARY }, headerTintColor: '#fff', headerTransparent: false })} />
         <Stack.Screen name="RealEstateProfile" component={RealEstateProfile} />

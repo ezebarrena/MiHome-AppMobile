@@ -103,6 +103,7 @@ export default {
     ubicacion:'Location',
     coordenadas:"Coordinates",
     orientacion:'Orientation',
+    vista:'Looking at',
     antiguedad:'Estate age',
     anios:'years old',
     anio:'year old',
@@ -110,6 +111,8 @@ export default {
     contactar:'CONTACT',
     propiedades:'ESTATES',
     valoracion:'Rating',
+    total:'Total',
+    cubiertos:'Built'
   },
 
   realEstateUploadAsset: {
@@ -134,13 +137,14 @@ export default {
     "location": "Location",
     "frontBack": "Front or back",
     "amenities": "Amenities",
+    orientacion:'Orientation',
     mensajePublicado:'The Estate has been published',
     mensajeError:'There has been an error, please review the content and try again'
 
   },
 
   realEstateUpdateAsset: {
-    "headTitle": "Update Estate",
+    "headTitle": "Upload Estate",
     "image": "Image",
     "title": "Post title",
     "type": "Asset Type",
@@ -150,17 +154,20 @@ export default {
     "bills": "Bills",
     "description": "Asset description",
     "rooms": "Total rooms",
-    "floors": "Floor",
+    "floors": "Total floors",
     "bath": "Baths",
     "bedroom": "Bedrooms",
     "garage": "Garage",
     "mTotal": "Total meters",
     "mCover": "Meters built",
-    "storage": "Storage room",
+    "storage": "Storage Room",
     "antiquity": "Antiquity",
     "location": "Location",
     "frontBack": "Front or back",
     "amenities": "Amenities",
+    orientacion:'Orientation',
+    mensajePublicado:'The Estate has been published',
+    mensajeError:'There has been an error, please review the content and try again'
   },
 
   REUploadAssetChoices:{
@@ -172,8 +179,8 @@ export default {
     office:"Office",
     commerce:"Commerce",
     terrain:"Terrain",
-    sell:"Sell",
-    rent:"Rent",
+    venta:"Sell",
+    alquiler:"Rent",
     yes:"Yes",
     no:"No",
     pool:"Swimming pool",
@@ -191,7 +198,6 @@ export default {
     sur:'South',
     este:'East',
     oeste:'West',
-    orientacion:'Orientation',
     frente:'Front',
     contrafrente:'Back'
   }

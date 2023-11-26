@@ -144,7 +144,7 @@ export default function DetallePropiedadRSUI({ informacion }) {
       {mostrarBotones ? (
         <View style={styles.botonera}>
           <TouchableOpacity
-            onPress={() => navModificar()}
+            onPress={() => navigation.navigate("UpdatePropiedad", {propiedadId: informacion._id})}
             style={[styles.boton, styles.botonMod]}
           >
             <Text style={styles.botonTexto}>

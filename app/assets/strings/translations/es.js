@@ -86,6 +86,7 @@ export default {
     ubicacion:'Ubicación',
     coordenadas:"Coordenadas",
     orientacion:'Orientación',
+    vista:'Vista a',
     antiguedad:'Antiguedad de la propiedad',
     anios:'años',
     anio:'año',
@@ -93,6 +94,8 @@ export default {
     contactar:'CONTACTAR',
     propiedades:'PROPIEDADES',
     valoracion:'Valoracion',
+    total:'Totales',
+    cubiertos:'Cubiertos'
   },
   realEstateUploadAsset: {
     "headTitle": "Publicar Propiedad",
@@ -117,11 +120,12 @@ export default {
     "frontBack": "Front or back",
     "amenities": "Amenities",
     mensajePublicado:'La propiedad se cargo exitosamente',
-    mensajeError:'Hubo un error, revise los campos y vuelva a intentar'
+    mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
+    orientacion:'Orientacion'
 
   },
   realEstateUpdateAsset: {
-    "headTitle": "Modificar Publicacion",
+    "headTitle": "Publicar Propiedad",
     "image": "Imagenes",
     "title": "Titulo de publicacion",
     "type": "Tipo de propiedad",
@@ -131,7 +135,7 @@ export default {
     "bills": "Expensas",
     "description": "Descripcion de publicacion",
     "rooms": "Ambientes totales",
-    "floors": "Piso",
+    "floors": "Pisos totales",
     "bath": "Baños",
     "bedroom": "Dormitorios",
     "garage": "Garage",
@@ -142,6 +146,9 @@ export default {
     "location": "Ubicacion",
     "frontBack": "Front or back",
     "amenities": "Amenities",
+    mensajePublicado:'La propiedad se cargo exitosamente',
+    mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
+    orientacion:'Orientacion'
   },
 
   REUploadAssetChoices:{
@@ -153,8 +160,8 @@ export default {
     office:"Oficina",
     commerce:"Comercio",
     terrain:"Terreno",
-    sell:"Venta",
-    rent:"Alquiler",
+    venta:"Venta",
+    alquiler:"Alquiler",
     yes:"Si",
     no:"No",
     pool:"Pileta de natacion",
@@ -172,7 +179,6 @@ export default {
     sur:'Sur',
     este:'Este',
     oeste:'Oeste',
-    orientacion:'Orientacion',
     frente:'Frente',
     contrafrente:'Contrafrente'
   }
