@@ -32,7 +32,6 @@ import CustomTextInput2 from "../../../ui/components/inputs/CustomTextInput2";
 import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
-import DropDownPicker from 'react-native-dropdown-picker';
 
 
 export default function SearchUI() {
@@ -137,7 +136,7 @@ export default function SearchUI() {
               </View>
               <View style={styles.columna}>
                 {/* Contenido de la segunda columna */}
-                <DropDownPicker/>  
+                <ChoiceInput/>  
               </View>
             </View>
 
