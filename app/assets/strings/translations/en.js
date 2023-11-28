@@ -3,8 +3,11 @@ export default {
     "appName": "MiHome",
   },
   "homeScreen": {
-    PHUsuario: 'Welcome',
+    PHUsuario: 'Welcome User!',
     PHUsuario1: "Properties near you",
+    SaleProperties: "Properties for sale",
+    RentProperties: "Properties for rent",
+
     PHBusqueda: 'What are you looking for?',
   },
   homeScreenRS: {
@@ -178,6 +181,10 @@ export default {
     garden:"Garden",
     security:"Private security",
     sport:"Sport place"
+  },
+
+  AdvancedSearch:{
+    title:'Advanced Search'
   }
 };
 

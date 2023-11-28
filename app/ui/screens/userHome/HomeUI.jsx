@@ -11,6 +11,9 @@ import {
   Image,
   TextInput,
   KeyboardAvoidingView,
+  TouchableOpacity,
+  Icon,
+
 } from "react-native";
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
@@ -22,9 +25,22 @@ import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
 import CardPropiedad from "../../components/cards/cardPropiedad";
 import Theme from "../../styles/Theme";
 
+import { useNavigation } from "@react-navigation/native";
+import { FlatList } from "react-native-gesture-handler";
+import { useState, useEffect } from "react";
+
+import searchIcon from "../../../assets/images/icons/searchIcon.png";
+import advancedIcon from "../../../assets/images/icons/advancedSearch.png";
+
+
 //SplashScreen.preventAutoHideAsync();
 
 export default function HomeUI() {
+
+  const navigation = useNavigation();
+
+  const [text, setText] = useState('');
+
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -34,24 +50,49 @@ export default function HomeUI() {
     return null;
   }
 
+  const handleImagePress = () => {
+    navigation.navigate("UserProfile")
+  }
+
+  const advancedSearchScreen = () => {
+    navigation.navigate("AdvancedSearch")
+  }
+
+  const Search = () => {
+    navigation.navigate("UserProfile") //cambiar
+  }
+
+
 
   return (
     <View style={styles.container}>
       <View style={styles.head}>
         <View style={styles.contenedorHead}>
-          <Text style={styles.textoHead}>{i18n.t('homeScreen.PHUsuario')} Usuario!</Text>
-          <Image source={fotoPerfil} style={styles.imagenHead} />
+          <Text style={styles.textoHead}>{i18n.t('homeScreen.PHUsuario')}</Text>
+          <TouchableOpacity onPress={handleImagePress}>
+            <Image source={fotoPerfil} style={styles.imagenHead} />
+          </TouchableOpacity>
         </View>
         <View style={styles.contenedorHead2}>
-          <TextInput placeholder={i18n.t('homeScreen.PHBusqueda')} style={styles.input} />
+          <TextInput placeholder={i18n.t('homeScreen.PHBusqueda')} 
+            style={styles.input}  
+            onChangeText={newText => setText(newText)}
+          />
+          <TouchableOpacity onPress={Search} style={styles.search1}>
+            <Image source={searchIcon} style={styles.searchIcon}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={advancedSearchScreen} style={styles.search2}>
+            <Image source={advancedIcon} style={styles.advanced}/>
+          </TouchableOpacity>
         </View>
 
       </View>
-      <Text style={styles.textoBody1}>{i18n.t('homeScreen.PHUsuario1')} </Text>
+      
+      <ScrollView vertical>
+      
+      <Text style={styles.textoBody2}>{i18n.t('homeScreen.PHUsuario1')} </Text>
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
-
-
         <View style={{ height: '15%' }}>
           <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
         </View>
@@ -62,8 +103,36 @@ export default function HomeUI() {
           <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
         </View>
       </ScrollView>
-      <Text>{i18n.t('homeScreen.PHUsuario1')} </Text>
 
+      <Text style={styles.textoBody1}>{i18n.t('homeScreen.SaleProperties')} </Text>
+
+      <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+      </ScrollView>
+      
+      <Text style={styles.textoBody1}>{i18n.t('homeScreen.RentProperties')} </Text>
+
+      <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ height: '15%' }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+      </ScrollView>
+
+      </ScrollView>
     </View>
   );
 }
@@ -75,16 +144,15 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
-
-
     flexGrow: 0,
+    /*marginTop: '-2%',*/
   },
 
   scrollViewContent: {
-    paddingBottom: "14%",
-    paddingTop: "6%",
-    paddingStart: '5%',
-    paddingEnd: "2%",
+    paddingTop: "2%",
+    paddingStart: '3%',
+    paddingEnd: "3%",
+    paddingBottom: "5%",
   },
 
   head: {
@@ -92,10 +160,10 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.PRIMARY,
     paddingTop: "8%",
     justifyContent: 'center',
-    height: "25%",
+    height: "21%",
     borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
     borderBottomRightRadius: 15,
-    marginBottom: 30,
+   
   },
 
   textoHead: {
@@ -108,27 +176,81 @@ const styles = StyleSheet.create({
   textoBody1: {
     fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get('window').width * 0.05,
-    marginLeft: "3%",
+    marginLeft: "5%",
   },
+
+  textoBody2: {
+    fontFamily: "Poppins_500Medium",
+    fontSize: Dimensions.get('window').width * 0.05,
+    marginLeft: "5%",
+    marginTop: "4%"
+  },
+
   imagenHead: {
     resizeMode: 'contain',
-    height: "120%"
-
+    height: Dimensions.get('window').width * 0.11,
+    marginLeft: '33%',
   },
+
   contenedorHead: {
     flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
     alignItems: 'center',
+    marginLeft: "3%",    
+    marginTop:"5%",
+
   },
+
+    contenedorHead2: {
+      flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
+      alignItems: 'center',
+      justifyContent: 'space-evenly',
+      width: '100%',
+  },
+
   contenedorHead2: {
-    marginTop: '5%'
+    marginTop: '3%',
+    marginLeft: '5%',
+    marginRight: '5%',
+    marginBottom:'5%',
+    flexDirection: 'row',
+    flex:1
   },
+
   input: {
     backgroundColor: "white",
     borderWidth: 1,
-    padding: "1%",
-    width: "65%",
-    borderTopLeftRadius: 30,
-    borderBottomLeftRadius: 30
+    width: "100%",
+    height: 37,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15,
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
+    fontSize: 15,
+    paddingLeft:10,
+    flex:1
+  
   },
 
+  searchIcon:{
+    maxWidth: Dimensions.get('window').width * 0.063,
+    maxHeight: Dimensions.get('window').width * 0.063,
+    marginTop:5.7,
+  },
+
+  advanced:{
+    maxWidth: Dimensions.get('window').width * 0.09,
+    maxHeight: Dimensions.get('window').width * 0.09,
+    
+  },
+
+  search1:{
+    position:'absolute',
+    marginLeft: '80%'
+    
+  },  
+  
+  search2:{
+    position:'absolute',
+    marginLeft: '87%'
+  },
 });
