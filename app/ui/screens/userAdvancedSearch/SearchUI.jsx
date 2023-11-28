@@ -28,6 +28,11 @@ import { useState, useEffect } from "react";
 import searchIcon from "../../../assets/images/icons/searchIcon.png";
 import close from "../../../assets/images/icons/close.png";
 
+import CustomTextInput2 from "../../../ui/components/inputs/CustomTextInput2";
+import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
+import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
+import Button from "../../../ui/components/buttons/Button";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 
 export default function SearchUI() {
@@ -76,10 +81,68 @@ export default function SearchUI() {
           <TouchableOpacity onPress={Search} style={styles.search1}>
             <Image source={searchIcon} style={styles.searchIcon}/>
           </TouchableOpacity>
-    
         </View>
-
       </View>
+
+      <ScrollView> 
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                {/* Contenido de la primera columna */}
+                <Text>Precio</Text>
+              </View>
+              <View style={styles.columna}>
+                {/* Contenido de la segunda columna */}
+                <CustomTextInput2/>  
+              </View>
+            </View>
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                {/* Contenido de la primera columna */}
+                <Text>Precio</Text>
+              </View>
+              <View style={styles.columna}>
+                {/* Contenido de la segunda columna */}
+                <CustomTextInput2/>  
+              </View>
+            </View>
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                {/* Contenido de la primera columna */}
+                <Text>Precio</Text>
+              </View>
+              <View style={styles.columna}>
+                {/* Contenido de la segunda columna */}
+                <CustomTextInput2/>  
+              </View>
+            </View>
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                {/* Contenido de la primera columna */}
+                <Text>Precio</Text>
+              </View>
+              <View style={styles.columna}>
+                {/* Contenido de la segunda columna */}
+                <CustomTextInput2/>  
+              </View>
+            </View>
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                {/* Contenido de la primera columna */}
+                <Text>Precio</Text>
+              </View>
+              <View style={styles.columna}>
+                {/* Contenido de la segunda columna */}
+                <DropDownPicker/>  
+              </View>
+            </View>
+
+        <Button title={"Busca ahora"} titleColor={"white"} size = 'medium'/>
+      </ScrollView>
       </View>
       
   );
@@ -186,5 +249,16 @@ const styles = StyleSheet.create({
     marginLeft: '87%'
     
   },  
-  
+
+  contenedor: {
+    flex: 1, // Esto hace que el contenedor ocupe todo el espacio disponible
+    flexDirection: 'row', // Esto establece la dirección del diseño a horizontal (columnas)
+  },
+  columna: {
+    flex: 1, // Esto hace que cada columna ocupe la mitad del espacio disponible
+    justifyContent: 'center', // Esto centra el contenido verticalmente en cada columna
+    alignItems: 'left', // Esto centra el contenido horizontalmente en cada columna
+    paddingLeft: '6%',
+
+  },
 });
