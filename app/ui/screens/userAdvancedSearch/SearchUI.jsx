@@ -88,7 +88,7 @@ export default function SearchUI() {
             <View style={styles.contenedor}>
               <View style={styles.columna}>
                 {/* Contenido de la primera columna */}
-                <Text>Precio</Text>
+                <Text style={styles.searchText}>Tipo de operacion</Text>
               </View>
               <View style={styles.columna}>
                 {/* Contenido de la segunda columna */}
@@ -98,45 +98,41 @@ export default function SearchUI() {
 
             <View style={styles.contenedor}>
               <View style={styles.columna}>
-                {/* Contenido de la primera columna */}
-                <Text>Precio</Text>
+                <Text style={styles.searchText}>Tipo de Propiedad</Text>
               </View>
               <View style={styles.columna}>
-                {/* Contenido de la segunda columna */}
                 <CustomTextInput2/>  
               </View>
             </View>
 
             <View style={styles.contenedor}>
               <View style={styles.columna}>
-                {/* Contenido de la primera columna */}
-                <Text>Precio</Text>
+                <Text style={styles.searchText}>Ubicacion</Text>
               </View>
               <View style={styles.columna}>
-                {/* Contenido de la segunda columna */}
                 <CustomTextInput2/>  
               </View>
             </View>
 
             <View style={styles.contenedor}>
               <View style={styles.columna}>
-                {/* Contenido de la primera columna */}
-                <Text>Precio</Text>
+                <Text style={styles.searchText}>Ambientes</Text>
               </View>
               <View style={styles.columna}>
-                {/* Contenido de la segunda columna */}
                 <CustomTextInput2/>  
               </View>
             </View>
 
             <View style={styles.contenedor}>
               <View style={styles.columna}>
-                {/* Contenido de la primera columna */}
-                <Text>Precio</Text>
+                <Text style={styles.searchText}>Precio</Text>
               </View>
               <View style={styles.columna}>
-                {/* Contenido de la segunda columna */}
-                <ChoiceInput/>  
+                <CustomTextInput2/>
+              </View>
+
+              <View style={styles.columna}>
+                <CustomTextInput2/>  
               </View>
             </View>
 
@@ -258,6 +254,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center', // Esto centra el contenido verticalmente en cada columna
     alignItems: 'left', // Esto centra el contenido horizontalmente en cada columna
     paddingLeft: '6%',
-
   },
+
+  searchText:{
+    fontSize: Dimensions.get('window').width * 0.045,
+  }
 });
