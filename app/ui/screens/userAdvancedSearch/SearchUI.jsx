@@ -32,6 +32,7 @@ import CustomTextInput2 from "../../../ui/components/inputs/CustomTextInput2";
 import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 
 export default function SearchUI() {
@@ -53,15 +54,20 @@ export default function SearchUI() {
     navigation.navigate("UserHome")
   }
 
-  const advancedSearchScreen = () => {
-    navigation.navigate("AdvancedSearch") //cambiar
-  }
-
   const Search = () => {
     navigation.navigate("UserProfile") //cambiar
   }
 
-
+  const dataTypes = [
+    { key: '1', value: i18n.t('REUploadAssetChoices.house') },
+    { key: '2', value: i18n.t('REUploadAssetChoices.department') },
+    { key: '3', value: i18n.t('REUploadAssetChoices.country_house') },
+    { key: '4', value: i18n.t('REUploadAssetChoices.PH') },
+    { key: '5', value: i18n.t('REUploadAssetChoices.shed') },
+    { key: '6', value: i18n.t('REUploadAssetChoices.office') },
+    { key: '7', value: i18n.t('REUploadAssetChoices.commerce') },
+    { key: '8', value: i18n.t('REUploadAssetChoices.terrain') },
+  ];
 
   return (
     <View style={styles.container}>
@@ -92,7 +98,9 @@ export default function SearchUI() {
               </View>
               <View style={styles.columna}>
                 {/* Contenido de la segunda columna */}
-                <CustomTextInput2/>  
+                <ChoiceInput
+                  data={dataTypes}
+                />
               </View>
             </View>
 
