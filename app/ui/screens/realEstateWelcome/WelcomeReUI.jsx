@@ -51,6 +51,7 @@ export default function WelcomeReUI() {
       setCargando(false)
       navigation.navigate("LandingStackRE");
     } else {
+      setCargando(false)
       setShowAlert(true);
     }
   };

@@ -207,8 +207,19 @@ export default {
     contrafrente:'Back'
   },
 
+  REprofile:{
+    logout: "Logout",
+    editar:'Edit your profile',
+    eliminar:'Delete your account',
+    textoEliminar1:'Are you sure that you want to delete this account permanently?',
+    textoEliminar2:'Once deleted there is no turning back!',
+    confirmar:'Delete permanently',
+    
+  },
+
   AdvancedSearch:{
     title:'Advanced Search'
+
   }
 };
 

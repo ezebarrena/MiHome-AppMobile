@@ -183,6 +183,16 @@ export default {
     oeste:'Oeste',
     frente:'Frente',
     contrafrente:'Contrafrente'
+  },
+
+  REprofile:{
+    logout: "Cerrar sesión",
+    editar:'Editar tu usuario',
+    eliminar:'Eliminar tu cuenta',
+    textoEliminar1:'Estas seguro que deseas eliminar esta cuenta permanentemente?',
+    textoEliminar2:'Una vez eliminada no se puede recuperar!',
+    confirmar:'Eliminar permanentemente',
+    
   }
 };
 
