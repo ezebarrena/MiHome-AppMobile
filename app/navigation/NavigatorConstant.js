@@ -8,6 +8,7 @@ const NAVIGATOR = {
     AGENDARE: 'AGENDARE',
     UPLOADASSET: 'UPLOADASSET',
     REPROFILE: 'REPROFILE',
+    SEARCH:'SEARCH'
 }
 
 export default {

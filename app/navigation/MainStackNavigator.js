@@ -8,6 +8,10 @@ import PublicacionPropiedad from '../ui/screens/publicacionPropiedad/publicacion
 import RealEstateProfile from '../ui/screens/realEstateProfile/RealEstateProfile';
 import i18n from "../assets/strings/I18n";
 import Theme from '../ui/styles/Theme';
+import Userfavorites from '../ui/screens/userFavorites/Favourites';
+import UserHome from '../ui/screens/userHome/Home';
+import UserProfile from '../ui/screens/userProfile/UserProfile';
+import AdvancedSearch from '../ui/screens/userAdvancedSearch/Search';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import UpdateAsset from '../ui/screens/realEstateUpdateAsset/updateAsset';
 
@@ -39,6 +43,10 @@ export function MainStackNavigator() {
 
       {/* Navegacion de usuario */}
       <Stack.Group>
+        <Stack.Screen name="UserHome" component={UserHome} options={{ headerShown: false }}/>
+        <Stack.Screen name="UserFavorites" component={Userfavorites} />
+        <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Screen name="AdvancedSearch" component={AdvancedSearch} options={{ headerShown: false }}/>
         <Stack.Screen name="LandingStack" component={LandingStackNavigator} options={{ headerShown: false }} />
       </Stack.Group>
     </Stack.Navigator>

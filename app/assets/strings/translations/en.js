@@ -4,8 +4,11 @@ export default {
     cerrar:'Close'
   },
   "homeScreen": {
-    PHUsuario: 'Welcome',
+    PHUsuario: 'Welcome User!',
     PHUsuario1: "Properties near you",
+    SaleProperties: "Properties for sale",
+    RentProperties: "Properties for rent",
+
     PHBusqueda: 'What are you looking for?',
   },
   homeScreenRS: {
@@ -203,12 +206,17 @@ export default {
     frente:'Front',
     contrafrente:'Back'
   },
-  
+
 
   REprofile:{
     logout: "Cerrar sesión",
     editat:'Editar tu usuario',
     eliminar:'Eliminar tu cuenta'
+  },
+
+  AdvancedSearch:{
+    title:'Advanced Search'
+
   }
 };
 
