@@ -60,8 +60,9 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     backgroundColor: Theme.colors.FONDOCARD,
-    marginVertical: 5,
+    marginVertical: 10,
     marginHorizontal: 5,
+    elevation:5
   },
   imageContainer: {
     flex: 2,

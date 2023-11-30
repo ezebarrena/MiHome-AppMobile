@@ -2,7 +2,7 @@ import { BottomTabBarHeightCallbackContext } from "@react-navigation/bottom-tabs
 import React from "react";
 import { TextInput, StyleSheet, Platform } from "react-native";
 
-const CustomTextInput = ({ placeholder, value, onChangeText, secureTextEntry, keyboardType }) => {
+const CustomTextInput = ({ placeholder, value, onChangeText, secureTextEntry, keyboardType, defaultValue }) => {
   return (
     <TextInput
       style={styles.input}
@@ -13,6 +13,7 @@ const CustomTextInput = ({ placeholder, value, onChangeText, secureTextEntry, ke
       autoCapitalize="none"
       secureTextEntry={secureTextEntry}
       keyboardType={keyboardType}
+      defaultValue={defaultValue}
     />
   );
 };

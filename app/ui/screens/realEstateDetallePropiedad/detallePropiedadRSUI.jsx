@@ -80,8 +80,8 @@ export default function DetallePropiedadRSUI({ informacion }) {
     try {
 
       respuesta = await deleteAsset(informacion._id)
-      console.log(respuesta,'ta');
-      if(respuesta.status == 200){
+      console.log(respuesta, 'ta');
+      if (respuesta.status == 200) {
         navigation.navigate("LandingStackRE");
       }
 
@@ -112,7 +112,7 @@ export default function DetallePropiedadRSUI({ informacion }) {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {modalPausarVisible ? <Text style={styles.modalText}>{i18n.t("detallePropiedadInmobiliaria.textoModalPausar")}</Text> : null}
+            {modalPausarVisible ? <Text style={styles.modalText}>{tipo === 'pausada'? i18n.t("detallePropiedadInmobiliaria.textoModalDespausar") : i18n.t("detallePropiedadInmobiliaria.textoModalPausar")}</Text> : null}
             {modalEliminarVisible ? <Text style={styles.modalText}>{i18n.t("detallePropiedadInmobiliaria.textoModalEliminar")}{"\n"}{"\n"}{i18n.t("detallePropiedadInmobiliaria.textoModalEliminar2")}</Text> : null}
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: '100%', paddingVertical: 5 }}>
               <TouchableOpacity
@@ -124,7 +124,7 @@ export default function DetallePropiedadRSUI({ informacion }) {
                 <TouchableOpacity
                   style={[styles.button, styles.botonPausa]}
                   onPress={() => cerrarModales(1)}>
-                  <Text style={[styles.textStyle, styles.colorNegroFuente]}>{i18n.t("detallePropiedadInmobiliaria.pausar")}</Text>
+                  <Text style={[styles.textStyle, styles.colorNegroFuente]}>{tipo === 'pausada'? i18n.t("detallePropiedadInmobiliaria.despausar"): i18n.t("detallePropiedadInmobiliaria.pausar")}</Text>
                 </TouchableOpacity> : null}
               {modalEliminarVisible ?
                 <TouchableOpacity
@@ -144,22 +144,23 @@ export default function DetallePropiedadRSUI({ informacion }) {
       {mostrarBotones ? (
         <View style={styles.botonera}>
           <TouchableOpacity
-            onPress={() => navModificar()}
+            onPress={() => navigation.navigate("UpdatePropiedad", { propiedadId: informacion._id })}
             style={[styles.boton, styles.botonMod]}
           >
             <Text style={styles.botonTexto}>
               {i18n.t("detallePropiedadInmobiliaria.modificarPublicacion")}
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             onPress={() => pausar()}
             style={[styles.boton, styles.botonPausa]}
           >
             <Text style={styles.botonTexto}>
-              {i18n.t("detallePropiedadInmobiliaria.pausar")}
+              { tipo === 'pausada' ? i18n.t("detallePropiedadInmobiliaria.despausar")  : i18n.t("detallePropiedadInmobiliaria.pausar")}
             </Text>
           </TouchableOpacity>
+
+
 
           <TouchableOpacity
             onPress={() => eliminar()}
@@ -254,7 +255,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
     backgroundColor: 'rgba(0,0,0,0.5)',
 
 

@@ -8,6 +8,12 @@ export default {
   homeScreenRS: {
     main: 'Propiedades Listadas',
     headVisualization: 'Mostrando',
+    noPropiedad:'NO TIENES PROPIEDADES CARGADAS',
+    noPropiedad1:'CARGA NUEVAS PROPIEDADES HACIENDO CLIC EN PUBLICAR!'
+  },
+
+  stackNavigator:{
+    publicar:'Publicar',
   },
 
   propiedadesEstados: {
@@ -22,6 +28,7 @@ export default {
 
   "common": {
     "appName": "MiHome",
+    cerrar:'Cerrar'
   },
   "welcomeScreen": {
     "continue": "Continuar",
@@ -61,9 +68,11 @@ export default {
     alquiladoHasta: 'Hasta',
     titulo:'Detalles de la Propiedad',
     textoModalPausar:'Seguro que deseas pausar esta propiedad?',
+    textoModalDespausar:'Seguro que deseas despausar esta propiedad?',
     cancelarModal:'Cancelar',
     textoModalEliminar:'Seguro que deseas eliminar esta propiedad?',
     textoModalEliminar2:'Una vez eliminada no se podra volver atras',
+    despausar:'Despausar'
   },
   detallePropiedad:{
     ambientes:'Ambientes',
@@ -79,6 +88,7 @@ export default {
     ubicacion:'Ubicación',
     coordenadas:"Coordenadas",
     orientacion:'Orientación',
+    vista:'Vista a',
     antiguedad:'Antiguedad de la propiedad',
     anios:'años',
     anio:'año',
@@ -86,6 +96,8 @@ export default {
     contactar:'CONTACTAR',
     propiedades:'PROPIEDADES',
     valoracion:'Valoracion',
+    total:'Totales',
+    cubiertos:'Cubiertos'
   },
   realEstateUploadAsset: {
     "headTitle": "Publicar Propiedad",
@@ -98,7 +110,7 @@ export default {
     "bills": "Expensas",
     "description": "Descripcion de publicacion",
     "rooms": "Ambientes totales",
-    "floors": "Pisos totales",
+    "floors": "Numero del Piso",
     "bath": "Baños",
     "bedroom": "Dormitorios",
     "garage": "Garage",
@@ -109,9 +121,13 @@ export default {
     "location": "Ubicacion",
     "frontBack": "Front or back",
     "amenities": "Amenities",
+    mensajePublicado:'La propiedad se cargo exitosamente',
+    mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
+    orientacion:'Orientacion'
+
   },
   realEstateUpdateAsset: {
-    "headTitle": "Modificar Publicacion",
+    "headTitle": "Publicar Propiedad",
     "image": "Imagenes",
     "title": "Titulo de publicacion",
     "type": "Tipo de propiedad",
@@ -121,7 +137,7 @@ export default {
     "bills": "Expensas",
     "description": "Descripcion de publicacion",
     "rooms": "Ambientes totales",
-    "floors": "Piso",
+    "floors": "Numero del Piso",
     "bath": "Baños",
     "bedroom": "Dormitorios",
     "garage": "Garage",
@@ -132,6 +148,9 @@ export default {
     "location": "Ubicacion",
     "frontBack": "Front or back",
     "amenities": "Amenities",
+    mensajePublicado:'La propiedad se cargo exitosamente',
+    mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
+    orientacion:'Orientacion'
   },
 
   REUploadAssetChoices:{
@@ -143,8 +162,8 @@ export default {
     office:"Oficina",
     commerce:"Comercio",
     terrain:"Terreno",
-    sell:"Venta",
-    rent:"Alquiler",
+    venta:"Venta",
+    alquiler:"Alquiler",
     yes:"Si",
     no:"No",
     pool:"Pileta de natacion",
@@ -157,7 +176,13 @@ export default {
     terrace:"Terraza",
     garden:"Jardin",
     security:"Seguridad privada",
-    sport:"Espacio de deportes"
+    sport:"Espacio de deportes",
+    norte:'Norte',
+    sur:'Sur',
+    este:'Este',
+    oeste:'Oeste',
+    frente:'Frente',
+    contrafrente:'Contrafrente'
   }
 };
 

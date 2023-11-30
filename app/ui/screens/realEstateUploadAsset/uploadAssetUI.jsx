@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, FlatList, TouchableOpacity, Modal, Pressable } from "react-native";
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
 import { Dimensions } from "react-native";
@@ -14,30 +14,30 @@ import CustomSearchBar from "../../components/inputs/CustomSearchBar";
 import { useForm } from "../../../hooks/useForm";
 import { createAsset } from "../../../api/assetsAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { useNavigation } from "@react-navigation/native";
 
 
 
 const dataTypes = [
-  { key: '1', value: i18n.t('REUploadAssetChoices.house') },
-  { key: '2', value: i18n.t('REUploadAssetChoices.department') },
-  { key: '3', value: i18n.t('REUploadAssetChoices.country_house') },
-  { key: '4', value: i18n.t('REUploadAssetChoices.PH') },
-  { key: '5', value: i18n.t('REUploadAssetChoices.shed') },
-  { key: '6', value: i18n.t('REUploadAssetChoices.office') },
-  { key: '7', value: i18n.t('REUploadAssetChoices.commerce') },
-  { key: '8', value: i18n.t('REUploadAssetChoices.terrain') },
+  { key: 'house', value: i18n.t('REUploadAssetChoices.house') },
+  { key: 'department', value: i18n.t('REUploadAssetChoices.department') },
+  { key: 'country_house', value: i18n.t('REUploadAssetChoices.country_house') },
+  { key: 'PH', value: i18n.t('REUploadAssetChoices.PH') },
+  { key: 'shed', value: i18n.t('REUploadAssetChoices.shed') },
+  { key: 'office', value: i18n.t('REUploadAssetChoices.office') },
+  { key: 'commerce', value: i18n.t('REUploadAssetChoices.commerce') },
+  { key: 'terrain', value: i18n.t('REUploadAssetChoices.terrain') },
 ];
 
 const dataFrontBack = [
-  { key: '1', value: 'Frente' },
-  { key: '2', value: 'Contrafrente' },
+  { key: 'frente', value: i18n.t('REUploadAssetChoices.frente') },
+  { key: 'contrafrente', value: i18n.t('REUploadAssetChoices.contrafrente') },
 ]
 
 const dataTransaccion = [
 
-  { key: '0', value: i18n.t('REUploadAssetChoices.sell') },
-  { key: '1', value: i18n.t('REUploadAssetChoices.rent') },
+  { key: '0', value: i18n.t('REUploadAssetChoices.venta') },
+  { key: '1', value: i18n.t('REUploadAssetChoices.alquiler') },
 
 ];
 
@@ -47,99 +47,45 @@ const dataCurrency = [
 ];
 
 const dataStorage = [
-  { key: '1', value: i18n.t('REUploadAssetChoices.yes') },
-  { key: '2', value: i18n.t('REUploadAssetChoices.no') },
+  { key: true, value: i18n.t('REUploadAssetChoices.yes') },
+  { key: false, value: i18n.t('REUploadAssetChoices.no') },
+];
+
+const dataOrientacion = [
+  { key: 'norte', value: i18n.t('REUploadAssetChoices.norte') },
+  { key: 'sur', value: i18n.t('REUploadAssetChoices.sur') },
+  { key: 'este', value: i18n.t('REUploadAssetChoices.este') },
+  { key: 'oeste', value: i18n.t('REUploadAssetChoices.oeste') },
 ];
 
 
-
 const dataAmenities = [
-  { key: '1', value: i18n.t('REUploadAssetChoices.pool') },
-  { key: '2', value: i18n.t('REUploadAssetChoices.climatized_pool') },
-  { key: '3', value: i18n.t('REUploadAssetChoices.covered_pool')},
-  { key: '4', value: i18n.t('REUploadAssetChoices.jacuzzi') },
-  { key: '5', value: i18n.t('REUploadAssetChoices.gym')},
-  { key: '6', value: i18n.t('REUploadAssetChoices.mpr') },
-  { key: '7', value: i18n.t('REUploadAssetChoices.grill') },
-  { key: '8', value: i18n.t('REUploadAssetChoices.terrace') },
-  { key: '9', value: i18n.t('REUploadAssetChoices.garden') },
-  { key: '10', value: i18n.t('REUploadAssetChoices.security') },
-  { key: '11', value: i18n.t('REUploadAssetChoices.sport') },
+  { key: 'pool', value: i18n.t('REUploadAssetChoices.pool') },
+  { key: 'climatized_pool', value: i18n.t('REUploadAssetChoices.climatized_pool') },
+  { key: 'covered_pool', value: i18n.t('REUploadAssetChoices.covered_pool') },
+  { key: 'jacuzzi', value: i18n.t('REUploadAssetChoices.jacuzzi') },
+  { key: 'gym', value: i18n.t('REUploadAssetChoices.gym') },
+  { key: 'mpr', value: i18n.t('REUploadAssetChoices.mpr') },
+  { key: 'grill', value: i18n.t('REUploadAssetChoices.grill') },
+  { key: 'terrace', value: i18n.t('REUploadAssetChoices.terrace') },
+  { key: 'garden', value: i18n.t('REUploadAssetChoices.garden') },
+  { key: 'security', value: i18n.t('REUploadAssetChoices.security') },
+  { key: 'sport', value: i18n.t('REUploadAssetChoices.sport') },
 ];
 
 export default function UploadAssetUI({ }) {
   const [imageUris, setImageUris] = useState([]);
-
+  const [subiendo, setSubiendo] = useState(false);
+  const [error, setError] = useState(false);
   const [mapRegion, setMapRegion] = useState({
     latitude: null,
     longitude: null,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
+  const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
 
-  /*
-  var raw = JSON.stringify({
-    "title": title,
-    "image":image,
-    "type": type,
-    "transaction": transaction, //1 alquiler, 0 venta
-    "price":price,
-    "coin":coin,
-    "bills":bills,
-    "description":description,
-    "amenities":amenities,
-    "room":room,
-    "floor":floor,
-    "bath":bath,
-    "bedroom":bedroom,
-    "garage":garage,
-    "mTotal":mTotal,
-    "mIndoor":mIndoor,
-    "storage":storage,
-    "antiquity":antiquity,
-    "streetName":streetName,
-    "streetNumber":streetNumber,
-    "neighbourhood":neighbourhood,
-    "locality":locality,
-    "province":province,
-    "country":country,
-    "geoLocalization":geoLocalization,
-    "frontBack":frontBack,
-    "state":state, //1 disponible, 0 no disponible
-    "realEstateName":realEstateName,
-  });
-  */
-
-  /*   const initialFormState = {
-      "title": '',
-      "image": [],
-      "type": '',
-      "transaction": null,
-      "price": null,
-      "coin": '',
-      "bills": null,
-      "description": '',
-      "amenities": [],
-      "room": null,
-      "floor": null,
-      "bath": null,
-      "bedroom": null,
-      'garage': null,
-      'mTotal': null,
-      'mIndoor': null,
-      'storage': null,
-      "antiquity": null,
-      "streetName": '',
-      "streetNumber": '',
-      "neighbourhood": '',
-      "locality": '',
-      "province": '',
-      "country": '',
-      "geoLocalization": '',
-      "frontBack": '',
-      "state": null,
-      "realEstateName": '',
-    }; */
 
 
   const initialFormState = {
@@ -170,7 +116,8 @@ export default function UploadAssetUI({ }) {
     "geoLocalization": "",
     "frontBack": "",
     "state": 1,
-    "realEstateName": ""
+    "realEstateName": "",
+    "orientation": []
 
   }
 
@@ -184,21 +131,30 @@ export default function UploadAssetUI({ }) {
 
   const handleSubmit = async () => {
     const value = await AsyncStorage.getItem('realEstateId')
+    console.log(value);
 
     if (value) {
       console.log(value);
       onChange(value, "realEstateName")
-      const nuevoForm = removeNullFields(form)
-      console.log(nuevoForm, 'asdf');
-      if (nuevoForm) {
-        const response = await createAsset(nuevoForm);
-        if (response) {
-          navigation.navigate("LandingStackRE");
-        }
-        else {
-          alert("error Upload Asset");
+      console.log(form.realEstateName);
+      if (form.realEstateName != "") {
+        const nuevoForm = removeNullFields(form)
+        if (nuevoForm) {
+          setSubiendo(true)
+          const response = await createAsset(nuevoForm);
+          console.log(response);
+          if (response.status === 200) {
+            console.log(response.status);
+            setSubiendo(false)
+            setModalVisible(true)
+          }
+          else {
+            alert("error Upload Asset");
+            setError(true)
+          }
         }
       }
+
     }
 
 
@@ -249,6 +205,26 @@ export default function UploadAssetUI({ }) {
   return (
 
     <ScrollView style={styles.ScrollView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            {error ? <Text style={styles.modalText}>{i18n.t('realEstateUploadAsset.mensajeError')}</Text> : <Text style={styles.modalText}>{i18n.t('realEstateUploadAsset.mensajePublicado')}</Text>}
+
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>{i18n.t('common.cerrar')}</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.contenedorHead}>
         <Text style={styles.textoHead}>{i18n.t('realEstateUploadAsset.headTitle')}</Text>
       </View>
@@ -271,8 +247,15 @@ export default function UploadAssetUI({ }) {
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
         <ChoiceInput
           data={dataTypes}
-          value={form.types}
-          onValueSelect={(value) => onChange(value, "type")}
+          value={i18n.t(`REUploadAssetChoices.${form.types}`)}
+          onValueSelect={(value) => {
+            const resultado = dataTypes.find(item => item.value === value);
+            if (resultado) {
+              console.log(resultado.key, 'llave');
+              onChange(resultado.key, "type")
+            }
+
+          }}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}</Text>
@@ -281,11 +264,11 @@ export default function UploadAssetUI({ }) {
           value={form.transaction}
           onValueSelect={(value) => {
             const resultado = dataTransaccion.find(item => item.value === value);
-            if(resultado){
+            if (resultado) {
               console.log(resultado.key);
               onChange(parseInt(resultado.key), "transaction")
             }
-            
+
           }}
         />
 
@@ -320,7 +303,8 @@ export default function UploadAssetUI({ }) {
         <ChoiceMultipleInput
           data={dataAmenities}
           value={form.amenities}
-          onValueSelect={(value) => onChange(value, "amenities")}
+
+          onValueSelect={(key) => onChange(key, "amenities")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}</Text>
@@ -329,7 +313,6 @@ export default function UploadAssetUI({ }) {
           value={form.room}
           onChangeText={(value) => onChange(parseInt(value), "room")}
         />
-
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.floors')}</Text>
         <CustomTextInput
@@ -382,11 +365,12 @@ export default function UploadAssetUI({ }) {
           data={dataStorage}
           value={form.storage}
           onValueSelect={(value) => {
-            let valor= false 
-            if(value == 'Si' || value == 'si'){
+            let valor = false
+            if (value == 'Si' || value == 'si') {
               valor = true
             }
-            onChange(valor, "storage")}}
+            onChange(valor, "storage")
+          }}
         />
 
 
@@ -401,10 +385,23 @@ export default function UploadAssetUI({ }) {
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.frontBack')}</Text>
         <ChoiceInput
           data={dataFrontBack}
-          value={form.frontBack}
-          onValueSelect={(value) => onChange(value, "frontBack")}
+          value={i18n.t(`REUploadAssetChoices.${form.frontBack}`)}
+          onValueSelect={(value) => {
+            const resultado = dataFrontBack.find(item => item.value === value);
+            if (resultado) {
+              console.log(resultado.key, 'llave');
+              onChange(resultado.key, "frontBack")
+            }
+
+          }}
         />
 
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.orientacion')}</Text>
+        <ChoiceMultipleInput
+          data={dataOrientacion}
+          value={form.orientation}
+          onValueSelect={(key) => onChange(key, "orientation")}
+        />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
         <CustomSearchBar
@@ -454,7 +451,7 @@ export default function UploadAssetUI({ }) {
           )}
         </MapView>
 
-        <Button title={"Publicar"} titleColor={"white"} onPress={() => handleSubmit()} />
+        <Button loading={subiendo} title={i18n.t('stackNavigator.publicar')} titleColor={"white"} onPress={() => handleSubmit()} />
       </View>
     </ScrollView>
   );
@@ -547,5 +544,51 @@ const styles = StyleSheet.create({
     height: 200,
     marginHorizontal: 14,
     marginVertical: 10,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 20,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  buttonClose: {
+    backgroundColor: '#512F7B',
+  },
+  button: {
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    elevation: 5,
+  },
+  textStyle: {
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: "Poppins_500Medium",
+    fontSize: Dimensions.get("window").width * 0.039,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontFamily: "Poppins_500Medium",
+    fontSize: Dimensions.get("window").width * 0.039,
   },
 });

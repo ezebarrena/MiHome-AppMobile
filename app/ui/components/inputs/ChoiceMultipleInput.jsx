@@ -2,7 +2,7 @@ import { MultipleSelectList } from 'react-native-dropdown-select-list'
 import React from "react";
 import { TextInput, StyleSheet, Platform } from "react-native";
 
-const ChoiceMultipleInput = ({ data, value, onValueSelect }) => {
+const ChoiceMultipleInput = ({ data, value, onValueSelect, defaultOption }) => {
 
   const [selected, setSelected] = React.useState([]);
 
@@ -11,14 +11,16 @@ const ChoiceMultipleInput = ({ data, value, onValueSelect }) => {
     setSelected(val);
     onValueSelect(val); // Llama a la función proporcionada por el componente padre
   };
+  console.log(defaultOption);
   return (
     <MultipleSelectList
-      setSelected={(val) => setSelected(val)} 
-      onSelect={()=>handleValueSelect(selected)}
+      defaultOption={defaultOption}
+      setSelected={(val) => setSelected(val)}
+      onSelect={() => handleValueSelect(selected)}
       boxStyles={styles.input}
       data={data}
       value={value}
-      save="value"
+      save="key"
     //onSelect={() => alert(selected)} 
     />
   )

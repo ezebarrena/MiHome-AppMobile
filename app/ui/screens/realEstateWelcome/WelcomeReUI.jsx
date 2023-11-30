@@ -20,6 +20,7 @@ export default function WelcomeReUI() {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showCannotLoginModal, setShowCannotLoginModal] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [cargando, setCargando] = useState(false);
 
   const initialFormState = {
     logInEmail: "",
@@ -41,11 +42,13 @@ export default function WelcomeReUI() {
   }, [form.logInEmail, form.password]);
 
   const handleLogin = async () => {
+    setCargando(true)
     const response = await logInRealEstate(form);
     if (response) {
       console.log("response", response);
       await AsyncStorage.setItem("token", response.token);
       await AsyncStorage.setItem("realEstateId", response.id);
+      setCargando(false)
       navigation.navigate("LandingStackRE");
     } else {
       setShowAlert(true);
@@ -79,6 +82,7 @@ export default function WelcomeReUI() {
                 titleColor="white"
                 onPress={handleLogin}
                 disabled={!isFormValid}
+                loading={cargando}
               />
 
               <Pressable onPress={() => setShowRegistrationModal(true)}>

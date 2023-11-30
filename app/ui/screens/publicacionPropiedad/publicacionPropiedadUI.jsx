@@ -93,11 +93,11 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
                 </View>
                 <View style={styles.viewDetalles}>
                     <Ionicons name="home-outline" size={33} style={{ marginHorizontal: 8 }} />
-                    <Text style={styles.textDetalles}>{propiedad.type} {i18nIdiomaTipo} </Text>
+                    <Text style={styles.textDetalles}>{i18n.t(`REUploadAssetChoices.${propiedad.type}`)} {i18nIdiomaTipo} </Text>
                 </View>
                 <View style={styles.viewDetalles}>
                     <MaterialIcons name="straighten" size={33} style={{ marginHorizontal: 8 }} />
-                    <Text style={styles.textDetalles}>{propiedad.mTotal} m2 totales, {propiedad.mIndoor} m2 cubiertos</Text>
+                    <Text style={styles.textDetalles}>{propiedad.mTotal} m2 {i18n.t("detallePropiedad.total")}, {propiedad.mIndoor} m2 {i18n.t("detallePropiedad.cubiertos")}</Text>
                 </View>
 
             </View>
@@ -128,16 +128,18 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
                 <View style={styles.chip}>
                     <Text style={styles.chipText}>{propiedad.bath} {propiedad.bath > 1 ? i18n.t("detallePropiedad.banios") : i18n.t("detallePropiedad.banio")}</Text>
                 </View>
-                <View style={styles.chip}>
+                {propiedad.garage ? <View style={styles.chip}>
                     <Text style={styles.chipText}>{propiedad.garage} {propiedad.garage > 1 ? i18n.t("detallePropiedad.cocheras") : i18n.t("detallePropiedad.cochera")}</Text>
-                </View>
-                <View style={styles.chip}>
+                </View> : null}
+                {propiedad.storage ? <View style={styles.chip}>
                     <Text style={styles.chipText}>{propiedad.storage} {propiedad.storage > 1 ? i18n.t("detallePropiedad.bauleras") : i18n.t("detallePropiedad.baulera")}</Text>
-                </View>
+                </View> : <View style={styles.chip}>
+                    <Text style={styles.chipText}> No {i18n.t("detallePropiedad.baulera")}</Text>
+                </View>}
 
                 {propiedad.amenities.map((chip, index) => (
                     <View key={index} style={styles.chip}>
-                        <Text style={styles.chipText}>{chip}</Text>
+                        <Text style={styles.chipText}>{i18n.t(`REUploadAssetChoices.${chip}`)}</Text>
                     </View>
                 ))}
 
@@ -158,7 +160,14 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
             </View>
             <View style={styles.viewExtras}>
                 <Text style={styles.textExtras}>{i18n.t("detallePropiedad.coordenadas")}: {propiedad.geoLocalization}</Text>
-                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.orientacion")}: {propiedad.frontBack}</Text>
+                {propiedad.frontBack ? <Text style={styles.textExtras}>{i18n.t("detallePropiedad.vista")}: {i18n.t(`REUploadAssetChoices.${propiedad.frontBack}`)}</Text> : null}
+                
+                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.orientacion")}: {propiedad.orientation.map((texto, index, array) => (
+                    <>
+                        {i18n.t(`REUploadAssetChoices.${texto}`)}
+                        {index !== array.length - 1 && ", "}
+                    </>
+                ))}</Text>
                 <Text style={styles.textExtras}>{i18n.t("detallePropiedad.antiguedad")}: {propiedad.antiquity} {propiedad.antiquity > 1 ? i18n.t("detallePropiedad.anios") : i18n.t("detallePropiedad.anio")}</Text>
             </View>
             <View style={styles.viewCardInmobiliaria}>
@@ -350,10 +359,10 @@ const styles = StyleSheet.create({
         height: 200,
         marginVertical: 10,
     },
-    ratingContainer:{
-        flexDirection:'row',
-        justifyContent:'space-evenly',
-        alignItems:'center',
-        width:'100%'
+    ratingContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%'
     }
 })

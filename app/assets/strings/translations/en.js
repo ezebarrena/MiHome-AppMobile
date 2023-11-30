@@ -1,6 +1,7 @@
 export default {
   "common": {
     "appName": "MiHome",
+    cerrar:'Close'
   },
   "homeScreen": {
     PHUsuario: 'Welcome User!',
@@ -12,7 +13,12 @@ export default {
   },
   homeScreenRS: {
     main: 'Listed Real State',
-    headVisualization: 'View'
+    headVisualization: 'View',
+    noPropiedad:'YOU DIDNT UPLOAD ANY ESTATES',
+    noPropiedad1:'UPLOAD ONE NOW CLICKING PUBLISH DOWN BELOW!'
+  },
+  stackNavigator:{
+    publicar:'Publish',
   },
   propiedadesEstados: {
     todo: 'All',
@@ -82,9 +88,11 @@ export default {
     alquiladoHasta: 'To',
     titulo:'Estate Details',
     textoModalPausar:'Are you sure you want to pause this publication?',
+    textoModalDespausar:'Are you sure you want to unpause this publication?',
     cancelarModal:'Cancel',
     textoModalEliminar:'Are you sure you want to delete this publication?',
     textoModalEliminar2:'Once deleted you cant go back',
+    despausar:'Unpause'
   },
   detallePropiedad:{
     ambientes:'Rooms',
@@ -100,6 +108,7 @@ export default {
     ubicacion:'Location',
     coordenadas:"Coordinates",
     orientacion:'Orientation',
+    vista:'Looking at',
     antiguedad:'Estate age',
     anios:'years old',
     anio:'year old',
@@ -107,6 +116,8 @@ export default {
     contactar:'CONTACT',
     propiedades:'ESTATES',
     valoracion:'Rating',
+    total:'Total',
+    cubiertos:'Built'
   },
 
   realEstateUploadAsset: {
@@ -120,21 +131,25 @@ export default {
     "bills": "Bills",
     "description": "Asset description",
     "rooms": "Total rooms",
-    "floors": "Total floors",
+    "floors": "Floor Number",
     "bath": "Baths",
     "bedroom": "Bedrooms",
     "garage": "Garage",
     "mTotal": "Total meters",
     "mCover": "Meters built",
-    "storage": "Internal storage",
+    "storage": "Storage Room",
     "antiquity": "Antiquity",
     "location": "Location",
     "frontBack": "Front or back",
     "amenities": "Amenities",
+    orientacion:'Orientation',
+    mensajePublicado:'The Estate has been published',
+    mensajeError:'There has been an error, please review the content and try again'
+
   },
 
   realEstateUpdateAsset: {
-    "headTitle": "Update Estate",
+    "headTitle": "Upload Estate",
     "image": "Image",
     "title": "Post title",
     "type": "Asset Type",
@@ -144,17 +159,20 @@ export default {
     "bills": "Bills",
     "description": "Asset description",
     "rooms": "Total rooms",
-    "floors": "Floor",
+    "floors": "Floor number",
     "bath": "Baths",
     "bedroom": "Bedrooms",
     "garage": "Garage",
     "mTotal": "Total meters",
     "mCover": "Meters built",
-    "storage": "Storage room",
+    "storage": "Storage Room",
     "antiquity": "Antiquity",
     "location": "Location",
     "frontBack": "Front or back",
     "amenities": "Amenities",
+    orientacion:'Orientation',
+    mensajePublicado:'The Estate has been published',
+    mensajeError:'There has been an error, please review the content and try again'
   },
 
   REUploadAssetChoices:{
@@ -166,8 +184,8 @@ export default {
     office:"Office",
     commerce:"Commerce",
     terrain:"Terrain",
-    sell:"Sell",
-    rent:"Rent",
+    venta:"Sell",
+    alquiler:"Rent",
     yes:"Yes",
     no:"No",
     pool:"Swimming pool",
@@ -180,7 +198,13 @@ export default {
     terrace:"Terrace",
     garden:"Garden",
     security:"Private security",
-    sport:"Sport place"
+    sport:"Sport place",
+    norte:'North',
+    sur:'South',
+    este:'East',
+    oeste:'West',
+    frente:'Front',
+    contrafrente:'Back'
   },
 
   AdvancedSearch:{

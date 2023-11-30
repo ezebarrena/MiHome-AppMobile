@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
 
-export const Button = ({ title, titleColor, backgroundColor, onPress, size = 'large', disabled = false }) => {
+export const Button = ({ title, titleColor, backgroundColor, onPress, size = 'large', disabled = false, loading}) => {
   const buttonStyles = {
     small: {
       width: Dimensions.get('window').width * 0.35,
@@ -24,7 +24,9 @@ export const Button = ({ title, titleColor, backgroundColor, onPress, size = 'la
         { backgroundColor: disabled ? '#ccc' : (backgroundColor || '#512F7B') }, // Cambia el color de fondo cuando está deshabilitado
         buttonStyles[size]
       ]}>
-        <Text style={[styles.buttonText, { color: titleColor ? titleColor : 'white' }]}>{title}</Text>
+        {loading ? <ActivityIndicator size='large' color='#fffff' />:<Text style={[styles.buttonText, { color: titleColor ? titleColor : 'white' }]}>{title}</Text>}
+
+        
       </View>
     </TouchableOpacity>
   );
