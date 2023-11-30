@@ -183,6 +183,12 @@ export default {
     oeste:'Oeste',
     frente:'Frente',
     contrafrente:'Contrafrente'
+  },
+
+  REprofile:{
+    logout: "Cerrar sesión",
+    editat:'Editar tu usuario',
+    eliminar:'Eliminar tu cuenta'
   }
 };
 

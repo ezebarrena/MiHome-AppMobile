@@ -202,6 +202,13 @@ export default {
     oeste:'West',
     frente:'Front',
     contrafrente:'Back'
+  },
+  
+
+  REprofile:{
+    logout: "Cerrar sesión",
+    editat:'Editar tu usuario',
+    eliminar:'Eliminar tu cuenta'
   }
 };
 

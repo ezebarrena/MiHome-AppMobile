@@ -10,7 +10,7 @@ import fotoPerfil from "../../../assets/images/icons/fotoRE.png";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function RealEstateProfileUI({params}) {
+export default function RealEstateProfileUI({ params }) {
     const navigation = useNavigation();
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold_Italic,
@@ -37,19 +37,20 @@ export default function RealEstateProfileUI({params}) {
     return (
         <View style={styles.container}>
             <View style={styles.userInfo}>
-                <Image source={fotoPerfil}/>
+                <Image source={fotoPerfil} />
                 <Text style={styles.userNameText}>{params.fantasyName}</Text>
                 <Text style={styles.mailText}>{params.logInEmail}</Text>
             </View>
 
             <View style={styles.contenedorOpciones}>
-                <Boton iconSource={home} title={"Mis Propiedades"}/>
+                <Boton iconSource={home} title={"Mis Propiedades"} />
+                {/*                 <Boton iconSource={home} title={"Mis Propiedades"}/>
                 <Boton iconSource={calendar} title={"Calendario"}/>
-                <Boton iconSource={ruedita} title={"Ajustes"}/>
+                <Boton iconSource={ruedita} title={"Ajustes"}/> */}
             </View>
 
             <View style={styles.contenedorCerrarSesion}>
-                <Boton iconSource={logout} title={"Cerrar sesión"} onPress={onLogout}/>
+                <Boton iconSource="logout" title={"Cerrar sesión"} onPress={onLogout} />
             </View>
         </View>
     );
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     },
     userInfo: {
         alignItems: 'center',
-        paddingTop:50,
+        paddingTop: 50,
     },
     contenedorOpciones: {
         width: 328,
