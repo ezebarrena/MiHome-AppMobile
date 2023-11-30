@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import NavigatorConstant from './NavigatorConstant';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -12,18 +12,8 @@ import HomeRS from '../ui/screens/realEstateHome/homeRS';
 import UploadAsset from '../ui/screens/realEstateUploadAsset/uploadAsset';
 
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
-const tabOptions = {
-  tabBarStyle: {
-    backgroundColor: '#ECE6F0',
-  },
-    tabBarActiveTintColor: '#250094',
-    tabBarInactiveTintColor: '#1C1B1F',
-    labelStyle: { paddingBottom: 10, fontSize: 10 },
-    style: { padding: 10, height: 70},
-
-}
 
 const TabBar = () => {
   const getTabIcon = (routeName) => {
@@ -54,14 +44,16 @@ return (
   
     <Tab.Navigator
       initialRouteName={NavigatorConstant.NAVIGATOR.HOME}
+      activeColor= '#250094'
+      inactiveColor= '#1C1B1F'
+      barStyle={{ backgroundColor: '#ECE6F0', height: 70 }}
       screenOptions={({ route }) => ({
         
         tabBarIcon: ({color, size}) => {
           const iconName = getTabIcon(route.name);
-          return <Icon name={iconName} size={size} color={color} />;
+          return <Icon name={iconName} size={24} color={color} />;
         },
-        headerShown: false,
-        ...tabOptions,
+        
       })}
       >
 
