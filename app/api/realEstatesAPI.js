@@ -34,7 +34,7 @@ export const logInRealEstate = async (realEstateData) => {
 
 export const getRealEstateID = async (realEstateId) => {
   try {
-    const response = await realEstatesAPI.post('/realestate/id', { _id: realEstateId });
+    const response = await realEstatesAPI.post('/realEstate/id', { _id: realEstateId });
     return response.data;
   } catch (error) {
     console.error('Error signing in real estate:', error);
@@ -68,6 +68,16 @@ export const resetPassword = async (email, password) => {
     return response.data;
   } catch (error) {
     console.error('Error validating code:', error);
+    throw error;
+  }
+};
+
+export const deleteRealEstate = async (logInEmail) => {
+  try {
+    const response =await realEstatesAPI.delete('/realEstate/me', { logInEmail: logInEmail });
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting real estate:', error);
     throw error;
   }
 };

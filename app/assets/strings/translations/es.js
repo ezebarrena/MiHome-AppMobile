@@ -187,8 +187,12 @@ export default {
 
   REprofile:{
     logout: "Cerrar sesión",
-    editat:'Editar tu usuario',
-    eliminar:'Eliminar tu cuenta'
+    editar:'Editar tu usuario',
+    eliminar:'Eliminar tu cuenta',
+    textoEliminar1:'Estas seguro que deseas eliminar esta cuenta permanentemente?',
+    textoEliminar2:'Una vez eliminada no se puede recuperar!',
+    confirmar:'Eliminar permanentemente',
+    
   }
 };
 
