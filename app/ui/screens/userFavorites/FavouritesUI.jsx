@@ -1,45 +1,102 @@
 import React from "react";
 import {
-  ImageBackground,
   StyleSheet,
   View,
+  Dimensions,
+  FlatList,
   Text,
-  Pressable,
+  TouchableOpacity,
+  RefreshControl
 } from "react-native";
-import { useCallback } from "react";
+
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
-import * as SplashScreen from "expo-splash-screen";
-import { LinearGradient } from "expo-linear-gradient";
 import i18n from "../../../assets/strings/I18n";
+import CardPropiedad from "../../components/cards/cardPropiedad";
+import { useNavigation } from "@react-navigation/native";
+import Theme from "../../styles/Theme";
+import { getMyRealEstateAssets } from '../../../api/assetsAPI'; //cambiar API user 
+import { useState, useEffect } from "react";
 
 
+export default function WelcomeUI(listadoPropiedades) {
+ 
+  const navigation = useNavigation();
 
-//SplashScreen.preventAutoHideAsync();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [active, setActive] = useState(true)
+  const [propiedades, setPropiedades] = useState()
+  const [propiedadesBD, setPropiedadesBD] = useState()
+  const [refreshing, setRefreshing] = useState(false);
 
-export default function WelcomeUI() {
-  const [fontsLoaded, fontError] = useFonts({
-    Poppins_700Bold_Italic,
-  });
+  const onRefresh = () => {
+    setRefreshing(true);
+    const busquedaPropiedades = async () => {
+      const valor = await AsyncStorage.getItem('realEstateId')
 
-  if (!fontsLoaded && !fontError) {
-    return null;
+      try {
+        const bodyData = {
+          realEstateName: valor,
+          state: '',
+          transaction: ''
+        }
+
+        const respuesta = await getMyRealEstateAssets(bodyData)
+
+
+        setPropiedades(respuesta.asset);
+        setPropiedadesBD(respuesta.asset)
+      }
+      catch (error) {
+        console.error('Error al obtener la busqueda:', error);
+      }
+
+    };
+
+    seEffect(() => {
+
+
+      setPropiedades(listadoPropiedades.asset);
+      setPropiedadesBD(listadoPropiedades.asset);
+      if (listadoPropiedades.asset && listadoPropiedades.asset.length > 0) {
+        setActive(false)
+      }
+      console.log(propiedades, 's');
+    }, [setPropiedades, listadoPropiedades])
+
+
   }
+
+
 
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={["rgba(0, 0, 0, 0.45)", "rgba(81,47,123,1)"]}
-        style={styles.background}
-      >
+      <View style={styles.contenedorHead}>
+        <Text style={styles.textoHead}>Favoritos</Text>
+      </View>
         
-          <View style={styles.overlay}>
-            <Text style={styles.logoText}>Favoritos</Text>
-          </View>
+      {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
+        <FlatList
+          data={propiedades}
+          keyExtractor={item => item._id}
+          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
+          contentContainerStyle={{
+            alignItems: "center",
+            flexGrow: 1,
+          }}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        />
+      </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>Agrega propiedades a favoritos {"\n"} </Text><Text style={styles.textEmpty}></Text></View>)
 
+      }
 
-        
-      </LinearGradient>
     </View>
   );
 }
@@ -50,6 +107,21 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+
+  contenedorHead: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: "3%",
+    paddingTop: 30,
+  },
+
+  textoHead: {
+    marginTop: 20,
+    fontFamily: 'Poppins_700Bold',
+    color: 'black',
+    fontSize: Dimensions.get('window').width * 0.07,
+  },
+  
   image: {
     flex: 1, // Para que la imagen ocupe toda la pantalla
     justifyContent: "center", // Centrar verticalmente
@@ -62,6 +134,7 @@ const styles = StyleSheet.create({
     right: 0,
     height: "100%",
   },
+
   overlay: {
     flex: 1,
     justifyContent: "flex-start", // Alinea el contenido en la parte superior
@@ -83,12 +156,14 @@ const styles = StyleSheet.create({
     height: "auto",
     borderRadius: 10,
   },
+
   textoBoton: {
     fontSize: 28,
     color: "white",
     textAlign: "center",
     padding: 10,
   },
+
   textoLoginInmobiliaria: {
     color: "white",
   },
@@ -98,4 +173,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
   },
+
+  cardsContainer: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+  },
+
+  emptyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+  textEmpty: {
+    fontSize: Dimensions.get('window').width * 0.05,
+  },
+
 });
