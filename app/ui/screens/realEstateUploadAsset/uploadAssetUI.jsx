@@ -314,7 +314,6 @@ export default function UploadAssetUI({ }) {
           onChangeText={(value) => onChange(parseInt(value), "room")}
         />
 
-
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.floors')}</Text>
         <CustomTextInput
           keyboardType={'numeric'}

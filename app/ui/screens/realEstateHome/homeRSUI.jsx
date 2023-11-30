@@ -37,7 +37,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
     { label: i18n.t('propiedadesEstados.vendida'), value: 1 },
     { label: i18n.t('propiedadesEstados.alquiler'), value: 2 },
     { label: i18n.t('propiedadesEstados.alquilada'), value: 3 },
-    { label: i18n.t('propiedadesEstados.pausada'), value: 4 }
+    { label: i18n.t('propiedadesEstados.pausada'), value: 4 },
   ]);
   const [active, setActive] = useState(true)
 
@@ -124,7 +124,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
         estado = 0
         break
       case 4:
-        estado = 0
+        estado = 2
         const objetosFiltrados = propiedadesBD.filter(objeto => objeto.state === estado);
         setPropiedades(objetosFiltrados)
         break
@@ -165,6 +165,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
           <Text style={styles.textoHead2}>{i18n.t('homeScreenRS.headVisualization')}</Text>
           <DropDownPicker
             open={open}
+            maxHeight={250}
             value={value}
             items={items}
             setOpen={setOpen}
