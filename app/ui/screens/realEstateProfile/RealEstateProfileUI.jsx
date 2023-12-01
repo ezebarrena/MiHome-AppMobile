@@ -41,11 +41,12 @@ export default function RealEstateProfileUI({ params }) {
             routes: [{ name: "Welcome" }],
         });
     };
-
+    console.log(params._id);
     const handleDelete = async () => {
         setCargando(true)
         try{
-            const respuesta = await deleteRealEstate(params.logInEmail)
+            const respuesta = await deleteRealEstate(params._id)
+            console.log(respuesta);
             if (respuesta.status === 200) {
                 setCargando(false)
                 setModalVisible(false)

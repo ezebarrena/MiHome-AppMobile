@@ -75,7 +75,7 @@ const dataAmenities = [
 export default function UpdateAssetUI({ propiedad }) {
 
   const [imageUris, setImageUris] = useState([]);
- 
+
   const [defaultOptionsAmenties, setDefaultOptionsAmenties] = useState([])
   const [subiendo, setSubiendo] = useState(false);
   const [error, setError] = useState(false);
@@ -122,34 +122,34 @@ export default function UpdateAssetUI({ propiedad }) {
     "orientation": propiedad.orientation ? propiedad.orientation : [],
   }; */
   const initialFormState = {
-    "title": "",
+    "title": propiedad.title != undefined || propiedad.title != null ? propiedad.title : "",
     "image": [],
-    "type": "",
-    "transaction": null,
-    "price": null,
-    "coin": "",
-    "bills": null,
-    "description": "",
-    "amenities": [],
-    "room": null,
-    "floor": null,
-    "bath": null,
-    "bedroom": null,
-    "garage": null,
-    "mTotal": null,
-    "mIndoor": null,
-    "storage": false,
-    "antiquity": null,
-    "streetName": "",
-    "streetNumber": null,
-    "neighbourhood": "",
-    "locality": "",
-    "province": "",
-    "country": "",
-    "geoLocalization": "",
-    "frontBack": "",
+    "type": propiedad.type ? propiedad.type : "",
+    "transaction": propiedad.transaction ? propiedad.transaction.toString() : null,
+    "price": propiedad.price ? propiedad.price.toString() : null,
+    "coin": propiedad.coin ? propiedad.coin : "",
+    "bills": propiedad.bills ? propiedad.bills.toString() : null,
+    "description": propiedad.description ? propiedad.description : "",
+    "amenities": propiedad.amenities ? propiedad.amenities : [],
+    "room": propiedad.room ? propiedad.room.toString() : null,
+    "floor": propiedad.floor ? propiedad.floor.toString() : null,
+    "bath": propiedad.bath ? propiedad.bath.toString() : null,
+    "bedroom": propiedad.bedroom ? propiedad.bedroom.toString() : null,
+    "garage": propiedad.garage ? propiedad.garage.toString() : null,
+    "mTotal": propiedad.mTotal ? propiedad.mTotal.toString() : null,
+    "mIndoor": propiedad.mIndoor ? propiedad.mIndoor.toString() : null,
+    "storage": propiedad.storage != undefined || propiedad.storage != null ? propiedad.storage : false,
+    "antiquity": propiedad.antiquity ? propiedad.antiquity.toString() : null,
+    "streetName": propiedad.streetName ? propiedad.streetName : "",
+    "streetNumber": propiedad.streetNumber ? propiedad.streetNumber.toString() : null,
+    "neighbourhood": propiedad.neighbourhood ? propiedad.neighbourhood : "",
+    "locality": propiedad.locality ? propiedad.locality : "",
+    "province": propiedad.province ? propiedad.province : "",
+    "country": propiedad.country ? propiedad.country : "",
+    "geoLocalization": propiedad.geoLocalization? propiedad.geoLocalization : "",
+    "frontBack": propiedad.frontBack ? propiedad.frontBack : "",
     "state": 1,
-    "realEstateName": "",
+    "realEstateName": propiedad.realEstateName ? propiedad.realEstateName : "",
     "orientation": []
   }
 
@@ -189,8 +189,8 @@ export default function UpdateAssetUI({ propiedad }) {
 
   }; */
 
-  const handleSubmit = ()=>{
-    console.log(form,'ssa');
+  const handleSubmit = () => {
+    console.log(form, 'ssa');
   }
 
   function removeNullFields(obj) {
@@ -237,12 +237,14 @@ export default function UpdateAssetUI({ propiedad }) {
   let tipo = Estados(propiedad.transaction, propiedad.state)
 
   let almacenamiento
-  if(propiedad.storage === true){
+  if (propiedad.storage === true) {
     almacenamiento = 'yes'
   }
-  else if(propiedad.storage === false){
+  else if (propiedad.storage === false) {
     almacenamiento = 'no'
   }
+
+
 
   return (
 
@@ -276,7 +278,6 @@ export default function UpdateAssetUI({ propiedad }) {
         <CustomTextInput
           value={form.title}
           onChangeText={(value) => onChange(value, "title")}
-          defaultValue={propiedad.title != undefined || propiedad.title != null ? propiedad.title : ""}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
@@ -290,12 +291,12 @@ export default function UpdateAssetUI({ propiedad }) {
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
         <ChoiceInput
           data={dataTypes}
-          value={i18n.t(`REUploadAssetChoices.${form.types}`)}
-          defaultOption={propiedad.type ? {key:propiedad.type, value: i18n.t(`REUploadAssetChoices.${propiedad.type}`)} : []}
+          value={i18n.t(`REUploadAssetChoices.${form.type}`)}
+          defaultOption={propiedad.type ? { key: propiedad.type, value: i18n.t(`REUploadAssetChoices.${propiedad.type}`) } : []}
           onValueSelect={(value) => {
             const resultado = dataTypes.find(item => item.value === value);
             if (resultado) {
-              console.log(resultado.key, 'llave');
+
               onChange(resultado.key, "type")
             }
 
@@ -306,11 +307,11 @@ export default function UpdateAssetUI({ propiedad }) {
         <ChoiceInput
           data={dataTransaccion}
           value={form.transaction}
-          defaultOption={propiedad.transaction != undefined || propiedad.transaction != null ? {key: propiedad.transaction.toString(), value: i18n.t(`REUploadAssetChoices.${tipo}`)} : []}
+          defaultOption={propiedad.transaction != undefined || propiedad.transaction != null ? { key: propiedad.transaction.toString(), value: i18n.t(`REUploadAssetChoices.${tipo}`) } : []}
           onValueSelect={(value) => {
             const resultado = dataTransaccion.find(item => item.value === value);
             if (resultado) {
-              console.log(resultado.key);
+
               onChange(parseInt(resultado.key), "transaction")
             }
 
@@ -322,7 +323,7 @@ export default function UpdateAssetUI({ propiedad }) {
           keyboardType={'numeric'}
           value={form.price}
           onChangeText={(value) => onChange(parseInt(value), "price")}
-          defaultValue={propiedad.price ? propiedad.price.toString() : ""}
+
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.coin')}</Text>
@@ -330,7 +331,7 @@ export default function UpdateAssetUI({ propiedad }) {
           data={dataCurrency}
           value={form.coin}
           onValueSelect={(value) => onChange(value, "coin")}
-          defaultOption={propiedad.coin ? {key:propiedad.coin, value: propiedad.coin} : []}
+          defaultOption={propiedad.coin ? { key: propiedad.coin, value: propiedad.coin } : []}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bills')}</Text>
@@ -338,14 +339,13 @@ export default function UpdateAssetUI({ propiedad }) {
           keyboardType={'numeric'}
           value={form.bills}
           onChangeText={(value) => onChange(parseInt(value), "bills")}
-          defaultValue={propiedad.bills ? propiedad.bills.toString() : ""}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.description')}</Text>
         <CustomTextInput
-          value={form.description}
+          value={form.description === "" ? (propiedad.description ? propiedad.description : "") : form.description}
           onChangeText={(value) => onChange(value, "description")}
-          defaultValue={propiedad.description ? propiedad.description : ""}
+
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.amenities')}</Text>
@@ -353,6 +353,9 @@ export default function UpdateAssetUI({ propiedad }) {
           data={dataAmenities}
           value={form.amenities}
           onValueSelect={(key) => onChange(key, "amenities")}
+          defaultOption={propiedad.amenities ? propiedad.amenities.map((amenitie, index) => ({
+            key: amenitie,
+            value: i18n.t(`REUploadAssetChoices.${amenitie}`),})): []}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}</Text>
@@ -360,7 +363,7 @@ export default function UpdateAssetUI({ propiedad }) {
           keyboardType={'numeric'}
           value={form.room}
           onChangeText={(value) => onChange(parseInt(value), "room")}
-          defaultValue={propiedad.room ? propiedad.room.toString() : ""}
+
         />
 
 
@@ -369,7 +372,7 @@ export default function UpdateAssetUI({ propiedad }) {
           keyboardType={'numeric'}
           value={form.floor}
           onChangeText={(value) => onChange(parseInt(value), "floor")}
-          defaultValue={propiedad.floor ? propiedad.floor.toString() : ''}
+
         />
 
 
@@ -378,7 +381,6 @@ export default function UpdateAssetUI({ propiedad }) {
           keyboardType={'numeric'}
           value={form.bath}
           onChangeText={(value) => onChange(parseInt(value), "bath")}
-          defaultValue={propiedad.bath ? propiedad.bath.toString() : ""}
         />
 
 
@@ -387,7 +389,7 @@ export default function UpdateAssetUI({ propiedad }) {
           keyboardType={'numeric'}
           value={form.bedroom}
           onChangeText={(value) => onChange(parseInt(value), "bedroom")}
-          defaultValue={propiedad.bedroom ? propiedad.bedroom.toString() : ""}
+
         />
 
 
@@ -395,8 +397,6 @@ export default function UpdateAssetUI({ propiedad }) {
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.garage}
-          onChangeText={(value) => onChange(parseInt(value), "garage")}
-          defaultValue={propiedad.garage ? propiedad.garage.toString() : ""}
         />
 
 
@@ -405,7 +405,7 @@ export default function UpdateAssetUI({ propiedad }) {
           keyboardType={'numeric'}
           value={form.mTotal}
           onChangeText={(value) => onChange(parseInt(value), "mTotal")}
-          defaultValue={propiedad.mTotal ? propiedad.mTotal.toString() : ""}
+
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mCover')}</Text>
@@ -413,7 +413,7 @@ export default function UpdateAssetUI({ propiedad }) {
           keyboardType={'numeric'}
           value={form.mIndoor}
           onChangeText={(value) => onChange(parseInt(value), "mIndoor")}
-          defaultValue={propiedad.mIndoor ? propiedad.mIndoor.toString() : ""}
+
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.storage')}</Text>
@@ -427,7 +427,7 @@ export default function UpdateAssetUI({ propiedad }) {
             }
             onChange(valor, "storage")
           }}
-          defaultOption={propiedad.storage != undefined || propiedad.storage != null ? {key:propiedad.storage, value: i18n.t(`REUploadAssetChoices.${almacenamiento}`)} : []}
+          defaultOption={propiedad.storage != undefined || propiedad.storage != null ? { key: propiedad.storage, value: i18n.t(`REUploadAssetChoices.${almacenamiento}`) } : []}
         />
 
 
@@ -437,7 +437,7 @@ export default function UpdateAssetUI({ propiedad }) {
           keyboardType={'numeric'}
           value={form.antiquity}
           onChangeText={(value) => onChange(parseInt(value), "antiquity")}
-          defaultValue={propiedad.antiquity ? propiedad.antiquity.toString() : ""}
+
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.frontBack')}</Text>
@@ -452,7 +452,7 @@ export default function UpdateAssetUI({ propiedad }) {
             }
 
           }}
-          defaultOption={propiedad.frontBack ? {key:propiedad.frontBack, value: i18n.t(`REUploadAssetChoices.${propiedad.frontBack}`)} : []}
+          defaultOption={propiedad.frontBack ? { key: propiedad.frontBack, value: i18n.t(`REUploadAssetChoices.${propiedad.frontBack}`) } : []}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.orientacion')}</Text>
