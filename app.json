@@ -2,6 +2,7 @@
   "expo": {
     "name": "mihome-appmobile",
     "slug": "mihome-appmobile",
+    "scheme": "mihome-appmobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/images/icon.png",
@@ -29,6 +30,11 @@
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b07cd9bb-edf1-4468-bc40-49d1521ac1c2"
+      }
+    }
   }
 }
