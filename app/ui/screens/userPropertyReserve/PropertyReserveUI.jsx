@@ -110,7 +110,7 @@ const PropertyReserveUI = () => {
   };
 
   const handlePress = () => {
-    navigation.navigate("PropertyReserve");
+    navigation.navigate("ReserveConfirmed");
   };
 
   return (
