@@ -42,9 +42,9 @@ export const getMyRealEstateAssets = async (userData) => {
   }
 };
 
-export const updateAsset = async (assetData) => {
+export const updateAsset = async (assetData, idAsset) => {
   try {
-    const response = await assetsAPI.put('/assets', assetData);
+    const response = await assetsAPI.put(`/assets/${idAsset}`, assetData);
     return response.data;
   } catch (error) {
     console.error('Error updating asset:', error);
