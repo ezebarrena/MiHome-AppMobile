@@ -46,41 +46,44 @@ const NewPaymentMethodUI = () => {
                 cardCvv={form.cardCvv}
                 cardBank={form.cardBank}
             />
-            <CustomTextInput
-                placeholder="Número de tarjeta"
-                onChangeText={(value) => limitInput(value, "cardNumber", 16)}
-                value={form.cardNumber}
-                keyboardType="numeric"
-            />
-            <CustomTextInput
-                placeholder="Titular"
-                onChangeText={(value) => limitInput(value, "cardHolder", 20)}
-                value={form.cardHolder}
-            />
-            <CustomTextInput
-                placeholder="Vencimiento"
-                onChangeText={(value) => limitExpirationInput(value, "cardExpiration")}
-                value={form.cardExpiration}
-                keyboardType="numeric"
-            />
-            <CustomTextInput
-                placeholder="CVV"
-                onChangeText={(value) => limitInput(value, "cardCvv", 3)}
-                value={form.cardCvv}
-                keyboardType="numeric"
-            />
-            <ChoiceInput
-                data={[
-                    { value: "SANTANDER" },
-                    { value: "GALICIA" },
-                    { value: "BBVA" },
-                ]}
-                onValueSelect={(value) => onChange(value, "cardBank")}
-            />
-            <Button
-                title="Confirmar"
-                onPress={() => navigation.navigate("UserPaymentMethods")}
-            />
+            <View style={styles.formContainer}>
+                <CustomTextInput
+                    placeholder="Número de tarjeta"
+                    onChangeText={(value) => limitInput(value, "cardNumber", 16)}
+                    value={form.cardNumber}
+                    keyboardType="numeric"
+                />
+                <CustomTextInput
+                    placeholder="Titular"
+                    onChangeText={(value) => limitInput(value, "cardHolder", 20)}
+                    value={form.cardHolder}
+                />
+                <CustomTextInput
+                    placeholder="Vencimiento"
+                    onChangeText={(value) => limitExpirationInput(value, "cardExpiration")}
+                    value={form.cardExpiration}
+                    keyboardType="numeric"
+                />
+                <CustomTextInput
+                    placeholder="CVV"
+                    onChangeText={(value) => limitInput(value, "cardCvv", 3)}
+                    value={form.cardCvv}
+                    keyboardType="numeric"
+                />
+                <ChoiceInput
+                    data={[
+                        { value: "SANTANDER" },
+                        { value: "GALICIA" },
+                        { value: "BBVA" },
+                    ]}
+                    onValueSelect={(value) => onChange(value, "cardBank")}
+                />
+                <Button
+                    title="Guardar"
+                    onPress={() => navigation.navigate("UserPaymentMethods")}
+                    size="medium"
+                />
+            </View>
         </View>
     );
 }
@@ -90,11 +93,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#fff",
         padding: 20,
+        marginTop: 20,
+        alignItems: "center",
     },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 20,
+    formContainer: {
+        flex: 1,
+        width: 328,
     },
 });
 
