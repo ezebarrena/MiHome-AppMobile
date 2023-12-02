@@ -65,27 +65,77 @@ export default function SearchUIv2() {
 
             <ScrollView>
                 
-                <Text style={styles.textoBody1}>Titulo</Text>
-                <CustomTextInput/>
+                <Text style={styles.textoBody1}>Que estas buscando? Te ayudamos!</Text>
+                <CustomTextInput
+                    placeholder="Titulo de propiedad"
+                />
             
                 <Text style={styles.textoBody1}>Tipo de Operacion</Text>
-                <ChoiceInput/>
+                <ChoiceInput
+                    data={[
+                        { value: "Compra" },
+                        { value: "Venta" },
+                    ]}
+                />
 
                 <Text style={styles.textoBody1}>Tipo de Propiedad</Text>
-                <ChoiceInput/>
+                <ChoiceInput
+                    data={[
+                        { value: "Casa" },
+                        { value: "Departamento" },
+                        { value: "Casa quinta" },
+                        { value: "Pen House" },
+                        { value: "Terreno" },
+                        { value: "Oficina" },
+                    ]}
+                />
 
                 <Text style={styles.textoBody1}>Ubicacion</Text>
-                <CustomTextInput/>
+                <CustomTextInput
+                    placeholder="Localidad"
+                />
 
-                <View style={styles.contenedorConFondo}>
+                <View >
                     <Text style={styles.textoBody1}>Precio y moneda</Text>
                     <View style={styles.contenedor}>
-                        <CustomTextInput2/>
-                        <CustomTextInput2/>
+                        <CustomTextInput2
+                            placeholder="Minimo"
+                        />
+                        <CustomTextInput2
+                            placeholder="Maximo"
+                        />
                     </View>
-                    <ChoiceInput/>
-
+                    <ChoiceInput
+                        data={[
+                            { value: "Dolares (USD)" },
+                            { value: "Pesos" },
+                        ]}
+                    />
                 </View>
+
+                <Text style={styles.textoBody1}>Ambientes</Text>
+                <CustomTextInput
+                    placeholder="Cantidad de ambientes"
+                />
+
+                <Text style={styles.textoBody1}>Amenities</Text>
+                <ChoiceMultipleInput
+                    data = {[
+                        { key: 'pool', value: i18n.t('REUploadAssetChoices.pool') },
+                        { key: 'climatized_pool', value: i18n.t('REUploadAssetChoices.climatized_pool') },
+                        { key: 'covered_pool', value: i18n.t('REUploadAssetChoices.covered_pool') },
+                        { key: 'jacuzzi', value: i18n.t('REUploadAssetChoices.jacuzzi') },
+                        { key: 'gym', value: i18n.t('REUploadAssetChoices.gym') },
+                        { key: 'mpr', value: i18n.t('REUploadAssetChoices.mpr') },
+                        { key: 'grill', value: i18n.t('REUploadAssetChoices.grill') },
+                        { key: 'terrace', value: i18n.t('REUploadAssetChoices.terrace') },
+                        { key: 'garden', value: i18n.t('REUploadAssetChoices.garden') },
+                        { key: 'security', value: i18n.t('REUploadAssetChoices.security') },
+                        { key: 'sport', value: i18n.t('REUploadAssetChoices.sport') },
+                    ]}
+                />
+
+                <Button  title={"Busca ahora"} titleColor={"white"} size = 'medium'/>
 
 
 
@@ -100,7 +150,7 @@ export default function SearchUIv2() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-  
+      padding:'4%'
     },
   
     scrollView: {
@@ -108,12 +158,7 @@ export default function SearchUIv2() {
       /*marginTop: '-2%',*/
     },
   
-    scrollViewContent: {
-      paddingTop: "2%",
-      paddingStart: '3%',
-      paddingEnd: "3%",
-      paddingBottom: "5%",
-    },
+
   
     head: {
       width: "100%",
@@ -123,8 +168,7 @@ export default function SearchUIv2() {
     },
   
     textoHead: {
-        marginLeft: 5,
-        marginTop: 30,    
+        marginTop: 10,    
         marginBottom:20,
         fontFamily: 'Poppins_700Bold',
         color: 'black',
@@ -132,14 +176,12 @@ export default function SearchUIv2() {
       },
       
     textoBody1: {
-      fontSize: Dimensions.get('window').width * 0.05,
-      marginLeft: "4%",
+      fontSize: Dimensions.get('window').width * 0.04,
     },
   
     textoBody2: {
       fontFamily: "Poppins_500Medium",
       fontSize: Dimensions.get('window').width * 0.05,
-      marginLeft: "5%",
       marginTop: "4%"
     },
   
@@ -147,14 +189,13 @@ export default function SearchUIv2() {
       resizeMode: 'contain',
       height: Dimensions.get('window').width * 0.11,
       marginLeft: '45%',
-      marginTop: '3%',
+      marginTop: '-6%',
     },
   
     contenedorHead: {
       flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
       alignItems: 'center',
-      marginLeft: "3%",    
-      marginTop:"5%",
+      marginTop:"7%",
   
     },
   
@@ -165,14 +206,7 @@ export default function SearchUIv2() {
         width: '100%',
     },
   
-    contenedorHead2: {
-      marginTop: '3%',
-      marginLeft: '5%',
-      marginRight: '5%',
-      marginBottom:'5%',
-      flexDirection: 'row',
-      flex:1
-    },
+
   
     input: {
       backgroundColor: "white",

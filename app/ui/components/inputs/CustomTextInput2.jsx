@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     overflow: "hidden",
-    width:'44%',
-    marginLeft:'4%',
+    width:'48%',
+    marginRight:'4%',
     marginVertical: 10,
     textAlign: "left", // Centra el texto del placeholder
     paddingLeft: '6%',
