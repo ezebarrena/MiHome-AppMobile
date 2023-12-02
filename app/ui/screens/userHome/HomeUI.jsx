@@ -1,6 +1,7 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import { useFocusEffect } from '@react-navigation/native';
 import {
-  ImageBackground,
   StyleSheet,
   View,
   Text,
@@ -10,14 +11,12 @@ import {
   Dimensions,
   Image,
   TextInput,
-  KeyboardAvoidingView,
   TouchableOpacity,
-  Icon,
+  RefreshControl,
 
 } from "react-native";
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
-import * as SplashScreen from "expo-splash-screen";
 
 import i18n from "../../../assets/strings/I18n";
 import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
@@ -27,19 +26,22 @@ import Theme from "../../styles/Theme";
 
 import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native-gesture-handler";
-import { useState, useEffect } from "react";
 
 import searchIcon from "../../../assets/images/icons/searchIcon.png";
 import advancedIcon from "../../../assets/images/icons/advancedSearch.png";
 
+//import de Asset API
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAssets } from '../../../api/assetsAPI';
 
-//SplashScreen.preventAutoHideAsync();
 
-export default function HomeUI() {
+export default function HomeUI(listadoPropiedades) {
 
   const navigation = useNavigation();
-
   const [text, setText] = useState('');
+  const [propiedades, setPropiedades] = useState()
+  const [propiedadesBD, setPropiedadesBD] = useState()
+  const [refreshing, setRefreshing] = useState(false);
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -62,7 +64,43 @@ export default function HomeUI() {
     navigation.navigate("UserProfile") //cambiar
   }
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    const busquedaPropiedades = async () => {
 
+      try {
+        const bodyData = {
+          state: '',
+          transaction: ''
+        }
+
+        const respuesta = await getAssets(bodyData)
+
+        setPropiedades(respuesta.asset);
+        setPropiedadesBD(respuesta.asset)
+        setRefreshing(false)
+      }
+      catch (error) {
+        console.error('Error al obtener la busqueda:', error);
+      }
+
+      };
+
+
+      busquedaPropiedades()
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 2000); 
+    };
+    //  useFocusEffect(
+    //    React.useCallback(() => {
+    //      setPropiedades(listadoPropiedades.asset);
+    //      setPropiedadesBD(listadoPropiedades.asset);
+    //    }, [setPropiedades, listadoPropiedades])
+    //);
+    
+
+  
 
   return (
     <View style={styles.container}>
@@ -90,6 +128,44 @@ export default function HomeUI() {
       
       <ScrollView vertical>
       
+      {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
+        <ScrollView horizontal
+          data={propiedades}
+          keyExtractor={item => item.transaccion} //especificar venta
+          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
+          contentContainerStyle={styles.scrollViewContent} 
+          style={styles.scrollView}
+          showsHorizontalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        />
+        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad')} {"\n"} </Text><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad1')}</Text></View>)
+
+      }
+
+      {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
+        <ScrollView horizontal
+          data={propiedades}
+          keyExtractor={item => item.transaccion} //especificar alquiler
+          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
+          contentContainerStyle={styles.scrollViewContent} 
+          style={styles.scrollView}
+          showsHorizontalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        />
+        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad')} {"\n"} </Text><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad1')}</Text></View>)
+
+      }
+
       <Text style={styles.textoBody2}>{i18n.t('homeScreen.PHUsuario1')} </Text>
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
@@ -103,7 +179,7 @@ export default function HomeUI() {
           <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
         </View>
       </ScrollView>
-
+      
       <Text style={styles.textoBody1}>{i18n.t('homeScreen.SaleProperties')} </Text>
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>

@@ -193,6 +193,13 @@ export default {
     textoEliminar2:'Una vez eliminada no se puede recuperar!',
     confirmar:'Eliminar permanentemente',
     
+  },
+  REeditarPerfil:{
+    tituloStack: "Editar tu cuenta",
+    nombre:"Nombre de Agencia",
+    numContacto:"Numero de contacto",
+    correoContacto:'Correo de contacto'
+
   }
 };
 

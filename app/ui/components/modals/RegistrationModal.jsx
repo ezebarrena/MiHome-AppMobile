@@ -17,6 +17,7 @@ export default function RegistrationModal({ isVisible, onClose }) {
     fantasyName: "",
     logInEmail: "",
     password: "",
+    contactEmail:"",
   };
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -34,6 +35,7 @@ export default function RegistrationModal({ isVisible, onClose }) {
   }, [form.fantasyName, form.logInEmail, form.password]);
 
   const handleRegistration = async () => {
+    onChange(form.fantasyName, "contactEmail")
     const response = await signInRealEstate(form);
     if (response) {
       console.log("response", response);

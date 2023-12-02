@@ -10,13 +10,23 @@ import fotoPerfil from "../../../assets/images/icons/fotoRE.png";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { deleteRealEstate } from "../../../api/realEstatesAPI";
-
+import CustomTextInput from "../../components/inputs/CustomTextInput";
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
+import { useForm } from "../../../hooks/useForm";
 
-export default function RealEstateProfileUI({ params }) {
+
+export default function RealEstateEditProfileUI({ params }) {
+
+    const initialFormState = {
+        "fantasyName": params.fantasyName != null || params.fantasyName != undefined ? params.fantasyName : "",
+        "contactEmail": params.contactEmail != null || params.contactEmail != undefined ? params.contactEmail: "", 
+
+
+    }
+
+    const { form, onChange, setFormValue } = useForm(initialFormState);
     const navigation = useNavigation();
-    const [modalVisible, setModalVisible] = useState(false);
     const [cargando, setCargando] = useState(false);
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold_Italic,
@@ -29,64 +39,35 @@ export default function RealEstateProfileUI({ params }) {
         return null;
     }
 
-    const onLogout = async () => {
-        try {
-            await AsyncStorage.clear(); // Elimina todos los datos almacenados en AsyncStorage
-        } catch (error) {
-            console.error('Error al limpiar AsyncStorage:', error);
-        }
-
-        navigation.reset({
-            index: 0,
-            routes: [{ name: "Welcome" }],
-        });
-    };
-    console.log(params._id);
-    const handleDelete = async () => {
-        setCargando(true)
-        try{
-            const respuesta = await deleteRealEstate(params._id)
-            console.log(respuesta);
-            if (respuesta.status === 200) {
-                setCargando(false)
-                setModalVisible(false)
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: "Welcome" }],
-                });
-            }
-        }
-        catch(error){
-            setCargando(false)
-            console.log(error);
-        }
-
-    }
+    console.log(form);
 
     return (
         <View style={styles.container}>
             <View style={styles.userInfo}>
                 <Image source={fotoPerfil} />
-                <Text style={styles.userNameText}>{params.fantasyName}</Text>
                 <Text style={styles.mailText}>{params.logInEmail}</Text>
             </View>
 
-            <View style={styles.contenedorOpciones}>
-                <Boton iconSource="edit" title={"editar"} onPress={() => navigation.navigate('RealEstateEditProfile')} />
-                <Boton iconSource="delete-forever" title={"eliminar"} onPress={() => { setModalVisible(true) }} />
-
-                {/*                 <Boton iconSource={home} title={"Mis Propiedades"}/>
-                <Boton iconSource={calendar} title={"Calendario"}/>
-                <Boton iconSource={ruedita} title={"Ajustes"}/> */}
+            <View style={styles.containerForm}>
+                <Text style={styles.textoBody1}>{i18n.t('REeditarPerfil.nombre')}</Text>
+                <CustomTextInput
+                    value={form.fantasyName}
+                    onChangeText={(value) => onChange(value, "fantasyName")}
+                    
+                />
+{/*                 <Text style={styles.textoBody1}>{i18n.t('REeditarPerfil.numContacto')}</Text>
+                <CustomTextInput
+                    keyboardType={'numeric'}
+                    value={form.fantasyName}
+                    onChangeText={(value) => onChange(value, "fantasyName")}
+                /> */}
+                <Text style={styles.textoBody1}>{i18n.t('REeditarPerfil.correoContacto')}</Text>
+                <CustomTextInput
+                    value={form.contactEmail}
+                    onChangeText={(value) => onChange(value, "fantasyName")}
+                />
             </View>
-
-            <View style={styles.contenedorCerrarSesion}>
-                <Boton iconSource="logout" title={"logout"} onPress={onLogout} />
-            </View>
-
-
-
-            <Modal
+            {/* <Modal
                 animationType="fade"
                 transparent={true}
                 visible={modalVisible}
@@ -111,7 +92,7 @@ export default function RealEstateProfileUI({ params }) {
 
                     </View>
                 </View>
-            </Modal>
+            </Modal> */}
         </View>
     );
 }
@@ -120,11 +101,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        marginTop: 45,
     },
     userInfo: {
         alignItems: 'center',
         paddingTop: 50,
     },
+    mailText: {
+        fontFamily: 'Poppins_500Medium',
+        fontSize: Dimensions.get("window").width * 0.043,
+        color: "#646464",
+        marginTop: 20,
+    },
+    /* 
     contenedorOpciones: {
         width: 328,
         borderWidth: 1,
@@ -140,12 +129,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_700Bold',
         fontSize: Dimensions.get("window").width * 0.08,
     },
-    mailText: {
-        fontFamily: 'Poppins_500Medium',
-        fontSize: Dimensions.get("window").width * 0.043,
-        color: "#646464",
-        marginBottom: 20,
-    },
+
     centeredView: {
         flex: 1,
         justifyContent: 'center',
@@ -198,5 +182,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly'
+    }, */
+    textoBody1: {
+        fontFamily: "Poppins_500Medium",
+        fontSize: Dimensions.get('window').width * 0.045,
+        textAlign: 'center',
+        marginTop:15
     },
+    containerForm: {
+        width: '80%',
+        marginTop: 10
+    },
+
 });

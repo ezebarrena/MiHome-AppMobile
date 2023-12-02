@@ -9,33 +9,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 export default function HomeRS() {
     const [propiedades, setPropiedades] = useState([])
-    /* useEffect(() => {
-        const busquedaPropiedades = async () => {
-            const valor = await AsyncStorage.getItem('realEstateId')
-
-            try {
-                const bodyData = {
-                    realEstateName: valor,
-                    state: '',
-                    transaction: ''
-                }
-
-                const respuesta = await getMyRealEstateAssets(bodyData)
-
-
-                setPropiedades(respuesta);
-            }
-            catch (error) {
-                console.error('Error al obtener la busqueda:', error);
-            }
-
-
-
-        };
-
-
-        busquedaPropiedades()
-    }, [setPropiedades]) */
+    
     useFocusEffect(
         React.useCallback(() => {
             const busquedaPropiedades = async () => {

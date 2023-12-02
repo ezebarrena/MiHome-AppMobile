@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Agenda, LocaleConfig } from 'react-native-calendars';
 
-const RealEstateAgendaUI = () => {
+const RealEstateAgendaUI = ({bookings}) => {
   // Estado para almacenar los datos de visitas
   const [items, setItems] = useState({});
 
@@ -17,6 +17,8 @@ const RealEstateAgendaUI = () => {
     }
     return allDays;
   };
+
+  console.log(bookings);
 
   // Función para generar visitas ficticias
   const generateVisits = () => {
@@ -36,7 +38,7 @@ const RealEstateAgendaUI = () => {
         timeSlot: 'Tarde',
       },
       {
-        date: '2023-10-25',
+        date: '2023-11-30',
         name: 'Carlos Sánchez',
         propertyType: 'Apartamento',
         address: '654 Avenida Principal',
@@ -81,29 +83,45 @@ const RealEstateAgendaUI = () => {
     dayNamesShort: ['Dom.', 'Lun.', 'Mar.', 'Mié.', 'Jue.', 'Vie.', 'Sáb.'],
     today: 'Hoy',
   };
-  LocaleConfig.defaultLocale = 'es';
+  LocaleConfig.locales['en'] = {
+    monthNames: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    monthNamesShort: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May.', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'],
+    dayNames: ['Sunday', 'Monday', 'Tuesdey', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    dayNamesShort: ['Sun.', 'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.'],
+    today: 'Today',
+  };
+  LocaleConfig.defaultLocale = 'en';
 
   return (
     <View style={{ flex: 1 }}>
       <Agenda
         items={items}
         // Establecer una fecha inicial predeterminada
-        selected={'2023-10-24'}
+
         // Vista de día inicial
         firstDay={1}
         renderItem={(item) => (
           <View style={styles.item}>
-            <Text>{item.name}</Text>
+            <Text>Usuario: {item.name}</Text>
             <Text>{item.propertyType}</Text>
             <Text>{item.address}</Text>
             <Text>{item.timeSlot}</Text>
           </View>
         )}
-        renderEmptyDate={() => (
-          <View style={styles.emptyItem}>
-            <Text>No hay visitas programadas para este día</Text>
-          </View>
-        )}
+
         loadItemsForMonth={(month) => {
           // Lógica para cargar elementos para el mes actual
           const year = month.year;
