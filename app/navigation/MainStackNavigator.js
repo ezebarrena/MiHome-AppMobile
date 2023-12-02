@@ -14,8 +14,9 @@ import UserProfile from '../ui/screens/userProfile/UserProfile';
 import AdvancedSearch from '../ui/screens/userAdvancedSearch/Search';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import UpdateAsset from '../ui/screens/realEstateUpdateAsset/updateAsset';
+import PaymentMethods from '../ui/screens/userPaymentMethods/PaymentMethods';
+import NewPaymentMethod from '../ui/screens/userNewPaymentMethod/NewPaymentMethod';
 import RealEstateEditProfile from '../ui/screens/realEstateEditProfile/RealEstateEditProfile';
-
 
 const Stack = createStackNavigator();
 
@@ -51,6 +52,8 @@ export function MainStackNavigator() {
         <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="AdvancedSearch" component={AdvancedSearch} options={{ headerShown: false }}/>
         <Stack.Screen name="LandingStack" component={LandingStackNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="UserPaymentMethods" component={PaymentMethods} />
+        <Stack.Screen name="UserNewPaymentMethod" component={NewPaymentMethod} />
       </Stack.Group>
     </Stack.Navigator>
     </SafeAreaProvider>
