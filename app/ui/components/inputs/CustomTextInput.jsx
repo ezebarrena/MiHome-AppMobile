@@ -3,6 +3,7 @@ import React from "react";
 import { TextInput, StyleSheet, Platform } from "react-native";
 
 const CustomTextInput = ({ placeholder, value, onChangeText, secureTextEntry, keyboardType, defaultValue }) => {
+
   return (
     <TextInput
       style={styles.input}

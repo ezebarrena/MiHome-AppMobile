@@ -72,9 +72,11 @@ export const resetPassword = async (email, password) => {
   }
 };
 
-export const deleteRealEstate = async (logInEmail) => {
+export const deleteRealEstate = async (reId) => {
   try {
-    const response =await realEstatesAPI.delete('/realEstate/me', { logInEmail: logInEmail });
+    console.log(reId, "reId");
+    const response =await realEstatesAPI.delete('/realEstate/me', {reId: reId });
+    
     return response.data;
   } catch (error) {
     console.error('Error deleting real estate:', error);

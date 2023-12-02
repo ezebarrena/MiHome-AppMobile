@@ -14,6 +14,8 @@ import UserProfile from '../ui/screens/userProfile/UserProfile';
 import AdvancedSearch from '../ui/screens/userAdvancedSearch/Search';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import UpdateAsset from '../ui/screens/realEstateUpdateAsset/updateAsset';
+import RealEstateEditProfile from '../ui/screens/realEstateEditProfile/RealEstateEditProfile';
+
 
 const Stack = createStackNavigator();
 
@@ -39,6 +41,7 @@ export function MainStackNavigator() {
         <Stack.Screen name="DetallesPropiedadRE" component={DetallePropiedadRS} getId={({ params }) => params.propiedadId} options={{ title: i18n.t("detallePropiedadInmobiliaria.titulo") }} />
         <Stack.Screen name="PublicacionPropiedad" component={PublicacionPropiedad} getId={({ params }) => params.propiedadId} options={({ route }) => ({ title: route.params.name, headerStyle: { backgroundColor: Theme.colors.PRIMARY }, headerTintColor: '#fff', headerTransparent: false })} />
         <Stack.Screen name="RealEstateProfile" component={RealEstateProfile} />
+        <Stack.Screen name="RealEstateEditProfile" component={RealEstateEditProfile} options={{ title: i18n.t("REeditarPerfil.tituloStack") }}/>
       </Stack.Group>
 
       {/* Navegacion de usuario */}
