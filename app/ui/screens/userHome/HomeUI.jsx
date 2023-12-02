@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
   },
 
   contenedorHead2: {
-    marginTop: '3%',
+    marginTop: '1.5%',
     marginLeft: '5%',
     marginRight: '5%',
     marginBottom:'5%',
