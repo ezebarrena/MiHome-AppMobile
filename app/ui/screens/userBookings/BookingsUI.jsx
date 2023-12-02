@@ -3,13 +3,13 @@ import {
   ImageBackground,
   StyleSheet,
   View,
+  Dimensions,
   Text,
   Pressable,
 } from "react-native";
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
-import * as SplashScreen from "expo-splash-screen";
-import { LinearGradient } from "expo-linear-gradient";
+
 import i18n from "../../../assets/strings/I18n";
 
 
@@ -28,18 +28,12 @@ export default function BookingsUI() {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={["rgba(0, 0, 0, 0.45)", "rgba(81,47,123,1)"]}
-        style={styles.background}
-      >
-        
-          <View style={styles.overlay}>
-            <Text style={styles.logoText}>Bookings</Text>
-          </View>
 
+      <View style={styles.contenedorHead}>
+        <Text style={styles.textoHead}>Bookings</Text>
+      </View>
 
-        
-      </LinearGradient>
+  
     </View>
   );
 }
@@ -97,5 +91,21 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
+  },
+
+
+  contenedorHead: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: "3%",
+    paddingTop: 30,
+  },
+
+  textoHead: {
+    marginLeft: 5,
+    marginTop: 25,
+    fontFamily: 'Poppins_700Bold',
+    color: 'black',
+    fontSize: Dimensions.get('window').width * 0.07,
   },
 });

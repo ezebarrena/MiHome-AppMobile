@@ -259,6 +259,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: Dimensions.get('window').width * 0.11,
     marginLeft: '17%',
+    marginTop: '-4%'
   },
 
   contenedorHead: {

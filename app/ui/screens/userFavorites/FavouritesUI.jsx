@@ -116,7 +116,8 @@ const styles = StyleSheet.create({
   },
 
   textoHead: {
-    marginTop: 20,
+    marginLeft: 5,
+    marginTop: 25,    
     fontFamily: 'Poppins_700Bold',
     color: 'black',
     fontSize: Dimensions.get('window').width * 0.07,
