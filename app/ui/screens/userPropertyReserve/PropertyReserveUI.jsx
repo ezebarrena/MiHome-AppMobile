@@ -140,13 +140,14 @@ const PropertyReserveUI = () => {
               cardExpiration={item.cardExpiration}
               cardBank={item.cardBank}
               onPressTrashIcon={() => onPressTrashIcon(item.id)}
+              allTouchable={true}
             />
           )}
           keyExtractor={(item) => item.id.toString()}
           horizontal={true}
         />
       </View>
-      <Button title="Reserve" onPress={handlePress} />
+      <Button title="Reserve" onPress={handlePress} size="medium" />
     </View>
   );
 };
@@ -161,6 +162,7 @@ const styles = {
   imageContainer: {
     alignItems: "center",
     marginBottom: 16,
+    marginTop: 16,
     paddingHorizontal: 16,
   },
   image: {

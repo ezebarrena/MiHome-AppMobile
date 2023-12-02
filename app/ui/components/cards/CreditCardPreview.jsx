@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-const CreditCardPreview = ({ cardNumber, cardExpiration, cardBank, onPressTrashIcon }) => {
+const CreditCardPreview = ({ cardNumber, cardExpiration, cardBank, showTrashIcon, onPressTrashIcon, allTouchable, onPress }) => {
   const getCardNetwork = (number) => {
     const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
     const mastercardRegex = /^5[1-5][0-9]{14}$/;
@@ -62,32 +62,36 @@ const CreditCardPreview = ({ cardNumber, cardExpiration, cardBank, onPressTrashI
   const selectedColors = backgroundColors[cardBank] || backgroundColors['default'];
 
   return (
-    <LinearGradient
-      colors={selectedColors}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.cardContainer}
-    >
-      <TouchableOpacity
-        style={styles.trashIconContainer}
-        onPress={onPressTrashIcon}
+    <TouchableOpacity disabled={!allTouchable} onPress={onPress}>
+      <LinearGradient
+        colors={selectedColors}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.cardContainer}
       >
-        <Ionicons name="trash-outline" size={24} color="white" style={styles.trashIcon} />
-      </TouchableOpacity>
+        {showTrashIcon && (
+          <TouchableOpacity
+            style={styles.trashIconContainer}
+            onPress={onPressTrashIcon}
+          >
+            <Ionicons name="trash-outline" size={24} color="white" style={styles.trashIcon} />
+          </TouchableOpacity>
+        )}
 
-      <View style={styles.cardDetailsContainer}>
-        <Text style={styles.cardNumber}>{formatCardNumber(cardNumber)}</Text>
-        <Text style={styles.cardDetailText}>{`Exp: ${cardExpiration}`}</Text>
-      </View>
+        <View style={styles.cardDetailsContainer}>
+          <Text style={styles.cardNumber}>{formatCardNumber(cardNumber)}</Text>
+          <Text style={styles.cardDetailText}>{`Exp: ${cardExpiration}`}</Text>
+        </View>
 
-      <View style={styles.logoContainer}>
-        {logoSource && <Image source={logoSource} style={styles.logo} />}
-      </View>
+        <View style={styles.logoContainer}>
+          {logoSource && <Image source={logoSource} style={styles.logo} />}
+        </View>
 
-      <View style={styles.bankLogoContainer}>
-        {bankLogoSource && <Image source={bankLogoSource} style={styles.bankLogo} />}
-      </View>
-    </LinearGradient>
+        <View style={styles.bankLogoContainer}>
+          {bankLogoSource && <Image source={bankLogoSource} style={styles.bankLogo} />}
+        </View>
+      </LinearGradient>
+    </TouchableOpacity>
   );
 };
 
