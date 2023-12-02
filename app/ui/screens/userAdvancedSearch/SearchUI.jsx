@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  ImageBackground,
   StyleSheet,
   View,
   Text,
@@ -15,15 +14,16 @@ import {
   Icon,
 
 } from "react-native";
+
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
 
 import i18n from "../../../assets/strings/I18n";
-
 import Theme from "../../styles/Theme";
 
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
+import { useForm } from "../../../hooks/useForm";
 
 import searchIcon from "../../../assets/images/icons/searchIcon.png";
 import close from "../../../assets/images/icons/close.png";
@@ -41,9 +41,6 @@ export default function SearchUI() {
 
   const navigation = useNavigation();
   const [subiendo, setSubiendo] = useState(false);
-  const [error, setError] = useState(false);
-
-  const [text, setText] = useState('');
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -58,23 +55,22 @@ export default function SearchUI() {
     "title": "",
     "type": "",
     "transaction": null,
-    "price": null,
+    "min_price": null,
+    "max_price": null,
     "coin": "",
     "amenities": [],
     "room": null,
-    "storage": false,
-    "neighbourhood": "",
+    //"neighbourhood": "",
     "locality": "",
-    "province": "",
-    "country": "",
-    "geoLocalization": "",
+    //"province": "",
+    //"country": "",
+    //"geoLocalization": "",
     "state": 1,
   }
 
-  const { form, onChange, setFormValue } = useForm(initialFormState);
+  const { form, onChange } = useForm(initialFormState);
 
   const handleSubmit = async () => {
-
     const nuevoForm = removeNullFields(form)
     if (nuevoForm) {
       setSubiendo(true)
@@ -87,20 +83,10 @@ export default function SearchUI() {
       }
       else {
         alert("error ");
-        setError(true)
       }
     }
   }
 
-  function removeNullFields(obj) {
-    const result = {};
-    for (const key in obj) {
-      if (obj[key] !== "") {
-        result[key] = obj[key];
-      }
-    }
-    return result;
-  }
 
 
 
@@ -108,9 +94,6 @@ export default function SearchUI() {
     navigation.navigate("UserHome")
   }
 
-  const Search = () => {
-    navigation.navigate("UserProfile") //cambiar
-  }
 
   const dataTypes = [
     { key: '1', value: 'Venta' },
@@ -129,9 +112,10 @@ export default function SearchUI() {
         <View style={styles.contenedorHead2}>
           <TextInput placeholder={i18n.t('homeScreen.PHBusqueda')} 
             style={styles.input}  
-            onChangeText={newText => setText(newText)}
+            value={form.title}
+            onChangeText={(value) => onChange(parseInt(value), "title")}
           />
-          <TouchableOpacity onPress={Search} style={styles.search1}>
+          <TouchableOpacity loading={subiendo} onPress={handleSubmit} style={styles.search1}>
             <Image source={searchIcon} style={styles.searchIcon}/>
           </TouchableOpacity>
         </View>
@@ -144,7 +128,10 @@ export default function SearchUI() {
                 <Text style={styles.searchText}>Tipo de operacion</Text>
               </View>
               <View style={styles.columna}>
-                <CustomTextInput2/>  
+                <CustomTextInput2
+                  value={form.transaction}
+                  onChangeText={(value) => onChange(parseInt(value), "transaction")}
+                />  
               </View>
             </View>
 
@@ -153,7 +140,10 @@ export default function SearchUI() {
                 <Text style={styles.searchText}>Tipo de Propiedad</Text>
               </View>
               <View style={styles.columna}>
-                <CustomTextInput2/>  
+                <CustomTextInput2
+                  value={form.type}
+                  onChangeText={(value) => onChange(parseInt(value), "type")}
+                />   
               </View>
             </View>
 
@@ -162,7 +152,10 @@ export default function SearchUI() {
                 <Text style={styles.searchText}>Ubicacion</Text>
               </View>
               <View style={styles.columna}>
-                <CustomTextInput2/>  
+                <CustomTextInput2
+                  value={form.locality}
+                  onChangeText={(value) => onChange((value), "locality")}
+                />  
               </View>
             </View>
 
@@ -171,12 +164,20 @@ export default function SearchUI() {
               <View style={styles.columna}>
                 <Text style={styles.searchText}>Precio</Text>
               </View>
-              <View style={styles.columna2}>
-                <CustomTextInput2/>
+              <View style={styles.columna2}> 
+                <CustomTextInput2 //precio minimo
+                  keyboardType={'numeric'}
+                  value={form.min_price}
+                  onChangeText={(value) => onChange(parseInt(value), "min_price")}
+                />
               </View>
 
               <View style={styles.columna2}>
-                <CustomTextInput2/>  
+                <CustomTextInput2 //precio maximo
+                  keyboardType={'numeric'}
+                  value={form.max_price}
+                  onChangeText={(value) => onChange(parseInt(value), "max_price")}
+                />  
               </View>
             </View>
 
@@ -195,7 +196,10 @@ export default function SearchUI() {
                 <Text style={styles.searchText}>Ambientes</Text>
               </View>
               <View style={styles.columna}>
-                <CustomTextInput2/>  
+                <CustomTextInput2
+                  value={form.room}
+                  onChangeText={(value) => onChange(parseInt(value), "room")}
+                />  
               </View>
             </View>
 
@@ -208,7 +212,7 @@ export default function SearchUI() {
               </View>
             </View>
 
-        <Button title={"Busca ahora"} titleColor={"white"} size = 'medium'/>
+        <Button loading={subiendo} title={"Busca ahora"} titleColor={"white"}  onPress={() => handleSubmit()} size = 'medium'/>
       </ScrollView>
       </View>
       
