@@ -33,7 +33,6 @@ import CustomTextInput2 from "../../../ui/components/inputs/CustomTextInput2";
 import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
-import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function SearchUIv2() {
 
@@ -135,7 +134,7 @@ export default function SearchUIv2() {
                     ]}
                 />
 
-                <Button  title={"Busca ahora"} titleColor={"white"} size = 'medium'/>
+                <Button  title={"Buscar ahora"} titleColor={"white"} size = 'medium'/>
 
 
 
