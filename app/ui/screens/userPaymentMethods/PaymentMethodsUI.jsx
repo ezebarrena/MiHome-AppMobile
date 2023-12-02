@@ -95,6 +95,7 @@ const PaymentMethodsUI = () => {
                         cardNumber={paymentMethod.cardNumber}
                         cardExpiration={paymentMethod.cardExpiration}
                         cardBank={paymentMethod.cardBank}
+                        showTrashIcon={true}
                         onPressTrashIcon={() => onPressTrashIcon(paymentMethod.id)}
                     />
                 ))}
