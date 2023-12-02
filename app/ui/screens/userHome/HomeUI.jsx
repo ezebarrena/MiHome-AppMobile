@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
   imagenHead: {
     resizeMode: 'contain',
     height: Dimensions.get('window').width * 0.11,
-    marginLeft: '33%',
+    marginLeft: '17%',
   },
 
   contenedorHead: {
