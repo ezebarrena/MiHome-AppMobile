@@ -17,6 +17,7 @@ import UpdateAsset from '../ui/screens/realEstateUpdateAsset/updateAsset';
 import PaymentMethods from '../ui/screens/userPaymentMethods/PaymentMethods';
 import NewPaymentMethod from '../ui/screens/userNewPaymentMethod/NewPaymentMethod';
 import RealEstateEditProfile from '../ui/screens/realEstateEditProfile/RealEstateEditProfile';
+import PropertyReserve from '../ui/screens/userPropertyReserve/PropertyReserve';
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,7 @@ export function MainStackNavigator() {
         <Stack.Screen name="LandingStack" component={LandingStackNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="UserPaymentMethods" component={PaymentMethods} />
         <Stack.Screen name="UserNewPaymentMethod" component={NewPaymentMethod} />
+        <Stack.Screen name="PropertyReserve" component={PropertyReserve} />
       </Stack.Group>
     </Stack.Navigator>
     </SafeAreaProvider>
