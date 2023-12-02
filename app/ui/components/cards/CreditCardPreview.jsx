@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-const CreditCardPreview = ({ cardNumber, expiryDate, bank, onPressTrashIcon }) => {
+const CreditCardPreview = ({ cardNumber, cardExpiration, cardBank, onPressTrashIcon }) => {
   const getCardNetwork = (number) => {
     const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
     const mastercardRegex = /^5[1-5][0-9]{14}$/;
@@ -30,7 +30,7 @@ const CreditCardPreview = ({ cardNumber, expiryDate, bank, onPressTrashIcon }) =
   };
 
   const getBankLogoSource = () => {
-    switch (bank) {
+    switch (cardBank) {
       case 'SANTANDER':
         return require('../../../assets/images/entities/santander-logo.png');
       case 'GALICIA':
@@ -59,7 +59,7 @@ const CreditCardPreview = ({ cardNumber, expiryDate, bank, onPressTrashIcon }) =
     default: ['#6c6cfc', '#6464fc', '#5c5afc', '#645cfc', '#6c64fc', '#746ffc', '#5454fc', '#7070fc', '#6864fc'],
   };
 
-  const selectedColors = backgroundColors[bank] || backgroundColors['default'];
+  const selectedColors = backgroundColors[cardBank] || backgroundColors['default'];
 
   return (
     <LinearGradient
@@ -77,7 +77,7 @@ const CreditCardPreview = ({ cardNumber, expiryDate, bank, onPressTrashIcon }) =
 
       <View style={styles.cardDetailsContainer}>
         <Text style={styles.cardNumber}>{formatCardNumber(cardNumber)}</Text>
-        <Text style={styles.cardDetailText}>{`Exp: ${expiryDate}`}</Text>
+        <Text style={styles.cardDetailText}>{`Exp: ${cardExpiration}`}</Text>
       </View>
 
       <View style={styles.logoContainer}>
