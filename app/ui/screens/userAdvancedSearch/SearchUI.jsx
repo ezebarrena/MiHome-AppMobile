@@ -29,15 +29,19 @@ import searchIcon from "../../../assets/images/icons/searchIcon.png";
 import close from "../../../assets/images/icons/close.png";
 
 import CustomTextInput2 from "../../../ui/components/inputs/CustomTextInput2";
-import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
+import ChoiceInput from "../../../ui/components/inputs/ChoiceInput2";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
 import DropDownPicker from 'react-native-dropdown-picker';
+
+import { filterSearch } from "../../../api/assetsAPI";
 
 
 export default function SearchUI() {
 
   const navigation = useNavigation();
+  const [subiendo, setSubiendo] = useState(false);
+  const [error, setError] = useState(false);
 
   const [text, setText] = useState('');
 
@@ -50,6 +54,56 @@ export default function SearchUI() {
     return null;
   }
 
+  const initialFormState = {
+    "title": "",
+    "type": "",
+    "transaction": null,
+    "price": null,
+    "coin": "",
+    "amenities": [],
+    "room": null,
+    "storage": false,
+    "neighbourhood": "",
+    "locality": "",
+    "province": "",
+    "country": "",
+    "geoLocalization": "",
+    "state": 1,
+  }
+
+  const { form, onChange, setFormValue } = useForm(initialFormState);
+
+  const handleSubmit = async () => {
+
+    const nuevoForm = removeNullFields(form)
+    if (nuevoForm) {
+      setSubiendo(true)
+      const response = await filterSearch(nuevoForm); //cambiar
+      console.log(response);
+      if (response.status === 200) {
+        console.log(response.status);
+        setSubiendo(false)
+        setModalVisible(true)
+      }
+      else {
+        alert("error ");
+        setError(true)
+      }
+    }
+  }
+
+  function removeNullFields(obj) {
+    const result = {};
+    for (const key in obj) {
+      if (obj[key] !== "") {
+        result[key] = obj[key];
+      }
+    }
+    return result;
+  }
+
+
+
   const goHome = () => {
     navigation.navigate("UserHome")
   }
@@ -59,14 +113,8 @@ export default function SearchUI() {
   }
 
   const dataTypes = [
-    { key: '1', value: i18n.t('REUploadAssetChoices.house') },
-    { key: '2', value: i18n.t('REUploadAssetChoices.department') },
-    { key: '3', value: i18n.t('REUploadAssetChoices.country_house') },
-    { key: '4', value: i18n.t('REUploadAssetChoices.PH') },
-    { key: '5', value: i18n.t('REUploadAssetChoices.shed') },
-    { key: '6', value: i18n.t('REUploadAssetChoices.office') },
-    { key: '7', value: i18n.t('REUploadAssetChoices.commerce') },
-    { key: '8', value: i18n.t('REUploadAssetChoices.terrain') },
+    { key: '1', value: 'Venta' },
+    { key: '2', value: 'Alquiler' }
   ];
 
   return (
@@ -93,14 +141,10 @@ export default function SearchUI() {
 
             <View style={styles.contenedor}>
               <View style={styles.columna}>
-                {/* Contenido de la primera columna */}
                 <Text style={styles.searchText}>Tipo de operacion</Text>
               </View>
               <View style={styles.columna}>
-                {/* Contenido de la segunda columna */}
-                <ChoiceInput
-                  data={dataTypes}
-                />
+                <CustomTextInput2/>  
               </View>
             </View>
 
@@ -122,6 +166,30 @@ export default function SearchUI() {
               </View>
             </View>
 
+            <View style={styles.contenedorConFondo}>
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                <Text style={styles.searchText}>Precio</Text>
+              </View>
+              <View style={styles.columna2}>
+                <CustomTextInput2/>
+              </View>
+
+              <View style={styles.columna2}>
+                <CustomTextInput2/>  
+              </View>
+            </View>
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                <Text style={styles.searchText}>Moneda</Text>
+              </View>
+              <View style={styles.columna}>
+                <CustomTextInput2/>  
+              </View>
+            </View>
+            </View>
+
             <View style={styles.contenedor}>
               <View style={styles.columna}>
                 <Text style={styles.searchText}>Ambientes</Text>
@@ -133,12 +201,8 @@ export default function SearchUI() {
 
             <View style={styles.contenedor}>
               <View style={styles.columna}>
-                <Text style={styles.searchText}>Precio</Text>
+                <Text style={styles.searchText}>Amenities</Text>
               </View>
-              <View style={styles.columna}>
-                <CustomTextInput2/>
-              </View>
-
               <View style={styles.columna}>
                 <CustomTextInput2/>  
               </View>
@@ -149,6 +213,7 @@ export default function SearchUI() {
       </View>
       
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -257,14 +322,33 @@ const styles = StyleSheet.create({
     flex: 1, // Esto hace que el contenedor ocupe todo el espacio disponible
     flexDirection: 'row', // Esto establece la dirección del diseño a horizontal (columnas)
   },
+
+  contenedorConFondo: {
+    backgroundColor: Theme.colors.FONDOCARD,
+    opacity:'50%',
+
+  },
+  
   columna: {
     flex: 1, // Esto hace que cada columna ocupe la mitad del espacio disponible
     justifyContent: 'center', // Esto centra el contenido verticalmente en cada columna
     alignItems: 'left', // Esto centra el contenido horizontalmente en cada columna
     paddingLeft: '6%',
+    //height:70, //eliminar de ser necesario
+  },
+
+  columna2: {
+    flex: 1, // Esto hace que cada columna ocupe la mitad del espacio disponible
+    justifyContent: 'center', // Esto centra el contenido verticalmente en cada columna
+    alignItems: 'left', // Esto centra el contenido horizontalmente en cada columna
+    paddingLeft: '2%',
+    marginRight:6
   },
 
   searchText:{
     fontSize: Dimensions.get('window').width * 0.045,
-  }
+  },
+
+
+
 });
