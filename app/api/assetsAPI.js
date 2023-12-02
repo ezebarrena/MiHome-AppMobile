@@ -83,3 +83,13 @@ export const createBooking = async (bookingData) => {
     throw error;
   }
 };
+
+export const getMyRealEstateBookings = async (realEstateID) => {
+  try {
+    const response = await assetsAPI.post('/assets/bookings/realEstate', realEstateID);
+    return response.data;
+  } catch (error) {
+    console.error('Error getting real estate assets:', error);
+    throw error;
+  }
+};

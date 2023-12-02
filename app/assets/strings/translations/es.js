@@ -193,6 +193,10 @@ export default {
     textoEliminar2:'Una vez eliminada no se puede recuperar!',
     confirmar:'Eliminar permanentemente',
     
+  },
+  REeditarPerfil:{
+    tituloStack: "Editar tu cuenta",
+    
   }
 };
 

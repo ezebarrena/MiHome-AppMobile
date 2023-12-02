@@ -220,6 +220,10 @@ export default {
   AdvancedSearch:{
     title:'Advanced Search'
 
+  },
+  REeditarPerfil:{
+    tituloStack: "Edit your account",
+    
   }
 };
 
