@@ -28,6 +28,11 @@ import { useState, useEffect } from "react";
 import searchIcon from "../../../assets/images/icons/searchIcon.png";
 import close from "../../../assets/images/icons/close.png";
 
+import CustomTextInput2 from "../../../ui/components/inputs/CustomTextInput2";
+import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
+import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
+import Button from "../../../ui/components/buttons/Button";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 
 export default function SearchUI() {
@@ -49,15 +54,20 @@ export default function SearchUI() {
     navigation.navigate("UserHome")
   }
 
-  const advancedSearchScreen = () => {
-    navigation.navigate("AdvancedSearch") //cambiar
-  }
-
   const Search = () => {
     navigation.navigate("UserProfile") //cambiar
   }
 
-
+  const dataTypes = [
+    { key: '1', value: i18n.t('REUploadAssetChoices.house') },
+    { key: '2', value: i18n.t('REUploadAssetChoices.department') },
+    { key: '3', value: i18n.t('REUploadAssetChoices.country_house') },
+    { key: '4', value: i18n.t('REUploadAssetChoices.PH') },
+    { key: '5', value: i18n.t('REUploadAssetChoices.shed') },
+    { key: '6', value: i18n.t('REUploadAssetChoices.office') },
+    { key: '7', value: i18n.t('REUploadAssetChoices.commerce') },
+    { key: '8', value: i18n.t('REUploadAssetChoices.terrain') },
+  ];
 
   return (
     <View style={styles.container}>
@@ -76,10 +86,66 @@ export default function SearchUI() {
           <TouchableOpacity onPress={Search} style={styles.search1}>
             <Image source={searchIcon} style={styles.searchIcon}/>
           </TouchableOpacity>
-    
         </View>
-
       </View>
+
+      <ScrollView> 
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                {/* Contenido de la primera columna */}
+                <Text style={styles.searchText}>Tipo de operacion</Text>
+              </View>
+              <View style={styles.columna}>
+                {/* Contenido de la segunda columna */}
+                <ChoiceInput
+                  data={dataTypes}
+                />
+              </View>
+            </View>
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                <Text style={styles.searchText}>Tipo de Propiedad</Text>
+              </View>
+              <View style={styles.columna}>
+                <CustomTextInput2/>  
+              </View>
+            </View>
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                <Text style={styles.searchText}>Ubicacion</Text>
+              </View>
+              <View style={styles.columna}>
+                <CustomTextInput2/>  
+              </View>
+            </View>
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                <Text style={styles.searchText}>Ambientes</Text>
+              </View>
+              <View style={styles.columna}>
+                <CustomTextInput2/>  
+              </View>
+            </View>
+
+            <View style={styles.contenedor}>
+              <View style={styles.columna}>
+                <Text style={styles.searchText}>Precio</Text>
+              </View>
+              <View style={styles.columna}>
+                <CustomTextInput2/>
+              </View>
+
+              <View style={styles.columna}>
+                <CustomTextInput2/>  
+              </View>
+            </View>
+
+        <Button title={"Busca ahora"} titleColor={"white"} size = 'medium'/>
+      </ScrollView>
       </View>
       
   );
@@ -186,5 +252,19 @@ const styles = StyleSheet.create({
     marginLeft: '87%'
     
   },  
-  
+
+  contenedor: {
+    flex: 1, // Esto hace que el contenedor ocupe todo el espacio disponible
+    flexDirection: 'row', // Esto establece la dirección del diseño a horizontal (columnas)
+  },
+  columna: {
+    flex: 1, // Esto hace que cada columna ocupe la mitad del espacio disponible
+    justifyContent: 'center', // Esto centra el contenido verticalmente en cada columna
+    alignItems: 'left', // Esto centra el contenido horizontalmente en cada columna
+    paddingLeft: '6%',
+  },
+
+  searchText:{
+    fontSize: Dimensions.get('window').width * 0.045,
+  }
 });
