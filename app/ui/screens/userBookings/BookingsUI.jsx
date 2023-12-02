@@ -103,9 +103,9 @@ const styles = StyleSheet.create({
 
   textoHead: {
     marginLeft: 5,
-    marginTop: 25,
+    marginTop: 30,    
     fontFamily: 'Poppins_700Bold',
     color: 'black',
-    fontSize: Dimensions.get('window').width * 0.07,
+    fontSize: Dimensions.get('window').width * 0.06,
   },
 });

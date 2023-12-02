@@ -24,11 +24,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     overflow: "hidden",
-    width:'100%',
-    marginLeft:'-12%',
+    width:'44%',
+    marginLeft:'4%',
     marginVertical: 10,
     textAlign: "left", // Centra el texto del placeholder
     paddingLeft: '6%',
+    flexDirection: 'row', // Esto establece la dirección del diseño a horizontal (columnas)
+
     ...Platform.select({
       ios: {
         shadowOffset: { width: 0, height: 2 },
