@@ -92,13 +92,6 @@ export default function HomeUI(listadoPropiedades) {
         setRefreshing(false);
       }, 2000); 
     };
-    //  useFocusEffect(
-    //    React.useCallback(() => {
-    //      setPropiedades(listadoPropiedades.asset);
-    //      setPropiedadesBD(listadoPropiedades.asset);
-    //    }, [setPropiedades, listadoPropiedades])
-    //);
-    
 
   
 
