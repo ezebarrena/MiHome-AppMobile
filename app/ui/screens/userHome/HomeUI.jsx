@@ -92,13 +92,6 @@ export default function HomeUI(listadoPropiedades) {
         setRefreshing(false);
       }, 2000); 
     };
-    //  useFocusEffect(
-    //    React.useCallback(() => {
-    //      setPropiedades(listadoPropiedades.asset);
-    //      setPropiedadesBD(listadoPropiedades.asset);
-    //    }, [setPropiedades, listadoPropiedades])
-    //);
-    
 
   
 
@@ -265,7 +258,7 @@ const styles = StyleSheet.create({
   imagenHead: {
     resizeMode: 'contain',
     height: Dimensions.get('window').width * 0.11,
-    marginLeft: '33%',
+    marginLeft: '17%',
   },
 
   contenedorHead: {
@@ -284,7 +277,7 @@ const styles = StyleSheet.create({
   },
 
   contenedorHead2: {
-    marginTop: '3%',
+    marginTop: '1.5%',
     marginLeft: '5%',
     marginRight: '5%',
     marginBottom:'5%',
