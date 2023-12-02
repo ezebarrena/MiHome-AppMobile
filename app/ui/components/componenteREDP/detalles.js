@@ -23,13 +23,20 @@ import Theme from "../../styles/Theme";
 
 import imagenTest from '../../../assets/images/various/imagenCasaTest.png'
 
-export default function PanelDetalles({ datosPropiedad, tipo }) {
+export default function PanelDetalles({ datosPropiedad, tipo, booking }) {
     const [fontsLoaded, fontError] = useFonts({
         Poppins_700Bold,
         Poppins_500Medium,
         Poppins_600SemiBold,
     });
 
+    useEffect(() => {
+        if (datosPropiedad.state === 0) {
+            const fecha = booking.dateBooked.split('-')
+            console.log(fecha, 'fecha');
+        }
+
+    }, [])
 
 
     if (!fontsLoaded && !fontError) {
@@ -45,8 +52,8 @@ export default function PanelDetalles({ datosPropiedad, tipo }) {
     let pausada = tipo === "pausada";
     let expensas = false
     console.log(datosPropiedad.bills);
-    if("bills" in datosPropiedad){
-        expensas= true
+    if ("bills" in datosPropiedad) {
+        expensas = true
     }
     return (
         <View style={styles.container}>
@@ -81,9 +88,9 @@ export default function PanelDetalles({ datosPropiedad, tipo }) {
                 <View style={styles.headEstadoPropiedad}>
                     <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.alquiladoDesde')}</Text>
                     <View>
-                        <Text style={styles.textos}>{datosPropiedad.fechaDesde}</Text>
+                        <Text style={styles.textos}>{booking.dateBooked}</Text>
                         <Text style={[styles.textos, styles.centrar]}>{i18n.t('detallePropiedadInmobiliaria.alquiladoHasta')}</Text>
-                        <Text style={styles.textos}>{datosPropiedad.fechaHasta}</Text>
+                        <Text style={styles.textos}>{booking.dateBookedEnd}</Text>
                     </View>
 
                 </View>
@@ -91,10 +98,10 @@ export default function PanelDetalles({ datosPropiedad, tipo }) {
 
             </View> : null}
 
-            
 
-           {(vendida || alquilado) ? null : (
-                expensas  ? (
+
+            {(vendida || alquilado) ? null : (
+                expensas ? (
                     <View style={styles.headEstadoPropiedad}>
                         <Text style={styles.textos}>{i18n.t('detallePropiedadInmobiliaria.expensas')}</Text>
                         <Text style={styles.textos}>$ {datosPropiedad.bills}</Text>
