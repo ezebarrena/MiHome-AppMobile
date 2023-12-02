@@ -29,9 +29,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "black",
-    marginHorizontal: 14,
     overflow: "hidden",
     marginVertical: 10,
+    paddingLeft:20,
     textAlign: "left",
     ...Platform.select({
       ios: {
