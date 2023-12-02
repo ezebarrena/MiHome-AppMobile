@@ -44,7 +44,8 @@ export default {
       "passwordInput": "PASSWORD",
       "nameInput": "REAL ESTATE AGENCY",
       "cuitInput": "CUIT",
-      "registerButton": "Create Account"
+      "registerButton": "Create Account",
+      contactEmail:"CONTACT EMAIL"
     },
     "cannotLoginModal": {
       "firstStep": {
@@ -171,8 +172,9 @@ export default {
     "frontBack": "Front or back",
     "amenities": "Amenities",
     orientacion:'Orientation',
-    mensajePublicado:'The Estate has been published',
-    mensajeError:'There has been an error, please review the content and try again'
+    mensajePublicado:'The Estate has been modified',
+    mensajeError:'There has been an error, please review the content and try again',
+    botonModificar:'Modify'
   },
 
   REUploadAssetChoices:{
