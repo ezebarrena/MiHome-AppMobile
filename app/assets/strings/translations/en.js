@@ -223,6 +223,9 @@ export default {
   },
   REeditarPerfil:{
     tituloStack: "Edit your account",
+    nombre:"Real Estate Name",
+    numContacto:"Phone Number",
+    correoContacto:'Contact Email'
     
   }
 };

@@ -19,7 +19,9 @@ import { useForm } from "../../../hooks/useForm";
 export default function RealEstateEditProfileUI({ params }) {
 
     const initialFormState = {
-        "fantasyName": params.fantasyName ? params.fantasyName : '',
+        "fantasyName": params.fantasyName != null || params.fantasyName != undefined ? params.fantasyName : "",
+        "contactEmail": params.contactEmail != null || params.contactEmail != undefined ? params.contactEmail: "", 
+
 
     }
 
@@ -37,19 +39,31 @@ export default function RealEstateEditProfileUI({ params }) {
         return null;
     }
 
-
+    console.log(form);
 
     return (
         <View style={styles.container}>
             <View style={styles.userInfo}>
                 <Image source={fotoPerfil} />
-
+                <Text style={styles.mailText}>{params.logInEmail}</Text>
             </View>
 
             <View style={styles.containerForm}>
-                <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
+                <Text style={styles.textoBody1}>{i18n.t('REeditarPerfil.nombre')}</Text>
                 <CustomTextInput
                     value={form.fantasyName}
+                    onChangeText={(value) => onChange(value, "fantasyName")}
+                    
+                />
+{/*                 <Text style={styles.textoBody1}>{i18n.t('REeditarPerfil.numContacto')}</Text>
+                <CustomTextInput
+                    keyboardType={'numeric'}
+                    value={form.fantasyName}
+                    onChangeText={(value) => onChange(value, "fantasyName")}
+                /> */}
+                <Text style={styles.textoBody1}>{i18n.t('REeditarPerfil.correoContacto')}</Text>
+                <CustomTextInput
+                    value={form.contactEmail}
                     onChangeText={(value) => onChange(value, "fantasyName")}
                 />
             </View>
@@ -93,6 +107,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 50,
     },
+    mailText: {
+        fontFamily: 'Poppins_500Medium',
+        fontSize: Dimensions.get("window").width * 0.043,
+        color: "#646464",
+        marginTop: 20,
+    },
     /* 
     contenedorOpciones: {
         width: 328,
@@ -109,12 +129,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_700Bold',
         fontSize: Dimensions.get("window").width * 0.08,
     },
-    mailText: {
-        fontFamily: 'Poppins_500Medium',
-        fontSize: Dimensions.get("window").width * 0.043,
-        color: "#646464",
-        marginBottom: 20,
-    },
+
     centeredView: {
         flex: 1,
         justifyContent: 'center',
@@ -171,10 +186,12 @@ const styles = StyleSheet.create({
     textoBody1: {
         fontFamily: "Poppins_500Medium",
         fontSize: Dimensions.get('window').width * 0.045,
-        textAlign:'center'
+        textAlign: 'center',
+        marginTop:15
     },
-    containerForm:{
-        width:'80%',
-        marginTop:40
-    }
+    containerForm: {
+        width: '80%',
+        marginTop: 10
+    },
+
 });

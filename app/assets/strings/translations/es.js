@@ -196,7 +196,10 @@ export default {
   },
   REeditarPerfil:{
     tituloStack: "Editar tu cuenta",
-    
+    nombre:"Nombre de Agencia",
+    numContacto:"Numero de contacto",
+    correoContacto:'Correo de contacto'
+
   }
 };
 
