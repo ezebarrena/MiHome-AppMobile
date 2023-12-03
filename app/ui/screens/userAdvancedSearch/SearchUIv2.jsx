@@ -17,17 +17,12 @@ import {
 
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
-
 import i18n from "../../../assets/strings/I18n";
 import Theme from "../../styles/Theme";
-
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import { useForm } from "../../../hooks/useForm";
-
-import searchIcon from "../../../assets/images/icons/searchIcon.png";
 import close from "../../../assets/images/icons/close.png";
-
 import CustomTextInput from "../../../ui/components/inputs/CustomTextInput";
 import CustomTextInput2 from "../../../ui/components/inputs/CustomTextInput2";
 import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
@@ -41,6 +36,18 @@ export default function SearchUIv2() {
     const goHome = () => {
         navigation.navigate("UserHome")
     }
+
+    const { form, onChange } = useForm({
+        title:"",
+        transaction:"",
+        type:"",
+        location:"",
+        min_price:"",
+        max_price:"",
+        coin:"",
+        room:"",
+        amenities:[],
+    });
   
     const [fontsLoaded, fontError] = useFonts({
       Poppins_700Bold,
@@ -51,6 +58,25 @@ export default function SearchUIv2() {
       return null;
     }
   
+    const limitInput = (value, fieldName, maxLength) => {
+      const truncatedValue = value.slice(0, maxLength);
+      onChange(truncatedValue, fieldName);
+    };
+
+    const limitExpirationInput = (value, fieldName) => {
+      const numericValue = value.replace(/\D/g, '').slice(0, 4);
+
+      if (numericValue.length === 3) {
+          const formattedValue = numericValue.slice(0, 2) + '/' + numericValue.slice(2);
+          onChange(formattedValue, fieldName);
+      } else if (numericValue.length === 4) {
+          const formattedValue = numericValue.replace(/^(\d{2})/, '$1/');
+          onChange(formattedValue, fieldName);
+      } else {
+          onChange(numericValue, fieldName);
+      }
+    };
+
     
   
     return (
@@ -67,6 +93,8 @@ export default function SearchUIv2() {
                 <Text style={styles.textoBody1}>Que estas buscando? Te ayudamos!</Text>
                 <CustomTextInput
                     placeholder="Titulo de propiedad"
+                    onChangeText={(value) => onChange(value, "title")}
+                    value={form.title}
                 />
             
                 <Text style={styles.textoBody1}>Tipo de Operacion</Text>
@@ -75,6 +103,7 @@ export default function SearchUIv2() {
                         { value: "Compra" },
                         { value: "Venta" },
                     ]}
+                    onValueSelect={(value) => onChange(value, "transaction")}
                 />
 
                 <Text style={styles.textoBody1}>Tipo de Propiedad</Text>
@@ -87,11 +116,14 @@ export default function SearchUIv2() {
                         { value: "Terreno" },
                         { value: "Oficina" },
                     ]}
+                    onValueSelect={(value) => onChange(value, "type",)}
                 />
 
                 <Text style={styles.textoBody1}>Ubicacion</Text>
                 <CustomTextInput
                     placeholder="Localidad"
+                    onChangeText={(value) => onChange(value, "location")}
+                    value={form.location}
                 />
 
                 <View >
@@ -99,9 +131,16 @@ export default function SearchUIv2() {
                     <View style={styles.contenedor}>
                         <CustomTextInput2
                             placeholder="Minimo"
+                            onChangeText={(value) => limitInput(value, "min_price",15)}
+                            value={form.min_price}
+                            keyboardType="numeric"
+
                         />
                         <CustomTextInput2
                             placeholder="Maximo"
+                            onChangeText={(value) => limitInput(value, "max_price",15)}
+                            value={form.max_price}
+                            keyboardType="numeric"
                         />
                     </View>
                     <ChoiceInput
@@ -109,12 +148,16 @@ export default function SearchUIv2() {
                             { value: "Dolares (USD)" },
                             { value: "Pesos" },
                         ]}
+                        onValueSelect={(value) => onChange(value, "coin")}
                     />
                 </View>
 
                 <Text style={styles.textoBody1}>Ambientes</Text>
                 <CustomTextInput
                     placeholder="Cantidad de ambientes"
+                    onChangeText={(value) => limitInput(value, "room",2)}
+                    value={form.room}
+                    keyboardType="numeric"
                 />
 
                 <Text style={styles.textoBody1}>Amenities</Text>
@@ -132,6 +175,8 @@ export default function SearchUIv2() {
                         { key: 'security', value: i18n.t('REUploadAssetChoices.security') },
                         { key: 'sport', value: i18n.t('REUploadAssetChoices.sport') },
                     ]}
+                    value={form.amenities}
+                    onValueSelect={(key) => onChange(key, "amenities")}
                 />
 
                 <Button  title={"Buscar ahora"} titleColor={"white"} size = 'medium'/>
@@ -176,6 +221,7 @@ export default function SearchUIv2() {
       
     textoBody1: {
       fontSize: Dimensions.get('window').width * 0.04,
+      
     },
   
     textoBody2: {
