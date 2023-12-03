@@ -47,6 +47,7 @@ export default {
       "nameInput": "AGENCIA INMOBILIARIA",
       "cuitInput": "CUIT",
       "registerButton": "Crear cuenta",
+      contactEmail:"EMAIL DE CONTACTO"
     },
   },
   detallePropiedadInmobiliaria: {
@@ -148,9 +149,10 @@ export default {
     "location": "Ubicacion",
     "frontBack": "Front or back",
     "amenities": "Amenities",
-    mensajePublicado:'La propiedad se cargo exitosamente',
+    mensajePublicado:'La propiedad se modifico exitosamente',
     mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
-    orientacion:'Orientacion'
+    orientacion:'Orientacion',
+    botonModificar:'Modificar'
   },
 
   REUploadAssetChoices:{

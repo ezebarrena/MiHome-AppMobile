@@ -25,7 +25,7 @@ const ChoiceInput = ({ data, value, onValueSelect, defaultOption }) => {
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: "rgba(250, 250, 250, 0.9)",
+    backgroundColor: "white",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "black",

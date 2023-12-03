@@ -89,7 +89,7 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
             <View style={styles.containerDetalles}>
                 <View style={styles.viewDetalles}>
                     <Ionicons name="location-outline" size={33} style={{ marginHorizontal: 8 }} />
-                    <Text style={styles.textDetalles1}>{propiedad.streetName} {propiedad.streetNumber}, {propiedad.neighbourhood}, {propiedad.locality}, {propiedad.province}, {propiedad.country}</Text>
+                    <Text style={styles.textDetalles1}>{propiedad.direction}</Text>
                 </View>
                 <View style={styles.viewDetalles}>
                     <Ionicons name="home-outline" size={33} style={{ marginHorizontal: 8 }} />

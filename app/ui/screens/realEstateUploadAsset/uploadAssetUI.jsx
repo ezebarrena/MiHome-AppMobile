@@ -117,7 +117,8 @@ export default function UploadAssetUI({ }) {
     "frontBack": "",
     "state": 1,
     "realEstateName": "",
-    "orientation": []
+    "orientation": [],
+    "direction": ''
 
   }
 
@@ -217,11 +218,15 @@ export default function UploadAssetUI({ }) {
           <View style={styles.modalView}>
             {error ? <Text style={styles.modalText}>{i18n.t('realEstateUploadAsset.mensajeError')}</Text> : <Text style={styles.modalText}>{i18n.t('realEstateUploadAsset.mensajePublicado')}</Text>}
 
-            <Pressable
+            {error ? <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={() => { setModalVisible(!modalVisible); setError(false) }}>
               <Text style={styles.textStyle}>{i18n.t('common.cerrar')}</Text>
-            </Pressable>
+            </Pressable> : <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => { setModalVisible(!modalVisible); navigation.navigate("Home"); }}>
+              <Text style={styles.textStyle}>{i18n.t('common.cerrar')}</Text>
+            </Pressable>}
           </View>
         </View>
       </Modal>
@@ -435,6 +440,7 @@ export default function UploadAssetUI({ }) {
                 province: item.address.adminDistrict,
                 country: item.address.countryRegion,
                 geoLocalization: String(item.point.coordinates),
+                direction: item.address.formatedAddress
               }
             );
 
