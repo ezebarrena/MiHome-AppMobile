@@ -160,7 +160,8 @@ export default function DetallePropiedadRSUI({ informacion, booking }) {
         </View>
       </Modal>
       <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", { propiedadId: informacion._id, name: informacion.title })} style={styles.divImagen}>
-        <Image source={imagenTest} style={styles.imagen} />
+        {informacion.image && informacion.image.length > 0 ? <Image src={informacion.image[0]} style={styles.imagen} /> : <Image source={imagenTest} style={styles.imagen} /> }
+        
       </TouchableOpacity>
       {mostrarBotones ? (
         <View style={styles.botonera}>

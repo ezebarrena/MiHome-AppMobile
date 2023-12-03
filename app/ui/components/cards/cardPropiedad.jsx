@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import Theme from "../../styles/Theme";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
@@ -17,14 +17,17 @@ export default function CardPropiedad({
   numero,
   barrio,
   transaccion,
+  firstImage
 }) {
   const [fontsLoaded, fontError] = useFonts({
     Poppins_400Regular,
   });
 
+
   if (!fontsLoaded && !fontError) {
     return null;
   }
+
 
   let tipo = Estados(transaccion, estado);
 
@@ -35,7 +38,8 @@ export default function CardPropiedad({
   return (
     <TouchableOpacity onPress={onPress} style={styles.cardContainer}>
       <View style={styles.imageContainer}>
-        <Image source={imagenTest} style={styles.propertyImage} />
+        {firstImage != 39 ? <Image src={firstImage} style={styles.propertyImage} /> : <Image source={firstImage} style={styles.propertyImage} />}
+        
         <View style={styles.statusIndicator}>
           <Text style={styles.statusIndicatorText}> {i18nIdioma}</Text>
         </View>

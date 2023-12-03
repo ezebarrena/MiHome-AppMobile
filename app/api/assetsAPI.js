@@ -13,7 +13,6 @@ const assetsAPI = axios.create({
 
 export const createAsset = async (assetData) => {
   try {
-    console.log(assetData,'t');
     const response = await assetsAPI.post('/assets', assetData);
     return response;
   } catch (error) {
@@ -103,3 +102,4 @@ export const getFilteredAssets = async (assetId,transaction, assetType, coin, nR
     throw error;
   }
 };
+

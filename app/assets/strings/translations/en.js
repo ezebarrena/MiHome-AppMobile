@@ -145,7 +145,8 @@ export default {
     "amenities": "Amenities",
     orientacion:'Orientation',
     mensajePublicado:'The Estate has been published',
-    mensajeError:'There has been an error, please review the content and try again'
+    mensajeError:'There has been an error, please review the content and try again',
+    faltaData:'Please fill all required fields'
 
   },
 
@@ -174,7 +175,8 @@ export default {
     orientacion:'Orientation',
     mensajePublicado:'The Estate has been modified',
     mensajeError:'There has been an error, please review the content and try again',
-    botonModificar:'Modify'
+    botonModificar:'Modify',
+    faltaData:'Please fill all required fields'
   },
 
   REUploadAssetChoices:{
@@ -206,7 +208,8 @@ export default {
     este:'East',
     oeste:'West',
     frente:'Front',
-    contrafrente:'Back'
+    contrafrente:'Back',
+
   },
 
   REprofile:{
