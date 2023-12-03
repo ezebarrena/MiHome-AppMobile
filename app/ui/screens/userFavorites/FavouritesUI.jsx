@@ -23,9 +23,6 @@ export default function FavouritesUI() {
  
   const navigation = useNavigation();
 
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [active, setActive] = useState(true)
   const [propiedades, setPropiedades] = useState()
   const [propiedadesBD, setPropiedadesBD] = useState()
   const [refreshing, setRefreshing] = useState(false);
@@ -39,10 +36,19 @@ export default function FavouritesUI() {
      
         const respuesta = await getMyFavouriteAssets()
 
+        setPropiedades(respuesta.asset);
+        setPropiedadesBD(respuesta.asset)
+        setRefreshing(false)
+
       }
       catch (error) {
-        console.error('Error al obtener la busqueda:', error);
+        console.error('Error busqueda favoritos:', error);
       }
+
+      busquedaPropiedades()
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 2000);
 
     };
 
