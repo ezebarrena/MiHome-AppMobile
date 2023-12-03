@@ -29,7 +29,7 @@ import imagenInmobiliaria from '../../../assets/images/imagenInmobiliaria.png'
 import Estados from "../../../assets/funcionTraduccion";
 import StarRating from 'react-native-star-rating';
 const { width } = Dimensions.get('window');
-
+import MapView, { Marker } from 'react-native-maps';
 const images = [
     require('../../../assets/images/various/imagenCasaTest.png'),  // Reemplaza con la ruta correcta de tus imágenes
     require('../../../assets/images/various/casatest1.png'),
@@ -48,25 +48,25 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
         Poppins_600SemiBold,
     });
 
-    /* const [mapRegion, setMapRegion] = useState({
+    const [mapRegion, setMapRegion] = useState({
         latitude: null,
         longitude: null,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
-      });
-      console.log(propiedad,'t');
-      const ubicacion = propiedad.geoLocalization.split(" ");
-      const latitude = parseFloat(ubicacion[0]); // Convierte la latitud en un número de punto flotante
-      const longitude = parseFloat(ubicacion[1]); // Convierte la longitud en un número de punto flotante
-      
-      // Configura el estado mapRegion con los valores de latitud y longitud
-      setMapRegion({
-        latitude,
-        longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      }); */
+    });
 
+
+
+    useEffect(() => {
+        if (propiedad.geoLocalization) {
+            const geo = propiedad.geoLocalization.split(",")
+            setMapRegion({
+                ...mapRegion,
+                latitude: parseFloat(geo[0]),
+                longitude: parseFloat(geo[1])
+            });
+        }
+    }, [])
     if (!fontsLoaded && !fontError) {
         return null;
     }
@@ -78,13 +78,23 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
     return (
         <ScrollView style={styles.container}>
             <ScrollView horizontal={true} style={styles.scrollView} showsHorizontalScrollIndicator={false}>
-                {images.map((image, index) => (
-                    <Image
-                        key={index}
-                        source={image}
-                        style={styles.propertyImage}
-                    />
-                ))}
+                {propiedad.image && propiedad.image.length > 0 ?
+                    (propiedad.image.map((image, index) => (
+                        <Image
+                            key={index}
+                            src={image}
+                            style={styles.propertyImage}
+                        />
+                    ))) :
+
+                    (images.map((image, index) => (
+                        <Image
+                            key={index}
+                            source={image}
+                            style={styles.propertyImage}
+                        />
+                    )))}
+                { }
             </ScrollView>
             <View style={styles.containerDetalles}>
                 <View style={styles.viewDetalles}>
@@ -147,7 +157,7 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
             </View>
             <View style={styles.viewUbicacion}>
                 <Text style={styles.textUbicacion}>{i18n.t("detallePropiedad.ubicacion")}</Text>
-                {/* <MapView style={styles.map} region={mapRegion}>
+                <MapView style={styles.map} region={mapRegion}>
                     {mapRegion.latitude !== null && mapRegion.longitude !== null && (
                         <Marker
                             coordinate={{
@@ -156,18 +166,18 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
                             }}
                         />
                     )}
-                </MapView> */}
+                </MapView>
             </View>
             <View style={styles.viewExtras}>
                 <Text style={styles.textExtras}>{i18n.t("detallePropiedad.coordenadas")}: {propiedad.geoLocalization}</Text>
                 {propiedad.frontBack ? <Text style={styles.textExtras}>{i18n.t("detallePropiedad.vista")}: {i18n.t(`REUploadAssetChoices.${propiedad.frontBack}`)}</Text> : null}
-                
-                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.orientacion")}: {propiedad.orientation.map((texto, index, array) => (
+                {propiedad.orientation.length > 0 ? <Text style={styles.textExtras}>{i18n.t("detallePropiedad.orientacion")}: {propiedad.orientation.map((texto, index, array) => (
                     <>
                         {i18n.t(`REUploadAssetChoices.${texto}`)}
                         {index !== array.length - 1 && ", "}
                     </>
-                ))}</Text>
+                ))}</Text> : null}
+
                 <Text style={styles.textExtras}>{i18n.t("detallePropiedad.antiguedad")}: {propiedad.antiquity} {propiedad.antiquity > 1 ? i18n.t("detallePropiedad.anios") : i18n.t("detallePropiedad.anio")}</Text>
             </View>
             <View style={styles.viewCardInmobiliaria}>
@@ -356,8 +366,9 @@ const styles = StyleSheet.create({
         fontSize: Dimensions.get("window").width * 0.039,
     },
     map: {
-        height: 200,
-        marginVertical: 10,
+      height: 200,
+      marginHorizontal: 10,
+      marginVertical: 10,
     },
     ratingContainer: {
         flexDirection: 'row',

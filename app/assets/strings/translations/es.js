@@ -124,7 +124,8 @@ export default {
     "amenities": "Amenities",
     mensajePublicado:'La propiedad se cargo exitosamente',
     mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
-    orientacion:'Orientacion'
+    orientacion:'Orientacion',
+    faltaData:'Por favor completa todos los campos obligatorios'
 
   },
   realEstateUpdateAsset: {
@@ -152,7 +153,8 @@ export default {
     mensajePublicado:'La propiedad se modifico exitosamente',
     mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
     orientacion:'Orientacion',
-    botonModificar:'Modificar'
+    botonModificar:'Modificar',
+    faltaData:'Por favor completa todos los campos obligatorios'
   },
 
   REUploadAssetChoices:{
@@ -184,7 +186,8 @@ export default {
     este:'Este',
     oeste:'Oeste',
     frente:'Frente',
-    contrafrente:'Contrafrente'
+    contrafrente:'Contrafrente',
+    
   },
 
   REprofile:{

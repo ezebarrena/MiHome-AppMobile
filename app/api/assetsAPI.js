@@ -13,7 +13,6 @@ const assetsAPI = axios.create({
 
 export const createAsset = async (assetData) => {
   try {
-    console.log(assetData,'t');
     const response = await assetsAPI.post('/assets', assetData);
     return response;
   } catch (error) {
@@ -93,3 +92,5 @@ export const getMyRealEstateBookings = async (realEstateID) => {
     throw error;
   }
 };
+
+
