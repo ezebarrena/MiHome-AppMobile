@@ -69,7 +69,7 @@ export default function SearchUIv2() {
       try {
         const results = await filterSearch(form);
         console.log("Resultados de búsqueda:", results);
-        navigation.navigate("UserResults", { results });
+        navigation.navigate("SearchResults", { results });
       } catch (error) {
         console.error("Error al realizar la búsqueda:", error);
       }
