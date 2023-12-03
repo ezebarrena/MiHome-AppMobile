@@ -6,7 +6,8 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
-  RefreshControl
+  RefreshControl,
+  ScrollView
 } from "react-native";
 
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
@@ -14,11 +15,11 @@ import i18n from "../../../assets/strings/I18n";
 import CardPropiedad from "../../components/cards/cardPropiedad";
 import { useNavigation } from "@react-navigation/native";
 import Theme from "../../styles/Theme";
-import { getMyRealEstateAssets } from '../../../api/assetsAPI'; //cambiar API user 
+import { getMyFavouriteAssets } from '../../../api/usersAPI'; //cambiar API user 
 import { useState, useEffect } from "react";
 
 
-export default function WelcomeUI(listadoPropiedades) {
+export default function FavouritesUI() {
  
   const navigation = useNavigation();
 
@@ -31,38 +32,19 @@ export default function WelcomeUI(listadoPropiedades) {
 
   const onRefresh = () => {
     setRefreshing(true);
+    
     const busquedaPropiedades = async () => {
-      const valor = await AsyncStorage.getItem('realEstateId')
 
       try {
-        const bodyData = {
-          realEstateName: valor,
-          state: '',
-          transaction: ''
-        }
+     
+        const respuesta = await getMyFavouriteAssets()
 
-        const respuesta = await getMyRealEstateAssets(bodyData)
-
-
-        setPropiedades(respuesta.asset);
-        setPropiedadesBD(respuesta.asset)
       }
       catch (error) {
         console.error('Error al obtener la busqueda:', error);
       }
 
     };
-
-    seEffect(() => {
-
-
-      setPropiedades(listadoPropiedades.asset);
-      setPropiedadesBD(listadoPropiedades.asset);
-      if (listadoPropiedades.asset && listadoPropiedades.asset.length > 0) {
-        setActive(false)
-      }
-      console.log(propiedades, 's');
-    }, [setPropiedades, listadoPropiedades])
 
 
   }
@@ -77,10 +59,12 @@ export default function WelcomeUI(listadoPropiedades) {
       </View>
         
       {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
-        <FlatList
+        <ScrollView
           data={propiedades}
-          keyExtractor={item => item._id}
-          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
+          style={styles.scrollView} 
+          keyExtractor={item => item}
+          
+          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("", { propiedadId: item._id })} />}
           contentContainerStyle={{
             alignItems: "center",
             flexGrow: 1,
@@ -93,9 +77,27 @@ export default function WelcomeUI(listadoPropiedades) {
             />
           }
         />
-      </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>Agrega propiedades a favoritos {"\n"} </Text><Text style={styles.textEmpty}></Text></View>)
+      </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>Agrega propiedades a favoritos {"\n"} </Text></View>)
 
       }
+
+      <ScrollView 
+        style={styles.scrollView} 
+        contentContainerStyle={styles.scrollViewContent} 
+        showsHorizontalScrollIndicator={false}>
+        <View style={{}}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{}}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+        <View style={{ }}>
+          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
+        </View>
+      </ScrollView>
 
     </View>
   );
@@ -106,6 +108,19 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+  },
+
+  scrollView: {
+    flexGrow: 0,
+    /*marginTop: '-2%',*/
+  },
+
+  scrollViewContent: {
+    paddingTop: "2%",
+    paddingStart: '3%',
+    paddingEnd: "3%",
+    paddingBottom: "5%",
+    alignItems:'center'
   },
 
   contenedorHead: {
