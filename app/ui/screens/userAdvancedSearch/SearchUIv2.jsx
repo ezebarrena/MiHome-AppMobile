@@ -29,6 +29,8 @@ import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
 
+import { filterSearch } from "../../../api/assetsAPI"; //no esta declarada
+
 export default function SearchUIv2() {
 
     const navigation = useNavigation();
@@ -63,21 +65,15 @@ export default function SearchUIv2() {
       onChange(truncatedValue, fieldName);
     };
 
-    const limitExpirationInput = (value, fieldName) => {
-      const numericValue = value.replace(/\D/g, '').slice(0, 4);
-
-      if (numericValue.length === 3) {
-          const formattedValue = numericValue.slice(0, 2) + '/' + numericValue.slice(2);
-          onChange(formattedValue, fieldName);
-      } else if (numericValue.length === 4) {
-          const formattedValue = numericValue.replace(/^(\d{2})/, '$1/');
-          onChange(formattedValue, fieldName);
-      } else {
-          onChange(numericValue, fieldName);
+    const handleSubmit = async () => {
+      try {
+        const results = await filterSearch(form);
+        console.log("Resultados de búsqueda:", results);
+        navigation.navigate("UserResults", { results });
+      } catch (error) {
+        console.error("Error al realizar la búsqueda:", error);
       }
     };
-
-    
   
     return (
         <View style={styles.container}>
@@ -179,7 +175,7 @@ export default function SearchUIv2() {
                     onValueSelect={(key) => onChange(key, "amenities")}
                 />
 
-                <Button  title={"Buscar ahora"} titleColor={"white"} size = 'medium'/>
+                <Button  title={"Buscar ahora"} titleColor={"white"} size = 'medium' onPress={() => handleSubmit()}/>
 
 
 
@@ -201,8 +197,6 @@ export default function SearchUIv2() {
       flexGrow: 0,
       /*marginTop: '-2%',*/
     },
-  
-
   
     head: {
       width: "100%",
@@ -250,8 +244,6 @@ export default function SearchUIv2() {
         justifyContent: 'space-evenly',
         width: '100%',
     },
-  
-
   
     input: {
       backgroundColor: "white",
