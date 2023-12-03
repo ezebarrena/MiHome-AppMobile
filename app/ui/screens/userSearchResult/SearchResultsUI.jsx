@@ -57,6 +57,9 @@ export default function SearchResultsUI() {
             </View>
 
             <ScrollView>
+
+
+                
             </ScrollView>
 
         </View>

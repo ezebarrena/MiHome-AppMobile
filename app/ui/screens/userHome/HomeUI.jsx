@@ -136,7 +136,7 @@ export default function HomeUI(listadoPropiedades) {
             />
           }
         />
-        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad')} {"\n"} </Text><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad1')}</Text></View>)
+        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>No hay propiedades para mostrar {"\n"} </Text></View>)
 
       }
 
@@ -155,7 +155,7 @@ export default function HomeUI(listadoPropiedades) {
             />
           }
         />
-        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad')} {"\n"} </Text><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad1')}</Text></View>)
+        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>No hay propiedades para mostrar {"\n"} </Text></View>)
 
       }
 
