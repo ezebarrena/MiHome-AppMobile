@@ -19,16 +19,18 @@ const CustomTextInput = ({ placeholder, value, onChangeText, secureTextEntry, ke
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: "rgba(250, 250, 250, 0.9)", // RGBA con 90% de transparencia
+    backgroundColor: "white", // RGBA con 90% de transparencia
     height: 48,
     borderRadius: 10,
     borderWidth: 1,
     overflow: "hidden",
-    width:'100%',
-    marginLeft:'-12%',
+    width:'48%',
+    marginRight:'4%',
     marginVertical: 10,
     textAlign: "left", // Centra el texto del placeholder
     paddingLeft: '6%',
+    flexDirection: 'row', // Esto establece la dirección del diseño a horizontal (columnas)
+
     ...Platform.select({
       ios: {
         shadowOffset: { width: 0, height: 2 },

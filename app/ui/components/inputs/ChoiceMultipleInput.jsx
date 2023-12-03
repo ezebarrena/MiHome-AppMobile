@@ -33,10 +33,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "black",
-    margin: 14,
     overflow: "hidden",
     marginVertical: 10,
-    textAlign: "center", // Centra el texto del placeholder
+    paddingLeft:20,
+    textAlign: "left", // Centra el texto del placeholder
     ...Platform.select({
       ios: {
         shadowOffset: { width: 0, height: 2 },

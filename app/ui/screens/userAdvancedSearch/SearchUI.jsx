@@ -40,7 +40,6 @@ import { filterSearch } from "../../../api/assetsAPI";
 export default function SearchUI() {
 
   const navigation = useNavigation();
-  const [subiendo, setSubiendo] = useState(false);
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -60,35 +59,18 @@ export default function SearchUI() {
     "coin": "",
     "amenities": [],
     "room": null,
-    //"neighbourhood": "",
     "locality": "",
-    //"province": "",
-    //"country": "",
-    //"geoLocalization": "",
     "state": 1,
   }
 
   const { form, onChange } = useForm(initialFormState);
 
   const handleSubmit = async () => {
-    const nuevoForm = removeNullFields(form)
-    if (nuevoForm) {
-      setSubiendo(true)
-      const response = await filterSearch(nuevoForm); //cambiar
-      console.log(response);
-      if (response.status === 200) {
-        console.log(response.status);
-        setSubiendo(false)
-        setModalVisible(true)
-      }
-      else {
-        alert("error ");
-      }
-    }
+   
+    const response = await filterSearch(nuevoForm); //cambiar
+    console.log(response);
+  
   }
-
-
-
 
   const goHome = () => {
     navigation.navigate("UserHome")
@@ -115,7 +97,7 @@ export default function SearchUI() {
             value={form.title}
             onChangeText={(value) => onChange(parseInt(value), "title")}
           />
-          <TouchableOpacity loading={subiendo} onPress={handleSubmit} style={styles.search1}>
+          <TouchableOpacity onPress={handleSubmit} style={styles.search1}>
             <Image source={searchIcon} style={styles.searchIcon}/>
           </TouchableOpacity>
         </View>
@@ -212,7 +194,7 @@ export default function SearchUI() {
               </View>
             </View>
 
-        <Button loading={subiendo} title={"Busca ahora"} titleColor={"white"}  onPress={() => handleSubmit()} size = 'medium'/>
+        <Button  title={"Busca ahora"} titleColor={"white"}  onPress={() => handleSubmit()} size = 'medium'/>
       </ScrollView>
       </View>
       
