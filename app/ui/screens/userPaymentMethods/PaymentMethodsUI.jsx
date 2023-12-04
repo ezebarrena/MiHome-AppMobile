@@ -3,9 +3,11 @@ import { View, ScrollView, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CreditCardPreview from "../../components/cards/CreditCardPreview";
 import Button from "../../components/buttons/Button";
+import ConfirmationModal from "../../components/modals/ConfirmationModal";
 
 const PaymentMethodsUI = () => {
     const navigation = useNavigation();
+    const [isConfirmationModalVisible, setIsConfirmationModalVisible] = React.useState(false);
     
     const paymentMethods = [
         {
@@ -84,6 +86,17 @@ const PaymentMethodsUI = () => {
 
     const onPressTrashIcon = (id) => {
         console.log("Trash icon pressed for card with id: ", id);
+        setIsConfirmationModalVisible(true);
+    };
+
+    const onAccept = () => {
+        console.log("Accepted");
+        setIsConfirmationModalVisible(false);
+    };
+
+    const onDeny = () => {
+        console.log("Denied");
+        setIsConfirmationModalVisible(false);
     };
     
     return (
@@ -103,6 +116,12 @@ const PaymentMethodsUI = () => {
             <Button
                 title="Agregar método de pago"
                 onPress={() => navigation.navigate("UserNewPaymentMethod")}
+            />
+            <ConfirmationModal
+                message="¿Está seguro que desea eliminar este método de pago?"
+                isVisible={isConfirmationModalVisible}
+                onAccept={onAccept}
+                onDeny={onDeny}
             />
         </View>
     );
