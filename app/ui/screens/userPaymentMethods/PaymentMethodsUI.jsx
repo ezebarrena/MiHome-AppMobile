@@ -114,7 +114,7 @@ const PaymentMethodsUI = () => {
     
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.cardsContainer}>
+            {/* <ScrollView contentContainerStyle={styles.cardsContainer}>
                 {paymentMethods ? paymentMethods.map((paymentMethod) => (
                     <CreditCardPreview
                         key={paymentMethod.id}
@@ -125,7 +125,7 @@ const PaymentMethodsUI = () => {
                         onPressTrashIcon={() => onPressTrashIcon(paymentMethod.id)}
                     />
                 )) : null}
-            </ScrollView>
+            </ScrollView> */}
             <Button
                 title="Agregar método de pago"
                 onPress={() => navigation.navigate("UserNewPaymentMethod")}

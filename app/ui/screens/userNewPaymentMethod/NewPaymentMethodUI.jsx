@@ -29,6 +29,7 @@ const NewPaymentMethodUI = () => {
             cardCvv: form.cardCvv,
             cardBank: form.cardBank,
         };
+        console.log("Payment method to save: ", paymentMethod);
         const response = await addPaymentMethod(userId, paymentMethod);
         console.log("Response from API: ", response);
     };
