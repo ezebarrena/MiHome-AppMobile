@@ -35,7 +35,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAssets } from '../../../api/assetsAPI';
 
 
-export default function HomeUI(listadoPropiedades) {
+export default function HomeUI() {
 
   const navigation = useNavigation();
   const [text, setText] = useState('');
@@ -79,12 +79,8 @@ export default function HomeUI(listadoPropiedades) {
     const busquedaPropiedades = async () => {
 
       try {
-        const bodyData = {
-          state: '',
-          transaction: ''
-        }
 
-        const respuesta = await getAssets(bodyData)
+        const respuesta = await getAssets()
 
         setPropiedades(respuesta.asset);
         setPropiedadesBD(respuesta.asset)
@@ -133,69 +129,36 @@ export default function HomeUI(listadoPropiedades) {
       
       <Text style={styles.textoBody2}> Puede interesarte </Text>
 
-      {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
-        <ScrollView horizontal
-          data={propiedades}
-          keyExtractor={item => item} //sin filtro
-          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
-          contentContainerStyle={styles.scrollViewContent} 
-          style={styles.scrollView}
-          showsHorizontalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }
-        />
-        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>No hay propiedades para mostrar {"\n"} </Text></View>)
 
-      }
+      <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
+
+        {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
+          <View
+            data={propiedades}
+            renderItem={({ item }) => <CardPropiedad titulo={item.title} firstImage={item.image && item.image.length > 0 ? item.image[0] : imagenTest} moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
+            contentContainerStyle={{
+              alignItems: "center",
+              flexGrow: 1,
+            }}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />
+            }
+          />
+          </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>No hay propiedades para mostrar {"\n"} </Text></View>)
+
+        }
+
+      </ScrollView>
+
 
       <Text style={styles.textoBody1}>{i18n.t('homeScreen.SaleProperties')} </Text>
 
 
-      {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
-        <ScrollView horizontal
-          data={propiedades}
-          keyExtractor={item => item.transaccion} //especificar venta
-          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
-          contentContainerStyle={styles.scrollViewContent} 
-          style={styles.scrollView}
-          showsHorizontalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }
-        />
-        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>No hay propiedades para mostrar {"\n"} </Text></View>)
-
-      }
-
       <Text style={styles.textoBody1}>{i18n.t('homeScreen.RentProperties')} </Text>
-
-
-      {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
-        <ScrollView horizontal
-          data={propiedades}
-          keyExtractor={item => item.transaccion} //especificar alquiler
-          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
-          contentContainerStyle={styles.scrollViewContent} 
-          style={styles.scrollView}
-          showsHorizontalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }
-        />
-        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>No hay propiedades para mostrar {"\n"} </Text></View>)
-
-      }
-
 
       
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
