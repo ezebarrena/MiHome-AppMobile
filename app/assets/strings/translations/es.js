@@ -49,7 +49,9 @@ export default {
       "nameInput": "AGENCIA INMOBILIARIA",
       "cuitInput": "CUIT",
       "registerButton": "Crear cuenta",
-      contactEmail:"EMAIL DE CONTACTO"
+      contactEmail:"EMAIL DE CONTACTO",
+      alertTitle:'Error creando la cuenta',
+      alertMessage:'Hubo un error creando la cuenta. Es posible que la cuenta ya exista'
     },
   },
   detallePropiedadInmobiliaria: {
