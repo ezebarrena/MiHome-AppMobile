@@ -22,7 +22,7 @@ import Theme from "../../styles/Theme";
 
 
 
-export default function BookingsUI() {
+export default function UserAgendaUI() {
 
   const navigation = useNavigation();
 
@@ -37,7 +37,7 @@ export default function BookingsUI() {
 
 
   const goHome = () => {
-    navigation.navigate("LandingStackNavigator")
+    navigation.navigate("LandingStack")
   }
 
 
@@ -45,7 +45,7 @@ export default function BookingsUI() {
     <View style={styles.container}>
 
       <View style={styles.contenedorHead}>
-        <Text style={styles.textoHead}>Bookings</Text>
+        <Text style={styles.textoHead}>Agenda</Text>
       </View>
 
       <ScrollView>
@@ -57,13 +57,7 @@ export default function BookingsUI() {
           </TouchableOpacity>
         </View>
 
-        <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
-        calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
-        />
-
-         <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
-        calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
-        />
+        
 
 
       </ScrollView>
