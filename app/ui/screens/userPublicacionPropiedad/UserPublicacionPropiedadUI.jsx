@@ -62,6 +62,10 @@ export default function UserPublicacionPropiedadUI({ propiedad, inmobiliaria }) 
         navigation.navigate("Book")
       }
 
+    const Contact = () => {
+    navigation.navigate("Contact")
+    }
+
     useEffect(() => {
         if (propiedad.geoLocalization) {
             const geo = propiedad.geoLocalization.split(",")
@@ -128,7 +132,7 @@ export default function UserPublicacionPropiedadUI({ propiedad, inmobiliaria }) 
             <View style={styles.spacing} />
 
             <TouchableOpacity>
-                <Text style={styles.bookingButton} onPress={''}>Favorito</Text>
+                <Text style={styles.bookingButton} onPress={Contact}>Contactar</Text>
             </TouchableOpacity>
             </View>
 
