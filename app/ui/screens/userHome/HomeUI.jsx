@@ -35,13 +35,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAssets } from '../../../api/assetsAPI';
 
 
-export default function HomeUI() {
+export default function HomeUI(listadoPropiedades) {
 
   const navigation = useNavigation();
   const [text, setText] = useState('');
   const [propiedades, setPropiedades] = useState()
   const [propiedadesBD, setPropiedadesBD] = useState()
   const [refreshing, setRefreshing] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -65,7 +67,7 @@ export default function HomeUI() {
 
   const Search = async () => {
     try {
-      const results = await getAssets(form);
+      const results = await getAssets();
       //console.log("Resultados de búsqueda:", results);
       navigation.navigate("UserProfile", { results });
     } catch (error) {
@@ -77,10 +79,10 @@ export default function HomeUI() {
   const onRefresh = () => {
     setRefreshing(true);
     const busquedaPropiedades = async () => {
-
       try {
 
         const respuesta = await getAssets()
+
 
         setPropiedades(respuesta.asset);
         setPropiedadesBD(respuesta.asset)
@@ -90,9 +92,20 @@ export default function HomeUI() {
         console.error('Error al obtener la busqueda:', error);
       }
 
-      };
+    };
 
 
+      useFocusEffect(
+        React.useCallback(() => {
+          setPropiedades(listadoPropiedades.asset);
+          setPropiedadesBD(listadoPropiedades.asset);
+          
+          if (listadoPropiedades.asset && listadoPropiedades.asset.length > 0) {
+            setActive(false)
+          }
+        }, [setPropiedades, listadoPropiedades])
+      );
+      
       busquedaPropiedades()
       setTimeout(() => {
         setRefreshing(false);
@@ -127,7 +140,7 @@ export default function HomeUI() {
       
       <ScrollView vertical>
       
-      <Text style={styles.textoBody2}> Puede interesarte </Text>
+      <Text style={styles.textoBody2}>Puede interesarte </Text>
 
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
@@ -135,7 +148,6 @@ export default function HomeUI() {
         {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
           <View
             data={propiedades}
-            renderItem={({ item }) => <CardPropiedad titulo={item.title} firstImage={item.image && item.image.length > 0 ? item.image[0] : imagenTest} moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
             contentContainerStyle={{
               alignItems: "center",
               flexGrow: 1,
