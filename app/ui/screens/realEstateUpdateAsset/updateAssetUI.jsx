@@ -338,7 +338,7 @@ export default function UpdateAssetUI({ propiedad }) {
         </View>
       </Modal>
       <View style={styles.contenedorHead}>
-        <Text style={styles.textoHead}>{i18n.t('realEstateUploadAsset.headTitle')}</Text>
+        <Text style={styles.textoHead}>{i18n.t('realEstateUpdateAsset.headTitle')}</Text>
       </View>
 
       <View style={styles.dataEntry}>
@@ -617,13 +617,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: "3%",
-    paddingTop: 30,
+    paddingTop: 5,
   },
 
   textoBody1: {
     fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get('window').width * 0.045,
-    marginLeft: "3%",
+
   },
 
   textoBody2: {
@@ -647,7 +647,8 @@ const styles = StyleSheet.create({
   },
 
   previewContainer: {
-    margin: 10,
+    marginRight: 10,
+    marginVertical:10,
   },
 
   previewImage: {
@@ -672,7 +673,7 @@ const styles = StyleSheet.create({
   map:
   {
     height: 200,
-    marginHorizontal: 14,
+
     marginVertical: 10,
   },
   centeredView: {

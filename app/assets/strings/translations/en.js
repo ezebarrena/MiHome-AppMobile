@@ -159,7 +159,7 @@ export default {
   },
 
   realEstateUpdateAsset: {
-    "headTitle": "Upload Estate",
+    "headTitle": "Update Estate",
     "image": "Image",
     "title": "Post title",
     "type": "Asset Type",

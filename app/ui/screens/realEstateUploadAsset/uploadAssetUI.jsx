@@ -222,7 +222,7 @@ export default function UploadAssetUI({ }) {
 
       }
     }
-    else{
+    else {
       setModalFaltaVisible(true)
     }
 
@@ -251,15 +251,22 @@ export default function UploadAssetUI({ }) {
 
     for (const field of requiredFields) {
       if (!form[field] || (Array.isArray(form[field]) && form[field].length === 0)) {
-        if(field !== "transaction"){
+        console.log(field);
+        if (field !== "transaction") {
+
           return false;
         }
-        else if(field === transaction){
-          if(form[field] !== 0 || form[field] !== 1){
+        else if (field === "transaction") {
+
+          if (form[field] === 0 || form[field] === 1) {
+            console.log("aca");
+            return true
+          }
+          else {
             return false
           }
         }
-         // Devuelve false si algún campo requerido no está lleno
+        // Devuelve false si algún campo requerido no está lleno
       }
     }
 
@@ -359,7 +366,7 @@ export default function UploadAssetUI({ }) {
         transparent={true}
         visible={modalFaltaVisible}
         onRequestClose={() => {
-          
+
           setModalFaltaVisible(!modalFaltaVisible);
         }}>
         <View style={styles.centeredView}>
@@ -587,11 +594,12 @@ export default function UploadAssetUI({ }) {
                 province: item.address.adminDistrict,
                 country: item.address.countryRegion,
                 geoLocalization: String(item.point.coordinates),
-                
+
               }
             );
-            onChange(item.address.formattedAddress, "direction")
-  
+            form.direction = item.address.formattedAddress 
+
+
 
           }}
         />
@@ -617,8 +625,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "94%",
     height: "100%",
-    marginLeft:'3%',
-    marginRight:'3%',
+    marginLeft: '3%',
+    marginRight: '3%',
   },
 
   background: {
@@ -697,7 +705,7 @@ const styles = StyleSheet.create({
   map:
   {
     height: 200,
-    marginHorizontal: 14,
+
     marginVertical: 10,
   },
   centeredView: {
@@ -746,8 +754,8 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get("window").width * 0.039,
   },
-  dataEntry:{
-    width:"90%",
-    alignSelf:"center"
+  dataEntry: {
+    width: "90%",
+    alignSelf: "center"
   },
 });
