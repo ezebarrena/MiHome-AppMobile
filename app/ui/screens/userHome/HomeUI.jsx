@@ -59,6 +59,8 @@ export default function HomeUI() {
     }
   };
 
+  const tipoTransaccionFiltro = 1;
+
   return (
     <View style={styles.container}>
     
@@ -92,9 +94,8 @@ export default function HomeUI() {
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
 
 
-        {!isPropiedadesLoading ? (propiedades.map(propiedad => (
-          <CardPropiedad key={propiedad._id} titulo={propiedad.titulo} valor={propiedad.valor} ubicacion={propiedad.ubicacion} ambientes={propiedad.ambientes} metros={propiedad.metros} tipo={propiedad.tipo} margen={propiedad.margen}/>
-        ))) : null}
+      {!isPropiedadesLoading ? (propiedades.slice(0, 15) .map(propiedad => (
+          <CardPropiedad  titulo={propiedad.title} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.tipo} margen={propiedad.margen} onPress={() => navigation.navigate("UserPublicacionPropiedad", { propiedadId: propiedad._id })} />))) : null}
 
 
       </ScrollView>
@@ -104,20 +105,23 @@ export default function HomeUI() {
 
       <Text style={styles.textoBody1}>{i18n.t('homeScreen.SaleProperties')} </Text>
 
+        <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
+
+
+          {!isPropiedadesLoading ? (propiedades.slice(0, 15) .filter(propiedad => propiedad.transaction === tipoTransaccionFiltro) .map(propiedad => (
+          <CardPropiedad  titulo={propiedad.title} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.transaction} margen={propiedad.margen}/>
+          ))) : null}
+
+
+        </ScrollView>
 
       <Text style={styles.textoBody1}>{i18n.t('homeScreen.RentProperties')} </Text>
 
       
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
-        <View style={{ height: '15%' }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-        <View style={{ height: '15%' }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-        <View style={{ height: '15%' }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
+        {!isPropiedadesLoading ? (propiedades.slice(0, 15) .filter(propiedad => propiedad.transaction !== tipoTransaccionFiltro) .map(propiedad => (
+          <CardPropiedad  titulo={propiedad.title} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.transaction} margen={propiedad.margen}/>
+        ))) : null}
       </ScrollView>
 
       </ScrollView>
