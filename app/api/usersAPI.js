@@ -67,7 +67,9 @@ export const deletePaymentMethod = async (userId, paymentMethod) => {
 
 export const getPaymentMethods = async (userId) => {
   try {
-    const response = await usersAPI.get(`users/${userId}/paymentmethod`);
+    const _id = userId;
+    console.log(_id);
+    const response = await usersAPI.get(`users/me/id`, { _id });
     return response.data;
   } catch (error) {
     console.error('Error getting payment methods:', error);
