@@ -5,7 +5,7 @@ import { getAssetById } from '../../../api/assetsAPI';
 import { ActivityIndicator } from 'react-native';
 import { getRealEstateID } from '../../../api/realEstatesAPI';
 
-export default function PublicacionPropiedad({ route }) {
+export default function UserPublicacionPropiedad({ route }) {
     const { propiedadId } = route.params;
     const [informacion, setInformacion] = useState(null);
     const [inmobiliaria, setInmboliaria] = useState()
