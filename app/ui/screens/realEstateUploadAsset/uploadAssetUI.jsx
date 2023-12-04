@@ -17,7 +17,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { uploadAssetImage } from "../../../api/imagesAPI";
 
-
+const [modalVisible, setModalVisible] = useState(false);
+const [modalFaltaVisible, setModalFaltaVisible] = useState(false);
+const navigation = useNavigation();
 
 const dataTypes = [
   { key: 'house', value: i18n.t('REUploadAssetChoices.house') },
@@ -59,7 +61,6 @@ const dataOrientacion = [
   { key: 'oeste', value: i18n.t('REUploadAssetChoices.oeste') },
 ];
 
-
 const dataAmenities = [
   { key: 'pool', value: i18n.t('REUploadAssetChoices.pool') },
   { key: 'climatized_pool', value: i18n.t('REUploadAssetChoices.climatized_pool') },
@@ -86,11 +87,6 @@ export default function UploadAssetUI({ }) {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalFaltaVisible, setModalFaltaVisible] = useState(false);
-  const navigation = useNavigation();
-
-
 
   const initialFormState = {
     "title": "",
@@ -123,15 +119,10 @@ export default function UploadAssetUI({ }) {
     "state": 1,
     "realEstateName": "",
     "orientation": [],
-
-
-  }
-
-
-
+  };
 
   const { form, onChange, setFormValue } = useForm(initialFormState);
-
+  
   const subirFoto = async (uri, nombre, imagenesArray) => {
     const formData = new FormData();
     formData.append("file", {
