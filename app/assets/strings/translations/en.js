@@ -280,6 +280,18 @@ export default {
     title:"Bookings",
     message:"Do you want to book a property?",
     buttom:"See properties"
+  },
+
+  AdvancedSearch:{
+    title:"Advanced search",
+    searchTitle:"What are you looking for?",
+    type:"Operation type",
+    property:"Property type",
+    location:"Location",
+    price:"Price and currency",
+    rooms:"Number of rooms",
+    amenities:"Amenities",
+    buttom:"Search now"
   }
 };
 
