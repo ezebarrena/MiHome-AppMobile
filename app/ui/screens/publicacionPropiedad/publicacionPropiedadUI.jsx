@@ -112,7 +112,7 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
                     )))}
                 { }
             </ScrollView>
-            <Text>{propiedad.title}</Text>
+            <Text style={styles.titulo}>{propiedad.title}</Text>
             <View style={styles.containerDetalles}>
                 <View style={styles.viewDetalles}>
                     <MaterialIcons name="pin-drop" size={35} style={{ marginHorizontal: 8 }} />
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     },
 
     containerDetalles: {
-        marginVertical: 25,
+        marginVertical: 10,
         alignItems: 'flex-start',
         paddingHorizontal: 2,
         justifyContent: 'center',
@@ -309,6 +309,13 @@ const styles = StyleSheet.create({
         fontSize: Dimensions.get("window").width * 0.043,
         fontFamily: 'Poppins_500Medium',
         paddingHorizontal: 12,
+    },
+    titulo:{
+        fontFamily:"Poppins_700Bold",
+        alignSelf: 'center',
+        fontSize: Dimensions.get("window").width * 0.05,
+        paddingHorizontal: 10,
+        marginTop:15
     },
     chip: {
         backgroundColor: 'transparent',

@@ -16,6 +16,8 @@ import { updateAsset } from "../../../api/assetsAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import Estados from "../../../assets/funcionTraduccion";
+import { uploadAssetImage } from "../../../api/imagesAPI";
+
 
 const dataTypes = [
   { key: 'house', value: i18n.t('REUploadAssetChoices.house') },
@@ -99,6 +101,9 @@ export default function UpdateAssetUI({ propiedad }) {
         longitude: parseFloat(geo[1])
       });
     }
+    if (propiedad.image) {
+      setImageUris(propiedad.image)
+    }
   }, [])
 
   const initialFormState = {
@@ -147,57 +152,113 @@ export default function UpdateAssetUI({ propiedad }) {
 
   }
 
+  const subirImage = async (uri, nombre, imagenesArray) => {
+    const formData = new FormData();
+    formData.append("file", {
+      uri: uri,
+      type: "image/jpeg",
+      name: nombre,
+    });
 
-  /* const handleSubmit = async () => {
-    const value = await AsyncStorage.getItem('realEstateId')
-    console.log(value);
+    try {
+      const response = await uploadAssetImage(formData);
 
-    if (value) {
-      console.log(value);
-      repartidor(value, "realEstateName")
-      console.log(form.realEstateName);
-      if (form.realEstateName != "") {
-        const nuevoForm = removeNullFields(form)
-        if (nuevoForm) {
-          setSubiendo(true)
-          const response = await createAsset(nuevoForm);
-          console.log(response);
-          if (response.status === 200) {
-            console.log(response.status);
-            setSubiendo(false)
-            setModalVisible(true)
-          }
-          else {
-            alert("error Upload Asset");
-            setError(true)
-          }
-        }
+      if (response.status === 200) {
+        console.log(response.data.secure_url);
+
+        // Actualiza el arreglo local
+        imagenesArray.push(response.data.secure_url);
+
+        return true;
+      } else {
+        return false;
       }
-
+    } catch (error) {
+      console.error("Error al subir la foto:", error);
+      return false;
     }
+  }
 
+  const dividirArrays = () => {
+    const coincidentes = [];
+    const noCoincidentes = [];
 
-  }; */
+    // Itera sobre los elementos de imageUris
+    imageUris.forEach(uri => {
+      // Verifica si el elemento está presente en propiedad.image
+      if (propiedad.image.includes(uri)) {
+        coincidentes.push(uri);
+      } else {
+        noCoincidentes.push(uri);
+      }
+    });
+
+    // Puedes devolver los dos arrays resultantes
+    return {
+      coincidentes: coincidentes,
+      noCoincidentes: noCoincidentes,
+    };
+  }
+  const handleSubirImagen = async () => {
+    enCambio([], 'image')
+    let i = 0
+    const dividirResultados = dividirArrays()
+    const imagenesArray = dividirResultados.coincidentes;
+    while (i < dividirResultados.noCoincidentes.length) {
+      const partesRuta = dividirResultados.noCoincidentes[i].split('/');
+      // Obtener el último elemento, que es el nombre del archivo con la extensión
+      const nombreConExtension = partesRuta[partesRuta.length - 1];
+      // Dividir el nombre del archivo y la extensión usando el carácter de punto como delimitador
+      const partesNombre = nombreConExtension.split('.');
+      // Obtener el nombre del archivo sin la extensión
+      const nombreSinExtension = partesNombre[0]
+      await subirImage(dividirResultados.noCoincidentes[i], nombreSinExtension, imagenesArray)
+      i++
+    }
+    console.log(imagenesArray,'iagenes');
+    listaCambios.image = imagenesArray
+    console.log(listaCambios.image);
+    subir()
+  }
+
+  const subir = async () => {
+
+    const response = await updateAsset(listaCambios, propiedad._id)
+    if (response.status === 200) {
+      console.log(response.status);
+      setSubiendo(false)
+      setModalVisible(true)
+    }
+    else {
+      alert("error Upload Asset");
+      setError(true)
+    }
+  }
 
   const handleSubmit = async () => {
     setSubiendo(true)
-    if (Object.keys(listaCambios).length > 0) {
-      const response = await updateAsset(listaCambios, propiedad._id)
-      if (response.status === 200) {
-        console.log(response.status);
-        setSubiendo(false)
-        setModalVisible(true)
-      }
-      else {
-        alert("error Upload Asset");
-        setError(true)
-      }
+
+    if (imageUris.length != propiedad.image.length) {
+      handleSubirImagen()
+    }
+    else if (imageUris.every(item => propiedad.image.includes(item)) === false) {
+      handleSubirImagen()
     }
     else {
-      setSubiendo(false)
-      setError(true)
-      setModalVisible(true)
+      if (Object.keys(listaCambios).length > 0) {
+        subir()
+      }
+
+      else {
+        setSubiendo(false)
+        setError(true)
+        setModalVisible(true)
+      }
+
     }
+
+
+
   }
 
 
@@ -225,9 +286,11 @@ export default function UpdateAssetUI({ propiedad }) {
 
   const addImageToUris = (uri) => {
     setImageUris([...imageUris, uri]);
+    console.log(imageUris.length);
   };
 
   const removeImage = (index) => {
+    console.log(imageUris.length);
     const updatedImages = [...imageUris];
     updatedImages.splice(index, 1);
     setImageUris(updatedImages);
@@ -259,7 +322,7 @@ export default function UpdateAssetUI({ propiedad }) {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {error ? <Text style={styles.modalText}>{i18n.t('realEstateUpdateAsset.mensajeError')}</Text>:<Text style={styles.modalText}>{i18n.t('realEstateUpdateAsset.mensajePublicado')}</Text>}
+            {error ? <Text style={styles.modalText}>{i18n.t('realEstateUpdateAsset.mensajeError')}</Text> : <Text style={styles.modalText}>{i18n.t('realEstateUpdateAsset.mensajePublicado')}</Text>}
 
             {error ? <Pressable
               style={[styles.button, styles.buttonClose]}
