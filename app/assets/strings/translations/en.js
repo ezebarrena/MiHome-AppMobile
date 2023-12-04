@@ -48,7 +48,9 @@ export default {
       "nameInput": "REAL ESTATE AGENCY",
       "cuitInput": "CUIT",
       "registerButton": "Create Account",
-      contactEmail:"CONTACT EMAIL"
+      contactEmail:"CONTACT EMAIL",
+      alertTitle:'Error creating account',
+      alertMessage:'There has been an error creating the account. It is possible that you already have an account'
     },
     "cannotLoginModal": {
       "firstStep": {
