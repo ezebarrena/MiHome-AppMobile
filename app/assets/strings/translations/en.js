@@ -118,7 +118,12 @@ export default {
     propiedades:'ESTATES',
     valoracion:'Rating',
     total:'Total',
-    cubiertos:'Built'
+    cubiertos:'Built',
+    piso:"Floor",
+    er:'st',
+    do:'nd',
+    er:'rd',
+    to:'th'
   },
 
   realEstateUploadAsset: {

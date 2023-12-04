@@ -98,7 +98,12 @@ export default {
     propiedades:'PROPIEDADES',
     valoracion:'Valoracion',
     total:'Totales',
-    cubiertos:'Cubiertos'
+    cubiertos:'Cubiertos',
+    piso:"Piso",
+    er:'er',
+    do:'do',
+    er:'er',
+    to:'to'
   },
   realEstateUploadAsset: {
     "headTitle": "Publicar Propiedad",

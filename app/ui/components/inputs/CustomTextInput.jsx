@@ -2,7 +2,7 @@ import { BottomTabBarHeightCallbackContext } from "@react-navigation/bottom-tabs
 import React from "react";
 import { TextInput, StyleSheet, Platform } from "react-native";
 
-const CustomTextInput = ({alto = 48, paddingHorizontal = 0, placeholder, value, onChangeText, secureTextEntry, keyboardType, defaultValue }) => {
+const CustomTextInput = ({multilinea = false, alto = 48, paddingHorizontal = 0, placeholder, value, onChangeText, secureTextEntry, keyboardType, defaultValue }) => {
 
   return (
     <TextInput
@@ -15,7 +15,7 @@ const CustomTextInput = ({alto = 48, paddingHorizontal = 0, placeholder, value, 
       secureTextEntry={secureTextEntry}
       keyboardType={keyboardType}
       defaultValue={defaultValue}
-      multiline={true}  // Hacer el TextInput multiline
+      multiline={multilinea}  // Hacer el TextInput multiline
       numberOfLines={100}
     />
   );
