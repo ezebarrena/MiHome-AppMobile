@@ -607,8 +607,10 @@ export default function UploadAssetUI({ }) {
 const styles = StyleSheet.create({
   ScrollView: {
     flex: 1,
-    width: "100%",
+    width: "94%",
     height: "100%",
+    marginLeft:'3%',
+    marginRight:'3%',
   },
 
   background: {
@@ -633,14 +635,12 @@ const styles = StyleSheet.create({
   contenedorHead: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: "3%",
     paddingTop: 30,
   },
 
   textoBody1: {
     fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get('window').width * 0.045,
-    marginLeft: "3%",
   },
 
   textoBody2: {
