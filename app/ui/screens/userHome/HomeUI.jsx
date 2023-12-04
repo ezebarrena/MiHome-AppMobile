@@ -22,6 +22,7 @@ export default function HomeUI() {
     const fetchData = async () => {
       try {
         const propiedadesData = await getAssets();
+
         setPropiedades(propiedadesData.asset);
         setIsPropiedadesLoading(false);
       } catch (error) {
@@ -34,7 +35,7 @@ export default function HomeUI() {
 
   const Search2 = () => {
     try {
-      const results =  getAssets();
+      const results = getAssets();
       //console.log("Resultados de búsqueda:", results);
       navigation.navigate("SearchResults", { results });
     } catch (error) {
@@ -69,7 +70,7 @@ export default function HomeUI() {
 
   return (
     <View style={styles.container}>
-    
+
       <View style={styles.head}>
         <View style={styles.contenedorHead}>
           <Text style={styles.textoHead}>{i18n.t('homeScreen.PHUsuario')}</Text>
@@ -78,57 +79,58 @@ export default function HomeUI() {
           </TouchableOpacity>
         </View>
         <View style={styles.contenedorHead2}>
-          <TextInput placeholder={i18n.t('homeScreen.PHBusqueda')} 
-            style={styles.input}  
+          <TextInput placeholder={i18n.t('homeScreen.PHBusqueda')}
+            style={styles.input}
             onChangeText={newText => setText(newText)}
           />
           <TouchableOpacity onPress={Search2} style={styles.search1}>
-            <Image source={searchIcon} style={styles.searchIcon}/>
+            <Image source={searchIcon} style={styles.searchIcon} />
           </TouchableOpacity>
           <TouchableOpacity onPress={advancedSearchScreen} style={styles.search2}>
-            <Image source={advancedIcon} style={styles.advanced}/>
+            <Image source={advancedIcon} style={styles.advanced} />
           </TouchableOpacity>
         </View>
 
       </View>
-      
+
       <ScrollView vertical>
-      
-      <Text style={styles.textoBody2}>Maybe your Interest </Text>
 
 
-      <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
+        <Text style={styles.textoBody2}>Your Interest </Text>
 
-
-      {!isPropiedadesLoading ? (propiedades.slice(0, 20) .filter(propiedad => propiedad.state === tipoEstadoFiltro).map(propiedad => (
-          <CardPropiedad  titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.tipo} margen={propiedad.margen} estado={propiedad.state} transaccion={propiedad.transaction} onPress={() => navigation.navigate("Publicacion", { propiedadId: propiedad._id })} />))) : null}
-
-
-      </ScrollView>
-
-
-
-
-      <Text style={styles.textoBody2}>{i18n.t('homeScreen.SaleProperties')} </Text>
 
         <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
 
 
-          {!isPropiedadesLoading ? (propiedades.slice(0, 15) .filter(propiedad => propiedad.transaction !== tipoTransaccionFiltro && propiedad.state === tipoEstadoFiltro) .map(propiedad => (
-          <CardPropiedad  titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} estado={propiedad.state} transaccion={propiedad.transaction} margen={propiedad.margen}/>
+          {!isPropiedadesLoading ? (propiedades.slice(0, 20).filter(propiedad => propiedad.state === tipoEstadoFiltro).map(propiedad => (
+            <CardPropiedad titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.tipo} margen={propiedad.margen} estado={propiedad.state} transaccion={propiedad.transaction} onPress={() => navigation.navigate("Publicacion", { propiedadId: propiedad._id, name: propiedad.title })} />))) : null}
+
+
+        </ScrollView>
+
+
+
+
+        <Text style={styles.textoBody2}>{i18n.t('homeScreen.SaleProperties')} </Text>
+
+        <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
+
+
+          {!isPropiedadesLoading ? (propiedades.filter(propiedad => propiedad.transaction === 0 && propiedad.state === tipoEstadoFiltro).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 15).map(propiedad => (
+            <CardPropiedad titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} estado={propiedad.state} transaccion={propiedad.transaction} margen={propiedad.margen} onPress={() => navigation.navigate("Publicacion", { propiedadId: propiedad._id, name: propiedad.title })} />
           ))) : null}
 
 
         </ScrollView>
 
-      <Text style={styles.textoBody2}>{i18n.t('homeScreen.RentProperties')} </Text>
+        <Text style={styles.textoBody2}>{i18n.t('homeScreen.RentProperties')} </Text>
 
-      
-      <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
-        {!isPropiedadesLoading ? (propiedades.slice(0, 15) .filter(propiedad => propiedad.transaction === tipoTransaccionFiltro && propiedad.state === tipoEstadoFiltro) .map(propiedad => (
-          <CardPropiedad  titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} estado={propiedad.state} transaccion={propiedad.transaction}  margen={propiedad.margen}/>
-        ))) : null}
-      </ScrollView>
+
+        <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
+          {!isPropiedadesLoading ? (propiedades.filter(propiedad => propiedad.transaction === 1 && propiedad.state === tipoEstadoFiltro).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 15).map(propiedad => (
+              <CardPropiedad titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} estado={propiedad.state} transaccion={propiedad.transaction} margen={propiedad.margen} onPress={() => navigation.navigate("Publicacion", { propiedadId: propiedad._id, name: propiedad.title })} />
+            ))) : null}
+        </ScrollView>
 
       </ScrollView>
     </View>
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     height: "21%",
     borderBottomLeftRadius: 15, // Redondea la esquina inferior izquierda
     borderBottomRightRadius: 15,
-   
+
   },
 
   textoHead: {
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get('window').width * 0.045,
     marginLeft: "5%",
-    marginTop:'4%'
+    marginTop: '4%'
   },
 
   imagenHead: {
@@ -193,25 +195,25 @@ const styles = StyleSheet.create({
   contenedorHead: {
     flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
     alignItems: 'center',
-    marginLeft: "3%",    
-    marginTop:"2%",
+    marginLeft: "3%",
+    marginTop: "2%",
 
   },
 
-    contenedorHead2: {
-      flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
-      alignItems: 'center',
-      justifyContent: 'space-evenly',
-      width: '100%',
+  contenedorHead2: {
+    flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    width: '100%',
   },
 
   contenedorHead2: {
     marginTop: '1.5%',
     marginLeft: '5%',
     marginRight: '5%',
-    marginBottom:'5%',
+    marginBottom: '5%',
     flexDirection: 'row',
-    flex:1
+    flex: 1
   },
 
   input: {
@@ -224,31 +226,31 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,
     fontSize: 15,
-    paddingLeft:10,
-    flex:1
-  
+    paddingLeft: 10,
+    flex: 1
+
   },
 
-  searchIcon:{
+  searchIcon: {
     maxWidth: Dimensions.get('window').width * 0.063,
     maxHeight: Dimensions.get('window').width * 0.063,
-    marginTop:5.7,
+    marginTop: 5.7,
   },
 
-  advanced:{
+  advanced: {
     maxWidth: Dimensions.get('window').width * 0.09,
     maxHeight: Dimensions.get('window').width * 0.09,
-    
+
   },
 
-  search1:{
-    position:'absolute',
+  search1: {
+    position: 'absolute',
     marginLeft: '80%'
-    
-  },  
-  
-  search2:{
-    position:'absolute',
+
+  },
+
+  search2: {
+    position: 'absolute',
     marginLeft: '87%'
   },
 });

@@ -44,7 +44,7 @@ export default function PublicacionPropiedad({ route }) {
     return (
         <React.Fragment>
             {informacion && inmobiliaria ? (
-                <PublicacionPropiedadUI propiedad={informacion} inmobiliaria={inmobiliaria} />
+                <UserPublicacionPropiedadUI propiedad={informacion} inmobiliaria={inmobiliaria} />
             ) : (
                 <ActivityIndicator style={{flex:1}} size="large" />
             )}
