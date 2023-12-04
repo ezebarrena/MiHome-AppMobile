@@ -69,14 +69,14 @@ export default function UserProfileUI() {
 
 
             <View style={styles.contenedorOpciones}>
-                <Boton iconSource={"favorite"} title={"Tus Favoritos"} onPress={favoriteNav}/>
+                <Boton iconSource={"favorite"} title={"fav"} onPress={favoriteNav}/>
 
-                <Boton iconSource={"account-balance-wallet"} title={"Tus Medios de pago"} onPress={paymentNav}/>
-                <Boton iconSource={"settings"} title={"Ajustes"}/>
+                <Boton iconSource={"account-balance-wallet"} title={"payment"} onPress={paymentNav}/>
+                <Boton iconSource={"settings"} title={"editar"}/>
             </View>
             
             <View style={styles.contenedorCerrarSesion}>
-                <Boton iconSource={"logout"} title={"Cerrar sesion"} onPress={onLogout}/>
+                <Boton iconSource={"logout"} title={"logout"} onPress={onLogout}/>
             </View>
         </View>
     );
