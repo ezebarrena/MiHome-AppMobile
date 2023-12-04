@@ -151,7 +151,10 @@ export default {
     orientacion:'Orientation',
     mensajePublicado:'The Estate has been published',
     mensajeError:'There has been an error, please review the content and try again',
-    faltaData:'Please fill all required fields'
+    faltaData:'Please fill all required fields',
+    seleccionImagen: "Select Images",
+    adjunto: "Add from Galery",
+    foto:'Take a picture'
 
   },
 
@@ -181,7 +184,8 @@ export default {
     mensajePublicado:'The Estate has been modified',
     mensajeError:'There has been an error, please review the content and try again',
     botonModificar:'Modify',
-    faltaData:'Please fill all required fields'
+    faltaData:'Please fill all required fields',
+    seleccionImagen: "Select Images"
   },
 
   REUploadAssetChoices:{

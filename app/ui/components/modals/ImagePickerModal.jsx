@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Modal, StyleSheet, Image } from "react-na
 import { MaterialIcons } from '@expo/vector-icons'; // Importa el icono de Material Icons
 import * as ImagePicker from "expo-image-picker";
 import Theme from "../../styles/Theme";
+import i18n from "../../../assets/strings/I18n";
 
 const ImagePickerModal = ({ buttonText, modalTitle, onImageSelected }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -82,14 +83,14 @@ const ImagePickerModal = ({ buttonText, modalTitle, onImageSelected }) => {
               onPress={pickImage}
             >
               <MaterialIcons name="photo-library" size={24} color="#fff" />
-              <Text style={styles.buttonText}>Adjuntar desde la Galería</Text>
+              <Text style={styles.buttonText}>{i18n.t('realEstateUploadAsset.adjunto')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.pickButton}
               onPress={takePhoto}
             >
               <MaterialIcons name="photo-camera" size={24} color="#fff" />
-              <Text style={styles.buttonText}>Tomar una Foto</Text>
+              <Text style={styles.buttonText}>{i18n.t('realEstateUploadAsset.foto')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Theme.colors.PRIMARY,
     marginVertical: 10,
-    marginHorizontal: 14,
+
     padding: 12,
     borderRadius: 5,
     alignItems: "center",
