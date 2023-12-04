@@ -31,6 +31,16 @@ export default function HomeUI() {
     fetchData();
   }, []);
 
+  const Search2 = () => {
+    try {
+      const results =  getAssets();
+      //console.log("Resultados de búsqueda:", results);
+      navigation.navigate("SearchResults", { results });
+    } catch (error) {
+      console.error("Error al realizar la búsqueda:", error);
+    }
+  }
+
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -49,15 +59,8 @@ export default function HomeUI() {
     navigation.navigate("AdvancedSearch")
   }
 
-  const Search = async () => {
-    try {
-      const results = await getAssets();
-      //console.log("Resultados de búsqueda:", results);
-      navigation.navigate("UserProfile", { results });
-    } catch (error) {
-      console.error("Error al realizar la búsqueda:", error);
-    }
-  };
+
+
 
   const tipoTransaccionFiltro = 1;
 
@@ -76,7 +79,7 @@ export default function HomeUI() {
             style={styles.input}  
             onChangeText={newText => setText(newText)}
           />
-          <TouchableOpacity onPress={Search} style={styles.search1}>
+          <TouchableOpacity onPress={Search2} style={styles.search1}>
             <Image source={searchIcon} style={styles.searchIcon}/>
           </TouchableOpacity>
           <TouchableOpacity onPress={advancedSearchScreen} style={styles.search2}>
@@ -103,7 +106,7 @@ export default function HomeUI() {
 
 
 
-      <Text style={styles.textoBody1}>{i18n.t('homeScreen.SaleProperties')} </Text>
+      <Text style={styles.textoBody2}>{i18n.t('homeScreen.SaleProperties')} </Text>
 
         <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
 
@@ -115,7 +118,7 @@ export default function HomeUI() {
 
         </ScrollView>
 
-      <Text style={styles.textoBody1}>{i18n.t('homeScreen.RentProperties')} </Text>
+      <Text style={styles.textoBody2}>{i18n.t('homeScreen.RentProperties')} </Text>
 
       
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
@@ -141,10 +144,9 @@ const styles = StyleSheet.create({
   },
 
   scrollViewContent: {
-    paddingTop: "2%",
     paddingStart: '3%',
     paddingEnd: "3%",
-    paddingBottom: "5%",
+    paddingBottom: "1%",
   },
 
   head: {
@@ -172,10 +174,9 @@ const styles = StyleSheet.create({
   },
 
   textoBody2: {
-    fontFamily: "Poppins_500Medium",
-    fontSize: Dimensions.get('window').width * 0.05,
+    fontSize: Dimensions.get('window').width * 0.045,
     marginLeft: "5%",
-    marginTop: "4%"
+    marginTop:'4%'
   },
 
   imagenHead: {
