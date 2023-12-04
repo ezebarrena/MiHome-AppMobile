@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import { View, ScrollView, StyleSheet, Text, RefreshControl } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CreditCardPreview from "../../components/cards/CreditCardPreview";
 import Button from "../../components/buttons/Button";
@@ -13,16 +13,26 @@ const PaymentMethodsUI = () => {
     const [paymentMethods, setPaymentMethods] = useState([]);
     const [paymentMethodtoDelete, setPaymentMethodToDelete] = useState(null);
     const [isPaymentMethodDeleted, setIsPaymentMethodDeleted] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        getPaymentMethodsFromAPI().finally(() => setRefreshing(false));
+    }, []);
+
+    const getPaymentMethodsFromAPI = async () => {
+        const userId = await AsyncStorage.getItem('userId');
+        const paymentMethodsFromAPI = await getPaymentMethods(userId);
+        console.log("Payment methods from API: ", paymentMethodsFromAPI);
+        setPaymentMethods(paymentMethodsFromAPI);
+        if (isPaymentMethodDeleted) {
+            setIsPaymentMethodDeleted(false);
+        }
+    };
 
     useEffect(() => {
-        const getPaymentMethodsFromAPI = async () => {
-            const userId = await AsyncStorage.getItem('userId')
-            const paymentMethodsFromAPI = await getPaymentMethods(userId);
-            console.log("Payment methods from API: ", paymentMethodsFromAPI);
-            setPaymentMethods(paymentMethodsFromAPI);
-        };
         getPaymentMethodsFromAPI();
-    }, [isPaymentMethodDeleted]);   
+    }, [isPaymentMethodDeleted]);
 
     const onPressTrashIcon = (paymentMethod) => {
         console.log("Trash icon pressed for card with id: ", paymentMethod);
@@ -32,10 +42,20 @@ const PaymentMethodsUI = () => {
 
     const onAccept = () => {
         const deletePaymentMethodFromAPI = async () => {
-            const userId = await AsyncStorage.getItem('userId')
-            const response = await deletePaymentMethod(userId, paymentMethodtoDelete);
+            const userId = await AsyncStorage.getItem('userId');
+            const paymentMethod = {
+                _id: paymentMethodtoDelete._id,
+                cardNumber: Number(paymentMethodtoDelete.cardNumber),
+                expiration: paymentMethodtoDelete.expiration,
+                bank: paymentMethodtoDelete.bank,
+                ccv: Number(paymentMethodtoDelete.ccv),
+                name: paymentMethodtoDelete.name,
+            };
+            console.log("User id: ", userId);
+            console.log("Payment methods to delete: ", paymentMethod);
+            const response = await deletePaymentMethod(userId, paymentMethod);
             console.log("Response from API: ", response);
-            setIsPaymentMethodDeleted(response);
+            setIsPaymentMethodDeleted(true);
         };
         deletePaymentMethodFromAPI();
         setIsConfirmationModalVisible(false);
@@ -45,10 +65,13 @@ const PaymentMethodsUI = () => {
         console.log("Denied");
         setIsConfirmationModalVisible(false);
     };
-    
+
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.cardsContainer}>
+            <ScrollView
+                contentContainerStyle={styles.cardsContainer}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            >
                 {paymentMethods && paymentMethods.map((paymentMethod) => (
                     <CreditCardPreview
                         key={paymentMethod._id}
@@ -72,7 +95,7 @@ const PaymentMethodsUI = () => {
             />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
