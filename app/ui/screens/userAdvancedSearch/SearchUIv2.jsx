@@ -79,7 +79,7 @@ export default function SearchUIv2() {
     return (
         <View style={styles.container}>
             <View style={styles.contenedorHead}>
-                <Text style={styles.textoHead}>Advanced search</Text>
+                <Text style={styles.textoHead}>{i18n.t('AdvancedSearch.title')}</Text>
                 <TouchableOpacity onPress={goHome}>
                     <Image source={close} style={styles.imagenHead} />
                 </TouchableOpacity>
@@ -87,14 +87,14 @@ export default function SearchUIv2() {
 
             <ScrollView>
                 
-                <Text style={styles.textoBody1}>Que estas buscando? Te ayudamos!</Text>
+                <Text style={styles.textoBody1}>{i18n.t('AdvancedSearch.searchTitle')}</Text>
                 <CustomTextInput
-                    placeholder="Titulo de propiedad"
+                    placeholder="e.g. Beautiful house in CABA"
                     onChangeText={(value) => onChange(value, "title")}
                     value={form.title}
                 />
             
-                <Text style={styles.textoBody1}>Tipo de Operacion</Text>
+                <Text style={styles.textoBody1}>{i18n.t('AdvancedSearch.type')}</Text>
                 <ChoiceInput
                     data={[
                         { value: "Compra" },
@@ -103,7 +103,7 @@ export default function SearchUIv2() {
                     onValueSelect={(value) => onChange(value, "transaction")}
                 />
 
-                <Text style={styles.textoBody1}>Tipo de Propiedad</Text>
+                <Text style={styles.textoBody1}>{i18n.t('AdvancedSearch.property')}</Text>
                 <ChoiceInput
                     data={[
                         { value: "Casa" },
@@ -116,25 +116,25 @@ export default function SearchUIv2() {
                     onValueSelect={(value) => onChange(value, "type",)}
                 />
 
-                <Text style={styles.textoBody1}>Ubicacion</Text>
+                <Text style={styles.textoBody1}>{i18n.t('AdvancedSearch.location')}</Text>
                 <CustomTextInput
-                    placeholder="Localidad"
+                    placeholder="Location, street"
                     onChangeText={(value) => onChange(value, "location")}
                     value={form.location}
                 />
 
                 <View >
-                    <Text style={styles.textoBody1}>Precio y moneda</Text>
+                    <Text style={styles.textoBody1}>{i18n.t('AdvancedSearch.price')}</Text>
                     <View style={styles.contenedor}>
                         <CustomTextInput2
-                            placeholder="Minimo"
+                            placeholder="Min"
                             onChangeText={(value) => limitInput(value, "min_price",15)}
                             value={form.min_price}
                             keyboardType="numeric"
 
                         />
                         <CustomTextInput2
-                            placeholder="Maximo"
+                            placeholder="Max"
                             onChangeText={(value) => limitInput(value, "max_price",15)}
                             value={form.max_price}
                             keyboardType="numeric"
@@ -149,15 +149,15 @@ export default function SearchUIv2() {
                     />
                 </View>
 
-                <Text style={styles.textoBody1}>Ambientes</Text>
+                <Text style={styles.textoBody1}>{i18n.t('AdvancedSearch.rooms')}</Text>
                 <CustomTextInput
-                    placeholder="Cantidad de ambientes"
+                    placeholder="Rooms (e.g. 1,2,3)"
                     onChangeText={(value) => limitInput(value, "room",2)}
                     value={form.room}
                     keyboardType="numeric"
                 />
 
-                <Text style={styles.textoBody1}>Amenities</Text>
+                <Text style={styles.textoBody1}>{i18n.t('AdvancedSearch.amenities')}</Text>
                 <ChoiceMultipleInput
                     data = {[
                         { key: 'pool', value: i18n.t('REUploadAssetChoices.pool') },
@@ -176,7 +176,7 @@ export default function SearchUIv2() {
                     onValueSelect={(key) => onChange(key, "amenities")}
                 />
 
-                <Button  title={"Buscar ahora"} titleColor={"white"} size = 'medium' onPress={() => handleSubmit()}/>
+                <Button  title={i18n.t('AdvancedSearch.buttom')} titleColor={"white"} size = 'medium' onPress={() => handleSubmit()}/>
 
 
 

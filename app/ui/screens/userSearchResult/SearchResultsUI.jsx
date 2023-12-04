@@ -30,25 +30,12 @@ import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 
 
 
-export default function SearchResultsUI() {
+export default function SearchResultsUI({propiedades}) {
     
     const navigation = useNavigation();
-    const [propiedades, setPropiedades] = useState()
-    const [isPropiedadesLoading, setIsPropiedadesLoading] = useState(true);
+    
   
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const propiedadesData = await getAssets();
-          setPropiedades(propiedadesData.asset);
-          setIsPropiedadesLoading(false);
-        } catch (error) {
-          console.error('Error fetching assets', error);
-        }
-      };
-  
-      fetchData();
-    }, []);
+
   
 
     const goHome = () => {
@@ -65,7 +52,7 @@ export default function SearchResultsUI() {
       }
     
 
-      const tipoEstadoFiltro = 1;
+      console.log(propiedades);
 
 
     return(
@@ -81,8 +68,8 @@ export default function SearchResultsUI() {
           <ScrollView vertical style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
 
 
-          {!isPropiedadesLoading ? (propiedades .filter(propiedad => propiedad.state === 1).map(propiedad => (
-          <CardPropiedad  titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.tipo} margen={propiedad.margen} estado={propiedad.state} transaccion={propiedad.transaction} onPress={() => navigation.navigate("Publicacion", { propiedadId: propiedad._id, name: propiedad.title  })} />))) : null}
+          {propiedades.map(propiedad => (
+          <CardPropiedad  titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.tipo} margen={propiedad.margen} estado={propiedad.state} transaccion={propiedad.transaction} onPress={() => navigation.navigate("Publicacion", { propiedadId: propiedad._id, name: propiedad.title  })} />))}
 
 
           </ScrollView>

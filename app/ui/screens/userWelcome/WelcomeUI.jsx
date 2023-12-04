@@ -29,7 +29,7 @@ export default function WelcomeUI() {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           console.log('Google sign in successful');
-          await AsyncStorage.setItem("userId", user.uid);
+          await AsyncStorage.setItem("user", user);
           navigation.navigate("LandingStack")
         }
       });

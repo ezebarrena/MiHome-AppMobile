@@ -36,24 +36,24 @@ export default function UserAgendaUI() {
   }
 
 
-  const goHome = () => {
-    navigation.navigate("LandingStack")
-  }
+  const Contact = () => {
+    navigation.navigate("Contact")
+    }
 
 
   return (
     <View style={styles.container}>
 
       <View style={styles.contenedorHead}>
-        <Text style={styles.textoHead}>Agenda</Text>
+        <Text style={styles.textoHead}>{i18n.t('Agenda.title')}</Text>
       </View>
 
       <ScrollView>
 
         <View style={styles.booking}>
-          <Text style={styles.bookingText}>Que estas esperando para hacer tu reserva?</Text>
+          <Text style={styles.bookingText}>{i18n.t('Agenda.message')}</Text>
           <TouchableOpacity>
-            <Text style={styles.bookingButton} onPress={goHome}>Ver propiedades</Text>
+            <Text style={styles.bookingButton} onPress={Contact}>{i18n.t('Agenda.buttom')}</Text>
           </TouchableOpacity>
         </View>
 
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   booking:{
     marginLeft: "3%",
     marginRight: "3%",
-    height:90,
+    height:120,
     backgroundColor:Theme.colors.FONDOCARD,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
