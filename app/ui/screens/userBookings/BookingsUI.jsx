@@ -61,9 +61,7 @@ export default function BookingsUI() {
         calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
         />
 
-         <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
-        calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
-        />
+
 
 
       </ScrollView>

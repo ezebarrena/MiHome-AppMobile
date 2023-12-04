@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Home from '../ui/screens/userHome/Home';
 import Favourites from '../ui/screens/userFavorites/Favourites';
 import Bookings from '../ui/screens/userBookings/Bookings';
-
+import UserAgenda from '../ui/screens/userAgenda/UserAgenda';
 import UserProfile from '../ui/screens/userProfile/UserProfile';
 import HomeRS from '../ui/screens/realEstateHome/homeRS';
 import UploadAsset from '../ui/screens/realEstateUploadAsset/uploadAsset';
@@ -20,10 +20,8 @@ const TabBar = () => {
     let iconName;
 
     switch (routeName) {
-      case 'Welcome':
-        iconName = 'calendar-outline';
-        break;
-      case 'Home':
+      
+      case 'HOME':
         iconName = 'home';
         break;
       case 'FAVORITES':
@@ -32,8 +30,10 @@ const TabBar = () => {
       case 'BOOKINGS':
         iconName = 'receipt';
         break;
-      default:
-        iconName = 'home';
+      case 'AGENDA':
+        iconName = 'calendar';
+        break;
+      
     }
 
     return iconName;
@@ -75,8 +75,8 @@ return (
       />
 
       <Tab.Screen
-        name={NavigatorConstant.NAVIGATOR.PROFILE}
-        component={UserProfile}
+        name={NavigatorConstant.NAVIGATOR.USERAGENDA}
+        component={UserAgenda}
         options={{
         }}
       />

@@ -22,6 +22,8 @@ import ReserveConfirmed from '../ui/screens/userReserveConfirmed/ReserveConfirme
 import SearchResults from '../ui/screens/userSearchResult/SearchResults';
 import Publicacion from '../ui/screens/userPublicacionPropiedad/UserPublicacionPropiedad';
 import Book from '../ui/screens/userPropertyReserve/PropertyReserve';
+import Contact from '../ui/screens/userSendMessage/UserSendMessage';
+
 
 
 const Stack = createStackNavigator();
@@ -63,6 +65,7 @@ export function MainStackNavigator() {
         <Stack.Screen name="UserNewPaymentMethod" component={NewPaymentMethod} />
         <Stack.Screen name="PropertyReserve" component={PropertyReserve} />
         <Stack.Screen name="Book" component={Book} />
+        <Stack.Screen name="Contact" component={Contact} />
         <Stack.Screen name="ReserveConfirmed" component={ReserveConfirmed} />
         <Stack.Screen name="Publicacion" component={Publicacion} getId={({ params }) => params.propiedadId} options={({ route }) => ({ title: route.params.name, headerStyle: { backgroundColor: Theme.colors.PRIMARY }, headerTintColor: '#fff', headerTransparent: false })} />
 
