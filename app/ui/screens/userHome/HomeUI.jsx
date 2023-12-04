@@ -40,8 +40,21 @@ export default function HomeUI() {
   const navigation = useNavigation();
   const [text, setText] = useState('');
   const [propiedades, setPropiedades] = useState()
-  const [propiedadesBD, setPropiedadesBD] = useState()
-  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const propiedadesData = await getAssets();
+        await setPropiedades(propiedadesData);
+        console.log("HASTA ACA LLEGASTE")
+        console.log(propiedades)
+      } catch (error) {
+        console.error('Error fetching assets', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -61,6 +74,7 @@ export default function HomeUI() {
   }
 
   
+  
 
 
   const Search = async () => {
@@ -74,35 +88,12 @@ export default function HomeUI() {
   };
 
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    const busquedaPropiedades = async () => {
-
-      try {
-
-        const respuesta = await getAssets()
-
-        setPropiedades(respuesta.asset);
-        setPropiedadesBD(respuesta.asset)
-        setRefreshing(false)
-      }
-      catch (error) {
-        console.error('Error al obtener la busqueda:', error);
-      }
-
-      };
-
-
-      busquedaPropiedades()
-      setTimeout(() => {
-        setRefreshing(false);
-      }, 2000); 
-    };
 
   
 
   return (
     <View style={styles.container}>
+    
       <View style={styles.head}>
         <View style={styles.contenedorHead}>
           <Text style={styles.textoHead}>{i18n.t('homeScreen.PHUsuario')}</Text>
@@ -132,27 +123,13 @@ export default function HomeUI() {
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
 
-        {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
-          <View
-            data={propiedades}
-            renderItem={({ item }) => <CardPropiedad titulo={item.title} firstImage={item.image && item.image.length > 0 ? item.image[0] : imagenTest} moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
-            contentContainerStyle={{
-              alignItems: "center",
-              flexGrow: 1,
-            }}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-              />
-            }
-          />
-          </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>No hay propiedades para mostrar {"\n"} </Text></View>)
-
-        }
+        {propiedades.map(propiedad => (
+          <CardPropiedad key={propiedad._id} titulo={propiedad.titulo} valor={propiedad.valor} ubicacion={propiedad.ubicacion} ambientes={propiedad.ambientes} metros={propiedad.metros} tipo={propiedad.tipo} margen={propiedad.margen}/>
+        ))}
 
       </ScrollView>
+
+
 
 
       <Text style={styles.textoBody1}>{i18n.t('homeScreen.SaleProperties')} </Text>
