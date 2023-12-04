@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { t } from 'i18n-js';
 
 const API_BASE_URL = 'http://18.218.245.250:8080/'; // Reemplaza con la URL de tu backend
 

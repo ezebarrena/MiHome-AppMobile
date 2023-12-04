@@ -251,7 +251,15 @@ export default function UploadAssetUI({ }) {
 
     for (const field of requiredFields) {
       if (!form[field] || (Array.isArray(form[field]) && form[field].length === 0)) {
-        return false; // Devuelve false si algún campo requerido no está lleno
+        if(field !== "transaction"){
+          return false;
+        }
+        else if(field === transaction){
+          if(form[field] !== 0 || form[field] !== 1){
+            return false
+          }
+        }
+         // Devuelve false si algún campo requerido no está lleno
       }
     }
 
@@ -607,8 +615,10 @@ export default function UploadAssetUI({ }) {
 const styles = StyleSheet.create({
   ScrollView: {
     flex: 1,
-    width: "100%",
+    width: "94%",
     height: "100%",
+    marginLeft:'3%',
+    marginRight:'3%',
   },
 
   background: {
@@ -633,14 +643,12 @@ const styles = StyleSheet.create({
   contenedorHead: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: "3%",
     paddingTop: 30,
   },
 
   textoBody1: {
     fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get('window').width * 0.045,
-    marginLeft: "3%",
   },
 
   textoBody2: {

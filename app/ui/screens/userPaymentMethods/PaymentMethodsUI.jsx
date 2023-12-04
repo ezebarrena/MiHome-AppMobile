@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import CreditCardPreview from "../../components/cards/CreditCardPreview";
 import Button from "../../components/buttons/Button";
 import ConfirmationModal from "../../components/modals/ConfirmationModal";
+import { deletePaymentMethod, getPaymentMethods } from "../../../api/usersAPI";
 
 const PaymentMethodsUI = () => {
     const navigation = useNavigation();
