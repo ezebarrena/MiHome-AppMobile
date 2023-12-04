@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ImageBackground, StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
@@ -7,9 +7,33 @@ import i18n from "../../../assets/strings/I18n";
 import mainBackground from "../../../assets/images/backgrounds/mainBackground.png";
 import ButtonWithIcon from "../../components/buttons/ButtonWithIcon";
 import Theme from "../../styles/Theme";
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import { signInWithCredential, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../../../firebaseConfig';
 
 export default function WelcomeUI() {
   const navigation = useNavigation();
+  WebBrowser.maybeCompleteAuthSession();
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId: '485542750631-36e19hqr71j93tps8n1npd9s2b42egao.apps.googleusercontent.com',
+  });
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { id_token } = response.params;
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential);
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          console.log('Google sign in successful');
+          console.log(user);
+          navigation.navigate("LandingStack")
+        }
+      });
+    }
+  }, [response]);
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold_Italic,
@@ -18,7 +42,6 @@ export default function WelcomeUI() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
 
   return (
     <View style={styles.container}>
@@ -33,6 +56,7 @@ export default function WelcomeUI() {
               <ButtonWithIcon
                 title={i18n.t("welcomeScreen.googleButton")}
                 onPress={() => navigation.navigate("LandingStack")}
+                // onPress={() => promptAsync()}
                 backgroundColor={Theme.colors.PRIMARY}
                 icon={require("../../../assets/images/GoogleIcon.png")}
               />

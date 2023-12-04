@@ -93,4 +93,13 @@ export const getMyRealEstateBookings = async (realEstateID) => {
   }
 };
 
+export const getFilteredAssets = async (assetId,transaction, assetType, coin, nRooms, minPrice, maxPrice, nBedrooms, nBaths, nGarage, mTotal, amenities, year) => {
+  try {
+    const response = await assetsAPI.post('/assets/filter', { _id: assetId, transaction, assetType, coin, nRooms, minPrice, maxPrice, nBedrooms, nBaths, nGarage, mTotal, amenities, year });
+    return response.data;
+  } catch (error) {
+    console.error('Error getting filter asset', error);
+    throw error;
+  }
+};
 
