@@ -29,7 +29,7 @@ export default function WelcomeUI() {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           console.log('Google sign in successful');
-          await AsyncStorage.setItem("userId", user.uid);
+          await AsyncStorage.setItem("user", user);
           navigation.navigate("LandingStack")
         }
       });
@@ -61,8 +61,8 @@ export default function WelcomeUI() {
             <View style={styles.loginContainer}>
               <ButtonWithIcon
                 title={i18n.t("welcomeScreen.googleButton")}
-                onPress={() => handleGoogleLogin()}
-                // onPress={() => promptAsync()}
+                //onPress={() => handleGoogleLogin()}
+                onPress={() => promptAsync()}
                 backgroundColor={Theme.colors.PRIMARY}
                 icon={require("../../../assets/images/GoogleIcon.png")}
               />

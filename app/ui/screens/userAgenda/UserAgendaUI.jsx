@@ -22,7 +22,7 @@ import Theme from "../../styles/Theme";
 
 
 
-export default function BookingsUI() {
+export default function UserAgendaUI() {
 
   const navigation = useNavigation();
 
@@ -36,34 +36,28 @@ export default function BookingsUI() {
   }
 
 
-  const goHome = () => {
-    navigation.navigate("LandingStackNavigator")
-  }
+  const Contact = () => {
+    navigation.navigate("Contact")
+    }
 
 
   return (
     <View style={styles.container}>
 
       <View style={styles.contenedorHead}>
-        <Text style={styles.textoHead}>Bookings</Text>
+        <Text style={styles.textoHead}>{i18n.t('Agenda.title')}</Text>
       </View>
 
       <ScrollView>
 
         <View style={styles.booking}>
-          <Text style={styles.bookingText}>Que estas esperando para hacer tu reserva?</Text>
+          <Text style={styles.bookingText}>{i18n.t('Agenda.message')}</Text>
           <TouchableOpacity>
-            <Text style={styles.bookingButton} onPress={goHome}>Ver propiedades</Text>
+            <Text style={styles.bookingButton} onPress={Contact}>{i18n.t('Agenda.buttom')}</Text>
           </TouchableOpacity>
         </View>
 
-        <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
-        calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
-        />
-
-         <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
-        calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
-        />
+        
 
 
       </ScrollView>
@@ -139,7 +133,7 @@ const styles = StyleSheet.create({
   booking:{
     marginLeft: "3%",
     marginRight: "3%",
-    height:90,
+    height:120,
     backgroundColor:Theme.colors.FONDOCARD,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,

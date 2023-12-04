@@ -8,6 +8,7 @@ export default {
     PHUsuario1: "Properties near you",
     SaleProperties: "Properties for sale",
     RentProperties: "Properties for rent",
+    Interest:"Your interest",
 
     PHBusqueda: 'What are you looking for?',
     tipo:'Estate type',
@@ -230,8 +231,26 @@ export default {
     textoEliminar1:'Are you sure that you want to delete this account permanently?',
     textoEliminar2:'Once deleted there is no turning back!',
     confirmar:'Delete permanently',
+    payment:"Payment methods",
+    fav:"Favourite properties",
+
+
     
   },
+
+  UserProfile:{
+    fav:"Favourite properties",
+    payment:"Payment methods",
+    settings:"Settings",
+    logout: "Logout",
+    editar:'Edit your profile',
+    eliminar:'Delete your account',
+    textoEliminar1:'Are you sure that you want to delete this account permanently?',
+    textoEliminar2:'Once deleted there is no turning back!',
+    confirmar:'Delete permanently',
+    
+  },
+
 
   AdvancedSearch:{
     title:'Advanced Search'
@@ -243,6 +262,36 @@ export default {
     numContacto:"Phone Number",
     correoContacto:'Contact Email'
     
+  },
+
+  Favourites:{
+    title:"Favourites",
+    message:"Add your favourite properties here!",
+    buttom:"See properties"
+  },
+
+  Agenda:{
+    title:"Agenda",
+    message:"Sent a message to a official Real Estate to book a visit",
+    buttom:"Book a visit"
+  },
+
+  Bookings:{
+    title:"Bookings",
+    message:"Do you want to book a property?",
+    buttom:"See properties"
+  },
+
+  AdvancedSearch:{
+    title:"Advanced search",
+    searchTitle:"What are you looking for?",
+    type:"Operation type",
+    property:"Property type",
+    location:"Location",
+    price:"Price and currency",
+    rooms:"Number of rooms",
+    amenities:"Amenities",
+    buttom:"Search now"
   }
 };
 

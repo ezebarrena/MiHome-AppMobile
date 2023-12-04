@@ -28,7 +28,7 @@ import CustomTextInput2 from "../../../ui/components/inputs/CustomTextInput2";
 import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
-import LandingStackNavigator from "../../../navigation/LandingStackNavigator"
+
 
 import { getAssets } from '../../../api/assetsAPI';
 
@@ -51,6 +51,7 @@ export default function SearchUIv2() {
 
   ];
   const navigation = useNavigation();
+
 
   const goHome = () => {
     navigation.navigate("LandingStack")
