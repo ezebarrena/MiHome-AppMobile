@@ -24,10 +24,10 @@ const NewPaymentMethodUI = () => {
         const userId = await AsyncStorage.getItem("userId");
         const paymentMethod = {
             cardNumber: form.cardNumber,
-            cardHolder: form.cardHolder,
-            cardExpiration: form.cardExpiration,
-            cardCvv: form.cardCvv,
-            cardBank: form.cardBank,
+            name: form.cardHolder,
+            expiration: form.cardExpiration,
+            ccv: form.cardCvv,
+            bank: form.cardBank,
         };
         console.log("Payment method to save: ", paymentMethod);
         const response = await addPaymentMethod(userId, paymentMethod);
