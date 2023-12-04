@@ -13,7 +13,7 @@ const usersAPI = axios.create({
 
 export const addPaymentMethod = async (userId, paymentMethod) => {
   try {
-    const response = await usersAPI.post('users/me/paymentmethod', { userId, paymentMethod });
+    const response = await usersAPI.post('/users/me/paymentmethod', { userId, paymentMethod });
     return response.data;
   } catch (error) {
     console.error('Error adding payment method:', error);
@@ -23,7 +23,7 @@ export const addPaymentMethod = async (userId, paymentMethod) => {
 
 export const deletePaymentMethod = async (userId, paymentMethod) => {
   try {
-    const response = await usersAPI.delete('users/me/paymentmethod', { userId, paymentMethod });
+    const response = await usersAPI.delete('/users/me/paymentmethod', { userId, paymentMethod });
     return response.data;
   } catch (error) {
     console.error('Error adding payment method:', error);
@@ -33,7 +33,9 @@ export const deletePaymentMethod = async (userId, paymentMethod) => {
 
 export const getPaymentMethods = async (userId) => {
   try {
-    const response = await usersAPI.get(`users/${userId}/paymentmethod`);
+    console.log('userId', userId);
+    const _id = userId;
+    const response = await usersAPI.get(`/users/me/id`, { _id });
     return response.data;
   } catch (error) {
     console.error('Error getting payment methods:', error);
