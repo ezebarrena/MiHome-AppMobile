@@ -130,7 +130,10 @@ export default {
     mensajePublicado:'La propiedad se cargo exitosamente',
     mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
     orientacion:'Orientacion',
-    faltaData:'Por favor completa todos los campos obligatorios'
+    faltaData:'Por favor completa todos los campos obligatorios',
+    seleccionImagen: "Seleccionar Imagen",
+    adjunto: "Adjuntar desde la Galería",
+    foto:'Tomar una Foto'
 
   },
   realEstateUpdateAsset: {
@@ -159,7 +162,10 @@ export default {
     mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
     orientacion:'Orientacion',
     botonModificar:'Modificar',
-    faltaData:'Por favor completa todos los campos obligatorios'
+    faltaData:'Por favor completa todos los campos obligatorios',
+    seleccionImagen: "Seleccionar Imagen",
+    adjunto: "Adjuntar desde la Galería",
+    foto:'Tomar una Foto'
   },
 
   REUploadAssetChoices:{
