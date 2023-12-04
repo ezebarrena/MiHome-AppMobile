@@ -62,7 +62,7 @@ export function MainStackNavigator() {
         <Stack.Screen name="UserNewPaymentMethod" component={NewPaymentMethod} />
         <Stack.Screen name="PropertyReserve" component={PropertyReserve} />
         <Stack.Screen name="ReserveConfirmed" component={ReserveConfirmed} />
-        <Stack.Screen name="Publicacion" component={Publicacion} />
+        <Stack.Screen name="Publicacion" component={Publicacion} getId={({ params }) => params.propiedadId} options={({ route }) => ({ title: route.params.name, headerStyle: { backgroundColor: Theme.colors.PRIMARY }, headerTintColor: '#fff', headerTransparent: false })} />
 
 
       </Stack.Group>
