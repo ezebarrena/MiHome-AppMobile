@@ -7,6 +7,7 @@ import ChoiceInput from "../../components/inputs/ChoiceInput";
 import { useForm } from "../../../hooks/useForm";
 import Button from "../../components/buttons/Button";
 import { addPaymentMethod } from "../../../api/usersAPI";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const NewPaymentMethodUI = () => {
     const navigation = useNavigation();
@@ -18,6 +19,25 @@ const NewPaymentMethodUI = () => {
         cardCvv: "",
         cardBank: "",
     });
+
+    const savePaymentMethod = async () => {
+        const userId = await AsyncStorage.getItem("userId");
+        const paymentMethod = {
+            cardNumber: form.cardNumber,
+            cardHolder: form.cardHolder,
+            cardExpiration: form.cardExpiration,
+            cardCvv: form.cardCvv,
+            cardBank: form.cardBank,
+        };
+        console.log("Payment method to save: ", paymentMethod);
+        const response = await addPaymentMethod(userId, paymentMethod);
+        console.log("Response from API: ", response);
+    };
+
+    const handleSavePaymentMethod = () => {
+        savePaymentMethod();
+        navigation.navigate("UserPaymentMethods");
+    };
 
     const limitInput = (value, fieldName, maxLength) => {
         const truncatedValue = value.slice(0, maxLength);
@@ -81,7 +101,7 @@ const NewPaymentMethodUI = () => {
                 />
                 <Button
                     title="Guardar"
-                    onPress={() => navigation.navigate("UserPaymentMethods")}
+                    onPress={handleSavePaymentMethod}
                     size="medium"
                 />
             </View>

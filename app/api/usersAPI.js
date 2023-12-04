@@ -69,8 +69,8 @@ export const getPaymentMethods = async (userId) => {
   try {
     const _id = userId;
     console.log(_id);
-    const response = await usersAPI.get(`users/me/id`, { _id });
-    return response.data;
+    const response = await usersAPI.post(`users/me/id`, { _id });
+    return response.data.realEstates.paymentMethods;
   } catch (error) {
     console.error('Error getting payment methods:', error);
     throw error;
