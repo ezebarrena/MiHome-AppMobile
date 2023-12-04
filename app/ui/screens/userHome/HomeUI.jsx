@@ -35,11 +35,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAssets } from '../../../api/assetsAPI';
 
 
-export default function HomeUI() {
+export default function HomeUI(listadoPropiedades) {
 
   const navigation = useNavigation();
   const [text, setText] = useState('');
   const [propiedades, setPropiedades] = useState()
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +56,7 @@ export default function HomeUI() {
 
     fetchData();
   }, []);
+
 
   const [fontsLoaded, fontError] = useFonts({
     Poppins_700Bold,
@@ -79,13 +81,14 @@ export default function HomeUI() {
 
   const Search = async () => {
     try {
-      const results = await getAssets(form);
+      const results = await getAssets();
       //console.log("Resultados de búsqueda:", results);
       navigation.navigate("UserProfile", { results });
     } catch (error) {
       console.error("Error al realizar la búsqueda:", error);
     }
   };
+
 
 
 
@@ -118,14 +121,16 @@ export default function HomeUI() {
       
       <ScrollView vertical>
       
-      <Text style={styles.textoBody2}> Puede interesarte </Text>
+      <Text style={styles.textoBody2}>Puede interesarte </Text>
 
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
 
+
         {propiedades.map(propiedad => (
           <CardPropiedad key={propiedad._id} titulo={propiedad.titulo} valor={propiedad.valor} ubicacion={propiedad.ubicacion} ambientes={propiedad.ambientes} metros={propiedad.metros} tipo={propiedad.tipo} margen={propiedad.margen}/>
         ))}
+
 
       </ScrollView>
 
