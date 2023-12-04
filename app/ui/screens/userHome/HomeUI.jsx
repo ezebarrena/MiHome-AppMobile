@@ -58,7 +58,7 @@ export default function HomeUI() {
   const Search2 = () => {
     try {
       if(value !== null && value2 !== null){
-        navigation.navigate("SearchResults", { transaction: value, type: value2 });
+        navigation.navigate("SearchResults", { transaction: value, type: value2, avanzada:false });
       }
       else{
         setModalVisible(true)

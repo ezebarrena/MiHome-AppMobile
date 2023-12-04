@@ -33,6 +33,9 @@ import LandingStackNavigator from "../../../navigation/LandingStackNavigator"
 import { getAssets } from '../../../api/assetsAPI';
 
 export default function SearchUIv2() {
+
+  const [trans, setTrans] = useState()
+  const [type, setType] = useState()
   const dataTypes = [
     { key: 'house', value: i18n.t('REUploadAssetChoices.house') },
     { key: 'department', value: i18n.t('REUploadAssetChoices.department') },
@@ -45,10 +48,14 @@ export default function SearchUIv2() {
   ];
 
   const dataTransaccion = [
-
+    { key: "todo", value: i18n.t('propiedadesEstados.todo') },
     { key: 0, value: i18n.t('REUploadAssetChoices.venta') },
     { key: 1, value: i18n.t('REUploadAssetChoices.alquiler') },
 
+  ];
+  const dataCurrency = [
+    { key: '1', value: 'U$D' },
+    { key: '2', value: 'AR$' },
   ];
   const navigation = useNavigation();
 
@@ -57,14 +64,11 @@ export default function SearchUIv2() {
   }
 
   const { form, onChange } = useForm({
-
-    transaction: "",
-    type: "",
+    room: "",
     location: "",
     min_price: "",
     max_price: "",
     coin: "",
-    room: "",
     amenities: [],
   });
 
@@ -82,15 +86,23 @@ export default function SearchUIv2() {
     onChange(truncatedValue, fieldName);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit =  () => {
     try {
-      const results = await getAssets(form);
-      console.log("Resultados de búsqueda:", results);
-      navigation.navigate("SearchResults", { results });
+      const nuevoForm =  removeNullFields(form)
+      navigation.navigate("SearchResults", { transaction: trans, type: type, avanzada:true, filtros: nuevoForm });
     } catch (error) {
       console.error("Error al realizar la búsqueda:", error);
     }
   };
+  function removeNullFields(obj) {
+    const result = {};
+    for (const key in obj) {
+      if (obj[key] !== "") {
+        result[key] = obj[key];
+      }
+    }
+    return result;
+  }
 
   return (
     <View style={styles.container}>
@@ -109,7 +121,7 @@ export default function SearchUIv2() {
           onValueSelect={(value) => {const resultado = dataTransaccion.find(item => item.value === value);
             if (resultado) {
               console.log(resultado.key);
-              onChange(resultado.key, "transaction")
+              setTrans(resultado.key)
             }}}
         />
 
@@ -119,14 +131,14 @@ export default function SearchUIv2() {
           onValueSelect={(value) => {const resultado = dataTypes.find(item => item.value === value);
             if (resultado) {
               console.log(resultado.key, 'llave');
-              onChange(resultado.key, "type")
+              setType(resultado.key)
             }}}
         />
 
         <Text style={styles.textoBody1}>Ubicacion</Text>
         <CustomTextInput
           placeholder="Localidad"
-          onChangeText={(value) => onChange(value, "location")}
+/*           onChangeText={(value) => onChange(value, "location")} */
           value={form.location}
         />
 
@@ -148,10 +160,7 @@ export default function SearchUIv2() {
             />
           </View>
           <ChoiceInput
-            data={[
-              { value: "Dolares (USD)" },
-              { value: "Pesos" },
-            ]}
+            data={dataCurrency}
             onValueSelect={(value) => onChange(value, "coin")}
           />
         </View>
