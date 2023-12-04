@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
 import Theme from "../../styles/Theme";
-import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
+import { useFonts, Poppins_400Regular, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 import i18n from "../../../assets/strings/I18n";
 import Estados from "../../../assets/funcionTraduccion";
@@ -17,14 +17,19 @@ export default function CardPropiedad({
   numero,
   barrio,
   transaccion,
+  firstImage,
+  titulo
 }) {
   const [fontsLoaded, fontError] = useFonts({
     Poppins_400Regular,
+    Poppins_600SemiBold
   });
+
 
   if (!fontsLoaded && !fontError) {
     return null;
   }
+
 
   let tipo = Estados(transaccion, estado);
 
@@ -35,11 +40,13 @@ export default function CardPropiedad({
   return (
     <TouchableOpacity onPress={onPress} style={styles.cardContainer}>
       <View style={styles.imageContainer}>
-        <Image source={imagenTest} style={styles.propertyImage} />
+        {firstImage != 39 ? <Image src={firstImage} style={styles.propertyImage} /> : <Image source={firstImage} style={styles.propertyImage} />}
+        
         <View style={styles.statusIndicator}>
           <Text style={styles.statusIndicatorText}> {i18nIdioma}</Text>
         </View>
       </View>
+      <Text numberOfLines={1} ellipsizeMode="tail" style={styles.titulo}>{titulo}</Text>
       <View style={styles.dataContainer}>
         <View style={styles.row}>
           <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">{moneda} {valor}</Text>
@@ -101,7 +108,14 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: "Poppins_400Regular",
-    fontSize: 16,
+    fontSize: Dimensions.get("window").width * 0.039,
     maxWidth: '60%'
+  },
+  titulo:{
+    fontFamily:'Poppins_600SemiBold',
+    textAlign:'center',
+    maxWidth: '100%',
+    fontSize: Dimensions.get("window").width * 0.04,
+    paddingHorizontal:5
   },
 });

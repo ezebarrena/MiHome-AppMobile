@@ -15,6 +15,7 @@ import { useForm } from "../../../hooks/useForm";
 import { createAsset } from "../../../api/assetsAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { uploadAssetImage } from "../../../api/imagesAPI";
 
 
 
@@ -76,6 +77,8 @@ const dataAmenities = [
 export default function UploadAssetUI({ }) {
   const [imageUris, setImageUris] = useState([]);
   const [subiendo, setSubiendo] = useState(false);
+  const [imagenesSubidas, setImagenesSubidas] = useState(false);
+  const [imagenes, setImagenes] = useState([]);
   const [error, setError] = useState(false);
   const [mapRegion, setMapRegion] = useState({
     latitude: null,
@@ -84,6 +87,7 @@ export default function UploadAssetUI({ }) {
     longitudeDelta: 0.01,
   });
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalFaltaVisible, setModalFaltaVisible] = useState(false);
   const navigation = useNavigation();
 
 
@@ -114,11 +118,12 @@ export default function UploadAssetUI({ }) {
     "province": "",
     "country": "",
     "geoLocalization": "",
+    "direction": '',
     "frontBack": "",
     "state": 1,
     "realEstateName": "",
     "orientation": [],
-    "direction": ''
+
 
   }
 
@@ -127,45 +132,153 @@ export default function UploadAssetUI({ }) {
 
   const { form, onChange, setFormValue } = useForm(initialFormState);
 
+  const subirFoto = async (uri, nombre, imagenesArray) => {
+    const formData = new FormData();
+    formData.append("file", {
+      uri: uri,
+      type: "image/jpeg",
+      name: nombre,
+    });
 
+    try {
+      const response = await uploadAssetImage(formData);
+
+      if (response.status === 200) {
+        console.log(response.data.secure_url);
+
+        // Actualiza el arreglo local
+        imagenesArray.push(response.data.secure_url);
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al subir la foto:", error);
+      return false;
+    }
+  }
+
+  const subirPropiedad = async () => {
+    console.log('estoy aca');
+    const nuevoForm = removeNullFields(form)
+    if (nuevoForm) {
+
+      const response = await createAsset(nuevoForm);
+
+      if (response.status === 200) {
+        setSubiendo(false)
+        setModalVisible(true)
+      }
+      else {
+        alert("error Upload Asset");
+        setError(true)
+        setModalVisible(true)
+      }
+    }
+
+  }
+
+  const handleSubmitImages = async () => {
+    const imagenesArray = [];
+    let i = 0
+    setSubiendo(true)
+    while (i < imageUris.length) {
+      const partesRuta = imageUris[i].split('/');
+      // Obtener el último elemento, que es el nombre del archivo con la extensión
+      const nombreConExtension = partesRuta[partesRuta.length - 1];
+      // Dividir el nombre del archivo y la extensión usando el carácter de punto como delimitador
+      const partesNombre = nombreConExtension.split('.');
+      // Obtener el nombre del archivo sin la extensión
+      const nombreSinExtension = partesNombre[0]
+      await subirFoto(imageUris[i], nombreSinExtension, imagenesArray)
+      i++
+    }
+
+    console.log(imagenesArray, 'imagenes final;');
+
+    form.image = imagenesArray
+
+    console.log(form.image);
+
+    subirPropiedad()
+
+
+
+  }
 
 
   const handleSubmit = async () => {
-    const value = await AsyncStorage.getItem('realEstateId')
-    console.log(value);
 
-    if (value) {
-      console.log(value);
-      onChange(value, "realEstateName")
-      console.log(form.realEstateName);
-      if (form.realEstateName != "") {
-        const nuevoForm = removeNullFields(form)
-        if (nuevoForm) {
-          setSubiendo(true)
-          const response = await createAsset(nuevoForm);
-          console.log(response);
-          if (response.status === 200) {
-            console.log(response.status);
-            setSubiendo(false)
-            setModalVisible(true)
-          }
-          else {
-            alert("error Upload Asset");
-            setError(true)
-          }
+    if (validateForm(form)) {
+      const value = await AsyncStorage.getItem('realEstateId')
+
+      if (value) {
+        onChange(value, "realEstateName")
+        if (form.realEstateName != "") {
+          handleSubmitImages()
+
         }
-      }
 
+      }
     }
+    else{
+      setModalFaltaVisible(true)
+    }
+
+
 
 
   };
 
+  const validateForm = (form) => {
+    const requiredFields = [
+      "title",
+      "type",
+      "transaction",
+      "price",
+      "coin",
+      "description",
+      "room",
+      "bath",
+      "bedroom",
+      "mTotal",
+      "mIndoor",
+      "direction",
+      "geoLocalization",
+    ];
+    console.log(form.direction, "direction");
+
+    for (const field of requiredFields) {
+      if (!form[field] || (Array.isArray(form[field]) && form[field].length === 0)) {
+        return false; // Devuelve false si algún campo requerido no está lleno
+      }
+    }
+
+    return true; // Devuelve true si todos los campos requeridos están llenos
+  };
+
+  /*   function removeNullFields(obj) {
+      const result = {};
+      for (const key in obj) {
+        if (obj[key] !== "") {
+          result[key] = obj[key];
+        }
+      }
+      return result;
+    } */
+
   function removeNullFields(obj) {
     const result = {};
     for (const key in obj) {
-      if (obj[key] !== "") {
-        result[key] = obj[key];
+      const value = obj[key];
+      if (
+        (typeof value !== "string" || value !== "") &&
+        (Array.isArray(value) ? value.length > 0 : true) &&
+        value !== null &&
+        value !== undefined
+      ) {
+        result[key] = value;
       }
     }
     return result;
@@ -184,6 +297,7 @@ export default function UploadAssetUI({ }) {
             <TouchableOpacity
               onPress={() => removeImage(index)}
               style={styles.deleteIcon}
+              disabled={subiendo}
             >
               <Ionicons name="trash-outline" size={20} color="white" />
             </TouchableOpacity>
@@ -195,19 +309,21 @@ export default function UploadAssetUI({ }) {
 
   const addImageToUris = (uri) => {
     setImageUris([...imageUris, uri]);
+
   };
 
   const removeImage = (index) => {
+    console.log(index);
     const updatedImages = [...imageUris];
     updatedImages.splice(index, 1);
     setImageUris(updatedImages);
-  };
 
+  };
   return (
 
     <ScrollView style={styles.ScrollView}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -230,18 +346,38 @@ export default function UploadAssetUI({ }) {
           </View>
         </View>
       </Modal>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalFaltaVisible}
+        onRequestClose={() => {
+          
+          setModalFaltaVisible(!modalFaltaVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{i18n.t('realEstateUploadAsset.faltaData')}</Text>
+
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => { setModalFaltaVisible(!modalFaltaVisible); }}>
+              <Text style={styles.textStyle}>{i18n.t('common.cerrar')}</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.contenedorHead}>
         <Text style={styles.textoHead}>{i18n.t('realEstateUploadAsset.headTitle')}</Text>
       </View>
 
       <View style={styles.dataEntry}>
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}*</Text>
         <CustomTextInput
           value={form.title}
           onChangeText={(value) => onChange(value, "title")}
         />
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}*</Text>
         <ImagePickerModal
           buttonText="Seleccionar imagen"
           modalTitle="Seleccionar imagen"
@@ -249,7 +385,7 @@ export default function UploadAssetUI({ }) {
         />
         {renderImagePreview(imageUris)}
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.type')}*</Text>
         <ChoiceInput
           data={dataTypes}
           value={i18n.t(`REUploadAssetChoices.${form.types}`)}
@@ -263,7 +399,7 @@ export default function UploadAssetUI({ }) {
           }}
         />
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.transaction')}*</Text>
         <ChoiceInput
           data={dataTransaccion}
           value={form.transaction}
@@ -277,14 +413,14 @@ export default function UploadAssetUI({ }) {
           }}
         />
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.price')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.price')}*</Text>
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.price}
           onChangeText={(value) => onChange(parseInt(value), "price")}
         />
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.coin')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.coin')}*</Text>
         <ChoiceInput
           data={dataCurrency}
           value={form.coin}
@@ -298,8 +434,11 @@ export default function UploadAssetUI({ }) {
           onChangeText={(value) => onChange(parseInt(value), "bills")}
         />
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.description')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.description')}*</Text>
         <CustomTextInput
+          alto={200}
+          multilinea={true}
+          paddingHorizontal={10}
           value={form.description}
           onChangeText={(value) => onChange(value, "description")}
         />
@@ -312,7 +451,7 @@ export default function UploadAssetUI({ }) {
           onValueSelect={(key) => onChange(key, "amenities")}
         />
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}*</Text>
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.room}
@@ -327,7 +466,7 @@ export default function UploadAssetUI({ }) {
         />
 
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bath')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bath')}*</Text>
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.bath}
@@ -335,7 +474,7 @@ export default function UploadAssetUI({ }) {
         />
 
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bedroom')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.bedroom')}*</Text>
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.bedroom}
@@ -351,21 +490,21 @@ export default function UploadAssetUI({ }) {
         />
 
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mTotal')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mTotal')}*</Text>
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.mTotal}
           onChangeText={(value) => onChange(parseInt(value), "mTotal")}
         />
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mCover')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.mCover')}*</Text>
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.mIndoor}
           onChangeText={(value) => onChange(parseInt(value), "mIndoor")}
         />
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.storage')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.storage')}*</Text>
         <ChoiceInput
           data={dataStorage}
           value={form.storage}
@@ -408,7 +547,7 @@ export default function UploadAssetUI({ }) {
           onValueSelect={(key) => onChange(key, "orientation")}
         />
 
-        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
+        <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}*</Text>
         <CustomSearchBar
           onAddressSelect={(item) => {
             console.log(item);
@@ -440,9 +579,11 @@ export default function UploadAssetUI({ }) {
                 province: item.address.adminDistrict,
                 country: item.address.countryRegion,
                 geoLocalization: String(item.point.coordinates),
-                direction: item.address.formatedAddress
+                
               }
             );
+            onChange(item.address.formattedAddress, "direction")
+  
 
           }}
         />

@@ -6,6 +6,7 @@ import CustomTextInput from "../../components/inputs/CustomTextInput";
 import ChoiceInput from "../../components/inputs/ChoiceInput";
 import { useForm } from "../../../hooks/useForm";
 import Button from "../../components/buttons/Button";
+import { addPaymentMethod } from "../../../api/usersAPI";
 
 const NewPaymentMethodUI = () => {
     const navigation = useNavigation();

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useFocusEffect } from '@react-navigation/native';
+import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 import {
 
   StyleSheet,
@@ -83,6 +84,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
     React.useCallback(() => {
       setPropiedades(listadoPropiedades.asset);
       setPropiedadesBD(listadoPropiedades.asset);
+      
       if (listadoPropiedades.asset && listadoPropiedades.asset.length > 0) {
         setActive(false)
       }
@@ -183,7 +185,7 @@ export default function HomeRSUI({ listadoPropiedades }) {
         <FlatList
           data={propiedades}
           keyExtractor={item => item._id}
-          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
+          renderItem={({ item }) => <CardPropiedad titulo={item.title} firstImage={item.image && item.image.length > 0 ? item.image[0] : imagenTest} moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
           contentContainerStyle={{
             alignItems: "center",
             flexGrow: 1,
