@@ -60,7 +60,7 @@ export default function BookingsUI() {
         <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
         calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
         />
-        
+
          <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
         calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
         />
@@ -145,13 +145,15 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     borderBottomLeftRadius:10,
     borderBottomRightRadius:10,
-    paddingLeft:10,
+    paddingLeft:15,
     paddingTop:10,
+    marginBottom:10,
+    marginTop:5
   },
 
   bookingText:{
     fontSize: Dimensions.get('window').width * 0.04,
-    marginBottom:5
+    marginBottom:10
   },
 
   bookingButton:{
