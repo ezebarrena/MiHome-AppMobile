@@ -12,6 +12,8 @@ import {
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
 import { useNavigation } from "@react-navigation/native";
+import CardBooking from "../../components/cards/CardBooking";
+
 
 
 import i18n from "../../../assets/strings/I18n";
@@ -55,7 +57,14 @@ export default function BookingsUI() {
           </TouchableOpacity>
         </View>
 
+        <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
+        calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
+        />
         
+         <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
+        calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
+        />
+
 
       </ScrollView>
   
