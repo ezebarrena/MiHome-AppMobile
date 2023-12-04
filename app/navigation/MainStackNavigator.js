@@ -19,6 +19,9 @@ import NewPaymentMethod from '../ui/screens/userNewPaymentMethod/NewPaymentMetho
 import RealEstateEditProfile from '../ui/screens/realEstateEditProfile/RealEstateEditProfile';
 import PropertyReserve from '../ui/screens/userPropertyReserve/PropertyReserve';
 import ReserveConfirmed from '../ui/screens/userReserveConfirmed/ReserveConfirmed';
+import SearchResults from '../ui/screens/userSearchResult/SearchResults';
+import Publicacion from '../ui/screens/userPublicacionPropiedad/UserPublicacionPropiedad';
+
 
 const Stack = createStackNavigator();
 
@@ -52,12 +55,16 @@ export function MainStackNavigator() {
         <Stack.Screen name="UserHome" component={UserHome} options={{ headerShown: false }}/>
         <Stack.Screen name="UserFavorites" component={Userfavorites} />
         <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Screen name="SearchResults" component={SearchResults} options={{ headerShown: false }}/>
         <Stack.Screen name="AdvancedSearch" component={AdvancedSearch} options={{ headerShown: false }}/>
         <Stack.Screen name="LandingStack" component={LandingStackNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="UserPaymentMethods" component={PaymentMethods} />
         <Stack.Screen name="UserNewPaymentMethod" component={NewPaymentMethod} />
         <Stack.Screen name="PropertyReserve" component={PropertyReserve} />
         <Stack.Screen name="ReserveConfirmed" component={ReserveConfirmed} />
+        <Stack.Screen name="Publicacion" component={Publicacion} />
+
+
       </Stack.Group>
     </Stack.Navigator>
     </SafeAreaProvider>
