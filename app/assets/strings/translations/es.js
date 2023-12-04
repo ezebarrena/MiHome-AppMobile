@@ -4,6 +4,8 @@ export default {
     PHUsuario: 'Bienvenido',
     PHUsuario1: "Propiedades cerca tuyo",
     PHBusqueda: 'Que estas buscando?',
+    tipo:'Tipo de propiedad',
+    transaccion:'Transaccion'
   },
   homeScreenRS: {
     main: 'Propiedades Listadas',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CreditCardPreview from "../../components/cards/CreditCardPreview";
 import Button from "../../components/buttons/Button";
@@ -114,18 +114,17 @@ const PaymentMethodsUI = () => {
     
     return (
         <View style={styles.container}>
-            {/* <ScrollView contentContainerStyle={styles.cardsContainer}>
-                {paymentMethods ? paymentMethods.map((paymentMethod) => (
+            <ScrollView contentContainerStyle={styles.cardsContainer}>
+                {paymentMethods && paymentMethods.map((paymentMethod) => (
                     <CreditCardPreview
-                        key={paymentMethod.id}
+                        key={paymentMethod._id}
                         cardNumber={paymentMethod.cardNumber}
-                        cardExpiration={paymentMethod.cardExpiration}
-                        cardBank={paymentMethod.cardBank}
-                        showTrashIcon={true}
-                        onPressTrashIcon={() => onPressTrashIcon(paymentMethod.id)}
+                        cardExpiration={paymentMethod.expiration}
+                        cardBank={paymentMethod.bank}
+                        onPressTrashIcon={() => onPressTrashIcon(paymentMethod._id)}
                     />
-                )) : null}
-            </ScrollView> */}
+                ))}
+            </ScrollView>
             <Button
                 title="Agregar método de pago"
                 onPress={() => navigation.navigate("UserNewPaymentMethod")}

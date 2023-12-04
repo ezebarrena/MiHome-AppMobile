@@ -10,6 +10,8 @@ export default {
     RentProperties: "Properties for rent",
 
     PHBusqueda: 'What are you looking for?',
+    tipo:'Estate type',
+    transaccion:'Transaction'
   },
   homeScreenRS: {
     main: 'Listed Real State',

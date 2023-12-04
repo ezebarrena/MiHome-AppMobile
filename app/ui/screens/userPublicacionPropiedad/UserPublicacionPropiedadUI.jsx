@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-
-
     StyleSheet,
     View,
     Text,
@@ -29,6 +27,8 @@ import imagenInmobiliaria from '../../../assets/images/imagenInmobiliaria.png'
 import Estados from "../../../assets/funcionTraduccion";
 import StarRating from 'react-native-star-rating';
 const { width } = Dimensions.get('window');
+import { useNavigation } from "@react-navigation/native";
+
 import MapView, { Marker } from 'react-native-maps';
 const images = [
     require('../../../assets/images/various/imagenCasaTest.png'),  // Reemplaza con la ruta correcta de tus imágenes
@@ -56,8 +56,15 @@ export default function UserPublicacionPropiedadUI({ propiedad, inmobiliaria }) 
     });
 
     const [sufijo, setSufijo] = useState("")
+    const navigation = useNavigation();
 
+    const Book = () => {
+        navigation.navigate("Book")
+      }
 
+    const Contact = () => {
+    navigation.navigate("Contact")
+    }
 
     useEffect(() => {
         if (propiedad.geoLocalization) {
@@ -111,11 +118,28 @@ export default function UserPublicacionPropiedadUI({ propiedad, inmobiliaria }) 
                         />
                     )))}
                 { }
+
             </ScrollView>
+            <View style={styles.booking}>
+            <TouchableOpacity>
+                <Text style={styles.bookingButton} onPress={Book}>Reservar</Text>
+            </TouchableOpacity>
+            <View style={styles.spacing} />
+
+            <TouchableOpacity>
+                <Text style={styles.bookingButton} onPress={''}>Agendar visita</Text>
+            </TouchableOpacity>
+            <View style={styles.spacing} />
+
+            <TouchableOpacity>
+                <Text style={styles.bookingButton} onPress={Contact}>Contactar</Text>
+            </TouchableOpacity>
+            </View>
+
             <Text style={styles.titulo}>{propiedad.title}</Text>
             <View style={styles.containerDetalles}>
                 <View style={styles.viewDetalles}>
-                    <MaterialIcons name="pin-drop" size={35} style={{ marginHorizontal: 8 }} />
+                    <MaterialIcons name="pin-drop" size={35} style={{ marginHorizontal: 30 }} />
                     <Text style={styles.textDetalles1}>{propiedad.direction}</Text>
                 </View>
                 <View style={styles.viewDetalles}>
@@ -224,7 +248,7 @@ export default function UserPublicacionPropiedadUI({ propiedad, inmobiliaria }) 
                     </View>
 
                     <View style={styles.bntneraCI}>
-                        <Pressable style={styles.btnCI} onPress={() => { console.log("contactar") }}><Text>{i18n.t("detallePropiedad.contactar")}</Text></Pressable>
+                        <Pressable style={styles.btnCI} onPress={Contact}><Text>{i18n.t("detallePropiedad.contactar")}</Text></Pressable>
                         <Pressable style={styles.btnCI} onPress={() => { console.log("propiedades") }}><Text>{i18n.t("detallePropiedad.propiedades")}</Text></Pressable>
                     </View>
                 </View>
@@ -308,14 +332,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: Dimensions.get("window").width * 0.043,
         fontFamily: 'Poppins_500Medium',
-        paddingHorizontal: 12,
+        paddingHorizontal: '5%',
     },
     titulo:{
         fontFamily:"Poppins_700Bold",
-        alignSelf: 'center',
         fontSize: Dimensions.get("window").width * 0.05,
-        paddingHorizontal: 10,
-        marginTop:15
+        paddingLeft:'5%'
     },
     chip: {
         backgroundColor: 'transparent',
@@ -342,6 +364,8 @@ const styles = StyleSheet.create({
     textUbicacion: {
         fontFamily: 'Poppins_700Bold',
         fontSize: Dimensions.get("window").width * 0.045,
+        paddingHorizontal: '2%',
+
     },
     viewExtras: {
         padding: 10,
@@ -349,6 +373,8 @@ const styles = StyleSheet.create({
     textExtras: {
         fontFamily: 'Poppins_500Medium',
         fontSize: Dimensions.get("window").width * 0.039,
+        paddingHorizontal: '2%',
+
     },
     viewCardInmobiliaria: {
         backgroundColor: Theme.colors.FONDOCARD,
@@ -407,5 +433,49 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         width: '100%'
-    }
+    },
+
+    booking:{
+        marginLeft: "3%",
+        marginRight: "3%",
+        height:58,
+        backgroundColor:Theme.colors.FONDOCARD,
+        borderTopLeftRadius: 10,
+        borderTopRi7ghtRadius: 10,
+        borderBottomLeftRadius:10,
+        borderBottomRightRadius:10,
+        marginBottom:10,
+        marginTop:15,
+        flex: 1, // Esto hace que el contenedor ocupe todo el espacio disponible
+        flexDirection: 'row', // Esto establece la dirección del diseño a horizontal (columnas)
+        justifyContent: 'center', // Centra en el eje principal (horizontal)
+        alignItems: 'center', // Centra en el eje secundario (vertical)
+      },
+    
+      bookingText:{
+        fontSize: Dimensions.get('window').width * 0.04,
+        marginBottom:10
+      },
+    
+      bookingButton:{
+        fontSize: Dimensions.get('window').width * 0.03,
+        fontFamily: 'Poppins_700Bold',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        borderBottomLeftRadius:10,
+        borderBottomRightRadius:10,
+        borderWidth:1.5,
+        paddingTop:8,
+        paddingLeft:10,
+        paddingBottom:3,
+        paddingRight:10,
+        width:'100%',
+        textAlign:'center',
+
+      },
+
+      spacing: {
+        width: 20,
+      },
+    
 })
