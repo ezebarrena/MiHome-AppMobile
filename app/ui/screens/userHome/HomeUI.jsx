@@ -1,54 +1,28 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useFocusEffect } from '@react-navigation/native';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  SafeAreaView,
-  Dimensions,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  RefreshControl,
-
-} from "react-native";
-import { useCallback } from "react";
+import { View, Text, StyleSheet, Image, Dimensions, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from "@expo-google-fonts/poppins";
-
 import i18n from "../../../assets/strings/I18n";
 import fotoPerfil from "../../../assets/images/icons/Rectangle.png"
-
 import CardPropiedad from "../../components/cards/cardPropiedad";
 import Theme from "../../styles/Theme";
-
 import { useNavigation } from "@react-navigation/native";
-import { FlatList } from "react-native-gesture-handler";
-
 import searchIcon from "../../../assets/images/icons/searchIcon.png";
 import advancedIcon from "../../../assets/images/icons/advancedSearch.png";
-
-//import de Asset API
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAssets } from '../../../api/assetsAPI';
 
-
-export default function HomeUI(listadoPropiedades) {
+export default function HomeUI() {
 
   const navigation = useNavigation();
-  const [text, setText] = useState('');
   const [propiedades, setPropiedades] = useState()
-
+  const [isPropiedadesLoading, setIsPropiedadesLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const propiedadesData = await getAssets();
-        await setPropiedades(propiedadesData);
-        console.log("HASTA ACA LLEGASTE")
-        console.log(propiedades)
+        setPropiedades(propiedadesData.asset);
+        setIsPropiedadesLoading(false);
       } catch (error) {
         console.error('Error fetching assets', error);
       }
@@ -75,10 +49,6 @@ export default function HomeUI(listadoPropiedades) {
     navigation.navigate("AdvancedSearch")
   }
 
-  
-  
-
-
   const Search = async () => {
     try {
       const results = await getAssets();
@@ -88,11 +58,6 @@ export default function HomeUI(listadoPropiedades) {
       console.error("Error al realizar la búsqueda:", error);
     }
   };
-
-
-
-
-  
 
   return (
     <View style={styles.container}>
@@ -127,9 +92,9 @@ export default function HomeUI(listadoPropiedades) {
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
 
 
-        {propiedades.map(propiedad => (
+        {!isPropiedadesLoading ? (propiedades.map(propiedad => (
           <CardPropiedad key={propiedad._id} titulo={propiedad.titulo} valor={propiedad.valor} ubicacion={propiedad.ubicacion} ambientes={propiedad.ambientes} metros={propiedad.metros} tipo={propiedad.tipo} margen={propiedad.margen}/>
-        ))}
+        ))) : null}
 
 
       </ScrollView>
