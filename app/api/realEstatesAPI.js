@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://18.218.245.250:8080'; // Reemplaza con la URL de tu backend
+const API_BASE_URL = 'http://18.218.245.250:8080/'; // Reemplaza con la URL de tu backend
 
 // Crea una instancia personalizada de Axios
 const realEstatesAPI = axios.create({

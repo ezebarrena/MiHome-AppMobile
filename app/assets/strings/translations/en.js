@@ -44,7 +44,8 @@ export default {
       "passwordInput": "PASSWORD",
       "nameInput": "REAL ESTATE AGENCY",
       "cuitInput": "CUIT",
-      "registerButton": "Create Account"
+      "registerButton": "Create Account",
+      contactEmail:"CONTACT EMAIL"
     },
     "cannotLoginModal": {
       "firstStep": {
@@ -117,7 +118,12 @@ export default {
     propiedades:'ESTATES',
     valoracion:'Rating',
     total:'Total',
-    cubiertos:'Built'
+    cubiertos:'Built',
+    piso:"Floor",
+    er:'st',
+    do:'nd',
+    er:'rd',
+    to:'th'
   },
 
   realEstateUploadAsset: {
@@ -144,7 +150,8 @@ export default {
     "amenities": "Amenities",
     orientacion:'Orientation',
     mensajePublicado:'The Estate has been published',
-    mensajeError:'There has been an error, please review the content and try again'
+    mensajeError:'There has been an error, please review the content and try again',
+    faltaData:'Please fill all required fields'
 
   },
 
@@ -171,8 +178,10 @@ export default {
     "frontBack": "Front or back",
     "amenities": "Amenities",
     orientacion:'Orientation',
-    mensajePublicado:'The Estate has been published',
-    mensajeError:'There has been an error, please review the content and try again'
+    mensajePublicado:'The Estate has been modified',
+    mensajeError:'There has been an error, please review the content and try again',
+    botonModificar:'Modify',
+    faltaData:'Please fill all required fields'
   },
 
   REUploadAssetChoices:{
@@ -204,7 +213,8 @@ export default {
     este:'East',
     oeste:'West',
     frente:'Front',
-    contrafrente:'Back'
+    contrafrente:'Back',
+
   },
 
   REprofile:{

@@ -26,16 +26,19 @@ import Theme from "../../styles/Theme";
 import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 import PanelDetalles from "../../components/componenteREDP/detalles";
 import Estados from "../../../assets/funcionTraduccion";
-import { deleteAsset } from "../../../api/assetsAPI";
+import { deleteAsset, updateAsset } from "../../../api/assetsAPI";
 
-export default function DetallePropiedadRSUI({ informacion }) {
+
+export default function DetallePropiedadRSUI({ informacion, booking }) {
   //console.log(mostrarBotones.mostrarBotones);
   //{mostrarBotones.mostrarBotones ? <Text>Bienvenidos, Usuario</Text> : null}
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalPausarVisible, setModalPausarVisible] = useState(false);
   const [modalEliminarVisible, setModalEliminarVisible] = useState(false);
+  const [propiedadDuplicado, setPropiedadDuplicado] = useState([])
   const necesitaBoton = ['venta', 'alquiler', 'pausada', 'alquilada']
+
 
 
   const [fontsLoaded, fontError] = useFonts({
@@ -47,10 +50,6 @@ export default function DetallePropiedadRSUI({ informacion }) {
     return null;
   }
 
-  const navModificar = () => {
-    console.log("mod");
-
-  };
 
 
   const pausar = () => {
@@ -65,9 +64,31 @@ export default function DetallePropiedadRSUI({ informacion }) {
     setModalEliminarVisible(true)
   };
 
+  const handlePausar = async () => {
+    try {
+      setPropiedadDuplicado(informacion)
+      let estado = 2
+      if (informacion.state === 2) {
+        estado = 1
+      }
+
+      const nuevoEstado = {
+        "state": estado
+      }
+
+      const respuesta = await updateAsset(nuevoEstado, informacion._id)
+      if (respuesta.status === 200) {
+        navigation.navigate('Home');
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const cerrarModales = (numero) => {
     if (numero == 1) {
-      //funcion para pausar
+      handlePausar()
     }
     if (numero == 2) {
       handleDelete()
@@ -139,29 +160,29 @@ export default function DetallePropiedadRSUI({ informacion }) {
         </View>
       </Modal>
       <TouchableOpacity onPress={() => navigation.navigate("PublicacionPropiedad", { propiedadId: informacion._id, name: informacion.title })} style={styles.divImagen}>
-        <Image source={imagenTest} style={styles.imagen} />
+        {informacion.image && informacion.image.length > 0 ? <Image src={informacion.image[0]} style={styles.imagen} /> : <Image source={imagenTest} style={styles.imagen} /> }
+        
       </TouchableOpacity>
       {mostrarBotones ? (
         <View style={styles.botonera}>
-          {tipo === "alquilada" ? null : <TouchableOpacity
-            onPress={() => navigation.navigate("UpdatePropiedad", { propiedadId: informacion._id })}
-            style={[styles.boton, styles.botonMod]}
-          >
-            <Text style={styles.botonTexto}>
-              {i18n.t("detallePropiedadInmobiliaria.modificarPublicacion")}
-            </Text>
-          </TouchableOpacity>}
-
-          <TouchableOpacity
-            onPress={() => pausar()}
-            style={[styles.boton, styles.botonPausa]}
-          >
-            <Text style={styles.botonTexto}>
-              {tipo === 'pausada' ? i18n.t("detallePropiedadInmobiliaria.despausar") : i18n.t("detallePropiedadInmobiliaria.pausar")}
-            </Text>
-          </TouchableOpacity>
-
-
+          {tipo === "alquilada" || tipo === "vendida" ? null : <>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("UpdatePropiedad", { propiedadId: informacion._id })}
+              style={[styles.boton, styles.botonMod]}
+            >
+              <Text style={styles.botonTexto}>
+                {i18n.t("detallePropiedadInmobiliaria.modificarPublicacion")}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => pausar()}
+              style={[styles.boton, styles.botonPausa]}
+            >
+              <Text style={styles.botonTexto}>
+                {tipo === 'pausada' ? i18n.t("detallePropiedadInmobiliaria.despausar") : i18n.t("detallePropiedadInmobiliaria.pausar")}
+              </Text>
+            </TouchableOpacity>
+          </>}
 
           <TouchableOpacity
             onPress={() => eliminar()}
@@ -184,7 +205,7 @@ export default function DetallePropiedadRSUI({ informacion }) {
         </TouchableOpacity>
 
       </View>}
-      <PanelDetalles datosPropiedad={informacion} tipo={tipo} />
+      <PanelDetalles datosPropiedad={informacion} tipo={tipo} booking={booking} />
 
     </View>
   );

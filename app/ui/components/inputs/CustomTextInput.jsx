@@ -2,11 +2,11 @@ import { BottomTabBarHeightCallbackContext } from "@react-navigation/bottom-tabs
 import React from "react";
 import { TextInput, StyleSheet, Platform } from "react-native";
 
-const CustomTextInput = ({ placeholder, value, onChangeText, secureTextEntry, keyboardType, defaultValue }) => {
+const CustomTextInput = ({multilinea = false, alto = 48, paddingHorizontal = 0, placeholder, value, onChangeText, secureTextEntry, keyboardType, defaultValue }) => {
 
   return (
     <TextInput
-      style={styles.input}
+      style={[styles.input, {height: alto, paddingHorizontal: paddingHorizontal}]}
       placeholder={placeholder}
       placeholderTextColor={value ? "black" : "#aaaaaa"}
       onChangeText={onChangeText}
@@ -15,20 +15,21 @@ const CustomTextInput = ({ placeholder, value, onChangeText, secureTextEntry, ke
       secureTextEntry={secureTextEntry}
       keyboardType={keyboardType}
       defaultValue={defaultValue}
+      multiline={multilinea}  // Hacer el TextInput multiline
+      numberOfLines={100}
     />
   );
 };
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: "rgba(250, 250, 250, 0.9)", // RGBA con 90% de transparencia
-    height: 48,
+    backgroundColor: "white", // RGBA con 90% de transparencia
     borderRadius: 10,
     borderWidth: 1,
-    marginHorizontal: 14,
     overflow: "hidden",
     marginVertical: 10,
-    textAlign: "center", // Centra el texto del placeholder
+    paddingLeft:20,
+    textAlign: "left", // Centra el texto del placeholder
     ...Platform.select({
       ios: {
         shadowOffset: { width: 0, height: 2 },

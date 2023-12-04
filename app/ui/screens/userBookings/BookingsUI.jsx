@@ -3,21 +3,31 @@ import {
   ImageBackground,
   StyleSheet,
   View,
+  Dimensions,
   Text,
   Pressable,
+  ScrollView,
+  TouchableOpacity
 } from "react-native";
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
-import * as SplashScreen from "expo-splash-screen";
-import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
+import CardBooking from "../../components/cards/CardBooking";
+
+
+
 import i18n from "../../../assets/strings/I18n";
+import Theme from "../../styles/Theme";
 
 
 
-//SplashScreen.preventAutoHideAsync();
 
 export default function BookingsUI() {
+
+  const navigation = useNavigation();
+
   const [fontsLoaded, fontError] = useFonts({
+    
     Poppins_700Bold_Italic,
   });
 
@@ -26,20 +36,38 @@ export default function BookingsUI() {
   }
 
 
+  const goHome = () => {
+    navigation.navigate("UserHome")
+  }
+
+
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={["rgba(0, 0, 0, 0.45)", "rgba(81,47,123,1)"]}
-        style={styles.background}
-      >
-        
-          <View style={styles.overlay}>
-            <Text style={styles.logoText}>Bookings</Text>
-          </View>
+
+      <View style={styles.contenedorHead}>
+        <Text style={styles.textoHead}>Bookings</Text>
+      </View>
+
+      <ScrollView>
+
+        <View style={styles.booking}>
+          <Text style={styles.bookingText}>Que estas esperando para hacer tu reserva?</Text>
+          <TouchableOpacity>
+            <Text style={styles.bookingButton} onPress={goHome}>Ver propiedades</Text>
+          </TouchableOpacity>
+        </View>
+
+        <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
+        calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
+        />
+
+         <CardBooking dateBooked={"11/09/2024"} dateBookedEnd={"11/11/2024"} estado={"Alquilada"} price={'$3000'}
+        calle={'Los Laureles'} numero={'124'} assetName={'Casa de verano'}
+        />
 
 
-        
-      </LinearGradient>
+      </ScrollView>
+  
     </View>
   );
 }
@@ -50,6 +78,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+
   image: {
     flex: 1, // Para que la imagen ocupe toda la pantalla
     justifyContent: "center", // Centrar verticalmente
@@ -89,13 +118,55 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 10,
   },
-  textoLoginInmobiliaria: {
-    color: "white",
+
+
+  contenedorHead: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: "3%",
+    paddingTop: 30,
+  },
+  
+
+  textoHead: {
+    marginLeft: 5,
+    marginTop: 30,    
+    fontFamily: 'Poppins_700Bold',
+    color: 'black',
+    fontSize: Dimensions.get('window').width * 0.06,
   },
 
-  contenedorLogin: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
+  booking:{
+    marginLeft: "3%",
+    marginRight: "3%",
+    height:90,
+    backgroundColor:Theme.colors.FONDOCARD,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius:10,
+    borderBottomRightRadius:10,
+    paddingLeft:15,
+    paddingTop:10,
+    marginBottom:10,
+    marginTop:5
   },
+
+  bookingText:{
+    fontSize: Dimensions.get('window').width * 0.04,
+    marginBottom:10
+  },
+
+  bookingButton:{
+    fontSize: Dimensions.get('window').width * 0.035,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius:10,
+    borderBottomRightRadius:10,
+    borderWidth:1,
+    padding:7,
+    width:'40%',
+    textAlign:'center'
+
+  },
+
 });

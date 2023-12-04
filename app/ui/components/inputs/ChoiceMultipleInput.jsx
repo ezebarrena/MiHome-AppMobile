@@ -11,7 +11,7 @@ const ChoiceMultipleInput = ({ data, value, onValueSelect, defaultOption }) => {
     setSelected(val);
     onValueSelect(val); // Llama a la función proporcionada por el componente padre
   };
-  console.log(defaultOption);
+
   return (
     <MultipleSelectList
       defaultOption={defaultOption}
@@ -29,14 +29,14 @@ const ChoiceMultipleInput = ({ data, value, onValueSelect, defaultOption }) => {
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: "rgba(250, 250, 250, 0.9)", // RGBA con 90% de transparencia
+    backgroundColor: "white", // RGBA con 90% de transparencia
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "black",
-    margin: 14,
     overflow: "hidden",
     marginVertical: 10,
-    textAlign: "center", // Centra el texto del placeholder
+    paddingLeft:20,
+    textAlign: "left", // Centra el texto del placeholder
     ...Platform.select({
       ios: {
         shadowOffset: { width: 0, height: 2 },

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import axios from 'axios';
 import { se } from 'make-plural';
 
-const CustomSearchBar = ({ onAddressSelect }) => {
+const CustomSearchBar = ({ onAddressSelect, defaultValue }) => {
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -31,6 +31,14 @@ const CustomSearchBar = ({ onAddressSelect }) => {
     setSearchResults([]);
   };
 
+  useEffect(()=>{
+    if(defaultValue != undefined){
+      setSearchText(defaultValue)
+      searchAddress()
+    }
+    
+  },[defaultValue])
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -51,7 +59,7 @@ const CustomSearchBar = ({ onAddressSelect }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(250, 250, 250, 0.9)',
+    backgroundColor: 'white',
     borderRadius: 10,
     borderWidth: 1,
     marginHorizontal: 14,

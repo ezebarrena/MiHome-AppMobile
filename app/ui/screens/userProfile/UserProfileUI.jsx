@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
 
     userInfo: {
         alignItems: 'center',
-        paddingTop:'25%',
+        paddingTop:'20%',
     },
     
     contenedorOpciones: {

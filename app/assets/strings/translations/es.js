@@ -47,6 +47,7 @@ export default {
       "nameInput": "AGENCIA INMOBILIARIA",
       "cuitInput": "CUIT",
       "registerButton": "Crear cuenta",
+      contactEmail:"EMAIL DE CONTACTO"
     },
   },
   detallePropiedadInmobiliaria: {
@@ -97,7 +98,12 @@ export default {
     propiedades:'PROPIEDADES',
     valoracion:'Valoracion',
     total:'Totales',
-    cubiertos:'Cubiertos'
+    cubiertos:'Cubiertos',
+    piso:"Piso",
+    er:'er',
+    do:'do',
+    er:'er',
+    to:'to'
   },
   realEstateUploadAsset: {
     "headTitle": "Publicar Propiedad",
@@ -123,7 +129,8 @@ export default {
     "amenities": "Amenities",
     mensajePublicado:'La propiedad se cargo exitosamente',
     mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
-    orientacion:'Orientacion'
+    orientacion:'Orientacion',
+    faltaData:'Por favor completa todos los campos obligatorios'
 
   },
   realEstateUpdateAsset: {
@@ -148,9 +155,11 @@ export default {
     "location": "Ubicacion",
     "frontBack": "Front or back",
     "amenities": "Amenities",
-    mensajePublicado:'La propiedad se cargo exitosamente',
+    mensajePublicado:'La propiedad se modifico exitosamente',
     mensajeError:'Hubo un error, revise los campos y vuelva a intentar',
-    orientacion:'Orientacion'
+    orientacion:'Orientacion',
+    botonModificar:'Modificar',
+    faltaData:'Por favor completa todos los campos obligatorios'
   },
 
   REUploadAssetChoices:{
@@ -182,7 +191,8 @@ export default {
     este:'Este',
     oeste:'Oeste',
     frente:'Frente',
-    contrafrente:'Contrafrente'
+    contrafrente:'Contrafrente',
+    
   },
 
   REprofile:{

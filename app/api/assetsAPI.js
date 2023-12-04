@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://18.218.245.250:8080'; // Reemplaza con la URL de tu backend
+const API_BASE_URL = 'http://18.218.245.250:8080/'; // Reemplaza con la URL de tu backend
 
 // Crea una instancia personalizada de Axios
 const assetsAPI = axios.create({
@@ -13,7 +13,6 @@ const assetsAPI = axios.create({
 
 export const createAsset = async (assetData) => {
   try {
-    console.log(assetData,'t');
     const response = await assetsAPI.post('/assets', assetData);
     return response;
   } catch (error) {
@@ -42,9 +41,9 @@ export const getMyRealEstateAssets = async (userData) => {
   }
 };
 
-export const updateAsset = async (assetData) => {
+export const updateAsset = async (assetData, idAsset) => {
   try {
-    const response = await assetsAPI.put('/assets', assetData);
+    const response = await assetsAPI.put(`/assets/${idAsset}`, assetData);
     return response.data;
   } catch (error) {
     console.error('Error updating asset:', error);
@@ -93,3 +92,14 @@ export const getMyRealEstateBookings = async (realEstateID) => {
     throw error;
   }
 };
+
+export const getFilteredAssets = async (assetId,transaction, assetType, coin, nRooms, minPrice, maxPrice, nBedrooms, nBaths, nGarage, mTotal, amenities, year) => {
+  try {
+    const response = await assetsAPI.post('/assets/filter', { _id: assetId, transaction, assetType, coin, nRooms, minPrice, maxPrice, nBedrooms, nBaths, nGarage, mTotal, amenities, year });
+    return response.data;
+  } catch (error) {
+    console.error('Error getting filter asset', error);
+    throw error;
+  }
+};
+

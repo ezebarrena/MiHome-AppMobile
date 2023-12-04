@@ -12,10 +12,12 @@ import { Ionicons } from "@expo/vector-icons"; // Asegúrate de importar Ionicon
 import MapView, { Marker } from 'react-native-maps';
 import CustomSearchBar from "../../components/inputs/CustomSearchBar";
 import { useForm } from "../../../hooks/useForm";
-import { createAsset } from "../../../api/assetsAPI";
+import { updateAsset } from "../../../api/assetsAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import Estados from "../../../assets/funcionTraduccion";
+import { uploadAssetImage } from "../../../api/imagesAPI";
+
 
 const dataTypes = [
   { key: 'house', value: i18n.t('REUploadAssetChoices.house') },
@@ -75,9 +77,10 @@ const dataAmenities = [
 export default function UpdateAssetUI({ propiedad }) {
 
   const [imageUris, setImageUris] = useState([]);
-
+  const [listaCambios, setListaCambios] = useState({})
   const [defaultOptionsAmenties, setDefaultOptionsAmenties] = useState([])
   const [subiendo, setSubiendo] = useState(false);
+  const [defaultLocation, setDefaultLocation] = useState("")
   const [error, setError] = useState(false);
   const [mapRegion, setMapRegion] = useState({
     latitude: null,
@@ -88,39 +91,21 @@ export default function UpdateAssetUI({ propiedad }) {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
-  console.log(propiedad);
+  useEffect(() => {
+    if (propiedad.geoLocalization) {
+      const geo = propiedad.geoLocalization.split(",")
+      setDefaultLocation(propiedad.direction)
+      setMapRegion({
+        ...mapRegion,
+        latitude: parseFloat(geo[0]),
+        longitude: parseFloat(geo[1])
+      });
+    }
+    if (propiedad.image) {
+      setImageUris(propiedad.image)
+    }
+  }, [])
 
-  /* const initialFormState = {
-    "title": propiedad.title ? propiedad.title : "",
-    "image": propiedad.image ? propiedad.image : [],
-    "type": propiedad.type ? propiedad.type : "",
-    "transaction": propiedad.transaction ? propiedad.transaction.toString() : null,
-    "price": propiedad.price ? propiedad.price.toString() : null,
-    "coin": propiedad.coin ? propiedad.coin.toString() : "",
-    "bills": propiedad.bills ? propiedad.bills.toString() : null,
-    "description": propiedad.description ? propiedad.description : "",
-    "amenities": propiedad.amenities ? propiedad.amenities : [],
-    "room": propiedad.room ? propiedad.room.toString() : null,
-    "floor": propiedad.floor ? propiedad.floor.toString() : null,
-    "bath": propiedad.bath ? propiedad.bath.toString() : null,
-    "bedroom": propiedad.bedroom ? propiedad.bedroom.toString() : null,
-    "garage": propiedad.garage ? propiedad.garage.toString() : null,
-    "mTotal": propiedad.mTotal ? propiedad.mTotal.toString() : null,
-    "mIndoor": propiedad.mIndoor ? propiedad.mIndoor.toString() : null,
-    "storage": propiedad.storage ? propiedad.storage : false,
-    "antiquity": propiedad.antiquity ? propiedad.antiquity.toString() : null,
-    "streetName": propiedad.streetName ? propiedad.streetName : "",
-    "streetNumber": propiedad.streetNumber ? propiedad.streetNumber.toString() : null,
-    "neighbourhood": propiedad.neighbourhood ? propiedad.neighbourhood : "",
-    "locality": propiedad.locality ? propiedad.locality : "",
-    "province": propiedad.province ? propiedad.province : "",
-    "country": propiedad.country ? propiedad.country : "",
-    "geoLocalization": propiedad.geoLocalization ? propiedad.geoLocalization : "",
-    "frontBack": propiedad.frontBack ? propiedad.frontBack : "",
-    "state": propiedad.state ? propiedad.state : 1,
-    "realEstateName": propiedad.realEstateName ? propiedad.realEstateName : "",
-    "orientation": propiedad.orientation ? propiedad.orientation : [],
-  }; */
   const initialFormState = {
     "title": propiedad.title != undefined || propiedad.title != null ? propiedad.title : "",
     "image": [],
@@ -146,62 +131,136 @@ export default function UpdateAssetUI({ propiedad }) {
     "locality": propiedad.locality ? propiedad.locality : "",
     "province": propiedad.province ? propiedad.province : "",
     "country": propiedad.country ? propiedad.country : "",
-    "geoLocalization": propiedad.geoLocalization? propiedad.geoLocalization : "",
+    "geoLocalization": propiedad.geoLocalization ? propiedad.geoLocalization : "",
     "frontBack": propiedad.frontBack ? propiedad.frontBack : "",
     "state": 1,
     "realEstateName": propiedad.realEstateName ? propiedad.realEstateName : "",
-    "orientation": []
+    "orientation": [],
+    "direction": propiedad.direction ? propiedad.direction : ""
   }
 
   const { form, onChange, setFormValue } = useForm(initialFormState);
 
+  const enCambio = (valor, campo) => {
 
+    if (propiedad[campo] !== valor) {
+      setListaCambios({
+        ...listaCambios,
+        [campo]: valor
+      })
+    }
 
+  }
 
-  /* const handleSubmit = async () => {
-    const value = await AsyncStorage.getItem('realEstateId')
-    console.log(value);
+  const subirImage = async (uri, nombre, imagenesArray) => {
+    const formData = new FormData();
+    formData.append("file", {
+      uri: uri,
+      type: "image/jpeg",
+      name: nombre,
+    });
 
-    if (value) {
-      console.log(value);
-      onChange(value, "realEstateName")
-      console.log(form.realEstateName);
-      if (form.realEstateName != "") {
-        const nuevoForm = removeNullFields(form)
-        if (nuevoForm) {
-          setSubiendo(true)
-          const response = await createAsset(nuevoForm);
-          console.log(response);
-          if (response.status === 200) {
-            console.log(response.status);
-            setSubiendo(false)
-            setModalVisible(true)
-          }
-          else {
-            alert("error Upload Asset");
-            setError(true)
-          }
-        }
+    try {
+      const response = await uploadAssetImage(formData);
+
+      if (response.status === 200) {
+        console.log(response.data.secure_url);
+
+        // Actualiza el arreglo local
+        imagenesArray.push(response.data.secure_url);
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al subir la foto:", error);
+      return false;
+    }
+  }
+
+  const dividirArrays = () => {
+    const coincidentes = [];
+    const noCoincidentes = [];
+
+    // Itera sobre los elementos de imageUris
+    imageUris.forEach(uri => {
+      // Verifica si el elemento está presente en propiedad.image
+      if (propiedad.image.includes(uri)) {
+        coincidentes.push(uri);
+      } else {
+        noCoincidentes.push(uri);
+      }
+    });
+
+    // Puedes devolver los dos arrays resultantes
+    return {
+      coincidentes: coincidentes,
+      noCoincidentes: noCoincidentes,
+    };
+  }
+  const handleSubirImagen = async () => {
+    enCambio([], 'image')
+    let i = 0
+    const dividirResultados = dividirArrays()
+    const imagenesArray = dividirResultados.coincidentes;
+    while (i < dividirResultados.noCoincidentes.length) {
+      const partesRuta = dividirResultados.noCoincidentes[i].split('/');
+      // Obtener el último elemento, que es el nombre del archivo con la extensión
+      const nombreConExtension = partesRuta[partesRuta.length - 1];
+      // Dividir el nombre del archivo y la extensión usando el carácter de punto como delimitador
+      const partesNombre = nombreConExtension.split('.');
+      // Obtener el nombre del archivo sin la extensión
+      const nombreSinExtension = partesNombre[0]
+      await subirImage(dividirResultados.noCoincidentes[i], nombreSinExtension, imagenesArray)
+      i++
+    }
+    console.log(imagenesArray,'iagenes');
+    listaCambios.image = imagenesArray
+    console.log(listaCambios.image);
+    subir()
+  }
+
+  const subir = async () => {
+
+    const response = await updateAsset(listaCambios, propiedad._id)
+    if (response.status === 200) {
+      console.log(response.status);
+      setSubiendo(false)
+      setModalVisible(true)
+    }
+    else {
+      alert("error Upload Asset");
+      setError(true)
+    }
+  }
+
+  const handleSubmit = async () => {
+    setSubiendo(true)
+
+    if (imageUris.length != propiedad.image.length) {
+      handleSubirImagen()
+    }
+    else if (imageUris.every(item => propiedad.image.includes(item)) === false) {
+      handleSubirImagen()
+    }
+    else {
+      if (Object.keys(listaCambios).length > 0) {
+        subir()
+      }
+
+      else {
+        setSubiendo(false)
+        setError(true)
+        setModalVisible(true)
       }
 
     }
 
 
-  }; */
 
-  const handleSubmit = () => {
-    console.log(form, 'ssa');
   }
 
-  function removeNullFields(obj) {
-    const result = {};
-    for (const key in obj) {
-      if (obj[key] !== "") {
-        result[key] = obj[key];
-      }
-    }
-    return result;
-  }
 
   const renderImagePreview = (imageUris) => {
     return (
@@ -227,9 +286,11 @@ export default function UpdateAssetUI({ propiedad }) {
 
   const addImageToUris = (uri) => {
     setImageUris([...imageUris, uri]);
+    console.log(imageUris.length);
   };
 
   const removeImage = (index) => {
+    console.log(imageUris.length);
     const updatedImages = [...imageUris];
     updatedImages.splice(index, 1);
     setImageUris(updatedImages);
@@ -244,7 +305,10 @@ export default function UpdateAssetUI({ propiedad }) {
     almacenamiento = 'no'
   }
 
-
+  const repartidor = (valor, campo) => {
+    onChange(valor, campo)
+    enCambio(valor, campo)
+  }
 
   return (
 
@@ -254,18 +318,22 @@ export default function UpdateAssetUI({ propiedad }) {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {error ? <Text style={styles.modalText}>{i18n.t('realEstateUploadAsset.mensajeError')}</Text> : <Text style={styles.modalText}>{i18n.t('realEstateUploadAsset.mensajePublicado')}</Text>}
+            {error ? <Text style={styles.modalText}>{i18n.t('realEstateUpdateAsset.mensajeError')}</Text> : <Text style={styles.modalText}>{i18n.t('realEstateUpdateAsset.mensajePublicado')}</Text>}
 
-            <Pressable
+            {error ? <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={() => { setModalVisible(!modalVisible); setError(false) }}>
               <Text style={styles.textStyle}>{i18n.t('common.cerrar')}</Text>
-            </Pressable>
+            </Pressable> : <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => { setModalVisible(!modalVisible); navigation.navigate("Home"); }}>
+              <Text style={styles.textStyle}>{i18n.t('common.cerrar')}</Text>
+            </Pressable>}
+
           </View>
         </View>
       </Modal>
@@ -277,7 +345,7 @@ export default function UpdateAssetUI({ propiedad }) {
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.title')}</Text>
         <CustomTextInput
           value={form.title}
-          onChangeText={(value) => onChange(value, "title")}
+          onChangeText={(value) => repartidor(value, 'title')}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
@@ -297,7 +365,7 @@ export default function UpdateAssetUI({ propiedad }) {
             const resultado = dataTypes.find(item => item.value === value);
             if (resultado) {
 
-              onChange(resultado.key, "type")
+              repartidor(resultado.key, "type")
             }
 
           }}
@@ -312,7 +380,7 @@ export default function UpdateAssetUI({ propiedad }) {
             const resultado = dataTransaccion.find(item => item.value === value);
             if (resultado) {
 
-              onChange(parseInt(resultado.key), "transaction")
+              repartidor(parseInt(resultado.key), "transaction")
             }
 
           }}
@@ -322,7 +390,7 @@ export default function UpdateAssetUI({ propiedad }) {
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.price}
-          onChangeText={(value) => onChange(parseInt(value), "price")}
+          onChangeText={(value) => repartidor(parseInt(value), "price")}
 
         />
 
@@ -330,7 +398,7 @@ export default function UpdateAssetUI({ propiedad }) {
         <ChoiceInput
           data={dataCurrency}
           value={form.coin}
-          onValueSelect={(value) => onChange(value, "coin")}
+          onValueSelect={(value) => repartidor(value, "coin")}
           defaultOption={propiedad.coin ? { key: propiedad.coin, value: propiedad.coin } : []}
         />
 
@@ -338,13 +406,13 @@ export default function UpdateAssetUI({ propiedad }) {
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.bills}
-          onChangeText={(value) => onChange(parseInt(value), "bills")}
+          onChangeText={(value) => repartidor(parseInt(value), "bills")}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.description')}</Text>
         <CustomTextInput
           value={form.description === "" ? (propiedad.description ? propiedad.description : "") : form.description}
-          onChangeText={(value) => onChange(value, "description")}
+          onChangeText={(value) => repartidor(value, "description")}
 
         />
 
@@ -352,17 +420,18 @@ export default function UpdateAssetUI({ propiedad }) {
         <ChoiceMultipleInput
           data={dataAmenities}
           value={form.amenities}
-          onValueSelect={(key) => onChange(key, "amenities")}
+          onValueSelect={(key) => repartidor(key, "amenities")}
           defaultOption={propiedad.amenities ? propiedad.amenities.map((amenitie, index) => ({
             key: amenitie,
-            value: i18n.t(`REUploadAssetChoices.${amenitie}`),})): []}
+            value: i18n.t(`REUploadAssetChoices.${amenitie}`),
+          })) : []}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.rooms')}</Text>
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.room}
-          onChangeText={(value) => onChange(parseInt(value), "room")}
+          onChangeText={(value) => repartidor(parseInt(value), "room")}
 
         />
 
@@ -371,7 +440,7 @@ export default function UpdateAssetUI({ propiedad }) {
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.floor}
-          onChangeText={(value) => onChange(parseInt(value), "floor")}
+          onChangeText={(value) => repartidor(parseInt(value), "floor")}
 
         />
 
@@ -380,7 +449,7 @@ export default function UpdateAssetUI({ propiedad }) {
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.bath}
-          onChangeText={(value) => onChange(parseInt(value), "bath")}
+          onChangeText={(value) => repartidor(parseInt(value), "bath")}
         />
 
 
@@ -388,7 +457,7 @@ export default function UpdateAssetUI({ propiedad }) {
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.bedroom}
-          onChangeText={(value) => onChange(parseInt(value), "bedroom")}
+          onChangeText={(value) => repartidor(parseInt(value), "bedroom")}
 
         />
 
@@ -404,7 +473,7 @@ export default function UpdateAssetUI({ propiedad }) {
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.mTotal}
-          onChangeText={(value) => onChange(parseInt(value), "mTotal")}
+          onChangeText={(value) => repartidor(parseInt(value), "mTotal")}
 
         />
 
@@ -412,7 +481,7 @@ export default function UpdateAssetUI({ propiedad }) {
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.mIndoor}
-          onChangeText={(value) => onChange(parseInt(value), "mIndoor")}
+          onChangeText={(value) => repartidor(parseInt(value), "mIndoor")}
 
         />
 
@@ -421,11 +490,11 @@ export default function UpdateAssetUI({ propiedad }) {
           data={dataStorage}
           value={form.storage}
           onValueSelect={(value) => {
-            let valor = false
-            if (value == 'Si' || value == 'si') {
-              valor = true
+            const resultado = dataTransaccion.find(item => item.value === value);
+            if (resultado) {
+
+              repartidor(resultado.key, "storage")
             }
-            onChange(valor, "storage")
           }}
           defaultOption={propiedad.storage != undefined || propiedad.storage != null ? { key: propiedad.storage, value: i18n.t(`REUploadAssetChoices.${almacenamiento}`) } : []}
         />
@@ -436,7 +505,7 @@ export default function UpdateAssetUI({ propiedad }) {
         <CustomTextInput
           keyboardType={'numeric'}
           value={form.antiquity}
-          onChangeText={(value) => onChange(parseInt(value), "antiquity")}
+          onChangeText={(value) => repartidor(parseInt(value), "antiquity")}
 
         />
 
@@ -447,8 +516,8 @@ export default function UpdateAssetUI({ propiedad }) {
           onValueSelect={(value) => {
             const resultado = dataFrontBack.find(item => item.value === value);
             if (resultado) {
-              console.log(resultado.key, 'llave');
-              onChange(resultado.key, "frontBack")
+
+              repartidor(resultado.key, "frontBack")
             }
 
           }}
@@ -459,14 +528,15 @@ export default function UpdateAssetUI({ propiedad }) {
         <ChoiceMultipleInput
           data={dataOrientacion}
           value={form.orientation}
-          onValueSelect={(key) => onChange(key, "orientation")}
+          onValueSelect={(key) => repartidor(key, "orientation")}
           defaultOption={form.orientation}
         />
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.location')}</Text>
         <CustomSearchBar
+          defaultValue={defaultLocation}
           onAddressSelect={(item) => {
-            console.log(item);
+
 
             // Obtener las coordenadas y actualizar el mapa
             setMapRegion({
@@ -511,7 +581,7 @@ export default function UpdateAssetUI({ propiedad }) {
           )}
         </MapView>
 
-        <Button loading={subiendo} title={"Publicar"} titleColor={"white"} onPress={() => handleSubmit()} />
+        <Button loading={subiendo} title={i18n.t('realEstateUpdateAsset.botonModificar')} titleColor={"white"} onPress={() => handleSubmit()} />
       </View>
     </ScrollView>
   );

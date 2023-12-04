@@ -60,9 +60,19 @@ export default function HomeUI(listadoPropiedades) {
     navigation.navigate("AdvancedSearch")
   }
 
-  const Search = () => {
-    navigation.navigate("UserProfile") //cambiar
-  }
+  
+
+
+  const Search = async () => {
+    try {
+      const results = await getAssets(form);
+      //console.log("Resultados de búsqueda:", results);
+      navigation.navigate("UserProfile", { results });
+    } catch (error) {
+      console.error("Error al realizar la búsqueda:", error);
+    }
+  };
+
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -92,13 +102,6 @@ export default function HomeUI(listadoPropiedades) {
         setRefreshing(false);
       }, 2000); 
     };
-    //  useFocusEffect(
-    //    React.useCallback(() => {
-    //      setPropiedades(listadoPropiedades.asset);
-    //      setPropiedadesBD(listadoPropiedades.asset);
-    //    }, [setPropiedades, listadoPropiedades])
-    //);
-    
 
   
 
@@ -128,6 +131,30 @@ export default function HomeUI(listadoPropiedades) {
       
       <ScrollView vertical>
       
+      <Text style={styles.textoBody2}> Puede interesarte </Text>
+
+      {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
+        <ScrollView horizontal
+          data={propiedades}
+          keyExtractor={item => item} //sin filtro
+          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("DetallesPropiedadRE", { propiedadId: item._id })} />}
+          contentContainerStyle={styles.scrollViewContent} 
+          style={styles.scrollView}
+          showsHorizontalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        />
+        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>No hay propiedades para mostrar {"\n"} </Text></View>)
+
+      }
+
+      <Text style={styles.textoBody1}>{i18n.t('homeScreen.SaleProperties')} </Text>
+
+
       {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
         <ScrollView horizontal
           data={propiedades}
@@ -143,9 +170,12 @@ export default function HomeUI(listadoPropiedades) {
             />
           }
         />
-        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad')} {"\n"} </Text><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad1')}</Text></View>)
+        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>No hay propiedades para mostrar {"\n"} </Text></View>)
 
       }
+
+      <Text style={styles.textoBody1}>{i18n.t('homeScreen.RentProperties')} </Text>
+
 
       {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
         <ScrollView horizontal
@@ -162,40 +192,12 @@ export default function HomeUI(listadoPropiedades) {
             />
           }
         />
-        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad')} {"\n"} </Text><Text style={styles.textEmpty}>{i18n.t('homeScreenRS.noPropiedad1')}</Text></View>)
+        </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>No hay propiedades para mostrar {"\n"} </Text></View>)
 
       }
 
-      <Text style={styles.textoBody2}>{i18n.t('homeScreen.PHUsuario1')} </Text>
 
-      <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
-        <View style={{ height: '15%' }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-        <View style={{ height: '15%' }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-        <View style={{ height: '15%' }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-      </ScrollView>
       
-      <Text style={styles.textoBody1}>{i18n.t('homeScreen.SaleProperties')} </Text>
-
-      <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
-        <View style={{ height: '15%' }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-        <View style={{ height: '15%' }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-        <View style={{ height: '15%' }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-      </ScrollView>
-      
-      <Text style={styles.textoBody1}>{i18n.t('homeScreen.RentProperties')} </Text>
-
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
         <View style={{ height: '15%' }}>
           <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
@@ -265,14 +267,15 @@ const styles = StyleSheet.create({
   imagenHead: {
     resizeMode: 'contain',
     height: Dimensions.get('window').width * 0.11,
-    marginLeft: '33%',
+    marginLeft: '22%',
+    marginTop: '-4%'
   },
 
   contenedorHead: {
     flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
     alignItems: 'center',
     marginLeft: "3%",    
-    marginTop:"5%",
+    marginTop:"2%",
 
   },
 
@@ -284,7 +287,7 @@ const styles = StyleSheet.create({
   },
 
   contenedorHead2: {
-    marginTop: '3%',
+    marginTop: '1.5%',
     marginLeft: '5%',
     marginRight: '5%',
     marginBottom:'5%',

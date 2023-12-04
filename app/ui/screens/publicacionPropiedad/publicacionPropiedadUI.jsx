@@ -29,7 +29,7 @@ import imagenInmobiliaria from '../../../assets/images/imagenInmobiliaria.png'
 import Estados from "../../../assets/funcionTraduccion";
 import StarRating from 'react-native-star-rating';
 const { width } = Dimensions.get('window');
-
+import MapView, { Marker } from 'react-native-maps';
 const images = [
     require('../../../assets/images/various/imagenCasaTest.png'),  // Reemplaza con la ruta correcta de tus imágenes
     require('../../../assets/images/various/casatest1.png'),
@@ -48,25 +48,41 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
         Poppins_600SemiBold,
     });
 
-    /* const [mapRegion, setMapRegion] = useState({
+    const [mapRegion, setMapRegion] = useState({
         latitude: null,
         longitude: null,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
-      });
-      console.log(propiedad,'t');
-      const ubicacion = propiedad.geoLocalization.split(" ");
-      const latitude = parseFloat(ubicacion[0]); // Convierte la latitud en un número de punto flotante
-      const longitude = parseFloat(ubicacion[1]); // Convierte la longitud en un número de punto flotante
-      
-      // Configura el estado mapRegion con los valores de latitud y longitud
-      setMapRegion({
-        latitude,
-        longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      }); */
+    });
 
+    const [sufijo, setSufijo] = useState("")
+
+
+
+    useEffect(() => {
+        if (propiedad.geoLocalization) {
+            const geo = propiedad.geoLocalization.split(",")
+            setMapRegion({
+                ...mapRegion,
+                latitude: parseFloat(geo[0]),
+                longitude: parseFloat(geo[1])
+            });
+        }
+        if (propiedad.floor) {
+            const ultimoDigito = propiedad.floor % 10;
+            const penultimoDigito = Math.floor((propiedad.floor % 100) / 10);
+
+            if (ultimoDigito === 1 && penultimoDigito !== 1) {
+                setSufijo('er');
+            } else if (ultimoDigito === 2 && penultimoDigito !== 1) {
+                setSufijo('do');
+            } else if (ultimoDigito === 3 && penultimoDigito !== 1) {
+                setSufijo('er');
+            } else {
+                setSufijo('to');
+            }
+        }
+    }, [])
     if (!fontsLoaded && !fontError) {
         return null;
     }
@@ -78,27 +94,45 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
     return (
         <ScrollView style={styles.container}>
             <ScrollView horizontal={true} style={styles.scrollView} showsHorizontalScrollIndicator={false}>
-                {images.map((image, index) => (
-                    <Image
-                        key={index}
-                        source={image}
-                        style={styles.propertyImage}
-                    />
-                ))}
+                {propiedad.image && propiedad.image.length > 0 ?
+                    (propiedad.image.map((image, index) => (
+                        <Image
+                            key={index}
+                            src={image}
+                            style={styles.propertyImage}
+                        />
+                    ))) :
+
+                    (images.map((image, index) => (
+                        <Image
+                            key={index}
+                            source={image}
+                            style={styles.propertyImage}
+                        />
+                    )))}
+                { }
             </ScrollView>
+            <Text style={styles.titulo}>{propiedad.title}</Text>
             <View style={styles.containerDetalles}>
                 <View style={styles.viewDetalles}>
-                    <Ionicons name="location-outline" size={33} style={{ marginHorizontal: 8 }} />
-                    <Text style={styles.textDetalles1}>{propiedad.streetName} {propiedad.streetNumber}, {propiedad.neighbourhood}, {propiedad.locality}, {propiedad.province}, {propiedad.country}</Text>
+                    <MaterialIcons name="pin-drop" size={35} style={{ marginHorizontal: 8 }} />
+                    <Text style={styles.textDetalles1}>{propiedad.direction}</Text>
                 </View>
                 <View style={styles.viewDetalles}>
-                    <Ionicons name="home-outline" size={33} style={{ marginHorizontal: 8 }} />
+                    <MaterialIcons name="home" size={35} style={{ marginHorizontal: 8 }} />
                     <Text style={styles.textDetalles}>{i18n.t(`REUploadAssetChoices.${propiedad.type}`)} {i18nIdiomaTipo} </Text>
                 </View>
                 <View style={styles.viewDetalles}>
-                    <MaterialIcons name="straighten" size={33} style={{ marginHorizontal: 8 }} />
+                    <MaterialIcons name="straighten" size={35} style={{ marginHorizontal: 8 }} />
                     <Text style={styles.textDetalles}>{propiedad.mTotal} m2 {i18n.t("detallePropiedad.total")}, {propiedad.mIndoor} m2 {i18n.t("detallePropiedad.cubiertos")}</Text>
                 </View>
+
+                {propiedad.floor ?
+                    <View style={styles.viewDetalles}>
+                        <MaterialIcons name="apartment" size={35} style={{ marginHorizontal: 8 }} />
+                        <Text style={styles.textDetalles}>{propiedad.floor}{i18n.t(`detallePropiedad.${sufijo}`)} {i18n.t("detallePropiedad.piso")} </Text>
+                    </View> : null}
+                {/* {propiedad.floor ?  : null} */}
 
             </View>
             <View style={styles.viewValores}>
@@ -117,7 +151,7 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
 
 
             </View>
-            <Text style={styles.descripcion}>{propiedad.descripcion}</Text>
+            <Text style={styles.descripcion}>{propiedad.description}</Text>
             <View style={styles.chipContainer}>
                 <View style={styles.chip}>
                     <Text style={styles.chipText}>{propiedad.room} {propiedad.room > 1 ? i18n.t("detallePropiedad.ambientes") : i18n.t("detallePropiedad.ambiente")}</Text>
@@ -147,7 +181,7 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
             </View>
             <View style={styles.viewUbicacion}>
                 <Text style={styles.textUbicacion}>{i18n.t("detallePropiedad.ubicacion")}</Text>
-                {/* <MapView style={styles.map} region={mapRegion}>
+                <MapView style={styles.map} region={mapRegion}>
                     {mapRegion.latitude !== null && mapRegion.longitude !== null && (
                         <Marker
                             coordinate={{
@@ -156,18 +190,19 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
                             }}
                         />
                     )}
-                </MapView> */}
+                </MapView>
             </View>
             <View style={styles.viewExtras}>
                 <Text style={styles.textExtras}>{i18n.t("detallePropiedad.coordenadas")}: {propiedad.geoLocalization}</Text>
+
                 {propiedad.frontBack ? <Text style={styles.textExtras}>{i18n.t("detallePropiedad.vista")}: {i18n.t(`REUploadAssetChoices.${propiedad.frontBack}`)}</Text> : null}
-                
-                <Text style={styles.textExtras}>{i18n.t("detallePropiedad.orientacion")}: {propiedad.orientation.map((texto, index, array) => (
+                {propiedad.orientation.length > 0 ? <Text style={styles.textExtras}>{i18n.t("detallePropiedad.orientacion")}: {propiedad.orientation.map((texto, index, array) => (
                     <>
                         {i18n.t(`REUploadAssetChoices.${texto}`)}
                         {index !== array.length - 1 && ", "}
                     </>
-                ))}</Text>
+                ))}</Text> : null}
+
                 <Text style={styles.textExtras}>{i18n.t("detallePropiedad.antiguedad")}: {propiedad.antiquity} {propiedad.antiquity > 1 ? i18n.t("detallePropiedad.anios") : i18n.t("detallePropiedad.anio")}</Text>
             </View>
             <View style={styles.viewCardInmobiliaria}>
@@ -227,7 +262,7 @@ const styles = StyleSheet.create({
     },
 
     containerDetalles: {
-        marginVertical: 25,
+        marginVertical: 10,
         alignItems: 'flex-start',
         paddingHorizontal: 2,
         justifyContent: 'center',
@@ -237,7 +272,7 @@ const styles = StyleSheet.create({
     textDetalles: {
         paddingHorizontal: 15,
         fontFamily: 'Poppins_600SemiBold',
-        fontSize: Dimensions.get("window").width * 0.039,
+        fontSize: Dimensions.get("window").width * 0.04,
     },
     textDetalles1: {
 
@@ -273,7 +308,14 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: Dimensions.get("window").width * 0.043,
         fontFamily: 'Poppins_500Medium',
+        paddingHorizontal: 12,
+    },
+    titulo:{
+        fontFamily:"Poppins_700Bold",
+        alignSelf: 'center',
+        fontSize: Dimensions.get("window").width * 0.05,
         paddingHorizontal: 10,
+        marginTop:15
     },
     chip: {
         backgroundColor: 'transparent',
@@ -357,6 +399,7 @@ const styles = StyleSheet.create({
     },
     map: {
         height: 200,
+        marginHorizontal: 10,
         marginVertical: 10,
     },
     ratingContainer: {
