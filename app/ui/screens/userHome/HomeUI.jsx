@@ -94,7 +94,7 @@ export default function HomeUI() {
       
       <ScrollView vertical>
       
-      <Text style={styles.textoBody2}>Your Interest </Text>
+      <Text style={styles.textoBody2}>Maybe your Interest </Text>
 
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
   },
 
   textoBody2: {
+    fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get('window').width * 0.045,
     marginLeft: "5%",
     marginTop:'4%'
