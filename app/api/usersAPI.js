@@ -13,7 +13,7 @@ const usersAPI = axios.create({
 
 export const getUser = async () => {
   try {
-    const response = await assetsAPI.get('/users/me/');
+    const response = await usersAPI.get('/users/me/');
     return response.data;
   } catch (error) {
     console.error('Error getting user', error);
@@ -23,7 +23,7 @@ export const getUser = async () => {
 
 export const favAnAsset = async (userId, assetId) => {
   try {
-    const response = await favAnAsset.post('/users/me/favorite', {
+    const response = await usersAPI.post('/users/me/favorite', {
       data: { id: assetId, user:userId },
     });
     return response.data;
@@ -35,7 +35,7 @@ export const favAnAsset = async (userId, assetId) => {
 
 export const unFavAnAsset = async (userId, assetId) => {
   try {
-    const response = await favAnAsset.post('/users/me/unfavorite', {
+    const response = await usersAPI.post('/users/me/unfavorite', {
       data: { id: assetId, user:userId },
     });
     return response.data;
@@ -47,7 +47,7 @@ export const unFavAnAsset = async (userId, assetId) => {
 
 export const getMyFavouriteAssets = async (userId) => {
   try {
-    const response = await favAnAsset.get('/users/me/favorite', {
+    const response = await usersAPI.get('/users/me/favorite', {
       data: { user:userId },
     });
     return response.data;
@@ -59,7 +59,7 @@ export const getMyFavouriteAssets = async (userId) => {
 
 export const addPaymentMethod = async (userId, paymentMethod) => {
   try {
-    const response = await assetsAPI.post('/users/me/paymentmethod', {
+    const response = await usersAPI.post('/users/me/paymentmethod', {
       data: { user:userId, paymentMethod },
     });
     return response.data;
@@ -71,7 +71,7 @@ export const addPaymentMethod = async (userId, paymentMethod) => {
 
 export const deletePaymentMethod = async (userId, paymentMethod) => {
   try {
-    const response = await assetsAPI.delete('/users/me/paymentmethod', {
+    const response = await usersAPI.delete('/users/me/paymentmethod', {
       data: { user:userId, paymentMethod },
     });
     return response.data;

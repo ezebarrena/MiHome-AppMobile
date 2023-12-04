@@ -350,8 +350,8 @@ export default function UpdateAssetUI({ propiedad }) {
 
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.image')}</Text>
         <ImagePickerModal
-          buttonText="Seleccionar imagen"
-          modalTitle="Seleccionar imagen"
+          buttonText={i18n.t('realEstateUploadAsset.seleccionImagen')}
+          modalTitle={i18n.t('realEstateUploadAsset.seleccionImagen')}
           onImageSelected={(uri) => addImageToUris(uri)}
         />
         {renderImagePreview(imageUris)}
@@ -720,6 +720,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: "Poppins_500Medium",
     fontSize: Dimensions.get("window").width * 0.039,
+  },
+  dataEntry:{
+    width:"90%",
+    alignSelf:"center"
   },
 });
 
