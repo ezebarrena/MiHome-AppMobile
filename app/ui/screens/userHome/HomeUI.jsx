@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import searchIcon from "../../../assets/images/icons/searchIcon.png";
 import advancedIcon from "../../../assets/images/icons/advancedSearch.png";
 import { getAssets } from '../../../api/assetsAPI';
+import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
 
 export default function HomeUI() {
 
@@ -63,6 +64,8 @@ export default function HomeUI() {
 
 
   const tipoTransaccionFiltro = 1;
+  const tipoEstadoFiltro = 1;
+
 
   return (
     <View style={styles.container}>
@@ -91,14 +94,14 @@ export default function HomeUI() {
       
       <ScrollView vertical>
       
-      <Text style={styles.textoBody2}>Puede interesarte </Text>
+      <Text style={styles.textoBody2}>Your Interest </Text>
 
 
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
 
 
-      {!isPropiedadesLoading ? (propiedades.slice(0, 15) .map(propiedad => (
-          <CardPropiedad  titulo={propiedad.title} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.tipo} margen={propiedad.margen} onPress={() => navigation.navigate("UserPublicacionPropiedad", { propiedadId: propiedad._id })} />))) : null}
+      {!isPropiedadesLoading ? (propiedades.slice(0, 20) .filter(propiedad => propiedad.state === tipoEstadoFiltro).map(propiedad => (
+          <CardPropiedad  titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.tipo} margen={propiedad.margen} estado={propiedad.state} transaccion={propiedad.transaction} onPress={() => navigation.navigate("Publicacion", { propiedadId: propiedad._id })} />))) : null}
 
 
       </ScrollView>
@@ -111,8 +114,8 @@ export default function HomeUI() {
         <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
 
 
-          {!isPropiedadesLoading ? (propiedades.slice(0, 15) .filter(propiedad => propiedad.transaction === tipoTransaccionFiltro) .map(propiedad => (
-          <CardPropiedad  titulo={propiedad.title} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.transaction} margen={propiedad.margen}/>
+          {!isPropiedadesLoading ? (propiedades.slice(0, 15) .filter(propiedad => propiedad.transaction !== tipoTransaccionFiltro && propiedad.state === tipoEstadoFiltro) .map(propiedad => (
+          <CardPropiedad  titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} estado={propiedad.state} transaccion={propiedad.transaction} margen={propiedad.margen}/>
           ))) : null}
 
 
@@ -122,8 +125,8 @@ export default function HomeUI() {
 
       
       <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
-        {!isPropiedadesLoading ? (propiedades.slice(0, 15) .filter(propiedad => propiedad.transaction !== tipoTransaccionFiltro) .map(propiedad => (
-          <CardPropiedad  titulo={propiedad.title} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.transaction} margen={propiedad.margen}/>
+        {!isPropiedadesLoading ? (propiedades.slice(0, 15) .filter(propiedad => propiedad.transaction === tipoTransaccionFiltro && propiedad.state === tipoEstadoFiltro) .map(propiedad => (
+          <CardPropiedad  titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} estado={propiedad.state} transaccion={propiedad.transaction}  margen={propiedad.margen}/>
         ))) : null}
       </ScrollView>
 

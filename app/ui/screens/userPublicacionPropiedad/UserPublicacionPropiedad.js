@@ -1,6 +1,6 @@
 import i18n from '../../../assets/strings/I18n';
 import React, { useState, useEffect } from "react";
-import PublicacionPropiedadUI from './publicacionPropiedadUI';
+import UserPublicacionPropiedadUI from './UserPublicacionPropiedadUI';
 import { getAssetById } from '../../../api/assetsAPI';
 import { ActivityIndicator } from 'react-native';
 import { getRealEstateID } from '../../../api/realEstatesAPI';
@@ -16,7 +16,7 @@ export default function PublicacionPropiedad({ route }) {
                 const respuesta = await getAssetById(propiedadId);
                 setInformacion(respuesta.asset[0]);
             } catch (error) {
-                console.error('Error al obtener la busqdueddass:', error);
+                console.error('Error al obtener la busqueda:', error);
             }
         };
 

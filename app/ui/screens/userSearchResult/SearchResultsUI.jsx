@@ -25,6 +25,8 @@ import { useForm } from "../../../hooks/useForm";
 import close from "../../../assets/images/icons/close.png";
 import { getAssets } from '../../../api/assetsAPI';
 import CardPropiedad from "../../components/cards/cardPropiedad";
+import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
+
 
 
 
@@ -63,6 +65,7 @@ export default function SearchResultsUI() {
       }
     
 
+      const tipoEstadoFiltro = 1;
 
 
     return(
@@ -78,8 +81,8 @@ export default function SearchResultsUI() {
           <ScrollView vertical style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
 
 
-          {!isPropiedadesLoading ? (propiedades.slice(0, 20) .map(propiedad => (
-          <CardPropiedad  titulo={propiedad.title} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.tipo} margen={propiedad.margen} onPress={() => navigation.navigate("UserPublicacionPropiedad", { propiedadId: propiedad._id })} />))) : null}
+          {!isPropiedadesLoading ? (propiedades.slice(0, 20) .filter(propiedad => propiedad.state === tipoEstadoFiltro).map(propiedad => (
+          <CardPropiedad  titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.tipo} margen={propiedad.margen} estado={propiedad.state} transaccion={propiedad.transaction} onPress={() => navigation.navigate("Publicacion", { propiedadId: propiedad._id })} />))) : null}
 
 
           </ScrollView>

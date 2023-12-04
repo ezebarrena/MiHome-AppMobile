@@ -29,7 +29,7 @@ import ChoiceInput from "../../../ui/components/inputs/ChoiceInput";
 import ChoiceMultipleInput from "../../../ui/components/inputs/ChoiceMultipleInput";
 import Button from "../../../ui/components/buttons/Button";
 
-import { filterSearch } from "../../../api/assetsAPI"; //no esta declarada
+import { getAssets } from '../../../api/assetsAPI';
 
 export default function SearchUIv2() {
 
@@ -67,7 +67,7 @@ export default function SearchUIv2() {
 
     const handleSubmit = async () => {
       try {
-        const results = await filterSearch(form);
+        const results = await getAssets(form);
         console.log("Resultados de búsqueda:", results);
         navigation.navigate("SearchResults", { results });
       } catch (error) {
