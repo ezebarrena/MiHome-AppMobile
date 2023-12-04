@@ -36,9 +36,9 @@ export default function UserAgendaUI() {
   }
 
 
-  const goHome = () => {
-    navigation.navigate("LandingStack")
-  }
+  const Contact = () => {
+    navigation.navigate("Contact")
+    }
 
 
   return (
@@ -51,9 +51,9 @@ export default function UserAgendaUI() {
       <ScrollView>
 
         <View style={styles.booking}>
-          <Text style={styles.bookingText}>Que estas esperando para hacer tu reserva?</Text>
+          <Text style={styles.bookingText}>Sent a message to a official Real Estate to book a visit</Text>
           <TouchableOpacity>
-            <Text style={styles.bookingButton} onPress={goHome}>Ver propiedades</Text>
+            <Text style={styles.bookingButton} onPress={Contact}>Book a visit</Text>
           </TouchableOpacity>
         </View>
 
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   booking:{
     marginLeft: "3%",
     marginRight: "3%",
-    height:90,
+    height:120,
     backgroundColor:Theme.colors.FONDOCARD,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,

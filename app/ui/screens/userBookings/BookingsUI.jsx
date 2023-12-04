@@ -51,9 +51,9 @@ export default function BookingsUI() {
       <ScrollView>
 
         <View style={styles.booking}>
-          <Text style={styles.bookingText}>Que estas esperando para hacer tu reserva?</Text>
+          <Text style={styles.bookingText}>Do you want a book a property?</Text>
           <TouchableOpacity>
-            <Text style={styles.bookingButton} onPress={goHome}>Ver propiedades</Text>
+            <Text style={styles.bookingButton} onPress={goHome}>See properties</Text>
           </TouchableOpacity>
         </View>
 
