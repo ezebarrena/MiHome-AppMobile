@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
 
   textoHead: {
-    marginLeft: 5,
+    marginLeft: 30,
     marginTop: 30,    
     fontFamily: 'Poppins_700Bold',
     color: 'black',
