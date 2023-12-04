@@ -251,7 +251,15 @@ export default function UploadAssetUI({ }) {
 
     for (const field of requiredFields) {
       if (!form[field] || (Array.isArray(form[field]) && form[field].length === 0)) {
-        return false; // Devuelve false si algún campo requerido no está lleno
+        if(field !== "transaction"){
+          return false;
+        }
+        else if(field === transaction){
+          if(form[field] !== 0 || form[field] !== 1){
+            return false
+          }
+        }
+         // Devuelve false si algún campo requerido no está lleno
       }
     }
 
