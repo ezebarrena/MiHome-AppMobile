@@ -14,7 +14,7 @@ const PaymentMethodsUI = () => {
 
     useEffect(() => {
         const getPaymentMethodsFromAPI = async () => {
-            const userId = await AsyncStorage.getItem('realEstateId')
+            const userId = await AsyncStorage.getItem('userId')
             const paymentMethodsFromAPI = await getPaymentMethods(userId);
             console.log("Payment methods from API: ", paymentMethodsFromAPI);
             setPaymentMethods(paymentMethodsFromAPI);
@@ -115,7 +115,7 @@ const PaymentMethodsUI = () => {
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.cardsContainer}>
-                {paymentMethods.map((paymentMethod) => (
+                {paymentMethods ? paymentMethods.map((paymentMethod) => (
                     <CreditCardPreview
                         key={paymentMethod.id}
                         cardNumber={paymentMethod.cardNumber}
@@ -124,7 +124,7 @@ const PaymentMethodsUI = () => {
                         showTrashIcon={true}
                         onPressTrashIcon={() => onPressTrashIcon(paymentMethod.id)}
                     />
-                ))}
+                )) : null}
             </ScrollView>
             <Button
                 title="Agregar método de pago"

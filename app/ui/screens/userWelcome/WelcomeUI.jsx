@@ -44,6 +44,11 @@ export default function WelcomeUI() {
     return null;
   }
 
+  const handleGoogleLogin = async () => {
+    await AsyncStorage.setItem("userId", '656285739e6085f32d51e5af');
+    navigation.navigate("LandingStack")
+  }
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -56,7 +61,7 @@ export default function WelcomeUI() {
             <View style={styles.loginContainer}>
               <ButtonWithIcon
                 title={i18n.t("welcomeScreen.googleButton")}
-                onPress={() => navigation.navigate("LandingStack")}
+                onPress={() => handleGoogleLogin()}
                 // onPress={() => promptAsync()}
                 backgroundColor={Theme.colors.PRIMARY}
                 icon={require("../../../assets/images/GoogleIcon.png")}
