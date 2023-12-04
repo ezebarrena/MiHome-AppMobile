@@ -10,6 +10,8 @@ import Bookings from '../ui/screens/userBookings/Bookings';
 import UserProfile from '../ui/screens/userProfile/UserProfile';
 import HomeRS from '../ui/screens/realEstateHome/homeRS';
 import UploadAsset from '../ui/screens/realEstateUploadAsset/uploadAsset';
+import SendMessage from '../ui/screens/userSendMessage/UserSendMessage'
+import UserSendMessage from '../ui/screens/userSendMessage/UserSendMessage';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -76,7 +78,7 @@ return (
 
       <Tab.Screen
         name={NavigatorConstant.NAVIGATOR.PROFILE}
-        component={UserProfile}
+        component={UserSendMessage}
         options={{
         }}
       />
