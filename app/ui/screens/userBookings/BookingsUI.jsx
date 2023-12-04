@@ -6,23 +6,36 @@ import {
   Dimensions,
   Text,
   Pressable,
+  ScrollView,
+  TouchableOpacity
 } from "react-native";
 import { useCallback } from "react";
 import { useFonts, Poppins_700Bold_Italic } from "@expo-google-fonts/poppins";
+import { useNavigation } from "@react-navigation/native";
+
 
 import i18n from "../../../assets/strings/I18n";
+import Theme from "../../styles/Theme";
 
 
 
-//SplashScreen.preventAutoHideAsync();
 
 export default function BookingsUI() {
+
+  const navigation = useNavigation();
+
   const [fontsLoaded, fontError] = useFonts({
+    
     Poppins_700Bold_Italic,
   });
 
   if (!fontsLoaded && !fontError) {
     return null;
+  }
+
+
+  const goHome = () => {
+    navigation.navigate("UserHome")
   }
 
 
@@ -33,6 +46,18 @@ export default function BookingsUI() {
         <Text style={styles.textoHead}>Bookings</Text>
       </View>
 
+      <ScrollView>
+
+        <View style={styles.booking}>
+          <Text style={styles.bookingText}>Que estas esperando para hacer tu reserva?</Text>
+          <TouchableOpacity>
+            <Text style={styles.bookingButton} onPress={goHome}>Ver propiedades</Text>
+          </TouchableOpacity>
+        </View>
+
+        
+
+      </ScrollView>
   
     </View>
   );
@@ -44,6 +69,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+
   image: {
     flex: 1, // Para que la imagen ocupe toda la pantalla
     justifyContent: "center", // Centrar verticalmente
@@ -83,15 +109,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 10,
   },
-  textoLoginInmobiliaria: {
-    color: "white",
-  },
-
-  contenedorLogin: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
 
 
   contenedorHead: {
@@ -100,6 +117,7 @@ const styles = StyleSheet.create({
     marginLeft: "3%",
     paddingTop: 30,
   },
+  
 
   textoHead: {
     marginLeft: 5,
@@ -108,4 +126,36 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: Dimensions.get('window').width * 0.06,
   },
+
+  booking:{
+    marginLeft: "3%",
+    marginRight: "3%",
+    height:90,
+    backgroundColor:Theme.colors.FONDOCARD,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius:10,
+    borderBottomRightRadius:10,
+    paddingLeft:10,
+    paddingTop:10,
+  },
+
+  bookingText:{
+    fontSize: Dimensions.get('window').width * 0.04,
+    marginBottom:5
+  },
+
+  bookingButton:{
+    fontSize: Dimensions.get('window').width * 0.035,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius:10,
+    borderBottomRightRadius:10,
+    borderWidth:1,
+    padding:7,
+    width:'40%',
+    textAlign:'center'
+
+  },
+
 });
