@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import { View, ScrollView, StyleSheet, Text, RefreshControl } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CreditCardPreview from "../../components/cards/CreditCardPreview";
 import Button from "../../components/buttons/Button";
@@ -11,99 +11,53 @@ const PaymentMethodsUI = () => {
     const navigation = useNavigation();
     const [isConfirmationModalVisible, setIsConfirmationModalVisible] = React.useState(false);
     const [paymentMethods, setPaymentMethods] = useState([]);
+    const [paymentMethodtoDelete, setPaymentMethodToDelete] = useState(null);
+    const [isPaymentMethodDeleted, setIsPaymentMethodDeleted] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        getPaymentMethodsFromAPI().finally(() => setRefreshing(false));
+    }, []);
+
+    const getPaymentMethodsFromAPI = async () => {
+        const userId = await AsyncStorage.getItem('userId');
+        const paymentMethodsFromAPI = await getPaymentMethods(userId);
+        console.log("Payment methods from API: ", paymentMethodsFromAPI);
+        setPaymentMethods(paymentMethodsFromAPI);
+        if (isPaymentMethodDeleted) {
+            setIsPaymentMethodDeleted(false);
+        }
+    };
 
     useEffect(() => {
-        const getPaymentMethodsFromAPI = async () => {
-            const userId = await AsyncStorage.getItem('userId')
-            const paymentMethodsFromAPI = await getPaymentMethods(userId);
-            console.log("Payment methods from API: ", paymentMethodsFromAPI);
-            setPaymentMethods(paymentMethodsFromAPI);
-        };
         getPaymentMethodsFromAPI();
-    }, []);
-    
-    // const paymentMethods = [
-    //     {
-    //         id: 1,
-    //         cardNumber: "5555555555555555",
-    //         cardExpiration: "12/25",
-    //         cardBank: "SANTANDER",
-    //     },
-    //     {
-    //         id: 2,
-    //         cardNumber: "4444444444444444",
-    //         cardExpiration: "12/25",
-    //         cardBank: "GALICIA",
-    //     },
-    //     {
-    //         id: 3,
-    //         cardNumber: "5555333333333333",
-    //         cardExpiration: "12/25",
-    //         cardBank: "BBVA",
-    //     },
-    //     {
-    //         id: 4,
-    //         cardNumber: "5555555555555555",
-    //         cardExpiration: "12/25",
-    //         cardBank: "SANTANDER",
-    //     },
-    //     {
-    //         id: 5,
-    //         cardNumber: "4444444444444444",
-    //         cardExpiration: "12/25",
-    //         cardBank: "GALICIA",
-    //     },
-    //     {
-    //         id: 6,
-    //         cardNumber: "5555333333333333",
-    //         cardExpiration: "12/25",
-    //         cardBank: "BBVA",
-    //     },
-    //     {
-    //         id: 7,
-    //         cardNumber: "5555555555555555",
-    //         cardExpiration: "12/25",
-    //         cardBank: "SANTANDER",
-    //     },
-    //     {
-    //         id: 8,
-    //         cardNumber: "4444444444444444",
-    //         cardExpiration: "12/25",
-    //         cardBank: "GALICIA",
-    //     },
-    //     {
-    //         id: 9,
-    //         cardNumber: "5555333333333333",
-    //         cardExpiration: "12/25",
-    //         cardBank: "BBVA",
-    //     },
-    //     {
-    //         id: 10,
-    //         cardNumber: "5555555555555555",
-    //         cardExpiration: "12/25",
-    //         cardBank: "SANTANDER",
-    //     },
-    //     {
-    //         id: 11,
-    //         cardNumber: "4444444444444444",
-    //         cardExpiration: "12/25",
-    //         cardBank: "GALICIA",
-    //     },
-    //     {
-    //         id: 12,
-    //         cardNumber: "5555333333333333",
-    //         cardExpiration: "12/25",
-    //         cardBank: "BBVA",
-    //     },
-    // ];
+    }, [isPaymentMethodDeleted]);
 
-    const onPressTrashIcon = (id) => {
-        console.log("Trash icon pressed for card with id: ", id);
+    const onPressTrashIcon = (paymentMethod) => {
+        console.log("Trash icon pressed for card with id: ", paymentMethod);
+        setPaymentMethodToDelete(paymentMethod);
         setIsConfirmationModalVisible(true);
     };
 
     const onAccept = () => {
-        console.log("Accepted");
+        const deletePaymentMethodFromAPI = async () => {
+            const userId = await AsyncStorage.getItem('userId');
+            const paymentMethod = {
+                _id: paymentMethodtoDelete._id,
+                cardNumber: Number(paymentMethodtoDelete.cardNumber),
+                expiration: paymentMethodtoDelete.expiration,
+                bank: paymentMethodtoDelete.bank,
+                ccv: Number(paymentMethodtoDelete.ccv),
+                name: paymentMethodtoDelete.name,
+            };
+            console.log("User id: ", userId);
+            console.log("Payment methods to delete: ", paymentMethod);
+            const response = await deletePaymentMethod(userId, paymentMethod);
+            console.log("Response from API: ", response);
+            setIsPaymentMethodDeleted(true);
+        };
+        deletePaymentMethodFromAPI();
         setIsConfirmationModalVisible(false);
     };
 
@@ -111,17 +65,21 @@ const PaymentMethodsUI = () => {
         console.log("Denied");
         setIsConfirmationModalVisible(false);
     };
-    
+
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.cardsContainer}>
+            <ScrollView
+                contentContainerStyle={styles.cardsContainer}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            >
                 {paymentMethods && paymentMethods.map((paymentMethod) => (
                     <CreditCardPreview
                         key={paymentMethod._id}
-                        cardNumber={paymentMethod.cardNumber}
+                        cardNumber={paymentMethod.cardNumber.toString()}
                         cardExpiration={paymentMethod.expiration}
                         cardBank={paymentMethod.bank}
-                        onPressTrashIcon={() => onPressTrashIcon(paymentMethod._id)}
+                        showTrashIcon={true}
+                        onPressTrashIcon={() => onPressTrashIcon(paymentMethod)}
                     />
                 ))}
             </ScrollView>
@@ -137,7 +95,7 @@ const PaymentMethodsUI = () => {
             />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
