@@ -11,6 +11,7 @@ import CustomAlert from "../../components/modals/CustomAlert";
 export default function RegistrationModal({ isVisible, onClose }) {
 
   const [isFormValid, setIsFormValid] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
   const initialFormState = {
@@ -22,7 +23,7 @@ export default function RegistrationModal({ isVisible, onClose }) {
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-  const { form, onChange } = useForm(initialFormState);
+  const { form, onChange, setFormValue } = useForm(initialFormState);
 
   const validateForm = () => {
     const isEmailValid = emailRegex.test(form.logInEmail);
@@ -41,11 +42,16 @@ export default function RegistrationModal({ isVisible, onClose }) {
     const response = await signInRealEstate(form);
     if (response) {
       console.log("response", response);
-      onClose();
-    }
-    else {
       setShowAlert(true);
     }
+    else {
+      setShowErrorAlert(true);
+    }
+  };
+
+  const handleAlert = () => {
+    setShowAlert(false);
+    onClose();
   };
 
   return (
@@ -63,16 +69,29 @@ export default function RegistrationModal({ isVisible, onClose }) {
             </Pressable>
           </View>
           <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.registrationModal.nameInput')} value={form.fantasyName} onChangeText={(value) => onChange(value, "fantasyName")} />
-          <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.registrationModal.emailInput')} value={form.logInEmail} onChangeText={(value) => onChange(value, "logInEmail")} />
-          <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.registrationModal.contactEmail')} value={form.contactEmail} onChangeText={(value) => onChange(value, "contactEmail")} />
+          <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.registrationModal.emailInput')} value={form.logInEmail} onChangeText={(value) => 
+          setFormValue(
+            {
+              ...form,
+              logInEmail: value.toLowerCase(),
+              contactEmail: value.toLowerCase()
+            }
+          )
+          } />
           <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.registrationModal.passwordInput')} secureTextEntry={true} value={form.password} onChangeText={(value) => onChange(value, "password")} />
           <Button title={i18n.t('realEstateWelcomeScreen.registrationModal.registerButton')} size='medium' backgroundColor='#E36565' onPress={handleRegistration} disabled={!isFormValid} />
         </View>
         <CustomAlert
-          isVisible={showAlert}
+          isVisible={showErrorAlert}
           onClose={() => setShowAlert(false)}
           title={i18n.t('realEstateWelcomeScreen.registrationModal.alertTitle')}
           message={i18n.t('realEstateWelcomeScreen.registrationModal.alertMessage')}
+        />
+        <CustomAlert
+          isVisible={showAlert}
+          onClose={() => handleAlert()}
+          title='Usuario creado exitosamente'
+          message='Usuario creado exitosamente'
         />
       </View>
     </Modal>
