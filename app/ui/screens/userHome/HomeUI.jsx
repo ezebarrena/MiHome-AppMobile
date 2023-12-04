@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   imagenHead: {
     resizeMode: 'contain',
     height: Dimensions.get('window').width * 0.11,
-    marginLeft: '17%',
+    marginLeft: '22%',
     marginTop: '-4%'
   },
 
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row', // Coloca los elementos uno al lado del otro horizontalmente
     alignItems: 'center',
     marginLeft: "3%",    
-    marginTop:"5%",
+    marginTop:"2%",
 
   },
 
