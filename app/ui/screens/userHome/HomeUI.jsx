@@ -79,12 +79,8 @@ export default function HomeUI(listadoPropiedades) {
     const busquedaPropiedades = async () => {
 
       try {
-        const bodyData = {
-          state: '',
-          transaction: ''
-        }
 
-        const respuesta = await getAssets(bodyData)
+        const respuesta = await getAssets()
 
         setPropiedades(respuesta.asset);
         setPropiedadesBD(respuesta.asset)
