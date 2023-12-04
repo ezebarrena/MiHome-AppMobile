@@ -11,6 +11,7 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { signInWithCredential, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../../../firebaseConfig';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function WelcomeUI() {
   const navigation = useNavigation();
@@ -25,10 +26,10 @@ export default function WelcomeUI() {
       const { id_token } = response.params;
       const credential = GoogleAuthProvider.credential(id_token);
       signInWithCredential(auth, credential);
-      onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, async (user) => {
         if (user) {
           console.log('Google sign in successful');
-          console.log(user);
+          await AsyncStorage.setItem("userId", user.uid);
           navigation.navigate("LandingStack")
         }
       });
