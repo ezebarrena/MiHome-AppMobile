@@ -210,6 +210,11 @@ export default {
     textoEliminar1:'Estas seguro que deseas eliminar esta cuenta permanentemente?',
     textoEliminar2:'Una vez eliminada no se puede recuperar!',
     confirmar:'Eliminar permanentemente',
+    fav:"Propiedades favoritas",
+    payment:"Metodos de pago",
+  
+      
+  
     
   },
   REeditarPerfil:{
