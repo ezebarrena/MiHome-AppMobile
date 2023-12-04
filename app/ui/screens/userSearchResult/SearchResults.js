@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 //funcion que crea pantalla 
 export default function SearchResults({ route }) {
-    const { transaction, type } = route.params;
+    const { transaction, type, avanzada } = route.params;
     const [propiedades, setPropiedades] = useState()
     const [isPropiedadesLoading, setIsPropiedadesLoading] = useState(true);
     console.log(transaction, type);
