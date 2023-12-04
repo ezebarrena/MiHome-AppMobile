@@ -137,7 +137,7 @@ export default {
 
   },
   realEstateUpdateAsset: {
-    "headTitle": "Publicar Propiedad",
+    "headTitle": "Modificar Propiedad",
     "image": "Imagenes",
     "title": "Titulo de publicacion",
     "type": "Tipo de propiedad",

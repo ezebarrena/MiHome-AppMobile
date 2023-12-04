@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     borderWidth: 1,
-    marginHorizontal: 14,
+
     marginVertical: 10,
     textAlign: 'center',
     ...Platform.select({
