@@ -55,6 +55,8 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
         longitudeDelta: 0.01,
     });
 
+    const [sufijo, setSufijo] = useState("")
+
 
 
     useEffect(() => {
@@ -65,6 +67,20 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
                 latitude: parseFloat(geo[0]),
                 longitude: parseFloat(geo[1])
             });
+        }
+        if (propiedad.floor) {
+            const ultimoDigito = propiedad.floor % 10;
+            const penultimoDigito = Math.floor((propiedad.floor % 100) / 10);
+
+            if (ultimoDigito === 1 && penultimoDigito !== 1) {
+                setSufijo('er');
+            } else if (ultimoDigito === 2 && penultimoDigito !== 1) {
+                setSufijo('do');
+            } else if (ultimoDigito === 3 && penultimoDigito !== 1) {
+                setSufijo('er');
+            } else {
+                setSufijo('to');
+            }
         }
     }, [])
     if (!fontsLoaded && !fontError) {
@@ -96,19 +112,27 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
                     )))}
                 { }
             </ScrollView>
+            <Text>{propiedad.title}</Text>
             <View style={styles.containerDetalles}>
                 <View style={styles.viewDetalles}>
-                    <Ionicons name="location-outline" size={33} style={{ marginHorizontal: 8 }} />
+                    <MaterialIcons name="pin-drop" size={35} style={{ marginHorizontal: 8 }} />
                     <Text style={styles.textDetalles1}>{propiedad.direction}</Text>
                 </View>
                 <View style={styles.viewDetalles}>
-                    <Ionicons name="home-outline" size={33} style={{ marginHorizontal: 8 }} />
+                    <MaterialIcons name="home" size={35} style={{ marginHorizontal: 8 }} />
                     <Text style={styles.textDetalles}>{i18n.t(`REUploadAssetChoices.${propiedad.type}`)} {i18nIdiomaTipo} </Text>
                 </View>
                 <View style={styles.viewDetalles}>
-                    <MaterialIcons name="straighten" size={33} style={{ marginHorizontal: 8 }} />
+                    <MaterialIcons name="straighten" size={35} style={{ marginHorizontal: 8 }} />
                     <Text style={styles.textDetalles}>{propiedad.mTotal} m2 {i18n.t("detallePropiedad.total")}, {propiedad.mIndoor} m2 {i18n.t("detallePropiedad.cubiertos")}</Text>
                 </View>
+
+                {propiedad.floor ?
+                    <View style={styles.viewDetalles}>
+                        <MaterialIcons name="apartment" size={35} style={{ marginHorizontal: 8 }} />
+                        <Text style={styles.textDetalles}>{propiedad.floor}{i18n.t(`detallePropiedad.${sufijo}`)} {i18n.t("detallePropiedad.piso")} </Text>
+                    </View> : null}
+                {/* {propiedad.floor ?  : null} */}
 
             </View>
             <View style={styles.viewValores}>
@@ -127,7 +151,7 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
 
 
             </View>
-            <Text style={styles.descripcion}>{propiedad.descripcion}</Text>
+            <Text style={styles.descripcion}>{propiedad.description}</Text>
             <View style={styles.chipContainer}>
                 <View style={styles.chip}>
                     <Text style={styles.chipText}>{propiedad.room} {propiedad.room > 1 ? i18n.t("detallePropiedad.ambientes") : i18n.t("detallePropiedad.ambiente")}</Text>
@@ -170,6 +194,7 @@ export default function PublicacionPropiedadUI({ propiedad, inmobiliaria }) {
             </View>
             <View style={styles.viewExtras}>
                 <Text style={styles.textExtras}>{i18n.t("detallePropiedad.coordenadas")}: {propiedad.geoLocalization}</Text>
+
                 {propiedad.frontBack ? <Text style={styles.textExtras}>{i18n.t("detallePropiedad.vista")}: {i18n.t(`REUploadAssetChoices.${propiedad.frontBack}`)}</Text> : null}
                 {propiedad.orientation.length > 0 ? <Text style={styles.textExtras}>{i18n.t("detallePropiedad.orientacion")}: {propiedad.orientation.map((texto, index, array) => (
                     <>
@@ -247,7 +272,7 @@ const styles = StyleSheet.create({
     textDetalles: {
         paddingHorizontal: 15,
         fontFamily: 'Poppins_600SemiBold',
-        fontSize: Dimensions.get("window").width * 0.039,
+        fontSize: Dimensions.get("window").width * 0.04,
     },
     textDetalles1: {
 
@@ -283,7 +308,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: Dimensions.get("window").width * 0.043,
         fontFamily: 'Poppins_500Medium',
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
     },
     chip: {
         backgroundColor: 'transparent',
@@ -366,9 +391,9 @@ const styles = StyleSheet.create({
         fontSize: Dimensions.get("window").width * 0.039,
     },
     map: {
-      height: 200,
-      marginHorizontal: 10,
-      marginVertical: 10,
+        height: 200,
+        marginHorizontal: 10,
+        marginVertical: 10,
     },
     ratingContainer: {
         flexDirection: 'row',

@@ -437,6 +437,7 @@ export default function UploadAssetUI({ }) {
         <Text style={styles.textoBody1}>{i18n.t('realEstateUploadAsset.description')}*</Text>
         <CustomTextInput
           alto={200}
+          multilinea={true}
           paddingHorizontal={10}
           value={form.description}
           onChangeText={(value) => onChange(value, "description")}
