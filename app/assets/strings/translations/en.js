@@ -8,6 +8,7 @@ export default {
     PHUsuario1: "Properties near you",
     SaleProperties: "Properties for sale",
     RentProperties: "Properties for rent",
+    Interest:"Your interest",
 
     PHBusqueda: 'What are you looking for?',
     tipo:'Estate type',
@@ -261,6 +262,24 @@ export default {
     numContacto:"Phone Number",
     correoContacto:'Contact Email'
     
+  },
+
+  Favourites:{
+    title:"Favourites",
+    message:"Add your favourite properties here!",
+    buttom:"See properties"
+  },
+
+  Agenda:{
+    title:"Agenda",
+    message:"Sent a message to a official Real Estate to book a visit",
+    buttom:"Book a visit"
+  },
+
+  Bookings:{
+    title:"Bookings",
+    message:"Do you want to book a property?",
+    buttom:"See properties"
   }
 };
 

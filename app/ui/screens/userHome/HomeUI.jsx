@@ -164,7 +164,7 @@ export default function HomeUI() {
       <ScrollView vertical>
 
 
-        <Text style={styles.textoBody2}>Your Interest </Text>
+        <Text style={styles.textoBody2}>{i18n.t('homeScreen.Interest')}</Text>
 
 
         <ScrollView horizontal style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>

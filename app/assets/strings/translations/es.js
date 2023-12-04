@@ -223,6 +223,24 @@ export default {
     numContacto:"Numero de contacto",
     correoContacto:'Correo de contacto'
 
+  },
+
+  Favoritos:{
+    title:"Favoritos",
+    message:"Agrega aqui tus propiedades favoritas",
+    buttom:"Ver propiedades"
+  },
+
+  Agenda:{
+    title:"Agenda",
+    message:"Contacta a una inmobiliaria oficial para reservar tu visita",
+    buttom:"Agendar visita"
+  },
+
+  Bookings:{
+    title:"Bookings",
+    message:"Queres reservar una propiedad",
+    buttom:"Ver propiedades"
   }
 };
 

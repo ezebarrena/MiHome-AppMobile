@@ -53,13 +53,13 @@ export default function FavouritesUI() {
   return (
     <View style={styles.container}>
       <View style={styles.contenedorHead}>
-        <Text style={styles.textoHead}>Favourites</Text>
+        <Text style={styles.textoHead}>{i18n.t('Favourites.title')}</Text>
       </View>
 
       <View style={styles.booking}>
-          <Text style={styles.bookingText}>Add your favourite properties here!</Text>
+          <Text style={styles.bookingText}>{i18n.t('Favourites.message')}</Text>
           <TouchableOpacity>
-            <Text style={styles.bookingButton} onPress={goHome}>See properties</Text>
+            <Text style={styles.bookingButton} onPress={goHome}>{i18n.t('Favourites.buttom')}</Text>
           </TouchableOpacity>
         </View>
 

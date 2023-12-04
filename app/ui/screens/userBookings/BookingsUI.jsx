@@ -45,15 +45,15 @@ export default function BookingsUI() {
     <View style={styles.container}>
 
       <View style={styles.contenedorHead}>
-        <Text style={styles.textoHead}>Bookings</Text>
+        <Text style={styles.textoHead}>{i18n.t('Bookings.title')}</Text>
       </View>
 
       <ScrollView>
 
         <View style={styles.booking}>
-          <Text style={styles.bookingText}>Do you want a book a property?</Text>
+          <Text style={styles.bookingText}>{i18n.t('Bookings.message')}</Text>
           <TouchableOpacity>
-            <Text style={styles.bookingButton} onPress={goHome}>See properties</Text>
+            <Text style={styles.bookingButton} onPress={goHome}>{i18n.t('Bookings.buttom')}</Text>
           </TouchableOpacity>
         </View>
 

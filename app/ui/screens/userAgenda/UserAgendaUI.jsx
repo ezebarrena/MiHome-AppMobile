@@ -45,15 +45,15 @@ export default function UserAgendaUI() {
     <View style={styles.container}>
 
       <View style={styles.contenedorHead}>
-        <Text style={styles.textoHead}>Agenda</Text>
+        <Text style={styles.textoHead}>{i18n.t('Agenda.title')}</Text>
       </View>
 
       <ScrollView>
 
         <View style={styles.booking}>
-          <Text style={styles.bookingText}>Sent a message to a official Real Estate to book a visit</Text>
+          <Text style={styles.bookingText}>{i18n.t('Agenda.message')}</Text>
           <TouchableOpacity>
-            <Text style={styles.bookingButton} onPress={Contact}>Book a visit</Text>
+            <Text style={styles.bookingButton} onPress={Contact}>{i18n.t('Agenda.buttom')}</Text>
           </TouchableOpacity>
         </View>
 
