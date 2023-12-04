@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://192.168.1.6:8080'; // Reemplaza con la URL de tu backend
+const API_BASE_URL = 'http://18.218.245.250:8080'; // Reemplaza con la URL de tu backend
 
 // Crea una instancia personalizada de Axios
 const usersAPI = axios.create({
@@ -10,3 +10,33 @@ const usersAPI = axios.create({
     // Otros encabezados personalizados que desees configurar
   },
 });
+
+export const addPaymentMethod = async (userId, paymentMethod) => {
+  try {
+    const response = await usersAPI.post('users/me/paymentmethod', { userId, paymentMethod });
+    return response.data;
+  } catch (error) {
+    console.error('Error adding payment method:', error);
+    throw error;
+  }
+};
+
+export const deletePaymentMethod = async (userId, paymentMethod) => {
+  try {
+    const response = await usersAPI.delete('users/me/paymentmethod', { userId, paymentMethod });
+    return response.data;
+  } catch (error) {
+    console.error('Error adding payment method:', error);
+    throw error;
+  }
+};
+
+export const getPaymentMethods = async (userId) => {
+  try {
+    const response = await usersAPI.get(`users/${userId}/paymentmethod`);
+    return response.data;
+  } catch (error) {
+    console.error('Error getting payment methods:', error);
+    throw error;
+  }
+};
