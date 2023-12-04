@@ -25,13 +25,14 @@ export default function PublicacionPropiedad({ route }) {
         
 
     }, []);
+    
     useEffect(()=>{
         const busquedaRealEstate = async () => {
             let realEstateID = informacion.realEstateName
             console.log(realEstateID);
             try {
                 const respuesta = await getRealEstateID(realEstateID);
-
+  
                 setInmboliaria(respuesta.realEstates)
             } catch (error) {
                 console.error('Error al obtener la busqdueddass:', error);

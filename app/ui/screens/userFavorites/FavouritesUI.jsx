@@ -17,6 +17,9 @@ import { useNavigation } from "@react-navigation/native";
 import Theme from "../../styles/Theme";
 import { getMyFavouriteAssets } from '../../../api/usersAPI'; //cambiar API user 
 import { useState, useEffect } from "react";
+import imagenTest from "../../../assets/images/various/imagenCasaTest.png";
+import { getAssets } from '../../../api/assetsAPI';
+
 
 
 export default function FavouritesUI() {
@@ -24,38 +27,27 @@ export default function FavouritesUI() {
   const navigation = useNavigation();
 
   const [propiedades, setPropiedades] = useState()
-  const [propiedadesBD, setPropiedadesBD] = useState()
-  const [refreshing, setRefreshing] = useState(false);
+  const [isPropiedadesLoading, setIsPropiedadesLoading] = useState(true);
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    
-    const busquedaPropiedades = async () => {
-
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-     
-        const respuesta = await getMyFavouriteAssets()
-
-        setPropiedades(respuesta.asset);
-        setPropiedadesBD(respuesta.asset)
-        setRefreshing(false)
-
+        const propiedadesData = await getAssets();
+        setPropiedades(propiedadesData.asset);
+        setIsPropiedadesLoading(false);
+      } catch (error) {
+        console.error('Error fetching assets', error);
       }
-      catch (error) {
-        console.error('Error busqueda favoritos:', error);
-      }
-
-      busquedaPropiedades()
-      setTimeout(() => {
-        setRefreshing(false);
-      }, 2000);
-
     };
 
+    fetchData();
+  }, []);
 
+  const goHome = () => {
+    navigation.navigate("UserHome")
   }
 
-
+  const tipoEstadoFiltro = 1;
 
 
   return (
@@ -63,47 +55,23 @@ export default function FavouritesUI() {
       <View style={styles.contenedorHead}>
         <Text style={styles.textoHead}>Favoritos</Text>
       </View>
-        
-      {propiedades && propiedades.length > 0 ? (<View style={styles.cardsContainer}>
-        <ScrollView
-          data={propiedades}
-          style={styles.scrollView} 
-          keyExtractor={item => item}
-          
-          renderItem={({ item }) => <CardPropiedad moneda={item.coin} valor={item.price} calle={item.streetName} numero={item.streetNumber} barrio={item.neighbourhood} ambientes={item.room} metros={item.mTotal} estado={item.state} transaccion={item.transaction} onPress={() => navigation.navigate("", { propiedadId: item._id })} />}
-          contentContainerStyle={{
-            alignItems: "center",
-            flexGrow: 1,
-          }}
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }
-        />
-      </View>) : (<View style={styles.emptyContainer} ><Text style={styles.textEmpty}>Agrega propiedades a favoritos {"\n"} </Text></View>)
 
-      }
+      <View style={styles.booking}>
+          <Text style={styles.bookingText}>Que estas esperando para hacer tu reserva?</Text>
+          <TouchableOpacity>
+            <Text style={styles.bookingButton} onPress={goHome}>Ver propiedades</Text>
+          </TouchableOpacity>
+        </View>
 
-      <ScrollView 
-        style={styles.scrollView} 
-        contentContainerStyle={styles.scrollViewContent} 
-        showsHorizontalScrollIndicator={false}>
-        <View style={{}}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-        <View style={{}}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-        <View style={{ }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
-        <View style={{ }}>
-          <CardPropiedad valor={"US$180.000"} ubicacion={"calle mitre 123"} ambientes={2} metros={168} tipo={"VENTA"} margen={20} />
-        </View>
+      <ScrollView vertical style={styles.scrollView} contentContainerStyle={styles.scrollViewContent} showsHorizontalScrollIndicator={false}>
+
+
+      {!isPropiedadesLoading ? (propiedades.slice(0, 20) .filter(propiedad => propiedad.state === tipoEstadoFiltro).map(propiedad => (
+      <CardPropiedad  titulo={propiedad.title} firstImage={propiedad.image && propiedad.image.length > 0 ? propiedad.image[0] : imagenTest} valor={propiedad.price} moneda={propiedad.coin} calle={propiedad.streetName} numero={propiedad.streetNumber} barrio={propiedad.Neighborhood} ambientes={propiedad.room} metros={propiedad.mTotal} tipo={propiedad.tipo} margen={propiedad.margen} estado={propiedad.state} transaccion={propiedad.transaction} onPress={() => navigation.navigate("Publicacion", { propiedadId: propiedad._id })} />))) : null}
+
+
       </ScrollView>
+
 
     </View>
   );
@@ -211,5 +179,40 @@ const styles = StyleSheet.create({
   textEmpty: {
     fontSize: Dimensions.get('window').width * 0.05,
   },
+
+
+  bookingText:{
+    fontSize: Dimensions.get('window').width * 0.04,
+    marginBottom:10
+  },
+
+  bookingButton:{
+    fontSize: Dimensions.get('window').width * 0.035,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius:10,
+    borderBottomRightRadius:10,
+    borderWidth:1,
+    padding:7,
+    width:'40%',
+    textAlign:'center'
+
+  },
+
+  booking:{
+    marginLeft: "3%",
+    marginRight: "3%",
+    height:90,
+    backgroundColor:Theme.colors.FONDOCARD,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius:10,
+    borderBottomRightRadius:10,
+    paddingLeft:15,
+    paddingTop:10,
+    marginBottom:10,
+    marginTop:5
+  },
+
 
 });
