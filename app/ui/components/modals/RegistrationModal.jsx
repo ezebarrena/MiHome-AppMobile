@@ -22,8 +22,7 @@ export default function RegistrationModal({ isVisible, onClose }) {
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-  const { form, onChange } = useForm(initialFormState);
-
+  const { form, onChange, setFormValue } = useForm(initialFormState);
   const validateForm = () => {
     const isEmailValid = emailRegex.test(form.logInEmail);
     const isNotEmpty = form.fantasyName.trim() !== "" && form.logInEmail.trim() !== "" && form.password.trim() !== "";
@@ -63,8 +62,14 @@ export default function RegistrationModal({ isVisible, onClose }) {
             </Pressable>
           </View>
           <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.registrationModal.nameInput')} value={form.fantasyName} onChangeText={(value) => onChange(value, "fantasyName")} />
-          <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.registrationModal.contactEmail')} value={form.contactEmail} onChangeText={(value) => onChange(value, "contactEmail")} />
-          <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.registrationModal.emailInput')} value={form.logInEmail} onChangeText={(value) => onChange(value, "logInEmail")} />
+          <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.registrationModal.emailInput')} value={form.logInEmail} onChangeText={(value) => 
+          setFormValue(
+            {
+              ...form,
+              logInEmail: value,
+              contactEmail: value,
+            }
+          )} />
           <CustomTextInput placeholder={i18n.t('realEstateWelcomeScreen.registrationModal.passwordInput')} secureTextEntry={true} value={form.password} onChangeText={(value) => onChange(value, "password")} />
           <Button title={i18n.t('realEstateWelcomeScreen.registrationModal.registerButton')} size='medium' backgroundColor='#E36565' onPress={handleRegistration} disabled={!isFormValid} />
         </View>
