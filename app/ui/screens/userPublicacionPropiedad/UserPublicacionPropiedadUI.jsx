@@ -248,7 +248,7 @@ export default function UserPublicacionPropiedadUI({ propiedad, inmobiliaria }) 
                     </View>
 
                     <View style={styles.bntneraCI}>
-                        <Pressable style={styles.btnCI} onPress={() => { console.log("contactar") }}><Text>{i18n.t("detallePropiedad.contactar")}</Text></Pressable>
+                        <Pressable style={styles.btnCI} onPress={Contact}><Text>{i18n.t("detallePropiedad.contactar")}</Text></Pressable>
                         <Pressable style={styles.btnCI} onPress={() => { console.log("propiedades") }}><Text>{i18n.t("detallePropiedad.propiedades")}</Text></Pressable>
                     </View>
                 </View>
