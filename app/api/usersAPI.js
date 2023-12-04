@@ -11,51 +11,9 @@ const usersAPI = axios.create({
   },
 });
 
-
-export const getUser = async () => {
-  try {
-    const response = await usersAPI.get('/users/me/');
-    return response.data;
-  } catch (error) {
-    console.error('Error getting user', error);
-    throw error;
-  }
-};
-
-export const favAnAsset = async (userId, assetId) => {
-  try {
-    const response = await usersAPI.post('/users/me/favorite', {
-      data: { id: assetId, user:userId },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error faving asset', error);
-    throw error;
-  }
-};
-
-export const unFavAnAsset = async (userId, assetId) => {
-  try {
-    const response = await usersAPI.post('/users/me/unfavorite', {
-      data: { id: assetId, user:userId },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error unfaving asset', error);
-    throw error;
-  }
-};
-
-export const getMyFavouriteAssets = async (userId) => {
-  try {
-    const response = await usersAPI.get('/users/me/favorite', {
-      data: { user:userId },
-    });
-
 export const addPaymentMethod = async (userId, paymentMethod) => {
   try {
-    const response = await usersAPI.post('users/me/paymentmethod', { userId, paymentMethod });
-
+    const response = await usersAPI.post('/users/me/paymentmethod', { userId, paymentMethod });
     return response.data;
   } catch (error) {
     console.error('Error adding payment method:', error);
@@ -65,12 +23,7 @@ export const addPaymentMethod = async (userId, paymentMethod) => {
 
 export const deletePaymentMethod = async (userId, paymentMethod) => {
   try {
-    const response = await usersAPI.post('/users/me/paymentmethod', {
-      data: { user:userId, paymentMethod },
-    });
-
-    const response = await usersAPI.delete('users/me/paymentmethod', { userId, paymentMethod });
-
+    const response = await usersAPI.delete('/users/me/paymentmethod', { userId, paymentMethod });
     return response.data;
   } catch (error) {
     console.error('Error adding payment method:', error);
@@ -80,13 +33,9 @@ export const deletePaymentMethod = async (userId, paymentMethod) => {
 
 export const getPaymentMethods = async (userId) => {
   try {
-
-    const response = await usersAPI.delete('/users/me/paymentmethod', {
-      data: { user:userId, paymentMethod },
-    });
-
-    const response = await usersAPI.get(`users/${userId}/paymentmethod`);
-
+    console.log('userId', userId);
+    const _id = userId;
+    const response = await usersAPI.get(`/users/me/id`, { _id });
     return response.data;
   } catch (error) {
     console.error('Error getting payment methods:', error);

@@ -7,7 +7,6 @@ import i18n from "../../../assets/strings/I18n";
 
 const ImagePickerModal = ({ buttonText, modalTitle, onImageSelected }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const pickImage = async () => {
     try {
@@ -21,8 +20,8 @@ const ImagePickerModal = ({ buttonText, modalTitle, onImageSelected }) => {
       if (!result.canceled) {
         const selectedAsset = result.assets[0];
         const uri = selectedAsset.uri;
-        setSelectedImage(uri);
         onImageSelected(uri);
+        setModalVisible(false);
       }
     } catch (error) {
       console.error('Error al seleccionar una imagen: ', error);
@@ -41,8 +40,8 @@ const ImagePickerModal = ({ buttonText, modalTitle, onImageSelected }) => {
       if (!result.canceled) {
         const selectedAsset = result.assets[0];
         const uri = selectedAsset.uri;
-        setSelectedImage(uri);
         onImageSelected(uri);
+        setModalVisible(false);
       }
     } catch (error) {
       console.error('Error al tomar una foto: ', error);
@@ -79,9 +78,6 @@ const ImagePickerModal = ({ buttonText, modalTitle, onImageSelected }) => {
             </TouchableOpacity>
 
             <Text style={styles.modalTitle}>{modalTitle}</Text>
-            <View style={styles.imageContainer}>
-              {selectedImage && <Image source={{ uri: selectedImage }} style={styles.selectedImage} />}
-            </View>
             <TouchableOpacity
               style={styles.pickButton}
               onPress={pickImage}
@@ -134,14 +130,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
-  },
-  imageContainer: {
-    marginBottom: 20,
-  },
-  selectedImage: {
-    width: "100%",
-    aspectRatio: 16 / 9, // Establece la relación de aspecto 16:9
-    borderRadius: 5,
   },
   pickButton: {
     backgroundColor: Theme.colors.TERCIARIO,
