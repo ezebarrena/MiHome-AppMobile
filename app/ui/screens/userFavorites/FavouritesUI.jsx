@@ -57,7 +57,7 @@ export default function FavouritesUI() {
       </View>
 
       <View style={styles.booking}>
-          <Text style={styles.bookingText}>Que estas esperando para hacer tu reserva?</Text>
+          <Text style={styles.bookingText}>Agrega propiedades a favoritos aqui</Text>
           <TouchableOpacity>
             <Text style={styles.bookingButton} onPress={goHome}>Ver propiedades</Text>
           </TouchableOpacity>
